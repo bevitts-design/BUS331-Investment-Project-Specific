@@ -365,7 +365,196 @@
     .summary-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 8px; }
     .summary-sub { font-size: 0.85rem; color: var(--ice-dim); line-height: 1.6; }
 
-    footer {
+    /* ── Excel Part D ── */
+    .excel-intro {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-bottom: 24px;
+      font-size: 0.875rem;
+      color: var(--ice-dim);
+      line-height: 1.65;
+    }
+    .excel-intro strong { color: var(--ice); }
+
+    .excel-data-table {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .excel-data-header {
+      background: rgba(201,168,76,0.08);
+      padding: 12px 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .excel-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      background: rgba(76,175,125,0.15);
+      border: 1px solid rgba(76,175,125,0.3);
+      color: #7de0aa;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .excel-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .step-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-title {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--ice);
+      line-height: 1.35;
+    }
+    .step-subtitle {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 2px;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.04em;
+    }
+    .step-body {
+      font-size: 0.845rem;
+      color: var(--ice-dim);
+      line-height: 1.65;
+      padding-left: 42px;
+    }
+    .step-body ol {
+      padding-left: 18px;
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .step-body ul {
+      padding-left: 18px;
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      list-style: disc;
+    }
+    .cell-ref {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      background: rgba(214,228,240,0.08);
+      border: 1px solid rgba(214,228,240,0.15);
+      border-radius: 4px;
+      padding: 1px 7px;
+      color: var(--ice);
+    }
+    .formula-inline {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px;
+      padding: 1px 8px;
+      color: var(--gold-lt);
+    }
+    .answer-row {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed rgba(214,228,240,0.1);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .answer-row strong { color: var(--ice-dim); }
+
+    .reflection-card {
+      background: rgba(201,168,76,0.04);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-top: 20px;
+    }
+    .reflection-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .reflection-q {
+      font-size: 0.855rem;
+      color: var(--ice-dim);
+      line-height: 1.6;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex;
+      gap: 10px;
+    }
+    .reflection-q:last-child { border-bottom: none; }
+    .reflection-q span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      flex-shrink: 0;
+      padding-top: 3px;
+    }
+
+    .excel-complete-btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: var(--radius);
+      color: var(--gold);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.03em;
+    }
+    .excel-complete-btn:hover { background: rgba(201,168,76,0.15); }
+    .excel-complete-btn.done {
+      background: rgba(46,125,82,0.15);
+      border-color: var(--correct-lt);
+      color: #7de0aa;
+      cursor: default;
+    }
+  
       margin-top: 60px; padding-top: 24px;
       border-top: 1px solid var(--border);
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
@@ -388,7 +577,7 @@
     <h1>Risk, Return &amp; <em>the Historical Record</em></h1>
     <div class="header-meta">
       <span class="meta-pill">⏱ 30–35 min</span>
-      <span class="meta-pill">3 parts · 16 questions</span>
+      <span class="meta-pill">4 parts · 17 questions</span>
       <span class="meta-pill">BKM 12th Ed.</span>
     </div>
   </header>
@@ -396,7 +585,7 @@
   <div class="progress-wrap">
     <div class="progress-label">
       <span>Progress</span>
-      <span id="prog-text">0 / 16 answered</span>
+      <span id="prog-text">0 / 17 answered</span>
     </div>
     <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
   </div>
@@ -474,6 +663,186 @@
     <div class="section-title">Multiple Choice</div>
     <div class="section-desc">Select the best answer. Feedback appears immediately after selection.</div>
     <div id="mc-questions"></div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       PART D · Excel Extension
+  ══════════════════════════════════ -->
+  <div class="part">
+    <div class="section-label">Part D</div>
+    <div class="section-title">Excel Extension — Mutual Fund Analysis</div>
+    <div class="section-desc">Open a blank Excel workbook and follow the steps below. You will build a return analysis model from scratch using a new data set — three Vanguard mutual funds over 2018–2022.</div>
+
+    <div class="excel-intro">
+      <strong>Scenario:</strong> You are a junior analyst at a wealth management firm. A client wants to evaluate three Vanguard funds for their portfolio: <strong>VTSAX</strong> (Total Stock Market), <strong>VBTLX</strong> (Total Bond Market), and <strong>VGSLX</strong> (Real Estate/REIT). Use the annual return data below to build a comparative risk/return model and prepare a summary for your client.
+    </div>
+
+    <div class="excel-data-table">
+      <div class="excel-data-header">
+        📊 Annual Returns — Vanguard Funds (2018–2022)
+        <span class="excel-badge">Enter this data into Excel</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>VTSAX (Total Market)</th>
+            <th>VBTLX (Total Bond)</th>
+            <th>VGSLX (REIT)</th>
+            <th>T-Bill (Risk-Free)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>2018</td><td>−5.17%</td><td>0.01%</td><td>−5.94%</td><td>1.87%</td></tr>
+          <tr><td>2019</td><td>30.72%</td><td>8.72%</td><td>28.94%</td><td>2.14%</td></tr>
+          <tr><td>2020</td><td>21.05%</td><td>7.72%</td><td>−4.72%</td><td>0.38%</td></tr>
+          <tr><td>2021</td><td>25.68%</td><td>−1.67%</td><td>40.37%</td><td>0.05%</td></tr>
+          <tr><td>2022</td><td>−19.52%</td><td>−13.17%</td><td>−26.23%</td><td>2.02%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="excel-step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Set Up Your Workbook</div>
+          <div class="step-subtitle">Layout · Labels · Data Entry</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <ol>
+          <li>In a blank workbook, type <span class="cell-ref">Year</span> in <span class="cell-ref">A1</span>, then <span class="cell-ref">VTSAX</span>, <span class="cell-ref">VBTLX</span>, <span class="cell-ref">VGSLX</span>, <span class="cell-ref">T-Bill</span> in <span class="cell-ref">B1:E1</span>.</li>
+          <li>Enter the years 2018–2022 in <span class="cell-ref">A2:A6</span>.</li>
+          <li>Enter the return data from the table above in <span class="cell-ref">B2:E6</span>. Enter as decimals — e.g., type <span class="cell-ref">−0.0517</span> for −5.17%.</li>
+          <li>Format <span class="cell-ref">B2:E6</span> as Percentage with 2 decimal places: select the range → Home → Number → Percentage → increase decimals to 2.</li>
+        </ol>
+        <div class="answer-row"><strong>✓ Check:</strong> Your B2 cell should display −5.17% and contain the value −0.0517.</div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="excel-step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Calculate Arithmetic Mean Returns</div>
+          <div class="step-subtitle">AVERAGE function · Row 8</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <ol>
+          <li>In <span class="cell-ref">A8</span>, type the label <span class="cell-ref">Arith. Mean</span>.</li>
+          <li>In <span class="cell-ref">B8</span>, enter: <span class="formula-inline">=AVERAGE(B2:B6)</span></li>
+          <li>Copy <span class="cell-ref">B8</span> across to <span class="cell-ref">C8:E8</span>.</li>
+          <li>Format row 8 as percentage with 2 decimal places.</li>
+        </ol>
+        <div class="answer-row"><strong>✓ Check:</strong> VTSAX arithmetic mean ≈ 10.55% &nbsp;|&nbsp; VBTLX ≈ 0.32% &nbsp;|&nbsp; VGSLX ≈ 6.48%</div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="excel-step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Calculate Geometric Mean Returns</div>
+          <div class="step-subtitle">GEOMEAN function · Row 9</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <ol>
+          <li>In <span class="cell-ref">A9</span>, type <span class="cell-ref">Geo. Mean</span>.</li>
+          <li>In <span class="cell-ref">B9</span>, enter: <span class="formula-inline">=GEOMEAN(1+B2,1+B3,1+B4,1+B5,1+B6)−1</span></li>
+          <li>Copy across to <span class="cell-ref">C9:E9</span> (adjust column references).</li>
+          <li>Alternatively, use: <span class="formula-inline">=PRODUCT(1+B2:B6)^(1/5)−1</span> entered as an array formula with <strong>Ctrl+Shift+Enter</strong>.</li>
+        </ol>
+        <div class="answer-row"><strong>✓ Check:</strong> VTSAX geo. mean ≈ 8.66% &nbsp;|&nbsp; VBTLX ≈ 0.14% &nbsp;|&nbsp; VGSLX ≈ 3.71% — all lower than arithmetic means as expected.</div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="excel-step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Calculate Standard Deviation</div>
+          <div class="step-subtitle">STDEV.S function · Row 10</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <ol>
+          <li>In <span class="cell-ref">A10</span>, type <span class="cell-ref">Std Dev (σ)</span>.</li>
+          <li>In <span class="cell-ref">B10</span>, enter: <span class="formula-inline">=STDEV.S(B2:B6)</span></li>
+          <li>Copy across to <span class="cell-ref">C10:E10</span>.</li>
+          <li>Use <span class="formula-inline">STDEV.S</span> (sample), not <span class="formula-inline">STDEV.P</span> (population) — we treat these 5 years as a sample.</li>
+        </ol>
+        <div class="answer-row"><strong>✓ Check:</strong> VTSAX σ ≈ 22.06% &nbsp;|&nbsp; VBTLX σ ≈ 8.23% &nbsp;|&nbsp; VGSLX σ ≈ 27.65%</div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="excel-step">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div>
+          <div class="step-title">Calculate Risk Premiums</div>
+          <div class="step-subtitle">Excess return above T-Bill · Row 11</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <ol>
+          <li>In <span class="cell-ref">A11</span>, type <span class="cell-ref">Risk Premium</span>.</li>
+          <li>In <span class="cell-ref">B11</span>, enter: <span class="formula-inline">=B8−E8</span> (VTSAX mean minus T-Bill mean).</li>
+          <li>In <span class="cell-ref">C11</span>, enter: <span class="formula-inline">=C8−E8</span></li>
+          <li>In <span class="cell-ref">D11</span>, enter: <span class="formula-inline">=D8−E8</span></li>
+          <li>Leave <span class="cell-ref">E11</span> blank — the T-Bill has no risk premium over itself.</li>
+        </ol>
+        <div class="answer-row"><strong>✓ Check:</strong> VTSAX risk premium ≈ 9.43% &nbsp;|&nbsp; VBTLX ≈ −0.80% &nbsp;|&nbsp; VGSLX ≈ 5.36% — VBTLX is negative, meaning bonds barely kept pace with T-Bills over this period.</div>
+      </div>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="excel-step">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <div>
+          <div class="step-title">Calculate the Sharpe Ratio</div>
+          <div class="step-subtitle">Risk-adjusted performance · Row 12</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <ol>
+          <li>In <span class="cell-ref">A12</span>, type <span class="cell-ref">Sharpe Ratio</span>.</li>
+          <li>In <span class="cell-ref">B12</span>, enter: <span class="formula-inline">=B11/B10</span> (risk premium ÷ std dev).</li>
+          <li>Copy across to <span class="cell-ref">C12:D12</span>.</li>
+          <li>Format row 12 as a number with 2 decimal places (not percentage — Sharpe ratio is unitless).</li>
+        </ol>
+        <div class="answer-row"><strong>✓ Check:</strong> VTSAX Sharpe ≈ 0.43 &nbsp;|&nbsp; VBTLX Sharpe ≈ −0.10 &nbsp;|&nbsp; VGSLX Sharpe ≈ 0.19 — VTSAX offered the best risk-adjusted return over this period.</div>
+      </div>
+    </div>
+
+    <!-- Reflection -->
+    <div class="reflection-card">
+      <div class="reflection-title">💬 Discussion Questions — Be prepared to discuss in class</div>
+      <div class="reflection-q">
+        <span>Q1</span>
+        VGSLX (REIT) had a higher arithmetic mean return than VBTLX, but also a much higher standard deviation. Using your Sharpe ratios, which fund offered better risk-adjusted performance? Does this change your view of REITs as a client holding?
+      </div>
+      <div class="reflection-q">
+        <span>Q2</span>
+        VBTLX had a negative risk premium over this period. Does that mean bonds are a bad investment? What role might they still play in a diversified portfolio? (Hint: think about what happened in 2018 and 2020.)
+      </div>
+      <div class="reflection-q">
+        <span>Q3</span>
+        Compare each fund's arithmetic mean to its geometric mean. Which fund shows the largest gap between the two? What does that gap tell you about the volatility of that fund?
+      </div>
+    </div>
+
+    <button class="excel-complete-btn" id="excel-done-btn" onclick="markExcelDone()">
+      ✓ Mark Excel Activity Complete
+    </button>
   </div>
 
   <div id="summary">
@@ -625,7 +994,7 @@ const mcData = [
 ];
 
 // ── STATE ──────────────────────────────────────────
-const TOTAL = calcData.length + tfData.length + mcData.length;
+const TOTAL = calcData.length + tfData.length + mcData.length + 1; // +1 for Excel completion
 let totalAnswered = 0;
 const calcAnswered = {};
 const mcAnswered = {};
@@ -822,6 +1191,17 @@ function selectMC(qi, oi) {
     fb.classList.add('wrong-fb');
     fb.innerHTML = `<strong>Incorrect.</strong> ${item.feedback}`;
   }
+  updateProgress(1);
+}
+
+// ── PART D: EXCEL COMPLETION ─────────────────────
+let excelDone = false;
+function markExcelDone() {
+  if (excelDone) return;
+  excelDone = true;
+  const btn = document.getElementById('excel-done-btn');
+  btn.textContent = '✓ Excel Activity Marked Complete';
+  btn.classList.add('done');
   updateProgress(1);
 }
 
