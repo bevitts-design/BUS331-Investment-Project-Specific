@@ -848,7 +848,7 @@
   <!-- ══════════════════════════════════
        SUBMISSION PANEL
   ══════════════════════════════════ -->
-  <div id="submit-panel" style="display:none; margin-top:40px;">
+  <div id="submit-panel" style="margin-top:40px;">
     <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px;">
       <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;color:var(--gold);text-transform:uppercase;margin-bottom:6px;">Submit Your Work</div>
       <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;color:var(--white);margin-bottom:8px;">Ready to Submit?</div>
@@ -1026,10 +1026,6 @@ function updateProgress(delta) {
   totalAnswered = Math.min(totalAnswered + delta, TOTAL);
   document.getElementById('prog-text').textContent = `${totalAnswered} / ${TOTAL} answered`;
   document.getElementById('progress-fill').style.width = `${(totalAnswered / TOTAL) * 100}%`;
-  if (totalAnswered >= TOTAL) {
-    document.getElementById('submit-panel').style.display = 'block';
-    document.getElementById('submit-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
 }
 
 // ── PART A: CALCULATIONS ──────────────────────────
