@@ -845,12 +845,34 @@
     </button>
   </div>
 
+  <!-- ══════════════════════════════════
+       SUBMISSION PANEL
+  ══════════════════════════════════ -->
+  <div id="submit-panel" style="display:none; margin-top:40px;">
+    <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px;">
+      <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;color:var(--gold);text-transform:uppercase;margin-bottom:6px;">Submit Your Work</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;color:var(--white);margin-bottom:8px;">Ready to Submit?</div>
+      <p style="font-size:0.875rem;color:var(--ice-dim);line-height:1.6;margin-bottom:24px;">Enter your name below and click Submit. Your answers will be recorded automatically.</p>
+
+      <label style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;display:block;margin-bottom:8px;">Full Name</label>
+      <input type="text" id="student-name" placeholder="First Last"
+        style="width:100%;max-width:340px;background:rgba(255,255,255,0.05);border:1px solid rgba(214,228,240,0.2);border-radius:6px;color:var(--ice);font-family:'DM Sans',sans-serif;font-size:0.9rem;padding:10px 14px;outline:none;margin-bottom:20px;display:block;" />
+
+      <button onclick="submitAnswers()" id="submit-btn"
+        style="background:var(--gold);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;padding:11px 28px;border:none;border-radius:7px;cursor:pointer;letter-spacing:0.03em;">
+        Submit Answers →
+      </button>
+      <div id="submit-status" style="margin-top:14px;font-size:0.82rem;display:none;"></div>
+    </div>
+  </div>
+
+  <!-- Confirmation -->
   <div id="summary">
     <div class="score-ring" id="score-ring">
       <span class="score-num" id="score-num">✓</span>
     </div>
-    <div class="summary-title">Activity Complete!</div>
-    <p class="summary-sub">Review any incorrect answers above before your next class session.<br>Submit your Canvas quiz to record completion.</p>
+    <div class="summary-title">Submitted!</div>
+    <p class="summary-sub" id="summary-sub">Your answers have been recorded. Review any incorrect responses above before next class.</p>
   </div>
 
   <footer>
@@ -1004,7 +1026,10 @@ function updateProgress(delta) {
   totalAnswered = Math.min(totalAnswered + delta, TOTAL);
   document.getElementById('prog-text').textContent = `${totalAnswered} / ${TOTAL} answered`;
   document.getElementById('progress-fill').style.width = `${(totalAnswered / TOTAL) * 100}%`;
-  if (totalAnswered >= TOTAL) document.getElementById('summary').classList.add('show');
+  if (totalAnswered >= TOTAL) {
+    document.getElementById('submit-panel').style.display = 'block';
+    document.getElementById('submit-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 }
 
 // ── PART A: CALCULATIONS ──────────────────────────
@@ -1205,7 +1230,96 @@ function markExcelDone() {
   updateProgress(1);
 }
 
-// ── INIT ──────────────────────────────────────────
+// ── SUBMISSION ────────────────────────────────────
+const SHEET_URL = 'YOUR_APPS_SCRIPT_URL_HERE'; // ← you will paste your URL here
+
+function collectAnswers() {
+  // Part A — numeric inputs
+  const partA = {};
+  calcData.forEach((item, i) => {
+    const val = document.getElementById(`calc-input-${i}`).value;
+    partA[`A${i+1}_${item.id}`] = val || '(blank)';
+  });
+
+  // Part B — T/F selections
+  const partB = {};
+  tfData.forEach((_, i) => {
+    partB[`B${i+1}`] = tfSelections[i]?.val || '(blank)';
+  });
+
+  // Part C — MC selections
+  const partC = {};
+  const letters = ['A','B','C','D'];
+  mcData.forEach((item, qi) => {
+    // find which option has 'correct' or 'wrong' class
+    let chosen = '(blank)';
+    for (let oi = 0; oi < item.options.length; oi++) {
+      const el = document.getElementById(`opt-${qi}-${oi}`);
+      if (el && (el.classList.contains('correct') || el.classList.contains('wrong'))) {
+        chosen = letters[oi];
+        break;
+      }
+    }
+    partC[`C${qi+1}`] = chosen;
+  });
+
+  // Part D — Excel completion
+  const partD = { ExcelComplete: excelDone ? 'Yes' : 'No' };
+
+  return { ...partA, ...partB, ...partC, ...partD };
+}
+
+async function submitAnswers() {
+  const name = document.getElementById('student-name').value.trim();
+  if (!name) {
+    const status = document.getElementById('submit-status');
+    status.style.display = 'block';
+    status.style.color = '#f08080';
+    status.textContent = 'Please enter your name before submitting.';
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Submitting…';
+  btn.style.opacity = '0.6';
+  btn.disabled = true;
+
+  const status = document.getElementById('submit-status');
+  status.style.display = 'block';
+  status.style.color = 'var(--ice-dim)';
+  status.textContent = 'Sending your answers…';
+
+  const payload = {
+    name,
+    timestamp: new Date().toLocaleString(),
+    activity: 'Ch5 · Risk, Return & the Historical Record',
+    ...collectAnswers()
+  };
+
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    // no-cors means we can't read the response, but if no error was thrown it went through
+    document.getElementById('submit-panel').style.display = 'none';
+    const summary = document.getElementById('summary');
+    summary.classList.add('show');
+    document.getElementById('summary-sub').textContent =
+      `Thanks, ${name}! Your answers have been recorded. Review any incorrect responses above before next class.`;
+    summary.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch (err) {
+    btn.textContent = 'Submit Answers →';
+    btn.style.opacity = '1';
+    btn.disabled = false;
+    status.style.color = '#f08080';
+    status.textContent = 'Submission failed — please try again or notify your instructor.';
+  }
+}
+
+
 buildCalc();
 buildTF();
 buildMC();
