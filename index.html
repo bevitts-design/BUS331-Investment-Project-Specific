@@ -21,19 +21,19 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); min-height: 100vh; }
 
-  /* Top Bar */
+  /* ── Top Bar ── */
   .topbar { background: var(--navy-mid); border-bottom: 1px solid rgba(201,168,76,0.15); padding: 0.45rem 2rem; display: flex; align-items: center; justify-content: space-between; }
   .topbar-left { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); }
   .topbar-left span { color: var(--gold); }
   .topbar-right { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--text-muted); }
 
-  /* Hero */
+  /* ── Hero ── */
   header { background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 60%, #0d1f3c 100%); border-bottom: 1px solid var(--gold); padding: 3rem 2rem 2.5rem; text-align: center; }
   .hero-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.75rem; }
   header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); color: var(--white); margin-bottom: 0.5rem; }
   header h1 span { color: var(--gold); }
 
-  /* Mandate Banner */
+  /* ── Mandate Banner ── */
   .mandate-banner { max-width: 1100px; margin: 2rem auto 0; padding: 0 1.5rem; }
   .mandate-link { display: flex; align-items: center; justify-content: space-between; background: rgba(201, 168, 76, 0.05); border: 1px solid rgba(201, 168, 76, 0.3); padding: 1.25rem 2rem; border-radius: 8px; text-decoration: none; transition: all 0.2s ease; }
   .mandate-link:hover { background: rgba(201, 168, 76, 0.1); border-color: var(--gold); transform: translateY(-2px); }
@@ -41,18 +41,23 @@
   .mandate-text p { font-size: 0.85rem; color: var(--ice); letter-spacing: 0.02em; }
   .mandate-icon { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--gold); border: 1px solid var(--gold); padding: 0.4rem 1rem; border-radius: 4px; text-transform: uppercase; }
 
-  /* Main */
+  /* ── Main Content ── */
   main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
   .section-header { margin-bottom: 2rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(201,168,76,0.2); }
   .section-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--white); letter-spacing: 0.02em; }
 
-  /* Grid */
-  .sub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
-  .sub-card { background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.15); border-radius: 8px; padding: 1.75rem; display: flex; flex-direction: column; transition: transform 0.2s, border-color 0.2s; }
-  .sub-card:hover { border-color: var(--gold); transform: translateY(-3px); }
-  .sub-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--gold); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  .sub-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: 0.85rem; color: var(--white); }
-  .sub-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; flex-grow: 1; }
+  /* ── Phase Grid ── */
+  .phase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .phase-card { background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.15); border-radius: 8px; padding: 1.75rem; display: flex; flex-direction: column; transition: transform 0.2s, border-color 0.2s; }
+  .phase-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+
+  .phase-label-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
+  .phase-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.05em; }
+  .phase-lead { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--text-muted); background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 3px; }
+
+  .phase-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: 0.85rem; color: var(--white); }
+  .phase-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; flex-grow: 1; }
+
   .link-group { display: flex; flex-direction: column; gap: 0.6rem; }
   
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; text-decoration: none; padding: 0.6rem 0.8rem; border-radius: 4px; transition: 0.2s; }
@@ -89,65 +94,83 @@
 
 <main>
   <div class="section-header">
-    <h2 class="section-title">Detailed Analysis & Valuations</h2>
+    <h2 class="section-title">Institutional Portfolio Management Phases</h2>
   </div>
 
-  <div class="sub-grid">
+  <div class="phase-grid">
     
-    <div class="sub-card">
-      <span class="sub-label">Section 01</span>
-      <h3 class="sub-title">Macroeconomic Analysis</h3>
-      <p class="sub-desc">Analyze the current economic cycle and scenario probabilities. (Note: Upload macro-analysis.html to see this page).</p>
+    <div class="phase-card">
+      <div class="phase-label-wrap">
+        <span class="phase-label">Phase 01</span>
+        <span class="phase-lead">Macro Analyst</span>
+      </div>
+      <h3 class="phase-title">Macro Foundations</h3>
+      <p class="phase-desc">Bull / Base / Bear cases with probabilities based on key economic indicators.</p>
       <div class="link-group">
         <a href="project/macro-analysis.html" class="btn btn-primary">🔗 Analysis Page</a>
         <a href="files/macro-data-set.xlsx" class="btn btn-secondary">📥 Download Data (.xlsx)</a>
       </div>
     </div>
 
-    <div class="sub-card">
-      <span class="sub-label">Section 02</span>
-      <h3 class="sub-title">IPS & Client Profiles</h3>
-      <p class="sub-desc">Document RRTTLLU constraints. (Note: Upload ips-client-profiles.html to see this page).</p>
+    <div class="phase-card">
+      <div class="phase-label-wrap">
+        <span class="phase-label">Phase 02</span>
+        <span class="phase-lead">IPS Architect</span>
+      </div>
+      <h3 class="phase-title">Client Guardrails (IPS)</h3>
+      <p class="phase-desc">IPS for each of 3 clients; drawdown limits (Tripwires) set via RRTTLLU framework.</p>
       <div class="link-group">
         <a href="project/ips-client-profiles.html" class="btn btn-primary">🔗 Client Profiles</a>
         <a href="files/ips-template.docx" class="btn btn-secondary">📥 IPS Template (.docx)</a>
       </div>
     </div>
 
-    <div class="sub-card">
-      <span class="sub-label">Section 03</span>
-      <h3 class="sub-title">Investment Project Bridge</h3>
-      <p class="sub-desc">CME Matrix and Solver optimization for Base and Bear cases.</p>
+    <div class="phase-card">
+      <div class="phase-label-wrap">
+        <span class="phase-label">Phase 03</span>
+        <span class="phase-lead">Portfolio Builder</span>
+      </div>
+      <h3 class="phase-title">The Bridge (CME Matrix)</h3>
+      <p class="phase-desc">CME Matrix + Solver-optimized allocations to translate macro thesis into mathematics.</p>
       <div class="link-group">
         <a href="project/BUS331_InvProject_Bridge_CME_Guide.html" class="btn btn-primary">🔗 Analysis Portal</a>
         <a href="files/bridge-framework.pdf" class="btn btn-secondary">📥 Methodology (.pdf)</a>
       </div>
     </div>
 
-    <div class="sub-card">
-      <span class="sub-label">Section 04</span>
-      <h3 class="sub-title">Security Selection</h3>
-      <p class="sub-desc">Portfolio selection and mandatory derivative hedging strategies.</p>
+    <div class="phase-card">
+      <div class="phase-label-wrap">
+        <span class="phase-label">Phase 04</span>
+        <span class="phase-lead">Portfolio Builder</span>
+      </div>
+      <h3 class="phase-title">Security Selection & Hedging</h3>
+      <p class="phase-desc">10 securities with theses + mandatory derivative hedge (Protective Put or Covered Call).</p>
       <div class="link-group">
         <a href="project/BUS331_InvProject_SecuritySelection_Guide.html" class="btn btn-primary">🔗 Valuation Module</a>
         <a href="files/valuation-models.xlsx" class="btn btn-secondary">📥 Model Sheets (.xlsx)</a>
       </div>
     </div>
 
-    <div class="sub-card">
-      <span class="sub-label">Section 05</span>
-      <h3 class="sub-title">Stress Test</h3>
-      <p class="sub-desc">Simulated crash testing vs. IPS drawdown limits.</p>
+    <div class="phase-card">
+      <div class="phase-label-wrap">
+        <span class="phase-label">Phase 05</span>
+        <span class="phase-lead">Risk & Audit Lead</span>
+      </div>
+      <h3 class="phase-title">Stress Test & Audit</h3>
+      <p class="phase-desc">Crash test vs. Bear Case; reallocation if failing mandate limits. Includes AI Audit Log.</p>
       <div class="link-group">
         <a href="project/BUS331_InvProject_StressTest_Guide.html" class="btn btn-primary">🔗 Stress Scenario Portal</a>
         <a href="files/stress-test-guide.pdf" class="btn btn-secondary">📥 Testing Guide (.pdf)</a>
       </div>
     </div>
 
-    <div class="sub-card">
-      <span class="sub-label">Section 06</span>
-      <h3 class="sub-title">Final Pitch & Oral Defense</h3>
-      <p class="sub-desc">Preparation guide for the Investment Committee presentation.</p>
+    <div class="phase-card">
+      <div class="phase-label-wrap">
+        <span class="phase-label">Phase 06</span>
+        <span class="phase-lead">Entire Team</span>
+      </div>
+      <h3 class="phase-title">Final Pitch</h3>
+      <p class="phase-desc">20–30 slide technical dossier + 15–20 min oral defense to the Investment Committee.</p>
       <div class="link-group">
         <a href="project/BUS331_InvProject_FinalPitch_Guide.html" class="btn btn-primary">🔗 Preparation Guide</a>
         <a href="files/final-rubric.pdf" class="btn btn-secondary">📥 Grading Rubric (.pdf)</a>
@@ -158,7 +181,8 @@
 </main>
 
 <footer>
-  BUS331 · Investments · Endicott College · Fall 2026
+  BUS331 · Investments · Endicott College · Fall 2026<br>
+  Institutional Portfolio Management · Term Project Portal
 </footer>
 
 </body>
