@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUS331 – Phase 6: The Final Pitch</title>
+<style>
+  :root {
+    --navy: #0A1628;
+    --navy-mid: #12254A;
+    --navy-light: #1E3A6E;
+    --gold: #C9A84C;
+    --gold-light: #E8CC7A;
+    --ice: #D6E4F0;
+    --ice-light: #EBF3FA;
+    --white: #FFFFFF;
+    --gray: #6B7A8D;
+    --input-yellow: #FFF9CC;
+    --answer-cream: #FBF6EC;
+    --green-dark: #1B5E20;
+    --green: #2E7D32;
+    --green-bg: #E8F5E9;
+    --red-dark: #B71C1C;
+    --red: #C62828;
+    --red-bg: #FFEBEE;
+    --orange: #E65100;
+    --orange-bg: #FFF3E0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+    background: #F0F4F8;
+    color: var(--navy);
+    line-height: 1.6;
+  }
+
+  .page-header {
+    background: var(--navy);
+    padding: 36px 48px 28px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .page-header .left .subtitle {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .page-header .left h1 { font-size: 27px; color: var(--white); font-weight: 700; }
+  .phase-badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 800;
+    padding: 8px 18px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .gold-rule { height: 4px; background: var(--gold); }
+
+  .body-wrap { max-width: 1100px; margin: 0 auto; padding: 36px 32px 64px; }
+
+  .phase-flow { display: flex; align-items: center; gap: 4px; margin-bottom: 28px; flex-wrap: wrap; }
+  .pf-item { background: var(--navy-light); color: var(--white); font-size: 11px; padding: 6px 13px; border-radius: 4px; font-weight: 600; }
+  .pf-item.active { background: var(--gold); color: var(--navy); }
+  .pf-item.done { background: var(--green); color: var(--white); }
+  .pf-arrow { color: var(--gold); font-size: 16px; }
+
+  .callout { border-left: 5px solid var(--gold); background: var(--ice-light); padding: 15px 20px; border-radius: 0 6px 6px 0; margin-bottom: 20px; }
+  .callout.navy { background: var(--navy); }
+  .callout.navy p { color: var(--ice); }
+  .callout.navy strong { color: var(--gold-light); }
+  .callout-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--navy); margin-bottom: 4px; }
+  .callout.navy .callout-label { color: var(--gold); }
+  .callout p { font-size: 13.5px; }
+
+  .section-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 12px 20px;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 36px;
+  }
+  .section-header .step-num {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 800;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 17px; font-weight: 700; }
+  .section-header .section-sub { font-size: 12px; color: var(--ice); margin-top: 2px; }
+  .section-body {
+    background: var(--white);
+    border: 1px solid #D0DAE8;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    padding: 26px 28px;
+  }
+
+  /* CLIENT CARD */
+  .client-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: 10px;
+    padding: 24px 28px;
+    color: var(--white);
+    margin-bottom: 26px;
+    position: relative;
+    overflow: hidden;
+  }
+  .client-card::before {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 120px; height: 120px;
+    background: var(--gold);
+    opacity: 0.08;
+    border-radius: 50%;
+  }
+  .client-card .client-name { font-size: 20px; font-weight: 700; color: var(--gold); margin-bottom: 3px; }
+  .client-card .client-role { font-size: 12.5px; color: var(--ice); margin-bottom: 16px; }
+  .client-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 10px; }
+  .client-stat { background: rgba(255,255,255,0.08); border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; padding: 10px 12px; }
+  .client-stat .stat-label { font-size: 10px; color: var(--gold-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+  .client-stat .stat-value { font-size: 14px; font-weight: 700; color: var(--white); }
+
+  /* TABLES */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 14px 0; }
+  .data-table th { background: var(--navy); color: var(--white); padding: 10px 13px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .data-table th.gold { background: var(--gold); color: var(--navy); }
+  .data-table td { padding: 10px 13px; border-bottom: 1px solid #E5ECF4; vertical-align: top; }
+  .data-table tr:nth-child(even) td { background: var(--ice-light); }
+  .data-table .answer-cell { background: var(--answer-cream) !important; border: 1px solid var(--gold); font-weight: 600; }
+
+  /* WORKED EXAMPLE */
+  .worked-example { background: var(--ice-light); border: 2px solid var(--gold); border-radius: 8px; padding: 22px 26px; margin: 22px 0; }
+  .worked-example .we-label { display: inline-block; background: var(--gold); color: var(--navy); font-size: 10px; font-weight: 800; padding: 3px 12px; border-radius: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .worked-example h3 { font-size: 15px; color: var(--navy); margin-bottom: 10px; }
+
+  /* STATUS BOXES */
+  .warning-box { background: var(--orange-bg); border-left: 5px solid var(--orange); border-radius: 0 6px 6px 0; padding: 13px 18px; margin: 16px 0; }
+  .warning-box .warn-label { font-size: 11px; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .warning-box p { font-size: 13px; color: #4E342E; }
+
+  .success-box { background: var(--green-bg); border-left: 5px solid var(--green); border-radius: 0 6px 6px 0; padding: 13px 18px; margin: 16px 0; }
+  .success-box .succ-label { font-size: 11px; font-weight: 700; color: var(--green-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .success-box p { font-size: 13px; color: var(--green-dark); }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 16px 0; }
+  @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+  .info-card { border: 1px solid #D0DAE8; border-radius: 8px; padding: 18px; }
+  .info-card h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .info-card h4 .icon { width: 24px; height: 24px; background: var(--gold); color: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+  .info-card p, .info-card li { font-size: 13px; color: #3A4A5E; line-height: 1.5; }
+  .info-card ul { padding-left: 16px; }
+  .info-card li { margin-bottom: 5px; }
+
+  /* TWO-AUDIENCE SPLIT */
+  .audience-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 8px; overflow: hidden; border: 1px solid #D0DAE8; margin: 20px 0; }
+  @media (max-width: 680px) { .audience-split { grid-template-columns: 1fr; } }
+  .audience-panel { padding: 22px 24px; }
+  .audience-panel.left { background: var(--navy); color: var(--white); border-right: 3px solid var(--gold); }
+  .audience-panel.right { background: var(--ice-light); }
+  .audience-panel .ap-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .audience-panel.left .ap-label { color: var(--gold); }
+  .audience-panel.right .ap-label { color: var(--navy-light); }
+  .audience-panel .ap-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .audience-panel.left .ap-title { color: var(--white); }
+  .audience-panel.right .ap-title { color: var(--navy); }
+  .audience-panel .ap-sub { font-size: 12px; margin-bottom: 16px; }
+  .audience-panel.left .ap-sub { color: var(--ice); }
+  .audience-panel.right .ap-sub { color: var(--gray); }
+  .audience-panel li { font-size: 13px; margin-bottom: 6px; padding-left: 0; }
+  .audience-panel.left li { color: var(--ice); }
+  .audience-panel.right li { color: #3A4A5E; }
+  .audience-panel ul { padding-left: 16px; }
+
+  /* DOSSIER SECTION LIST */
+  .dossier-list { list-style: none; padding: 0; margin: 16px 0; counter-reset: dossier-counter; }
+  .dossier-list li {
+    counter-increment: dossier-counter;
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 14px 0;
+    border-bottom: 1px solid #E5ECF4;
+  }
+  .dossier-list li:last-child { border-bottom: none; }
+  .dossier-list li::before {
+    content: counter(dossier-counter);
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 800;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .dossier-list .dl-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+  .dossier-list .dl-desc { font-size: 12.5px; color: #3A4A5E; line-height: 1.5; }
+  .dossier-list .dl-source { font-size: 11px; color: var(--gold); font-weight: 600; margin-top: 4px; }
+
+  /* ORAL RUBRIC */
+  .rubric-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 16px 0; }
+  .rubric-table th { background: var(--navy); color: var(--white); padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .rubric-table th.gold { background: var(--gold); color: var(--navy); }
+  .rubric-table td { padding: 10px 12px; border-bottom: 1px solid #E5ECF4; vertical-align: top; line-height: 1.5; }
+  .rubric-table tr:nth-child(even) td { background: var(--ice-light); }
+  .rubric-table .weight-cell { font-size: 16px; font-weight: 800; color: var(--gold); text-align: center; white-space: nowrap; }
+  .rubric-table .exc { color: var(--green-dark); font-size: 12px; }
+  .rubric-table .dev { color: var(--red-dark); font-size: 12px; }
+
+  /* QA CARDS */
+  .qa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+  @media (max-width: 680px) { .qa-grid { grid-template-columns: 1fr; } }
+  .qa-card { border: 1px solid #D0DAE8; border-radius: 8px; overflow: hidden; }
+  .qa-card .qa-head { background: var(--navy-mid); padding: 10px 14px; display: flex; align-items: center; gap: 8px; }
+  .qa-card .qa-head .qa-cat { font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
+  .qa-card .qa-body { padding: 14px; }
+  .qa-card .qa-q { font-size: 13px; color: var(--navy); font-weight: 600; margin-bottom: 8px; font-style: italic; line-height: 1.5; }
+  .qa-card .qa-hint { font-size: 12px; color: #3A4A5E; line-height: 1.5; }
+  .qa-card .qa-hint strong { color: var(--navy); }
+
+  /* MEMO TEMPLATE */
+  .memo-block {
+    border: 1px solid #D0DAE8;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  .memo-block .memo-header {
+    background: var(--navy);
+    padding: 14px 20px;
+  }
+  .memo-block .memo-header .mh-title { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 2px; }
+  .memo-block .memo-header .mh-meta { font-size: 12px; color: var(--ice); }
+  .memo-block .memo-section { padding: 16px 20px; border-bottom: 1px solid #E5ECF4; }
+  .memo-block .memo-section:last-child { border-bottom: none; }
+  .memo-block .memo-section .ms-num { font-size: 10px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+  .memo-block .memo-section .ms-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .memo-block .memo-section p { font-size: 13px; color: #3A4A5E; line-height: 1.5; }
+  .memo-block .memo-section .ms-prompt { background: var(--input-yellow); border-radius: 4px; padding: 8px 12px; font-size: 12.5px; color: #555; font-style: italic; margin-top: 8px; line-height: 1.5; }
+  .memo-block .memo-section .ms-example { background: var(--answer-cream); border: 1px solid var(--gold); border-radius: 4px; padding: 8px 12px; font-size: 12.5px; color: var(--navy); margin-top: 8px; line-height: 1.5; }
+
+  /* TIMING BAR */
+  .timing-bar { display: flex; border-radius: 8px; overflow: hidden; margin: 20px 0; height: 56px; }
+  .timing-segment { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px 8px; text-align: center; }
+  .timing-segment .ts-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; }
+  .timing-segment .ts-time { font-size: 13px; font-weight: 800; margin-top: 2px; }
+  .ts-intro { background: var(--navy-light); color: var(--white); flex: 1; }
+  .ts-macro { background: var(--navy-mid); color: var(--white); flex: 2; }
+  .ts-port { background: var(--navy); color: var(--white); flex: 3; }
+  .ts-risk { background: var(--navy-mid); color: var(--white); flex: 2; }
+  .ts-rec { background: var(--navy-light); color: var(--white); flex: 1.5; }
+  .ts-qa { background: var(--gold); color: var(--navy); flex: 3; }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; padding: 0; margin: 16px 0; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #E5ECF4; font-size: 13.5px; }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box { width: 20px; height: 20px; border: 2px solid var(--gold); border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
+
+  /* MISC */
+  p { margin-bottom: 10px; }
+  p:last-child { margin-bottom: 0; }
+  h3.sub { font-size: 15px; color: var(--navy); margin: 22px 0 12px; }
+
+  .page-footer { background: var(--navy); color: var(--ice); text-align: center; padding: 20px; font-size: 12px; margin-top: 48px; }
+  .page-footer span { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="left">
+    <div class="subtitle">BUS 331 · Investments · Endicott College</div>
+    <h1>Phase 6: The Final Pitch — Dossier &amp; Oral Defense</h1>
+  </div>
+  <div class="phase-badge">Phase 6 of 6</div>
+</div>
+<div class="gold-rule"></div>
+
+<div class="body-wrap">
+
+  <div class="phase-flow">
+    <div class="pf-item done">✓ Phase 1: Macro</div><div class="pf-arrow">›</div>
+    <div class="pf-item done">✓ Phase 2: IPS</div><div class="pf-arrow">›</div>
+    <div class="pf-item done">✓ Phase 3: Bridge</div><div class="pf-arrow">›</div>
+    <div class="pf-item done">✓ Phase 4: Securities</div><div class="pf-arrow">›</div>
+    <div class="pf-item done">✓ Phase 5: Audit</div><div class="pf-arrow">›</div>
+    <div class="pf-item active">Phase 6: Pitch ←</div>
+  </div>
+
+  <div class="callout navy">
+    <div class="callout-label">Phase Objective</div>
+    <p>Phase 6 is where five phases of analysis converge into two deliverables. The <strong>Technical Dossier</strong> is your written record — precise, math-verified, built for a compliance audience. The <strong>Oral Presentation</strong> is your live defense — persuasive, narrative-driven, built for an Investment Committee. Both are graded. Neither can succeed without the other. <strong>The Q&amp;A is 30% of your oral grade</strong> — it is not a formality.</p>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  THE TWO-AUDIENCE APPROACH                         -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">1</div>
+    <div>
+      <h2>The Two-Audience Approach</h2>
+      <div class="section-sub">Same analysis — two completely different modes of communication</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <p>The most common Phase 6 failure is treating the oral presentation as a reading of the written submission. These are different products for different audiences. Understanding who you are talking to — and why they care — changes everything about how you communicate.</p>
+
+    <div class="audience-split">
+      <div class="audience-panel left">
+        <div class="ap-label">Written Submission</div>
+        <div class="ap-title">The Compliance Department</div>
+        <div class="ap-sub">Risk managers, auditors, regulators</div>
+        <ul>
+          <li>Audience cares about: <strong style="color:var(--gold-light);">precision, traceability, defensibility</strong></li>
+          <li>Format: 20–30 slide Technical Dossier</li>
+          <li>Tone: formal, third-person, cites every data source</li>
+          <li>Math must be perfect — rounding errors are noticed</li>
+          <li>Every number traces to a cited source or formula</li>
+          <li>AI Audit Log is an appendix, not a footnote</li>
+        </ul>
+      </div>
+      <div class="audience-panel right">
+        <div class="ap-label">Oral Presentation</div>
+        <div class="ap-title">The Investment Committee</div>
+        <div class="ap-sub">Clients, board members, senior portfolio managers</div>
+        <ul>
+          <li>Audience cares about: <strong>conviction, clarity, trust</strong></li>
+          <li>Format: 15–20 min pitch + 5–10 min Q&amp;A</li>
+          <li>Tone: confident, advisory, first-person plural ("we believe")</li>
+          <li>Lead with the conclusion — they are busy executives</li>
+          <li>Use visuals to show the story, not replicate the spreadsheet</li>
+          <li>Q&amp;A is where your real preparation shows</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <div class="warn-label">⚠ The Silo Warning — Final Form</div>
+      <p>If one team member says "inflation is falling" in the macro section and another picks inflation hedges in the portfolio section, the Investment Committee will catch it immediately — and it costs points in <em>both</em> the written and oral rubrics. The numbers, the narrative, and the recommendations must be internally consistent across all five prior phases. Review the full deck as a team before the presentation day.</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  STEP 2 — THE TECHNICAL DOSSIER                   -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">2</div>
+    <div>
+      <h2>The Technical Dossier — Written Submission</h2>
+      <div class="section-sub">Required sections, in order — one submission per team covering all three clients</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <p>The Technical Dossier is a compiled document that integrates all five prior phases into a single coherent submission. It is not a paste of your prior worksheets — it is a purposefully organized portfolio report. Each section must be polished for a compliance reader who will check the math, the sourcing, and the internal consistency.</p>
+
+    <ol class="dossier-list">
+      <li>
+        <div>
+          <div class="dl-title">Executive Summary</div>
+          <div class="dl-desc">One page maximum. State the team's macro thesis, the three client names, and the overall investment strategy in plain English. A senior executive should understand the entire submission after reading this page alone.</div>
+          <div class="dl-source">Source phase: Synthesized from all phases — write this last</div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="dl-title">Phase 1 — Macroeconomic Analysis</div>
+          <div class="dl-desc">The shared top-down macro view: GDP, CPI, Fed Funds Rate forecast, yield curve analysis, and economic regime identification. Include the Sensitivity Matrix heat map. State the Base Case, Bull Case, and Bear Case probabilities.</div>
+          <div class="dl-source">Source phase: Phase 1 worksheet + Excel Sensitivity Matrix</div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="dl-title">Phase 2 — Investment Policy Statements (All 3 Clients)</div>
+          <div class="dl-desc">One IPS per client, formatted consistently. Include the full RRTTLLU analysis and the hard constraint drawdown tripwire for each client. This section is the legal backbone — every subsequent decision must trace back to it.</div>
+          <div class="dl-source">Source phase: Phase 2 RRTTLLU worksheets</div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="dl-title">Phase 3 — Capital Market Expectations &amp; Asset Allocation (All 3 Clients)</div>
+          <div class="dl-desc">The CME Matrix with macro justifications, the Base Case and Bear Case correlation matrices, and the Solver-optimized portfolio weights for each client. Include the Sharpe Ratio for the optimal allocation and the explicit link between each CME assumption and a Phase 1 finding.</div>
+          <div class="dl-source">Source phase: Phase 3 Excel model — CME_Matrix and Client tabs</div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="dl-title">Phase 4 — Security Selection &amp; Derivative Hedge (All 3 Clients)</div>
+          <div class="dl-desc">The 10-security allocation table per client, followed by abbreviated investment theses (2–3 sentences each in the dossier; full theses in the appendix). The derivative hedge specification for each client: strategy, underlying, strike, expiration, contracts, estimated premium, and effective floor.</div>
+          <div class="dl-source">Source phase: Phase 4 investment thesis documents</div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="dl-title">Phase 5 — Quantitative Audit (All 3 Clients)</div>
+          <div class="dl-desc">The completed Audit Scorecard for all three clients side by side. Portfolio Beta, Standard Deviation, and Sharpe Ratio — Base Case and Bear Case. Hedge effectiveness table. Any IPS breaches disclosed with explanation. Overall verdict for each client: PASS or re-allocated to PASS.</div>
+          <div class="dl-source">Source phase: Phase 5 Audit Scorecards</div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="dl-title">Investment Recommendation Summary</div>
+          <div class="dl-desc">One page per client. Final recommended asset allocation, Sharpe Ratio, and one-paragraph narrative tying the macro thesis to the client outcome. State explicitly whether the portfolio is positioned for the Base Case and hedged for the Bear Case.</div>
+          <div class="dl-source">Source phase: Synthesized from Phases 3–5</div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="dl-title">Appendix A — AI Audit Log</div>
+          <div class="dl-desc">Full prompt-by-prompt log from all phases. Every AI interaction documented: prompt used, AI output, verification step, and team decision. Required for the Hallucination Clause compliance check.</div>
+          <div class="dl-source">Source phase: Accumulated across all phases</div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="dl-title">Appendix B — Full Investment Theses</div>
+          <div class="dl-desc">All 30 individual security investment theses (10 per client), formatted per the Phase 4 template. Betas, expected returns, macro connections, and IPS compliance notes included for every security.</div>
+          <div class="dl-source">Source phase: Phase 4 thesis documents</div>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  STEP 3 — THE IC MEMO                             -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">3</div>
+    <div>
+      <h2>The Investment Committee Memo — Required Format</h2>
+      <div class="section-sub">One memo per client — the formal written narrative accompanying the dossier</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <p>The IC Memo is not a summary of your Excel model — it is the written argument for why your portfolio decisions are correct and in the client's best interest. It must be readable by a non-quant executive. Each section has a specific job. A memo that buries the recommendation in section 4 will not score at the Exceptional level.</p>
+
+    <div class="memo-block">
+      <div class="memo-header">
+        <div class="mh-title">Investment Committee Memo — Template</div>
+        <div class="mh-meta">TO: Investment Committee &nbsp;|&nbsp; FROM: [Team Name] &nbsp;|&nbsp; DATE: [Date] &nbsp;|&nbsp; RE: 12-Month Portfolio Strategy — [Client Name]</div>
+      </div>
+
+      <div class="memo-section">
+        <div class="ms-num">Section 1</div>
+        <div class="ms-title">Executive Summary — The BLUF</div>
+        <p>State the 12-month investment stance in the first three lines. The Investment Committee should know your recommendation before reading any further. Include the client's target return, your macro outlook in one sentence, and whether the portfolio is overweight or underweight equities relative to the IPS baseline.</p>
+        <div class="ms-prompt">What to write: "We recommend a [growth / defensive / balanced] posture for [client name] over the next 12 months. Our Base Case macro thesis of [GDP, CPI, Rate forecast] supports [overweight / underweight] equities. The portfolio targets [X%] return with [Y%] standard deviation, fully hedged against a [Z%] drawdown scenario."</div>
+        <div class="ms-example"><strong>Worked example (Priya Mehta):</strong> We recommend a moderate-growth posture for Priya Mehta over the next 12 months. Our Base Case thesis — a soft landing with two Fed rate cuts — supports a 55% equity allocation and a duration play in fixed income. The portfolio targets 8.7% return with 12.3% standard deviation, hedged to a −9.8% maximum drawdown via a Protective Put on SPY.</div>
+      </div>
+
+      <div class="memo-section">
+        <div class="ms-num">Section 2</div>
+        <div class="ms-title">Macro Foundation &amp; CME Justification</div>
+        <p>Summarize the Phase 1 thesis in two paragraphs. Explain — in plain English — how the macro view translated into specific CME assumptions. For each major asset class, one sentence connecting the economic forecast to the expected return assumption. Do not re-paste the Sensitivity Matrix; reference it and explain its conclusion.</p>
+        <div class="ms-prompt">What to write: For each asset class, answer: "We forecast [X%] return for [asset class] because [specific Phase 1 finding — GDP / rates / sentiment / yield curve]."</div>
+      </div>
+
+      <div class="memo-section">
+        <div class="ms-num">Section 3</div>
+        <div class="ms-title">Portfolio Construction &amp; Client Fit</div>
+        <p>Explain the Solver-optimal allocation in the context of the client's IPS. This is where the Phase 3 math meets the Phase 2 constraints. State the final weights, the resulting Sharpe Ratio, and confirm each IPS constraint is satisfied. If the allocation required a trade-off (e.g., reducing equity to meet σ constraint), describe the trade-off explicitly.</p>
+        <div class="ms-prompt">What to write: "The Solver-optimized allocation of [weights] maximizes the Sharpe Ratio at [value] while satisfying the IPS constraints of [return target], [σ limit], and [drawdown limit]. The [equity / bond] overweight reflects our macro view that [specific reason]."</div>
+      </div>
+
+      <div class="memo-section">
+        <div class="ms-num">Section 4</div>
+        <div class="ms-title">Risk Analysis — Bear Case &amp; Hedge Defense</div>
+        <p>This is the most critical section for the compliance audience. State the Bear Case scenario (from the Phase 1 Red Zone), the unhedged portfolio loss, and the hedged loss after the Phase 4 derivative strategy. Confirm the hedged loss is within the IPS drawdown tripwire. Explain why you chose this specific hedge over the alternatives.</p>
+        <div class="ms-prompt">What to write: "Under our Bear Case scenario ([specific rates / sentiment inputs]), the unhedged portfolio would lose [X%]. The [strategy name] hedge on [underlying] reduces this to [Y%], satisfying the IPS drawdown limit of [Z%]. We chose [strategy] over [alternative] because [cost-benefit reason tied to client's IPS return target]."</div>
+        <div class="ms-example"><strong>Worked example (Priya Mehta):</strong> Under the Bear Case (6.0% Fed Funds / 45 Sentiment), the unhedged portfolio would lose −14.2%. The Protective Put on SPY (4 contracts, 5% OTM, 6-month expiry) reduces the maximum drawdown to −9.8%, satisfying Priya's IPS tripwire of −12%. We chose the Protective Put over a Covered Call because capping upside conflicts with Priya's 20-year growth mandate — the put preserves full upside participation at a premium cost of 1.44% of the equity sleeve.</div>
+      </div>
+
+      <div class="memo-section">
+        <div class="ms-num">Section 5</div>
+        <div class="ms-title">Investment Recommendation</div>
+        <p>Translate the macro thesis and portfolio construction into a clear, actionable recommendation. State the final asset allocation, the specific security positioning, and the stance relative to the IPS baseline. Close with one sentence stating what would cause the team to revise the recommendation — the "exit trigger" for the key positions.</p>
+        <div class="ms-prompt">What to write: Close with: "We would revise this recommendation toward [more defensive / more aggressive] if [specific macro trigger — e.g., 'the Fed signals a pause rather than cuts at the next FOMC meeting' or 'CPI re-accelerates above 4%']."</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  STEP 4 — ORAL PRESENTATION                       -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">4</div>
+    <div>
+      <h2>The Oral Presentation — Structure &amp; Timing</h2>
+      <div class="section-sub">15–20 minutes pitch + 5–10 minutes Q&amp;A · Professional attire required</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <p>The oral presentation is not a narrated slideshow. It is a live defense of analytical decisions made over an entire semester. The Investment Committee (your professor, peers, and potentially a guest) will interrupt, challenge, and push back. Your team's job is to respond with the same precision as the written submission, delivered with the confidence of an advisor who believes in the recommendation.</p>
+
+    <h3 class="sub">Suggested Timing — 18-Minute Pitch</h3>
+    <div class="timing-bar">
+      <div class="timing-segment ts-intro">
+        <div class="ts-label">Intro &amp; Clients</div>
+        <div class="ts-time">2 min</div>
+      </div>
+      <div class="timing-segment ts-macro">
+        <div class="ts-label">Macro Thesis</div>
+        <div class="ts-time">3 min</div>
+      </div>
+      <div class="timing-segment ts-port">
+        <div class="ts-label">Portfolio Strategy (3 clients)</div>
+        <div class="ts-time">7 min</div>
+      </div>
+      <div class="timing-segment ts-risk">
+        <div class="ts-label">Risk &amp; Audit</div>
+        <div class="ts-time">3 min</div>
+      </div>
+      <div class="timing-segment ts-rec">
+        <div class="ts-label">Recommendation</div>
+        <div class="ts-time">3 min</div>
+      </div>
+      <div class="timing-segment ts-qa">
+        <div class="ts-label">Q&amp;A — The Final Boss</div>
+        <div class="ts-time">10 min</div>
+      </div>
+    </div>
+
+    <h3 class="sub">Oral Presentation Rubric</h3>
+    <table class="rubric-table">
+      <thead>
+        <tr>
+          <th>Criteria</th>
+          <th class="gold">Weight</th>
+          <th>Exceptional</th>
+          <th>Developing</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Narrative Flow &amp; Clarity</strong><br><span style="font-size:11px; color:var(--gray);">Does the presentation tell a coherent story from macro thesis to client recommendation?</span></td>
+          <td class="weight-cell">30%</td>
+          <td class="exc">Compelling story arc — each section builds on the last. Complex concepts explained with confidence. No reading from slides.</td>
+          <td class="dev">Feels like a list of numbers. No cohesive transitions. Audience must choose between reading the slide or listening to the speaker.</td>
+        </tr>
+        <tr>
+          <td><strong>Defense of Strategy (Q&amp;A)</strong><br><span style="font-size:11px; color:var(--gray);">Can the team defend every number on the fly?</span></td>
+          <td class="weight-cell">30%</td>
+          <td class="exc">Handles tough questions with technical precision. Defends Bear Case and hedging logic without hesitation. Cites specific data sources from memory.</td>
+          <td class="dev">Unable to explain the logic behind numbers when questioned. Responses are vague or "I'm not sure." One member answers everything.</td>
+        </tr>
+        <tr>
+          <td><strong>Professional Presence</strong><br><span style="font-size:11px; color:var(--gray);">Do you present as advisors, not students?</span></td>
+          <td class="weight-cell">20%</td>
+          <td class="exc">Professional attire and demeanor. Speaks as "Advisors to the Committee." High eye contact. Refers to clients by name throughout.</td>
+          <td class="dev">Unprofessional demeanor, distracting body language, or visibly unprepared for a formal setting.</td>
+        </tr>
+        <tr>
+          <td><strong>Team Cohesion</strong><br><span style="font-size:11px; color:var(--gray);">Does the team show they worked together on the whole project?</span></td>
+          <td class="weight-cell">10%</td>
+          <td class="exc">Perfectly synchronized. Each member's section builds on the previous. Any member can answer any question about any phase.</td>
+          <td class="dev">Disjointed hand-offs. Clear that members worked in silos. Macro person cannot explain the portfolio; portfolio person cannot explain the macro.</td>
+        </tr>
+        <tr>
+          <td><strong>Visual Aid Efficacy</strong><br><span style="font-size:11px; color:var(--gray);">Do your slides enhance the argument or distract from it?</span></td>
+          <td class="weight-cell">10%</td>
+          <td class="exc">Slides illuminate the key data point per section. Visuals replace text walls. The committee can see the conclusion at a glance.</td>
+          <td class="dev">Text-wall slides. The audience must read slides instead of listening to the speaker. Sensitivity Matrix never shown.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  STEP 5 — THE Q&A FINAL BOSS                      -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">5</div>
+    <div>
+      <h2>The Q&amp;A — Preparing for the Final Boss</h2>
+      <div class="section-sub">30% of your oral grade · Any team member can be called on for any question</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <p>The Q&amp;A session is not a formality — it is the highest-weighted single component of the oral grade. The Investment Committee will play the role of the CIO and the Client simultaneously, testing both technical depth and fiduciary reasoning. Every team member must be able to answer questions about every phase, not just their own assigned section.</p>
+
+    <div class="callout">
+      <div class="callout-label">The Anti-Silo Test</div>
+      <p>If one student answers every technical question while others stay silent, the professor will direct a follow-up to a quiet team member: <em>"Student A explained the math — Student B, how does that math affect the client's actual lifestyle as defined in the IPS?"</em> Prepare to cross-explain each other's sections.</p>
+    </div>
+
+    <h3 class="sub">Representative Q&amp;A Questions by Category</h3>
+
+    <div class="qa-grid">
+      <div class="qa-card">
+        <div class="qa-head"><div class="qa-cat">Macroeconomic</div></div>
+        <div class="qa-body">
+          <div class="qa-q">"You assigned a 20% probability to your Bear Case. If CPI stays sticky above 4% for the next six months, does that probability increase — and how does that immediately change your tactical allocation?"</div>
+          <div class="qa-hint"><strong>What they're testing:</strong> Whether your scenarios are live and connected to your portfolio, or just a worksheet you filled out and forgot.</div>
+        </div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head"><div class="qa-cat">IPS &amp; Fiduciary Duty</div></div>
+        <div class="qa-body">
+          <div class="qa-q">"Your retiree client has high liquidity needs and low risk tolerance. If the market enters your Bear Case, do you sell depreciated equities to meet cash needs, or do you reduce lifestyle distributions?"</div>
+          <div class="qa-hint"><strong>What they're testing:</strong> Whether you are managing for the client's actual situation, not just for portfolio metrics in isolation.</div>
+        </div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head"><div class="qa-cat">Drawdown &amp; Compliance</div></div>
+        <div class="qa-body">
+          <div class="qa-q">"Your IPS states a maximum drawdown of −10%. Your initial stress test showed −14%. Walk me through the trade-offs you made when you re-allocated to get under that limit. What did you give up?"</div>
+          <div class="qa-hint"><strong>What they're testing:</strong> Whether you understand that fiduciary compliance has a cost — and whether you can articulate that cost specifically.</div>
+        </div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head"><div class="qa-cat">Security Selection</div></div>
+        <div class="qa-body">
+          <div class="qa-q">"Your stock selections have an average Beta of 1.2. In your Bear Case, you predicted a flight to quality. Why did you choose high-beta names if you are concerned about a recessionary scenario?"</div>
+          <div class="qa-hint"><strong>What they're testing:</strong> Consistency between your macro thesis, your security picks, and your risk metrics. A contradiction here is the silo error in live form.</div>
+        </div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head"><div class="qa-cat">Derivative Hedge</div></div>
+        <div class="qa-body">
+          <div class="qa-q">"You chose a Protective Put instead of a Covered Call or simply increasing your cash allocation. Compare the cost-benefit of the premium you paid versus those two alternatives."</div>
+          <div class="qa-hint"><strong>What they're testing:</strong> Whether you made a deliberate, client-specific choice or simply picked the first strategy you learned. Reference the client's return target and time horizon.</div>
+        </div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head"><div class="qa-cat">Sharpe Ratio Interpretation</div></div>
+        <div class="qa-body">
+          <div class="qa-q">"Your growth client has a higher Sharpe Ratio than your retiree client. Does that mean the growth portfolio is better managed?"</div>
+          <div class="qa-hint"><strong>What they're testing:</strong> Whether you understand that Sharpe Ratio reflects risk mandate, not management quality. The correct answer: a higher Sharpe in a growth portfolio is a reflection of different risk tolerance, not superior construction.</div>
+        </div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head"><div class="qa-cat">AI Audit</div></div>
+        <div class="qa-body">
+          <div class="qa-q">"I see in your AI Audit Log that you used an LLM to help generate your correlation matrix. Did the AI's suggestions conflict with your Phase 1 research at any point? How did the team resolve that conflict?"</div>
+          <div class="qa-hint"><strong>What they're testing:</strong> Whether the AI Audit Log reflects real critical thinking or was a compliance checkbox exercise. Reference a specific entry and the team's actual decision.</div>
+        </div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head"><div class="qa-cat">The Conviction Question</div></div>
+        <div class="qa-body">
+          <div class="qa-q">"If I gave you an additional $100,000 to invest for your mid-career client right now, and you had to put it into only one of the asset classes you researched — which one, and why?"</div>
+          <div class="qa-hint"><strong>What they're testing:</strong> Whether you have genuine conviction in your macro thesis or have been hedging every statement. Answer decisively, cite Phase 1, and connect it directly to the client's IPS.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  WORKED EXAMPLE — PRIYA BLUF                      -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">★</div>
+    <div>
+      <h2>Worked Example: Opening 30 Seconds for Priya Mehta</h2>
+      <div class="section-sub">Fictional client — illustrating how to open the oral presentation</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="client-card">
+      <div class="client-name">Priya Mehta</div>
+      <div class="client-role">Corporate Attorney · Age 39 · Moderate Growth · $500,000 AUM · 20-Year Horizon</div>
+      <div class="client-stats">
+        <div class="client-stat"><div class="stat-label">Base Case E(Rp)</div><div class="stat-value">8.7%</div></div>
+        <div class="client-stat"><div class="stat-label">Sharpe Ratio</div><div class="stat-value">0.47</div></div>
+        <div class="client-stat"><div class="stat-label">Portfolio Beta</div><div class="stat-value">0.61</div></div>
+        <div class="client-stat"><div class="stat-label">Bear Case Loss</div><div class="stat-value">−9.8% (hedged)</div></div>
+        <div class="client-stat"><div class="stat-label">IPS Tripwire</div><div class="stat-value">−12% ✓</div></div>
+        <div class="client-stat"><div class="stat-label">Hedge</div><div class="stat-value">Protective Put · SPY</div></div>
+      </div>
+    </div>
+
+    <div class="worked-example">
+      <span class="we-label">Opening statement — oral presentation</span>
+      <h3>How to open the Priya Mehta section (approximately 45 seconds)</h3>
+      <p style="font-size:13.5px; color:var(--navy); line-height:1.8; font-style:italic; border-left:3px solid var(--gold); padding-left:14px; margin-top:8px;">
+        "For Priya Mehta, our recommendation is a moderate-growth portfolio targeting 8.7% return with a Sharpe Ratio of 0.47. Our macro thesis — a soft landing with two Fed rate cuts over the next 12 months — supports a 55% equity overweight, concentrated in broad U.S. market exposure and financials, which stand to benefit from a steepening yield curve. We have fully stress-tested this portfolio against our Bear Case scenario. Even if rates stay elevated and consumer sentiment collapses, the maximum loss is −9.8% — well within Priya's IPS drawdown limit of −12%. The hedge that achieves that floor costs 1.44% of the equity sleeve — an insurance premium we believe is appropriate given her 20-year time horizon and her mandate to grow capital, not merely preserve it."
+      </p>
+      <p style="font-size:12px; color:var(--gray); margin-top:14px;"><strong>Why this works:</strong> The recommendation is stated in the first sentence. The macro link is explicit ("soft landing / rate cuts"). The Bear Case outcome is quantified. The hedge cost is acknowledged as a deliberate trade-off. The committee knows the answer before the next slide appears.</p>
+    </div>
+
+    <div class="warning-box">
+      <div class="warn-label">⚠ The "AI-ism" Red Flag</div>
+      <p>Avoid phrases like "in the ever-evolving macroeconomic landscape," "holistic approach to wealth management," or "robust risk-adjusted framework." These are signals that the memo or the oral script was generated by AI without editing. The Investment Committee will notice — and it will raise doubts about whether the team actually understands what they wrote.</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  FINAL CHECKLIST                                  -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">✓</div>
+    <div>
+      <h2>Phase 6 Final Submission Checklist</h2>
+      <div class="section-sub">Complete all items before presentation day</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <h3 class="sub" style="margin-top:0;">Written Submission — Technical Dossier</h3>
+    <ul class="checklist">
+      <li><div class="check-box"></div><span><strong>All nine dossier sections present</strong> — Executive Summary through Appendix B, in order, covering all three clients.</span></li>
+      <li><div class="check-box"></div><span><strong>IC Memo complete for all three clients</strong> — all five sections (BLUF, Macro, Portfolio, Risk, Recommendation) with the Bear Case hedge defense in Section 4.</span></li>
+      <li><div class="check-box"></div><span><strong>Numbers are internally consistent</strong> — the GDP forecast in Section 2 matches the CME Matrix in Section 4, which matches the σp in Section 6, which matches the drawdown in the scorecard. No orphaned numbers.</span></li>
+      <li><div class="check-box"></div><span><strong>All data sources cited</strong> — every beta, P/E, yield, return estimate, and option premium has a cited source. No AI-generated metrics without verification citations.</span></li>
+      <li><div class="check-box"></div><span><strong>AI Audit Log in Appendix A</strong> — complete with entries from all phases where AI was used.</span></li>
+      <li><div class="check-box"></div><span><strong>Full investment theses in Appendix B</strong> — all 30 securities (10 per client) in Phase 4 template format.</span></li>
+    </ul>
+
+    <h3 class="sub">Oral Presentation — Preparation</h3>
+    <ul class="checklist">
+      <li><div class="check-box"></div><span><strong>Full deck reviewed as a team</strong> — every team member has read every section. No one is surprised by a slide they didn't write.</span></li>
+      <li><div class="check-box"></div><span><strong>Opening BLUF rehearsed</strong> — the recommendation, macro link, Bear Case outcome, and hedge rationale delivered in under 60 seconds per client.</span></li>
+      <li><div class="check-box"></div><span><strong>Silo check passed</strong> — the macro thesis, security picks, σp, and hedge choice are consistent for each client. No contradictions across sections.</span></li>
+      <li><div class="check-box"></div><span><strong>All eight Q&amp;A categories prepared</strong> — each team member can answer questions from at least three different categories, not just their own assigned phase.</span></li>
+      <li><div class="check-box"></div><span><strong>Sharpe Ratio interpretation ready</strong> — team can explain why a higher Sharpe in the growth portfolio does not mean it is "better managed" than the retiree portfolio.</span></li>
+      <li><div class="check-box"></div><span><strong>Conviction question answered</strong> — team has a prepared, decisive answer to "if you had to put $100k in one asset class right now, which one and why?"</span></li>
+      <li><div class="check-box"></div><span><strong>Professional attire confirmed</strong> — business professional for all presenting team members.</span></li>
+    </ul>
+  </div>
+
+</div><!-- end body-wrap -->
+
+<div class="page-footer">
+  <span>BUS 331 · Investments · Endicott College</span> &nbsp;|&nbsp; Phase 6: The Final Pitch — Dossier &amp; Oral Defense &nbsp;|&nbsp; Fictional client (Priya Mehta) used for classroom illustration only
+</div>
+
+</body>
+</html>
