@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUS 331 — Phase 3: The Bridge | CME Matrix & Portfolio Optimization</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #0A1628;
+    --navy2:  #0D1E38;
+    --gold:   #C9A84C;
+    --gold2:  #E0BC6A;
+    --ice:    #D6E4F0;
+    --ice2:   #EBF3FA;
+    --white:  #FFFFFF;
+    --text:   #1A2332;
+    --muted:  #5A6A7E;
+    --light:  #F4F7FB;
+    --border: #CBD8E8;
+    --yellow: #FFF9CC;
+    --cream:  #FFFDE7;
+    --green:  #1E8449;
+    --red:    #C0392B;
+    --green-bg: #D4EDDA; --green-tx: #155724;
+    --red-bg:   #F8D7DA; --red-tx:   #721C24;
+    --amber-bg: #FFF3CD; --amber-tx: #856404;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--light);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ──────────────────────────────── */
+  .header {
+    background: var(--navy);
+    padding: 40px 48px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--gold);
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .header-kicker {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  .header-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,.55);
+    font-weight: 300;
+  }
+  .header-meta {
+    margin-top: 24px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    background: rgba(201,168,76,.15);
+    border: 1px solid rgba(201,168,76,.35);
+    color: var(--gold2);
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 2px;
+  }
+
+  /* ── WRAPPER ─────────────────────────────── */
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 48px 28px 80px; }
+
+  /* ── SECTION HEADINGS ────────────────────── */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 52px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--gold);
+  }
+  .section-num {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: var(--navy);
+    padding: 4px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  /* ── BODY TEXT ───────────────────────────── */
+  p { margin-bottom: 14px; }
+  .objective {
+    font-size: 15px;
+    color: var(--muted);
+    font-style: italic;
+    background: var(--ice2);
+    border-left: 3px solid var(--gold);
+    padding: 12px 16px;
+    margin-bottom: 22px;
+    border-radius: 0 3px 3px 0;
+  }
+  strong { color: var(--navy); }
+  .label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 22px 0 8px;
+    display: block;
+  }
+
+  /* ── CALLOUTS ────────────────────────────── */
+  .callout {
+    border-top: 3px solid var(--gold);
+    background: var(--ice2);
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 0 0 4px 4px;
+  }
+  .callout .c-label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .callout p { font-size: 14px; margin-bottom: 6px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout.warn { background: var(--amber-bg); border-top-color: #E67E22; }
+  .callout.warn .c-label { color: #E67E22; }
+  .callout.danger { background: var(--red-bg); border-top-color: var(--red); }
+  .callout.danger .c-label { color: var(--red); }
+
+  /* ── TABLES ──────────────────────────────── */
+  .tbl-wrap { overflow-x: auto; margin: 16px 0 24px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: var(--navy); }
+  thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: 600;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:nth-child(odd)  { background: var(--light); }
+  tbody tr:nth-child(even) { background: var(--white); }
+  tbody td { padding: 10px 14px; vertical-align: top; line-height: 1.5; }
+  .td-key { font-weight: 700; color: var(--navy); font-size: 13px; }
+  .td-ice { background: var(--ice2) !important; }
+  .td-yellow { background: var(--yellow) !important; font-weight: 600; }
+  .td-cream { background: var(--cream) !important; font-family: 'Source Code Pro', monospace; font-size: 12px; }
+  .td-green { background: var(--green-bg) !important; color: var(--green-tx); font-weight: 700; }
+  .td-red   { background: var(--red-bg)   !important; color: var(--red-tx);   font-weight: 700; }
+  .td-amber { background: var(--amber-bg) !important; color: var(--amber-tx); font-weight: 700; }
+  .td-center { text-align: center; }
+  .td-mono { font-family: 'Source Code Pro', monospace; font-size: 12px; color: var(--navy); }
+
+  /* ── FORMULA BLOCK ───────────────────────── */
+  .formula-block {
+    background: var(--navy);
+    color: var(--gold2);
+    font-family: 'Source Code Pro', monospace;
+    font-size: 13px;
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin: 12px 0 20px;
+    line-height: 2;
+    overflow-x: auto;
+  }
+  .formula-block .comment {
+    color: rgba(255,255,255,.4);
+    font-size: 11px;
+  }
+
+  /* ── STEP LIST ───────────────────────────── */
+  .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+  .step-list li {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14.5px;
+    align-items: flex-start;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    background: var(--navy);
+    color: var(--gold);
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  /* ── BULLET LIST ─────────────────────────── */
+  ul.req { list-style: none; padding: 0; margin: 0 0 20px; }
+  ul.req li {
+    padding: 6px 0 6px 20px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    font-size: 14.5px;
+  }
+  ul.req li:last-child { border-bottom: none; }
+  ul.req li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 15px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* ── TWO-COL LAYOUT ──────────────────────── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0 24px; }
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .card-head {
+    background: var(--navy);
+    color: var(--white);
+    padding: 10px 16px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .card-body { padding: 14px 16px; background: var(--white); font-size: 13.5px; }
+  .card-body p { margin-bottom: 6px; font-size: 13.5px; }
+  .card-body p:last-child { margin-bottom: 0; }
+
+  /* ── WORKED EXAMPLE ──────────────────────── */
+  .example-box {
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 20px 0 28px;
+  }
+  .example-head {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 10px 18px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .example-body { padding: 20px; background: var(--white); }
+  .example-body p { font-size: 14px; margin-bottom: 10px; }
+
+  /* ── CLIENT BADGE ────────────────────────── */
+  .client-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .client-badge span { color: var(--gold); font-family: 'Source Code Pro', monospace; font-size: 10px; letter-spacing: 1px; }
+
+  /* ── PASS/FAIL BADGES ────────────────────── */
+  .verdict {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 12px;
+    font-family: 'Source Code Pro', monospace;
+    letter-spacing: 1px;
+  }
+  .verdict.pass { background: var(--green-bg); color: var(--green-tx); }
+  .verdict.fail { background: var(--red-bg);   color: var(--red-tx);   }
+
+  /* ── SOLVER STEPS ────────────────────────── */
+  .solver-grid {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 16px 0 24px;
+    font-size: 13.5px;
+  }
+  .solver-grid .sg-label {
+    background: var(--navy);
+    color: var(--gold);
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .solver-grid .sg-val {
+    background: var(--white);
+    padding: 11px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Source Code Pro', monospace;
+    font-size: 13px;
+    color: var(--navy);
+  }
+  .solver-grid .sg-label:last-of-type,
+  .solver-grid .sg-val:last-of-type { border-bottom: none; }
+
+  /* ── CHECKLIST ───────────────────────────── */
+  .checklist { margin: 0 0 24px; }
+  .check-item {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    align-items: flex-start;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 18px; height: 18px;
+    border: 2px solid var(--gold);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── COVARIANCE MINI-MATRIX ──────────────── */
+  .cov-matrix {
+    display: grid;
+    grid-template-columns: 120px repeat(3, 100px);
+    gap: 2px;
+    margin: 16px 0 24px;
+    font-size: 13px;
+    font-family: 'Source Code Pro', monospace;
+  }
+  .cov-matrix .cm-head {
+    background: var(--navy);
+    color: var(--white);
+    padding: 9px 10px;
+    text-align: center;
+    font-size: 11px;
+    border-radius: 2px;
+  }
+  .cov-matrix .cm-row-label {
+    background: var(--navy);
+    color: var(--white);
+    padding: 9px 10px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    border-radius: 2px;
+  }
+  .cov-matrix .cm-diag {
+    background: var(--ice);
+    color: var(--navy);
+    padding: 9px 10px;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 2px;
+  }
+  .cov-matrix .cm-inp {
+    background: var(--yellow);
+    color: #0000CC;
+    padding: 9px 10px;
+    text-align: center;
+    border-radius: 2px;
+  }
+  .cov-matrix .cm-mirror {
+    background: var(--cream);
+    color: var(--navy);
+    padding: 9px 10px;
+    text-align: center;
+    border-radius: 2px;
+    font-style: italic;
+    font-size: 11px;
+  }
+
+  /* ── FOOTER ──────────────────────────────── */
+  .footer {
+    background: var(--navy);
+    color: rgba(255,255,255,.4);
+    font-size: 12px;
+    text-align: center;
+    padding: 16px;
+    margin-top: 60px;
+  }
+
+  /* ── PRINT ───────────────────────────────── */
+  @media print {
+    body { background: white; }
+    .wrap { padding: 0 12px; }
+    .header { padding: 24px 28px; }
+    .header-title { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-kicker">BUS 331 &mdash; Investments &nbsp;|&nbsp; Endicott College</div>
+  <div class="header-title">Phase 3: The Bridge<br>CME Matrix &amp; Portfolio Optimization</div>
+  <div class="header-sub">From Macro Thesis to Optimized Asset Allocation</div>
+  <div class="header-meta">
+    <div class="meta-pill">Phase 3 of 6</div>
+    <div class="meta-pill">Excel Workbook</div>
+    <div class="meta-pill">Solver Required</div>
+    <div class="meta-pill">Fictional Client — Classroom Use</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- OVERVIEW -->
+  <div class="section-head">
+    <div class="section-num">Overview</div>
+    <div class="section-title">What Phase 3 Does</div>
+  </div>
+
+  <p>Phase 1 told you <em>what the economy is doing</em>. Phase 2 told you <em>what your client needs</em>. Phase 3 connects those two things mathematically. You convert your macro thesis into a set of return and risk assumptions for each asset class — the <strong>Capital Market Expectations (CME) Matrix</strong> — and then use Excel Solver to find the portfolio weights that maximize the Sharpe Ratio while staying within each client's IPS constraints.</p>
+
+  <div class="callout warn">
+    <div class="c-label">&#8594; The Connection Rule</div>
+    <p>Your CME Matrix numbers must be <strong>consistent with your Phase 1 macro thesis</strong>. If Phase 1 predicts high inflation, your Fixed Income expected return must be lower (bond prices fall as yields rise). If Phase 1 predicts a soft landing, equity returns should reflect moderate earnings growth. Graders will cross-check Phase 1 against Phase 3 directly.</p>
+  </div>
+
+  <!-- FICTIONAL CLIENT -->
+  <div class="section-head">
+    <div class="section-num">Client Context</div>
+    <div class="section-title">Worked Example — Priya Mehta (Fictional)</div>
+  </div>
+
+  <div class="client-badge">
+    <span>FICTIONAL CLIENT</span>
+    Priya Mehta &mdash; Corporate Attorney, Age 39
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>IPS Parameter</th><th>Value</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="td-key">Risk Aversion (A)</td><td>3.5</td><td>Phase 2 IPS — moderate risk tolerance</td></tr>
+        <tr><td class="td-key">Required Return E(R)</td><td>8.5%</td><td>Phase 2 IPS — 20-year growth horizon</td></tr>
+        <tr><td class="td-key">Max Standard Deviation (σ)</td><td>16.0%</td><td>Phase 2 IPS — acceptable volatility ceiling</td></tr>
+        <tr><td class="td-key">Max Drawdown (Tripwire)</td><td>&minus;12.0%</td><td>Phase 2 IPS — mandate breach threshold</td></tr>
+        <tr><td class="td-key">Time Horizon</td><td>20 years</td><td>Phase 2 IPS — retirement planning goal</td></tr>
+        <tr><td class="td-key">Phase 1 Macro Regime</td><td>Late-Cycle / Base Case: Soft Landing</td><td>Phase 1 team thesis</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 1: CME MATRIX -->
+  <div class="section-head">
+    <div class="section-num">Section 1</div>
+    <div class="section-title">Building the CME Matrix</div>
+  </div>
+
+  <div class="objective">The CME Matrix is a table of expected returns and standard deviations for each asset class under your Base Case macro scenario. It is the mathematical translation of your Phase 1 thesis.</div>
+
+  <p>The workbook has <strong>two CME Matrix tabs</strong> — one for the Base Case and one for the Bear Case. You must complete both. The Base Case drives your Solver optimization. The Bear Case is used in the Phase 5 stress test.</p>
+
+  <span class="label">Step 1 — Enter asset class assumptions</span>
+  <p>For each asset class, enter the <strong>expected annual return E(R)</strong> and <strong>standard deviation (σ)</strong> under your Base Case. These are not guesses — every number must be sourced:</p>
+  <ul class="req">
+    <li><strong>U.S. Equities:</strong> Use FactSet @ECO consensus GDP and earnings growth to anchor your equity return. Historical average: 8–10% nominal, but adjust for your macro view.</li>
+    <li><strong>Fixed Income:</strong> Current yield on 10-Year Treasury is a strong anchor. In a Late-Cycle environment with rates plateauing, expected bond returns are typically 4–6%.</li>
+    <li><strong>Cash / Equivalents:</strong> Use the current Fed Funds Rate or 3-Month T-Bill yield (FRED: TB3MS). Cash return is stable but opportunity cost rises in bull markets.</li>
+  </ul>
+
+  <span class="label">Base Case CME Matrix — Priya Mehta (Fictional Example)</span>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Asset Class</th>
+          <th>E(R) — Student Input</th>
+          <th>σ — Student Input</th>
+          <th>Source / Phase 1 Justification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">U.S. Equities</td>
+          <td class="td-yellow td-center">8.5%</td>
+          <td class="td-yellow td-center">15.0%</td>
+          <td>FactSet @ECO GDP consensus 2.1%; soft landing supports moderate earnings growth of ~7–8%; add 1–2% dividend yield</td>
+        </tr>
+        <tr>
+          <td class="td-key">Fixed Income</td>
+          <td class="td-yellow td-center">4.5%</td>
+          <td class="td-yellow td-center">5.0%</td>
+          <td>10-Year Treasury yield ≈ 4.3% (FRED: DGS10); spread compression expected in soft landing; duration ≈ 7 years</td>
+        </tr>
+        <tr>
+          <td class="td-key">Cash / Equiv.</td>
+          <td class="td-yellow td-center">2.5%</td>
+          <td class="td-yellow td-center">0.5%</td>
+          <td>FRED TB3MS ≈ 2.4%; Fed expected to cut modestly over 12 months per CME FedWatch</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="c-label">&#9432; Yellow Cells = Student Input</div>
+    <p>In your Excel workbook, <strong>yellow cells</strong> are student inputs (blue text). <strong>Cream cells</strong> are formulas — do not edit them. Every yellow cell in the CME Matrix requires a source citation in the adjacent justification column.</p>
+  </div>
+
+  <!-- SECTION 2: CORRELATION MATRIX -->
+  <div class="section-head">
+    <div class="section-num">Section 2</div>
+    <div class="section-title">The Correlation Matrix</div>
+  </div>
+
+  <div class="objective">Correlation measures how much two asset classes move together. It is the key input that drives diversification — the lower the correlation, the more the portfolio benefits from holding both assets.</div>
+
+  <p>Your workbook has a 3×3 correlation matrix. The <strong>diagonal is always 1.00</strong> (each asset is perfectly correlated with itself). The <strong>upper triangle</strong> is student input. The <strong>lower triangle auto-mirrors</strong> the upper triangle using formulas — never enter numbers there directly.</p>
+
+  <span class="label">Correlation Matrix Layout</span>
+  <div class="cov-matrix">
+    <div class="cm-head"></div>
+    <div class="cm-head">Equities</div>
+    <div class="cm-head">Fixed Inc.</div>
+    <div class="cm-head">Cash</div>
+    <div class="cm-row-label">Equities</div>
+    <div class="cm-diag">1.00</div>
+    <div class="cm-inp">ρ₁₂ = ?</div>
+    <div class="cm-inp">ρ₁₃ = ?</div>
+    <div class="cm-row-label">Fixed Inc.</div>
+    <div class="cm-mirror">= ρ₁₂</div>
+    <div class="cm-diag">1.00</div>
+    <div class="cm-inp">ρ₂₃ = ?</div>
+    <div class="cm-row-label">Cash</div>
+    <div class="cm-mirror">= ρ₁₃</div>
+    <div class="cm-mirror">= ρ₂₃</div>
+    <div class="cm-diag">1.00</div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-head">Base Case Correlations</div>
+      <div class="card-body">
+        <p><strong>Equities / Fixed Income (ρ₁₂):</strong> Historically –0.20 to +0.20. In a soft landing environment, typically slightly negative as bonds provide a modest hedge to equities.</p>
+        <p><strong>Equities / Cash (ρ₁₃):</strong> Near zero (0.00 to 0.05). Cash is uncorrelated with market returns.</p>
+        <p><strong>Fixed Income / Cash (ρ₂₃):</strong> Low positive (0.10 to 0.25). Both are rate-sensitive but cash has near-zero duration.</p>
+        <p style="margin-top:8px; font-size:12px; color:var(--muted);">Source: BKM Exhibit 7.4 or FactSet @CORR screen</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">Bear Case Correlations ⚠</div>
+      <div class="card-body">
+        <p><strong>Critical Rule:</strong> In a Bear Case (market panic), correlations between risky asset classes converge toward 1.0. Diversification breaks down exactly when you need it most.</p>
+        <p><strong>Equities / Fixed Income:</strong> Can shift from –0.20 to +0.70 or higher during a crisis (investors sell everything for cash).</p>
+        <p><strong>Equities / Cash:</strong> Remains near zero — cash is a true safe haven.</p>
+        <p style="margin-top:8px; font-size:13px; color:var(--red); font-weight:600;">This is why your Bear Case Sharpe Ratio is always lower than Base Case.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: PORTFOLIO σ FORMULA -->
+  <div class="section-head">
+    <div class="section-num">Section 3</div>
+    <div class="section-title">Portfolio Variance &amp; Standard Deviation</div>
+  </div>
+
+  <div class="objective">The portfolio standard deviation is not the weighted average of individual σ values. It must account for all pairwise correlations between asset classes. This is the core of Modern Portfolio Theory.</div>
+
+  <p>For a 3-asset portfolio with weights w₁, w₂, w₃ and standard deviations σ₁, σ₂, σ₃, the portfolio variance is:</p>
+
+  <div class="formula-block">
+σ²<sub>p</sub> = w₁²σ₁² + w₂²σ₂² + w₃²σ₃²<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ 2·w₁·w₂·ρ₁₂·σ₁·σ₂<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ 2·w₁·w₃·ρ₁₃·σ₁·σ₃<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ 2·w₂·w₃·ρ₂₃·σ₂·σ₃<br>
+<br>
+σ<sub>p</sub> = SQRT(σ²<sub>p</sub>)<br>
+<br>
+<span class="comment">-- This formula is already built into the cream cells in your workbook.</span><br>
+<span class="comment">-- It pulls weights from Section 3, σ from Section 1, ρ from Section 2.</span><br>
+<span class="comment">-- Do NOT hard-code numbers — the cells must update when you change inputs.</span>
+  </div>
+
+  <p>The workbook calculates portfolio σ and the Sharpe Ratio automatically once you enter the weights. You do not need to build a separate covariance matrix table — the formula above handles all the pairwise terms directly.</p>
+
+  <div class="callout warn">
+    <div class="c-label">&#9888; The 262% Error</div>
+    <p>The most common Phase 3 mistake is entering returns as whole numbers (e.g., 8.5 instead of 0.085) in the CME Matrix. This causes the GDP-style formula to produce nonsensical results like 262% growth. Always use <strong>decimal format</strong>: 8.5% = 0.085 in Excel formula cells. Yellow input cells are pre-formatted to display as % — enter 0.085 and it will show 8.5%.</p>
+  </div>
+
+  <!-- SECTION 4: SOLVER OPTIMIZATION -->
+  <div class="section-head">
+    <div class="section-num">Section 4</div>
+    <div class="section-title">Solver Optimization — Maximum Sharpe Ratio</div>
+  </div>
+
+  <div class="objective">Excel Solver finds the portfolio weights that maximize the Sharpe Ratio — the highest return per unit of risk — subject to each client's IPS constraints. Every client will produce a different optimal allocation because their constraints differ.</div>
+
+  <span class="label">What you need before running Solver</span>
+  <ul class="req">
+    <li>CME Matrix fully filled in (Section 1 and Section 2 complete)</li>
+    <li>Risk-Free Rate entered (FRED TB3MS — 3-Month T-Bill yield)</li>
+    <li>IPS max σ and max drawdown limits from Phase 2 for this client</li>
+    <li>Solver add-in enabled: <strong>File → Options → Add-ins → Excel Add-ins → Solver Add-in ✓</strong></li>
+  </ul>
+
+  <span class="label">Solver Setup — Step by Step</span>
+  <div class="solver-grid">
+    <div class="sg-label">Set Objective</div>
+    <div class="sg-val">Sharpe Ratio cell (col I, client's weight row) &nbsp;→&nbsp; <strong>MAX</strong></div>
+    <div class="sg-label">By Changing</div>
+    <div class="sg-val">w₁, w₂, w₃ — the three weight cells (cols C, D, E for that client's row)</div>
+    <div class="sg-label">Subject To</div>
+    <div class="sg-val">w₁ + w₂ + w₃ = 1 &nbsp;&nbsp;(weights sum to 100%)</div>
+    <div class="sg-label"></div>
+    <div class="sg-val">w₁ ≥ 0, w₂ ≥ 0, w₃ ≥ 0 &nbsp;&nbsp;(no short-selling)</div>
+    <div class="sg-label"></div>
+    <div class="sg-val">Portfolio σ ≤ IPS max σ &nbsp;&nbsp;(volatility constraint from Phase 2)</div>
+    <div class="sg-label">Solving Method</div>
+    <div class="sg-val"><strong>GRG Nonlinear</strong> &nbsp;(required for Sharpe Ratio — it is a non-linear objective)</div>
+  </div>
+
+  <ol class="step-list">
+    <li><div class="step-num">1</div><div>Open the Excel CME Matrix workbook. Go to <strong>Data → Solver</strong>.</div></li>
+    <li><div class="step-num">2</div><div>In "Set Objective," click the Sharpe Ratio cell for your client (Section 3, column I). Select <strong>Max</strong>.</div></li>
+    <li><div class="step-num">3</div><div>In "By Changing Variable Cells," select the three weight cells (w₁, w₂, w₃) for that client's row.</div></li>
+    <li><div class="step-num">4</div><div>Click <strong>Add</strong> three times to set constraints: (1) weights = 1, (2) all weights ≥ 0, (3) portfolio σ ≤ IPS max σ.</div></li>
+    <li><div class="step-num">5</div><div>Select <strong>GRG Nonlinear</strong> as the solving method. Click <strong>Solve</strong>.</div></li>
+    <li><div class="step-num">6</div><div>When Solver returns a solution, select <strong>"Keep Solver Solution"</strong> and click OK. The weights now reflect the optimal allocation.</div></li>
+    <li><div class="step-num">7</div><div>Record the optimal weights, portfolio E(R), portfolio σ, and Sharpe Ratio. These carry forward into Phase 4 and Phase 5.</div></li>
+  </ol>
+
+  <div class="callout danger">
+    <div class="c-label">&#9888; Hard-Coded Numbers = Zero Points</div>
+    <p>If a grader changes any input cell in your CME Matrix and the Sharpe Ratio, portfolio σ, and E(R) cells <strong>do not update</strong>, your model is hard-coded. This is the primary grading red flag for Phase 3. Every result cell must be a live formula — never type a calculated result directly into a cell.</p>
+  </div>
+
+  <!-- SECTION 5: WORKED EXAMPLE -->
+  <div class="section-head">
+    <div class="section-num">Section 5</div>
+    <div class="section-title">Worked Example — Priya Mehta Base vs. Bear Case</div>
+  </div>
+
+  <div class="example-box">
+    <div class="example-head">&#9733; Base Case — Solver Output (Fictional)</div>
+    <div class="example-body">
+      <p>After running Solver with the Base Case CME Matrix inputs above, the optimal portfolio for Priya Mehta (A = 3.5, max σ = 16%, E(R) target = 8.5%) is:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Asset Class</th><th>Weight</th><th>$ Allocation</th><th>E(R) Contribution</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-key">U.S. Equities</td>
+              <td class="td-cream td-center">72.0%</td>
+              <td class="td-cream td-center">$360,000</td>
+              <td class="td-cream td-center">6.12%</td>
+            </tr>
+            <tr>
+              <td class="td-key">Fixed Income</td>
+              <td class="td-cream td-center">22.0%</td>
+              <td class="td-cream td-center">$110,000</td>
+              <td class="td-cream td-center">0.99%</td>
+            </tr>
+            <tr>
+              <td class="td-key">Cash / Equiv.</td>
+              <td class="td-cream td-center">6.0%</td>
+              <td class="td-cream td-center">$30,000</td>
+              <td class="td-cream td-center">0.15%</td>
+            </tr>
+            <tr>
+              <td class="td-key" style="border-top:2px solid var(--gold)">Portfolio Total</td>
+              <td class="td-ice td-center" style="border-top:2px solid var(--gold); font-weight:700">100.0%</td>
+              <td class="td-ice td-center" style="border-top:2px solid var(--gold); font-weight:700">$500,000</td>
+              <td class="td-ice td-center" style="border-top:2px solid var(--gold); font-weight:700">7.26%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tbl-wrap" style="margin-top:16px">
+        <table>
+          <thead><tr><th>Metric</th><th>Value</th><th>IPS Limit</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="td-key">Portfolio σ</td>
+              <td class="td-cream td-center">11.2%</td>
+              <td class="td-center">≤ 16.0%</td>
+              <td class="td-green td-center">✓ PASS</td>
+            </tr>
+            <tr>
+              <td class="td-key">Sharpe Ratio</td>
+              <td class="td-cream td-center">0.43</td>
+              <td class="td-center">Maximize</td>
+              <td class="td-green td-center">✓ Optimal</td>
+            </tr>
+            <tr>
+              <td class="td-key">E(R)</td>
+              <td class="td-cream td-center">7.26%</td>
+              <td class="td-center">≥ 8.5%</td>
+              <td class="td-amber td-center">⚠ Below target</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:12px; font-size:13px; color:var(--muted);">Note: The E(R) of 7.26% falls slightly below Priya's 8.5% target. The team should document this shortfall and justify it — the σ constraint (16%) is preventing a more aggressive allocation. This is a legitimate trade-off, not an error. The Phase 3 grade rewards honest acknowledgment of constraint trade-offs.</p>
+    </div>
+  </div>
+
+  <div class="example-box">
+    <div class="example-head">&#9733; Bear Case — Stress Preview (Fictional)</div>
+    <div class="example-body">
+      <p>Using the Bear Case CME Matrix (equities –18%, bonds –4.5%, cash +2.5%) and updated correlations (equity/bond correlation rises to +0.65), the same 72/22/6 portfolio produces:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Asset Class</th><th>Weight</th><th>Bear Case E(R)</th><th>Contribution</th><th>$ P&amp;L</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-key">U.S. Equities</td>
+              <td class="td-center">72.0%</td>
+              <td class="td-red td-center">–18.0%</td>
+              <td class="td-red td-center">–12.96%</td>
+              <td class="td-red td-center">($64,800)</td>
+            </tr>
+            <tr>
+              <td class="td-key">Fixed Income</td>
+              <td class="td-center">22.0%</td>
+              <td class="td-red td-center">–4.5%</td>
+              <td class="td-red td-center">–0.99%</td>
+              <td class="td-red td-center">($4,950)</td>
+            </tr>
+            <tr>
+              <td class="td-key">Cash / Equiv.</td>
+              <td class="td-center">6.0%</td>
+              <td class="td-green td-center">+2.5%</td>
+              <td class="td-green td-center">+0.15%</td>
+              <td class="td-green td-center">$750</td>
+            </tr>
+            <tr>
+              <td class="td-key" style="border-top:2px solid var(--gold)">Portfolio Total</td>
+              <td class="td-center" style="border-top:2px solid var(--gold)"></td>
+              <td class="td-red td-center" style="border-top:2px solid var(--gold); font-weight:700">–13.8%</td>
+              <td class="td-red td-center" style="border-top:2px solid var(--gold); font-weight:700">–13.80%</td>
+              <td class="td-red td-center" style="border-top:2px solid var(--gold); font-weight:700">($69,000)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:16px; margin-top:16px; padding:12px 16px; background:var(--red-bg); border-left:4px solid var(--red); border-radius:3px;">
+        <div>
+          <div style="font-weight:700; color:var(--red-tx); font-size:14px;">&#10007; FAILS IPS Tripwire</div>
+          <div style="color:var(--red-tx); font-size:13px;">Bear Case return = –13.80% &nbsp;|&nbsp; IPS limit = –12.0% &nbsp;|&nbsp; Breach: –1.80%</div>
+        </div>
+        <span class="verdict fail">FAIL</span>
+      </div>
+
+      <p style="margin-top:14px; font-size:13.5px;">This portfolio <strong>fails Priya's Tripwire in the Bear Case</strong>. In Phase 5, the team will need to re-allocate — typically by reducing equity exposure or adding a derivative hedge. For example, shifting to 60% equities / 28% bonds / 12% cash drops the Bear Case return to approximately –11.6%, which passes the –12% limit.</p>
+
+      <p style="font-size:13px; color:var(--muted); margin-top:8px;">Note: This Bear Case calculation is a preview only. The full stress test, re-allocation, and final risk metrics are completed in Phase 5. Phase 3 requires you to <em>build</em> the Bear Case CME Matrix — Phase 5 requires you to <em>act on it</em>.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 6: DELIVERABLES -->
+  <div class="section-head">
+    <div class="section-num">Section 6</div>
+    <div class="section-title">Phase 3 Deliverables &amp; Submission Checklist</div>
+  </div>
+
+  <span class="label">Required Deliverables</span>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Deliverable</th><th>Format</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="td-key">CME Matrix — Base Case</td>
+          <td>Excel Tab</td>
+          <td>Expected returns, standard deviations, and correlations for all 3 asset classes. Every input cell has a source citation. Formula cells auto-calculate portfolio E(R), σ, and Sharpe Ratio.</td>
+        </tr>
+        <tr>
+          <td class="td-key">CME Matrix — Bear Case</td>
+          <td>Excel Tab</td>
+          <td>Separate tab with Bear Case assumptions. Must show higher correlations between risky asset classes. Cite Phase 1 Bear Case scenario table as source.</td>
+        </tr>
+        <tr>
+          <td class="td-key">Solver Output — 3 Clients</td>
+          <td>Excel Section</td>
+          <td>Optimal weights for each client printed from Solver in Section 3 of the workbook. Must show the Sharpe Ratio, portfolio σ, and IPS constraint status (PASS/FAIL cell).</td>
+        </tr>
+        <tr>
+          <td class="td-key">IPS Constraint Check</td>
+          <td>Excel Section</td>
+          <td>Section 5 of the workbook: IPS max σ entered for each client, portfolio σ linked from Section 3, PASS/FAIL verdict auto-calculated. Any failing client must be noted.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <span class="label">Pre-Submission Checklist</span>
+  <div class="checklist">
+    <div class="check-item"><div class="check-box"></div><div>CME Matrix Base Case complete — all yellow input cells filled with sourced values</div></div>
+    <div class="check-item"><div class="check-box"></div><div>CME Matrix Bear Case complete — correlations are <em>higher</em> than Base Case (converging toward 1.0)</div></div>
+    <div class="check-item"><div class="check-box"></div><div>Diagonal of correlation matrix = 1.00 for all three asset classes</div></div>
+    <div class="check-item"><div class="check-box"></div><div>Lower triangle of correlation matrix uses mirror formulas — not manually entered</div></div>
+    <div class="check-item"><div class="check-box"></div><div>Risk-Free Rate (Rf) entered — sourced from FRED TB3MS</div></div>
+    <div class="check-item"><div class="check-box"></div><div>Solver run for all three clients — GRG Nonlinear method used</div></div>
+    <div class="check-item"><div class="check-box"></div><div>Weights sum to 100% for each client — total cell shows green</div></div>
+    <div class="check-item"><div class="check-box"></div><div>Portfolio σ ≤ IPS max σ for each client — IPS Constraint Check section complete</div></div>
+    <div class="check-item"><div class="check-box"></div><div>Formula cells update when any input is changed — no hard-coded numbers</div></div>
+    <div class="check-item"><div class="check-box"></div><div>CME Matrix numbers are consistent with Phase 1 macro thesis (graders cross-check)</div></div>
+    <div class="check-item"><div class="check-box"></div><div>Macro justification column completed for each asset class input</div></div>
+    <div class="check-item"><div class="check-box"></div><div>AI Audit Log updated for any AI-assisted inputs or formula debugging</div></div>
+  </div>
+
+  <!-- GRADING FLAGS -->
+  <div class="section-head">
+    <div class="section-num">Grading</div>
+    <div class="section-title">Common Errors &amp; Grading Red Flags</div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Red Flag</th><th>What It Looks Like</th><th>How to Avoid It</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="td-key td-red">Hard-Coded Model</td>
+          <td>Changing an input cell doesn't update any output — graders test this in 30 seconds</td>
+          <td>Every output cell must contain a formula referencing input cells, not typed numbers</td>
+        </tr>
+        <tr>
+          <td class="td-key td-amber">Decimal Error (262%)</td>
+          <td>Portfolio E(R) shows 850% or portfolio σ shows 1,500%</td>
+          <td>Enter all returns as decimals: 8.5% = 0.085. Format cells as % so they display correctly</td>
+        </tr>
+        <tr>
+          <td class="td-key td-red">Bear Case Correlations Too Low</td>
+          <td>Bear Case correlation matrix is identical to or lower than Base Case</td>
+          <td>Correlations must increase in Bear Case — this is a real-world phenomenon Graders know</td>
+        </tr>
+        <tr>
+          <td class="td-key td-amber">Phase 1 Inconsistency</td>
+          <td>Phase 1 says "high inflation" but CME Matrix shows bond returns unchanged at 4.5%</td>
+          <td>Pull up your Phase 1 scenario table while filling in the CME Matrix and check every row</td>
+        </tr>
+        <tr>
+          <td class="td-key td-red">Wrong Solver Method</td>
+          <td>Solver finds a suboptimal solution or returns an error</td>
+          <td>Always use GRG Nonlinear for Sharpe Ratio maximization — not Simplex LP</td>
+        </tr>
+        <tr>
+          <td class="td-key td-amber">Missing IPS Constraint</td>
+          <td>Solver runs without the σ ≤ IPS max σ constraint — allocation violates mandate</td>
+          <td>Add the σ constraint in Solver before clicking Solve. The IPS Constraint Check section flags violations</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- end wrap -->
+
+<div class="footer">
+  BUS 331 &nbsp;&middot;&nbsp; Investments &nbsp;&middot;&nbsp; Endicott College &nbsp;&nbsp;|&nbsp;&nbsp;
+  Phase 3: The Bridge — CME Matrix &amp; Portfolio Optimization &nbsp;&nbsp;|&nbsp;&nbsp;
+  Fictional client (Priya Mehta) used for classroom illustration only
+</div>
+
+</body>
+</html>

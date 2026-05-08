@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase 02 · Client Guardrails · BUS331</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628; --navy-mid: #112240; --gold: #c9a84c; --ice: #d6e4f0; --white: #ffffff; --text-muted: #a8b8cc; --danger: #e74c3c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); line-height: 1.6; }
+  .container { max-width: 900px; margin: 0 auto; padding: 4rem 1.5rem; }
+  .back-link { font-family: 'DM Mono', monospace; color: var(--gold); text-decoration: none; font-size: 0.8rem; display: block; margin-bottom: 2rem; }
+  header { border-bottom: 1px solid var(--gold); padding-bottom: 2rem; margin-bottom: 3rem; }
+  .label { font-family: 'DM Mono', monospace; color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-top: 0.5rem; }
+  .role-badge { display: inline-block; background: rgba(201,168,76,0.1); color: var(--gold); padding: 4px 12px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 0.7rem; margin-top: 1rem; }
+  
+  .content-block { background: var(--navy-mid); padding: 2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 2rem; }
+  .warning-block { border-left: 4px solid var(--danger); background: rgba(231, 76, 60, 0.05); padding: 1.5rem; margin-bottom: 2rem; border-radius: 0 8px 8px 0; }
+  h2 { font-family: 'Playfair Display', serif; margin-bottom: 1rem; color: var(--gold); font-size: 1.4rem; }
+  p { margin-bottom: 1rem; color: var(--ice); }
+  
+  .rrttllu-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; list-style: none; margin: 1.5rem 0; }
+  .rrttllu-item { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; }
+  .rrttllu-item strong { color: var(--gold); display: block; margin-bottom: 5px; }
+
+  .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .file-btn { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.2); padding: 1rem; border-radius: 6px; color: var(--ice); text-decoration: none; transition: 0.2s; font-size: 0.85rem; }
+  .file-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="../index.html" class="back-link">← BACK TO PORTAL</a>
+  <header>
+    <span class="label">Project Phase 02</span>
+    <h1>Client Guardrails (IPS)</h1>
+    <div class="role-badge">Lead: IPS Architect</div>
+  </header>
+
+  <div class="warning-block">
+    <strong style="color:var(--danger); font-family:'DM Mono', monospace; font-size:0.8rem;">THE TRIPWIRE</strong>
+    <p style="font-size:0.9rem; margin-top:5px;">You must define a <strong>Maximum Acceptable Drawdown</strong> for each client. If Phase 05 stress testing breaches this limit, the mandate is failed.</p>
+  </div>
+
+  <div class="content-block">
+    <h2>Objective</h2>
+    <p>Define the investment rules for each assigned client profile. The IPS is the legal and ethical foundation for every portfolio decision that follows.</p>
+  </div>
+
+  <div class="content-block">
+    <h2>RRTTLLU Framework</h2>
+    <div class="rrttllu-list">
+      <div class="rrttllu-item"><strong>Risk</strong> Tolerance & Max Drawdown</div>
+      <div class="rrttllu-item"><strong>Return</strong> Required Objective</div>
+      <div class="rrttllu-item"><strong>Time</strong> Investment Horizon</div>
+      <div class="rrttllu-item"><strong>Tax</strong> Situation & Status</div>
+      <div class="rrttllu-item"><strong>Liquidity</strong> Cash Flow Needs</div>
+      <div class="rrttllu-item"><strong>Legal</strong> & Regulatory Constraints</div>
+      <div class="rrttllu-item"><strong>Unique</strong> Circumstances (ESG, etc.)</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <h2>Client Resources</h2>
+    <div class="resource-grid">
+      <a href="../files/Client_Scenarios_Profiles.pptx" class="btn file-btn">📽️ Client Profiles (PPTX)</a>
+      <a href="../files/Client_Scenarios_Data_File.xlsx" class="btn file-btn">📊 Client Scenarios Data (XLSX)</a>
+      <a href="../files/Investment_Policy_Statement_Template_Client_Analysis_Framework.docx" class="btn file-btn">📝 IPS Template (DOCX)</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUS331 – Phase 5: The Stress Test & Quantitative Audit</title>
+<style>
+  :root {
+    --navy: #0A1628;
+    --navy-mid: #12254A;
+    --navy-light: #1E3A6E;
+    --gold: #C9A84C;
+    --gold-light: #E8CC7A;
+    --ice: #D6E4F0;
+    --ice-light: #EBF3FA;
+    --white: #FFFFFF;
+    --gray: #6B7A8D;
+    --input-yellow: #FFF9CC;
+    --answer-cream: #FBF6EC;
+    --green-dark: #1B5E20;
+    --green: #2E7D32;
+    --green-bg: #E8F5E9;
+    --red-dark: #B71C1C;
+    --red: #C62828;
+    --red-bg: #FFEBEE;
+    --orange: #E65100;
+    --orange-bg: #FFF3E0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+    background: #F0F4F8;
+    color: var(--navy);
+    line-height: 1.6;
+  }
+
+  .page-header {
+    background: var(--navy);
+    padding: 36px 48px 28px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .page-header .left .subtitle {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .page-header .left h1 { font-size: 27px; color: var(--white); font-weight: 700; }
+  .phase-badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 800;
+    padding: 8px 18px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .gold-rule { height: 4px; background: var(--gold); }
+
+  .body-wrap { max-width: 1100px; margin: 0 auto; padding: 36px 32px 64px; }
+
+  .phase-flow { display: flex; align-items: center; gap: 4px; margin-bottom: 28px; flex-wrap: wrap; }
+  .pf-item { background: var(--navy-light); color: var(--white); font-size: 11px; padding: 6px 13px; border-radius: 4px; font-weight: 600; }
+  .pf-item.active { background: var(--gold); color: var(--navy); }
+  .pf-item.done { background: var(--green); color: var(--white); }
+  .pf-arrow { color: var(--gold); font-size: 16px; }
+
+  .callout { border-left: 5px solid var(--gold); background: var(--ice-light); padding: 15px 20px; border-radius: 0 6px 6px 0; margin-bottom: 20px; }
+  .callout.navy { background: var(--navy); }
+  .callout.navy p { color: var(--ice); }
+  .callout.navy strong { color: var(--gold-light); }
+  .callout-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--navy); margin-bottom: 4px; }
+  .callout.navy .callout-label { color: var(--gold); }
+  .callout p { font-size: 13.5px; }
+
+  .section-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 12px 20px;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 36px;
+  }
+  .section-header .step-num {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 800;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 17px; font-weight: 700; }
+  .section-header .section-sub { font-size: 12px; color: var(--ice); margin-top: 2px; }
+  .section-body {
+    background: var(--white);
+    border: 1px solid #D0DAE8;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    padding: 26px 28px;
+  }
+
+  /* CLIENT CARD */
+  .client-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: 10px;
+    padding: 24px 28px;
+    color: var(--white);
+    margin-bottom: 26px;
+    position: relative;
+    overflow: hidden;
+  }
+  .client-card::before {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 120px; height: 120px;
+    background: var(--gold);
+    opacity: 0.08;
+    border-radius: 50%;
+  }
+  .client-card .client-name { font-size: 20px; font-weight: 700; color: var(--gold); margin-bottom: 3px; }
+  .client-card .client-role { font-size: 12.5px; color: var(--ice); margin-bottom: 16px; }
+  .client-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 10px; }
+  .client-stat { background: rgba(255,255,255,0.08); border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; padding: 10px 12px; }
+  .client-stat .stat-label { font-size: 10px; color: var(--gold-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+  .client-stat .stat-value { font-size: 14px; font-weight: 700; color: var(--white); }
+
+  /* TABLES */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 14px 0; }
+  .data-table th { background: var(--navy); color: var(--white); padding: 10px 13px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .data-table th.gold { background: var(--gold); color: var(--navy); }
+  .data-table td { padding: 10px 13px; border-bottom: 1px solid #E5ECF4; vertical-align: top; }
+  .data-table tr:nth-child(even) td { background: var(--ice-light); }
+  .data-table .input-cell { background: var(--input-yellow) !important; font-style: italic; color: #666; font-size: 12px; }
+  .data-table .answer-cell { background: var(--answer-cream) !important; border: 1px solid var(--gold); font-weight: 600; }
+  .data-table .pass-text { color: var(--green-dark); font-weight: 700; }
+  .data-table .fail-text { color: var(--red-dark); font-weight: 700; }
+
+  /* FORMULA BOX */
+  .formula-box { background: var(--navy); border-radius: 8px; padding: 20px 24px; margin: 18px 0; font-family: 'Consolas', 'Courier New', monospace; }
+  .formula-box .formula-label { font-family: 'Calibri', sans-serif; color: var(--gold); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+  .formula-box .formula-text { color: var(--white); font-size: 13.5px; line-height: 2.0; }
+  .formula-box .formula-text .hl { color: var(--gold-light); font-weight: 700; }
+  .formula-box .formula-note { font-family: 'Calibri', sans-serif; color: var(--ice); font-size: 12px; margin-top: 12px; line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; }
+
+  /* WORKED EXAMPLE */
+  .worked-example { background: var(--ice-light); border: 2px solid var(--gold); border-radius: 8px; padding: 22px 26px; margin: 22px 0; }
+  .worked-example .we-label { display: inline-block; background: var(--gold); color: var(--navy); font-size: 10px; font-weight: 800; padding: 3px 12px; border-radius: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .worked-example h3 { font-size: 15px; color: var(--navy); margin-bottom: 10px; }
+
+  /* STATUS BOXES */
+  .warning-box { background: var(--orange-bg); border-left: 5px solid var(--orange); border-radius: 0 6px 6px 0; padding: 13px 18px; margin: 16px 0; }
+  .warning-box .warn-label { font-size: 11px; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .warning-box p { font-size: 13px; color: #4E342E; }
+
+  .success-box { background: var(--green-bg); border-left: 5px solid var(--green); border-radius: 0 6px 6px 0; padding: 13px 18px; margin: 16px 0; }
+  .success-box .succ-label { font-size: 11px; font-weight: 700; color: var(--green-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .success-box p { font-size: 13px; color: var(--green-dark); }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 16px 0; }
+  @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+  .info-card { border: 1px solid #D0DAE8; border-radius: 8px; padding: 18px; }
+  .info-card h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .info-card h4 .icon { width: 24px; height: 24px; background: var(--gold); color: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+  .info-card p, .info-card li { font-size: 13px; color: #3A4A5E; line-height: 1.5; }
+  .info-card ul { padding-left: 16px; }
+  .info-card li { margin-bottom: 4px; }
+
+  /* METRIC CARDS */
+  .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+  @media (max-width: 720px) { .metric-grid { grid-template-columns: 1fr; } }
+  .metric-card { border-radius: 8px; overflow: hidden; border: 1px solid #D0DAE8; }
+  .metric-card .mc-head { background: var(--navy); padding: 14px 16px; }
+  .metric-card .mc-head .mc-name { font-size: 15px; font-weight: 800; color: var(--gold); }
+  .metric-card .mc-head .mc-full { font-size: 11px; color: var(--ice); margin-top: 2px; }
+  .metric-card .mc-body { padding: 16px; }
+  .metric-card .mc-body .mc-formula { background: var(--navy); border-radius: 5px; padding: 8px 12px; font-family: 'Consolas', monospace; font-size: 12px; color: var(--gold-light); margin-bottom: 12px; line-height: 1.6; }
+  .metric-card .mc-body p, .metric-card .mc-body li { font-size: 12.5px; color: #3A4A5E; line-height: 1.5; }
+  .metric-card .mc-body ul { padding-left: 16px; }
+  .metric-card .mc-body li { margin-bottom: 4px; }
+  .metric-card .mc-body .interp { background: var(--ice-light); border-radius: 5px; padding: 8px 12px; margin-top: 10px; font-size: 12px; color: var(--navy); line-height: 1.5; }
+
+  /* AUDIT SCORECARD */
+  .scorecard { border: 2px solid var(--gold); border-radius: 8px; overflow: hidden; margin: 20px 0; }
+  .scorecard-head { background: var(--navy); padding: 14px 18px; }
+  .scorecard-head .sc-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+  .scorecard-head .sc-client { font-size: 12px; color: var(--gold); }
+  .scorecard-row { display: grid; grid-template-columns: 2.2fr 1fr 1.2fr 1fr 88px; padding: 11px 18px; border-bottom: 1px solid #E5ECF4; font-size: 13px; align-items: center; gap: 8px; }
+  .scorecard-row.header { background: var(--ice-light); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray); }
+  .scorecard-row:last-child { border-bottom: none; }
+  .scorecard-row:nth-child(even) { background: #FAFCFE; }
+  .status-pill { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  .pill-pass { background: var(--green-bg); color: var(--green-dark); }
+  .pill-warn { background: var(--orange-bg); color: var(--orange); }
+  @media (max-width: 680px) {
+    .scorecard-row { grid-template-columns: 1fr 1fr; }
+    .scorecard-row.header { display: none; }
+  }
+
+  /* CRASH DIAGRAM */
+  .crash-diagram { background: var(--navy); border-radius: 8px; padding: 24px; margin: 20px 0; }
+  .crash-diagram .cd-title { color: var(--gold); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; text-align: center; }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; padding: 0; margin: 16px 0; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #E5ECF4; font-size: 13.5px; }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box { width: 20px; height: 20px; border: 2px solid var(--gold); border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
+
+  /* MISC */
+  p { margin-bottom: 10px; }
+  p:last-child { margin-bottom: 0; }
+  h3.sub { font-size: 15px; color: var(--navy); margin: 22px 0 12px; }
+
+  .page-footer { background: var(--navy); color: var(--ice); text-align: center; padding: 20px; font-size: 12px; margin-top: 48px; }
+  .page-footer span { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="left">
+    <div class="subtitle">BUS 331 · Investments · Endicott College</div>
+    <h1>Phase 5: The Stress Test &amp; Quantitative Audit</h1>
+  </div>
+  <div class="phase-badge">Phase 5 of 6</div>
+</div>
+<div class="gold-rule"></div>
+
+<div class="body-wrap">
+
+  <div class="phase-flow">
+    <div class="pf-item done">✓ Phase 1: Macro</div><div class="pf-arrow">›</div>
+    <div class="pf-item done">✓ Phase 2: IPS</div><div class="pf-arrow">›</div>
+    <div class="pf-item done">✓ Phase 3: Bridge</div><div class="pf-arrow">›</div>
+    <div class="pf-item done">✓ Phase 4: Securities</div><div class="pf-arrow">›</div>
+    <div class="pf-item active">Phase 5: Audit ←</div><div class="pf-arrow">›</div>
+    <div class="pf-item">Phase 6: Pitch</div>
+  </div>
+
+  <div class="callout navy">
+    <div class="callout-label">Phase Objective</div>
+    <p>Phase 5 is the compliance check. You have built the portfolio — now you must <strong>prove it holds up</strong>. Run the fully constructed portfolio through the Bear Case scenario from Phase 1. Calculate three performance metrics — <strong>Portfolio Beta, Standard Deviation, and Sharpe Ratio</strong> — and confirm the Bear Case loss stays within each client's IPS drawdown tripwire. If a portfolio fails, you must re-allocate, document every change, and verify the fix before Phase 6.</p>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  FICTIONAL CLIENT                                  -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">★</div>
+    <div>
+      <h2>Worked Example Client: Priya Mehta</h2>
+      <div class="section-sub">Fictional client — used for classroom illustration only</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="client-card">
+      <div class="client-name">Priya Mehta</div>
+      <div class="client-role">Corporate Attorney · Age 39 · Income $220,000 · Net Worth $680,000</div>
+      <div class="client-stats">
+        <div class="client-stat"><div class="stat-label">IPS Drawdown Limit</div><div class="stat-value">−12%</div></div>
+        <div class="client-stat"><div class="stat-label">Target E(R)</div><div class="stat-value">≥ 8.5%</div></div>
+        <div class="client-stat"><div class="stat-label">Max Portfolio σ</div><div class="stat-value">≤ 16%</div></div>
+        <div class="client-stat"><div class="stat-label">Risk Aversion (A)</div><div class="stat-value">3.5 — Moderate</div></div>
+        <div class="client-stat"><div class="stat-label">Phase 4 Hedge</div><div class="stat-value">Protective Put on SPY</div></div>
+        <div class="client-stat"><div class="stat-label">AUM</div><div class="stat-value">$500,000</div></div>
+      </div>
+    </div>
+    <p style="font-size:13.5px;">Entering Phase 5, Priya's portfolio has been built (Phase 3 weights), stocked with 10 securities (Phase 4), and hedged with a Protective Put. The only question left before the final pitch: <em>does this portfolio survive the Bear Case?</em></p>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  STEP 1 — THE THREE METRICS                        -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">1</div>
+    <div>
+      <h2>The Three Required Performance Metrics</h2>
+      <div class="section-sub">Calculate all three for each client — Base Case and Bear Case</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <p>These three metrics are the quantitative backbone of your Phase 6 presentation. Each answers a different question the Investment Committee will ask. You must calculate them, interpret them, and explain clearly how the Bear Case values differ from the Base Case — and why that difference matters for the client.</p>
+
+    <div class="metric-grid">
+
+      <div class="metric-card">
+        <div class="mc-head">
+          <div class="mc-name">Portfolio Beta (β<sub>p</sub>)</div>
+          <div class="mc-full">Systematic / Market Risk</div>
+        </div>
+        <div class="mc-body">
+          <div class="mc-formula">βp = Σ (w<sub>i</sub> × β<sub>i</sub>)</div>
+          <p>The weighted average of each security's individual beta. Measures how much the portfolio moves relative to the market — S&amp;P 500 has a beta of exactly 1.0 by definition.</p>
+          <ul style="margin-top:8px;">
+            <li>β &lt; 1.0 → less volatile than the market</li>
+            <li>β = 1.0 → moves with the market</li>
+            <li>β &gt; 1.0 → amplifies market swings</li>
+          </ul>
+          <div class="interp"><strong>IPS check:</strong> A risk-averse client (high A) should have βp well below 1.0. If your βp contradicts the client's stated risk profile, the Investment Committee will ask why. Be prepared to defend it or re-allocate.</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="mc-head">
+          <div class="mc-name">Std Dev (σ<sub>p</sub>)</div>
+          <div class="mc-full">Total Portfolio Risk</div>
+        </div>
+        <div class="mc-body">
+          <div class="mc-formula">σp = SQRT(MMULT(<br>&nbsp;TRANSPOSE(w),<br>&nbsp;MMULT(CovMatrix, w)))</div>
+          <p>Total risk — both systematic and idiosyncratic. This is the same formula used in the Phase 3 Solver. In Phase 5, recalculate it with the <strong>Bear Case covariance matrix</strong> (stressed, tighter correlations).</p>
+          <ul style="margin-top:8px;">
+            <li>Bear Case σp will always be higher than Base Case</li>
+            <li>Equity-to-equity correlations converge toward 1.0 in stress</li>
+            <li>Diversification benefit nearly disappears at the worst moment</li>
+          </ul>
+          <div class="interp"><strong>IPS check:</strong> σp must be ≤ the client's IPS maximum standard deviation. A minor Bear Case breach caused by correlation compression should be disclosed and explained — not silently ignored.</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="mc-head">
+          <div class="mc-name">Sharpe Ratio</div>
+          <div class="mc-full">Risk-Adjusted Return</div>
+        </div>
+        <div class="mc-body">
+          <div class="mc-formula">S = ( E(Rp) − Rf ) ÷ σp</div>
+          <p>Return earned per unit of total risk taken. The risk-free rate (Rf) is your Cash/T-Bill CME return from Phase 3. Higher is better — but only compare Sharpe Ratios across clients with the same risk mandate.</p>
+          <ul style="margin-top:8px;">
+            <li>Base Case Sharpe should be positive</li>
+            <li>Bear Case Sharpe will typically be negative — that is expected</li>
+            <li>The hedge should improve the Bear Case Sharpe vs. unhedged</li>
+          </ul>
+          <div class="interp"><strong>IC Q&amp;A alert:</strong> If the Growth client has a higher Sharpe than the Retiree, the committee will ask whether that means it is "better managed." The answer is no — it reflects a different risk mandate, not superior management skill.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="warning-box">
+      <div class="warn-label">⚠ Excel Requirement — No Hard-Coded Metrics</div>
+      <p>All three metrics must be formula-driven and linked to your Phase 3 CME Matrix. If your instructor changes one CME input cell, βp, σp, and the Sharpe Ratio must update automatically. If nothing changes when an input is altered, you have hard-coded your audit — this is an automatic deduction.</p>
+    </div>
+
+    <div class="worked-example">
+      <span class="we-label">Worked Example — Priya Mehta</span>
+      <h3>Calculated Metrics: Base Case vs. Bear Case</h3>
+      <p style="font-size:13px; color:#555; margin-bottom:14px;">Using the 10-security portfolio from Phase 4, with the Protective Put hedge applied to the equity sleeve. The Bear Case uses stressed correlations and the Red Zone CME inputs from Phase 1.</p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th class="gold">Base Case</th>
+            <th>Bear Case (unhedged)</th>
+            <th>Bear Case (hedged)</th>
+            <th>IPS Limit</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Portfolio Beta (βp)</strong></td>
+            <td class="answer-cell">0.61</td>
+            <td>0.61</td>
+            <td>0.44 <span style="font-size:11px; color:var(--gray)">(put reduces effective δ)</span></td>
+            <td>Per risk profile</td>
+            <td><span class="status-pill pill-pass">✓ Pass</span></td>
+          </tr>
+          <tr>
+            <td><strong>Portfolio Std Dev (σp)</strong></td>
+            <td class="answer-cell">12.3%</td>
+            <td>19.1% <span style="font-size:11px; color:var(--gray)">(correlations tighten)</span></td>
+            <td>16.8%</td>
+            <td>≤ 16%</td>
+            <td><span class="status-pill pill-warn">⚠ Disclosed</span></td>
+          </tr>
+          <tr>
+            <td><strong>Sharpe Ratio</strong></td>
+            <td class="answer-cell">0.47</td>
+            <td>−0.31</td>
+            <td>−0.18 <span style="font-size:11px; color:var(--gray)">(hedge improves)</span></td>
+            <td>Maximize</td>
+            <td><span class="status-pill pill-pass">✓ Context</span></td>
+          </tr>
+          <tr>
+            <td><strong>Max Drawdown (Bear)</strong></td>
+            <td class="answer-cell">—</td>
+            <td>−14.2%</td>
+            <td>−9.8%</td>
+            <td>≤ −12%</td>
+            <td><span class="status-pill pill-pass">✓ Pass</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="warning-box" style="margin-top:14px;">
+        <div class="warn-label">σp Disclosure — Bear Case Minor Breach</div>
+        <p>The hedged Bear Case σp of 16.8% technically exceeds Priya's IPS maximum of 16%. The team must document this in writing: the 0.8% breach is driven entirely by the VIX spike and correlation compression in the Bear Case scenario — behavior documented in BKM Chapter 6. The hard constraint (drawdown limit) is satisfied at −9.8%. This is disclosed as a known stress-period limitation, not a portfolio construction error.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  STEP 2 — THE CRASH TEST                          -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">2</div>
+    <div>
+      <h2>The Crash Test — Running the Bear Case</h2>
+      <div class="section-sub">Apply Phase 1 Bear Case CME inputs to the fully constructed portfolio</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <p>The crash test is not a new model — it is the Phase 3 Solver model re-run with Bear Case inputs. The difference in Phase 5 is that you are now applying that stress scenario to the <em>actual</em> Phase 4 portfolio, including its specific security betas and the derivative hedge, not just abstract asset class weights.</p>
+
+    <h3 class="sub">What Changes in the Bear Case Run</h3>
+    <div class="two-col">
+      <div class="info-card">
+        <h4><div class="icon">→</div> Swap These Inputs</h4>
+        <ul>
+          <li>CME Matrix: switch from Base to Bear Case expected returns</li>
+          <li>Correlation matrix: use the stressed version (equity correlations → 1.0)</li>
+          <li>Fed Funds Rate: use the Red Zone rate from Phase 1 Sensitivity Matrix</li>
+          <li>Consumer Sentiment: use the low Bear Case level from Phase 1</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4><div class="icon">≡</div> Keep These Fixed</h4>
+        <ul>
+          <li>Portfolio weights — locked from Phase 4</li>
+          <li>Individual security betas — real market betas, not scenario-dependent</li>
+          <li>Hedge structure — strike, expiration, and contract count from Phase 4</li>
+          <li>AUM — $500,000 throughout all scenarios</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">The Four-Outcome Decision Tree</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Crash Test Result</th>
+          <th class="gold">Required Action</th>
+          <th>Where It Appears in Phase 6</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pass-text">✓ PASS — within IPS drawdown limit</span></td>
+          <td>Document the result. Confirm hedge was effective. Proceed to Phase 6.</td>
+          <td>Presented as fiduciary compliance evidence in the IC Memo Risk section</td>
+        </tr>
+        <tr>
+          <td><span class="fail-text">✗ FAIL — unhedged exceeds limit</span></td>
+          <td>Apply the Phase 4 hedge and recalculate. If the hedged portfolio passes, document the before/after. This is the expected outcome for most teams.</td>
+          <td>The problem → solution narrative is a graded element of the oral presentation</td>
+        </tr>
+        <tr>
+          <td><span class="fail-text">✗ FAIL — hedged portfolio still exceeds limit</span></td>
+          <td>Re-allocate: reduce equity weight, increase cash or short-duration bonds. Recalculate until passing. Document every change with rationale.</td>
+          <td>Show the trade-off explicitly: "We sacrificed X% of upside to satisfy the IPS constraint"</td>
+        </tr>
+        <tr>
+          <td style="color:var(--gray);">σp breach — minor, stress-period only</td>
+          <td>Disclose in writing. Explain it as a Bear Case anomaly from correlation compression, not a structural error.</td>
+          <td>Include in the AI Audit Log as a known limitation reviewed with the AI Red Team</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="crash-diagram">
+      <div class="cd-title">The Crash Test — Portfolio Value Under Three Scenarios</div>
+      <svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" width="640" height="260" style="max-width:100%; display:block; margin:0 auto;">
+        <line x1="80" y1="200" x2="600" y2="200" stroke="#1E3A6E" stroke-width="1"/>
+        <line x1="80" y1="162" x2="600" y2="162" stroke="#1E3A6E" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="80" y1="124" x2="600" y2="124" stroke="#1E3A6E" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="80" y1="86" x2="600" y2="86" stroke="#1E3A6E" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="80" y1="48" x2="80" y2="212" stroke="#D6E4F0" stroke-width="1.5"/>
+        <line x1="80" y1="200" x2="610" y2="200" stroke="#D6E4F0" stroke-width="1.5"/>
+        <text x="74" y="203" fill="#6B7A8D" font-size="10" text-anchor="end" font-family="Calibri,Arial">$500k</text>
+        <text x="74" y="165" fill="#6B7A8D" font-size="10" text-anchor="end" font-family="Calibri,Arial">$520k</text>
+        <text x="74" y="127" fill="#6B7A8D" font-size="10" text-anchor="end" font-family="Calibri,Arial">$540k</text>
+        <text x="74" y="89" fill="#6B7A8D" font-size="10" text-anchor="end" font-family="Calibri,Arial">$560k</text>
+        <text x="80" y="220" fill="#6B7A8D" font-size="10" text-anchor="middle" font-family="Calibri,Arial">Start</text>
+        <text x="230" y="220" fill="#6B7A8D" font-size="10" text-anchor="middle" font-family="Calibri,Arial">Month 3</text>
+        <text x="380" y="220" fill="#6B7A8D" font-size="10" text-anchor="middle" font-family="Calibri,Arial">Month 6</text>
+        <text x="530" y="220" fill="#6B7A8D" font-size="10" text-anchor="middle" font-family="Calibri,Arial">Month 12</text>
+        <!-- IPS Tripwire -->
+        <line x1="80" y1="236" x2="600" y2="236" stroke="#C62828" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <text x="380" y="233" fill="#EF9A9A" font-size="10" font-family="Calibri,Arial">IPS Tripwire (−12% = $440k)</text>
+        <!-- Base Case -->
+        <polyline points="80,200 180,190 280,178 380,164 480,150 530,144" fill="none" stroke="#4FC3F7" stroke-width="2"/>
+        <!-- Hedged Bear Case -->
+        <polyline points="80,200 180,192 280,210 380,229 480,224 530,219" fill="none" stroke="#E8CC7A" stroke-width="2.5"/>
+        <!-- Unhedged Bear Case — fails tripwire -->
+        <polyline points="80,200 180,190 280,214 380,248 480,260 530,264" fill="none" stroke="#EF5350" stroke-width="2" stroke-dasharray="6,4"/>
+        <!-- Shock marker -->
+        <line x1="280" y1="52" x2="280" y2="210" stroke="#888" stroke-width="0.75" stroke-dasharray="3,3"/>
+        <text x="283" y="62" fill="#aaa" font-size="10" font-family="Calibri,Arial">Bear Case</text>
+        <text x="283" y="74" fill="#aaa" font-size="10" font-family="Calibri,Arial">shock begins</text>
+        <!-- Legend -->
+        <line x1="310" y1="24" x2="338" y2="24" stroke="#4FC3F7" stroke-width="2"/>
+        <text x="342" y="28" fill="#D6E4F0" font-size="10" font-family="Calibri,Arial">Base Case</text>
+        <line x1="420" y1="24" x2="448" y2="24" stroke="#E8CC7A" stroke-width="2.5"/>
+        <text x="452" y="28" fill="#D6E4F0" font-size="10" font-family="Calibri,Arial">Bear Case (hedged) — PASS</text>
+        <line x1="310" y1="40" x2="338" y2="40" stroke="#EF5350" stroke-width="2" stroke-dasharray="6,4"/>
+        <text x="342" y="44" fill="#D6E4F0" font-size="10" font-family="Calibri,Arial">Bear Case (unhedged) — FAIL</text>
+      </svg>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  STEP 3 — THE AUDIT SCORECARD                     -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">3</div>
+    <div>
+      <h2>The Audit Scorecard</h2>
+      <div class="section-sub">One completed scorecard per client — your Phase 5 deliverable</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <p>The Audit Scorecard is the single-page summary of Phase 5. It shows Base Case and Bear Case results side by side, and whether each IPS constraint is met. One scorecard per client. All three are compiled into the Phase 6 Technical Dossier.</p>
+
+    <h3 class="sub">Blank Template — Student Input Version</h3>
+
+    <div class="scorecard">
+      <div class="scorecard-head">
+        <div class="sc-title">Phase 5 Audit Scorecard</div>
+        <div class="sc-client">Client: _________________________ &nbsp;|&nbsp; Team: _________________________ &nbsp;|&nbsp; AUM: $500,000</div>
+      </div>
+      <div class="scorecard-row header">
+        <div>Metric / Constraint</div>
+        <div>Base Case</div>
+        <div>Bear Case (hedged)</div>
+        <div>IPS Limit</div>
+        <div>Status</div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>Portfolio Beta (βp)</strong></div>
+        <div class="input-cell" style="background:var(--input-yellow); padding:4px 8px; border-radius:4px; font-size:12px;">Enter value</div>
+        <div class="input-cell" style="background:var(--input-yellow); padding:4px 8px; border-radius:4px; font-size:12px;">Enter value</div>
+        <div style="font-size:12px; color:var(--gray);">Per risk profile</div>
+        <div><span class="status-pill pill-warn">Review</span></div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>Portfolio Std Dev (σp)</strong></div>
+        <div class="input-cell" style="background:var(--input-yellow); padding:4px 8px; border-radius:4px; font-size:12px;">Enter %</div>
+        <div class="input-cell" style="background:var(--input-yellow); padding:4px 8px; border-radius:4px; font-size:12px;">Enter %</div>
+        <div style="font-size:12px; color:var(--gray);">IPS max σ</div>
+        <div><span class="status-pill pill-warn">Review</span></div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>Sharpe Ratio</strong></div>
+        <div class="input-cell" style="background:var(--input-yellow); padding:4px 8px; border-radius:4px; font-size:12px;">Enter value</div>
+        <div class="input-cell" style="background:var(--input-yellow); padding:4px 8px; border-radius:4px; font-size:12px;">Enter value</div>
+        <div style="font-size:12px; color:var(--gray);">Maximize</div>
+        <div><span class="status-pill pill-warn">Review</span></div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>Bear Case Max Drawdown</strong></div>
+        <div style="font-size:12px; color:var(--gray);">N/A</div>
+        <div class="input-cell" style="background:var(--input-yellow); padding:4px 8px; border-radius:4px; font-size:12px;">Enter %</div>
+        <div style="font-size:12px; color:var(--gray);">IPS tripwire</div>
+        <div><span class="status-pill pill-warn">Review</span></div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>Hedge Effectiveness</strong></div>
+        <div style="font-size:12px; color:var(--gray);">N/A</div>
+        <div class="input-cell" style="background:var(--input-yellow); padding:4px 8px; border-radius:4px; font-size:12px;">Unhedged loss → hedged loss</div>
+        <div style="font-size:12px; color:var(--gray);">Within tripwire</div>
+        <div><span class="status-pill pill-warn">Review</span></div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>E(Rp) vs. IPS Target</strong></div>
+        <div class="input-cell" style="background:var(--input-yellow); padding:4px 8px; border-radius:4px; font-size:12px;">Enter %</div>
+        <div class="input-cell" style="background:var(--input-yellow); padding:4px 8px; border-radius:4px; font-size:12px;">Enter %</div>
+        <div style="font-size:12px; color:var(--gray);">IPS min E(R)</div>
+        <div><span class="status-pill pill-warn">Review</span></div>
+      </div>
+    </div>
+
+    <h3 class="sub">Worked Example — Priya Mehta Completed Scorecard</h3>
+
+    <div class="scorecard">
+      <div class="scorecard-head">
+        <div class="sc-title">Phase 5 Audit Scorecard</div>
+        <div class="sc-client">Client: Priya Mehta &nbsp;|&nbsp; AUM: $500,000 &nbsp;|&nbsp; Hedge: Protective Put on SPY (4 contracts, 5% OTM, 6-month)</div>
+      </div>
+      <div class="scorecard-row header">
+        <div>Metric / Constraint</div>
+        <div>Base Case</div>
+        <div>Bear Case (hedged)</div>
+        <div>IPS Limit</div>
+        <div>Status</div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>Portfolio Beta (βp)</strong></div>
+        <div class="answer-cell" style="padding:4px 8px; border-radius:4px; font-size:13px;">0.61</div>
+        <div style="font-size:13px;">0.44 <span style="font-size:11px; color:var(--gray)">(put reduces δ)</span></div>
+        <div style="font-size:12px; color:var(--gray);">Moderate profile</div>
+        <div><span class="status-pill pill-pass">✓ Pass</span></div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>Portfolio Std Dev (σp)</strong></div>
+        <div class="answer-cell" style="padding:4px 8px; border-radius:4px; font-size:13px;">12.3%</div>
+        <div style="font-size:13px;">16.8% <span style="font-size:11px; color:var(--gray)">(stress correlations)</span></div>
+        <div style="font-size:12px; color:var(--gray);">≤ 16%</div>
+        <div><span class="status-pill pill-warn">⚠ Disclosed</span></div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>Sharpe Ratio</strong></div>
+        <div class="answer-cell" style="padding:4px 8px; border-radius:4px; font-size:13px;">0.47</div>
+        <div style="font-size:13px;">−0.18 <span style="font-size:11px; color:var(--gray)">(hedge vs. −0.31 unhedged)</span></div>
+        <div style="font-size:12px; color:var(--gray);">Maximize</div>
+        <div><span class="status-pill pill-pass">✓ Context</span></div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>Bear Case Max Drawdown</strong></div>
+        <div style="font-size:12px; color:var(--gray);">N/A</div>
+        <div style="font-size:13px; font-weight:700; color:var(--green-dark);">−9.8%</div>
+        <div style="font-size:12px; color:var(--gray);">≤ −12%</div>
+        <div><span class="status-pill pill-pass">✓ Pass</span></div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>Hedge Effectiveness</strong></div>
+        <div style="font-size:12px; color:var(--gray);">N/A</div>
+        <div style="font-size:13px;">−14.2% → −9.8% <span style="font-size:11px; color:var(--green);">(+4.4pp recovered)</span></div>
+        <div style="font-size:12px; color:var(--gray);">Within tripwire</div>
+        <div><span class="status-pill pill-pass">✓ Pass</span></div>
+      </div>
+      <div class="scorecard-row">
+        <div><strong>E(Rp) vs. IPS Target</strong></div>
+        <div class="answer-cell" style="padding:4px 8px; border-radius:4px; font-size:13px;">8.7%</div>
+        <div style="font-size:13px; color:var(--red-dark);">−2.1% <span style="font-size:11px; color:var(--gray)">(Bear scenario)</span></div>
+        <div style="font-size:12px; color:var(--gray);">≥ 8.5%</div>
+        <div><span class="status-pill pill-pass">✓ Base Pass</span></div>
+      </div>
+    </div>
+
+    <div class="success-box">
+      <div class="succ-label">✓ Overall Verdict: PASS — Cleared for Phase 6</div>
+      <p>Priya's hedged portfolio satisfies the IPS drawdown tripwire (−9.8% vs. −12% limit). The σp breach of 16.8% vs. 16% is disclosed and attributed to stress-period correlation compression. Base Case E(Rp) of 8.7% meets the 8.5% minimum. The portfolio is approved to proceed to the Phase 6 pitch.</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  STEP 4 — THE AI AUDIT LOG                        -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">4</div>
+    <div>
+      <h2>The AI Audit Log</h2>
+      <div class="section-sub">Required appendix — documents every AI interaction and the team's response</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <p>The AI Audit Log is not optional. It is a graded deliverable that provides evidence your team used AI as a sparring partner — not a ghostwriter. For every phase where AI assisted, the log must record the prompt used, the AI's output, and how the team responded: accepted, rejected, or modified.</p>
+
+    <div class="callout">
+      <div class="callout-label">The Hallucination Clause</div>
+      <p>Any AI-generated number — beta, correlation, return estimate, option premium — that was not verified against a real data source (FactSet, Bloomberg, SEC filing, CBOE) is treated as professional negligence. The Audit Log is your proof that verification happened. A number in your submission without a cited source will be flagged.</p>
+    </div>
+
+    <h3 class="sub">Minimum Entries Required</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th class="gold">What to Log</th>
+          <th>Evidence of Human Review</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Phase 1</strong></td>
+          <td>AI regime identification prompt and output</td>
+          <td>Did the team's view agree or disagree? What specific data point resolved the conflict?</td>
+        </tr>
+        <tr>
+          <td><strong>Phase 3</strong></td>
+          <td>Any AI assistance with CME return estimates or correlation assumptions</td>
+          <td>Were estimates verified against FactSet @ECO or FRED historical data?</td>
+        </tr>
+        <tr>
+          <td><strong>Phase 4</strong></td>
+          <td>Any AI-generated security analysis or derivative pricing</td>
+          <td>Were betas, P/E ratios, and option premiums confirmed in a real data source before use?</td>
+        </tr>
+        <tr>
+          <td><strong>Phase 5</strong></td>
+          <td>Any AI used to interpret stress test results or frame the Bear Case narrative</td>
+          <td>Did the AI's risk framing align with the Phase 1 macro thesis? Where did it diverge?</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="worked-example">
+      <span class="we-label">Sample Log Entry — Phase 4 Option Pricing</span>
+      <h3>Protective Put Premium Verification</h3>
+      <table class="data-table" style="margin-top:8px;">
+        <thead>
+          <tr><th>Field</th><th class="gold">Entry</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Prompt used</strong></td>
+            <td>"Estimate the premium for a 5% OTM 6-month put on SPY given current VIX of 18. Explain the key pricing inputs."</td>
+          </tr>
+          <tr>
+            <td><strong>AI output</strong></td>
+            <td>AI estimated ~$17–$20 per share using a Black-Scholes approximation with VIX as the implied volatility input.</td>
+          </tr>
+          <tr>
+            <td><strong>Verification step</strong></td>
+            <td>Cross-referenced against the CBOE options chain for SPY. Actual mid-price for the target strike and expiration was $18.40.</td>
+          </tr>
+          <tr>
+            <td><strong>Decision</strong></td>
+            <td>Used $18.00/share (conservatively rounded down) in the Phase 4 documentation. AI estimate accepted with independent verification.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  CHECKLIST                                        -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="step-num">✓</div>
+    <div>
+      <h2>Phase 5 Submission Checklist</h2>
+      <div class="section-sub">Complete all items for all three clients before proceeding to Phase 6</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <ul class="checklist">
+      <li><div class="check-box"></div><span><strong>Portfolio Beta calculated</strong> for all 3 clients — weighted average of Phase 4 security betas. Base Case and Bear Case both reported.</span></li>
+      <li><div class="check-box"></div><span><strong>Portfolio Std Dev calculated</strong> for all 3 clients — MMULT/TRANSPOSE formula with the covariance matrix. Bear Case uses stressed (tighter) correlation inputs.</span></li>
+      <li><div class="check-box"></div><span><strong>Sharpe Ratio calculated</strong> for all 3 clients — Base Case and Bear Case. Risk-free rate is the Cash/T-Bill CME return from Phase 3.</span></li>
+      <li><div class="check-box"></div><span><strong>Bear Case drawdown confirmed</strong> — hedged portfolio loss is within each client's IPS drawdown tripwire. All three clients tested and documented individually.</span></li>
+      <li><div class="check-box"></div><span><strong>Any σp breach disclosed</strong> — if Bear Case σp exceeds the IPS maximum, it is written up with an explanation of the stress-period cause. Not silently omitted.</span></li>
+      <li><div class="check-box"></div><span><strong>Failed portfolios re-allocated</strong> — if a hedged Bear Case still exceeds the IPS tripwire, the re-allocation is documented with before/after metrics and the upside trade-off explained.</span></li>
+      <li><div class="check-box"></div><span><strong>Audit Scorecard completed</strong> for all 3 clients — one per client, all metrics against IPS limits with Pass / Warn / Disclosed status.</span></li>
+      <li><div class="check-box"></div><span><strong>All metrics are formula-driven</strong> — changing any CME input cell automatically updates βp, σp, Sharpe, and drawdown. No hard-coded numbers in the audit model.</span></li>
+      <li><div class="check-box"></div><span><strong>AI Audit Log complete</strong> — minimum one entry per phase where AI was used. Each entry includes the prompt, the output, the verification step, and the team's decision.</span></li>
+    </ul>
+  </div>
+
+</div><!-- end body-wrap -->
+
+<div class="page-footer">
+  <span>BUS 331 · Investments · Endicott College</span> &nbsp;|&nbsp; Phase 5: The Stress Test &amp; Quantitative Audit &nbsp;|&nbsp; Fictional client (Priya Mehta) used for classroom illustration only
+</div>
+
+</body>
+</html>
