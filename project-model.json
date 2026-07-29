@@ -1,0 +1,409 @@
+{
+  "schemaVersion": 1,
+  "course": {
+    "code": "BUS331",
+    "name": "Investments",
+    "school": "Gerrish School of Business",
+    "institution": "Endicott College",
+    "term": "Fall 2026"
+  },
+  "project": {
+    "title": "Investment Committee Simulation",
+    "subtitle": "Three approval gates. Four committee members. One integrated recommendation.",
+    "premise": "Your four-person investment committee advises three client mandates and manages $500,000 in hypothetical assets. The committee must establish a market view, build and challenge each portfolio, and defend one evidence-linked recommendation.",
+    "clientCount": 3,
+    "committeeSize": 4,
+    "hypotheticalAum": "$500,000",
+    "scopeNote": "Canvas remains the authority for due dates, submission links, and course-grade weights."
+  },
+  "roles": [
+    {
+      "id": "chair-mandate",
+      "title": "Committee Chair & Client Mandate Lead",
+      "shortTitle": "Chair & Mandate",
+      "color": "gold",
+      "mandate": "Own the meeting process, client suitability, decision record, and integration across all three phases.",
+      "phaseResponsibilities": {
+        "phase-1": "Lead the RRTTLLU review, resolve client constraint conflicts, and frame the approval motion.",
+        "phase-2": "Test whether proposed allocations and securities stay inside each approved mandate.",
+        "phase-3": "Open the committee meeting, state the recommendation, record the vote, and close with actions."
+      }
+    },
+    {
+      "id": "markets-strategy",
+      "title": "Markets & Economic Strategist",
+      "shortTitle": "Markets Strategist",
+      "color": "teal",
+      "mandate": "Own the 12-month macro thesis, scenario probabilities, data provenance, and transmission logic.",
+      "phaseResponsibilities": {
+        "phase-1": "Build the human-first macro read, compare it with consensus, and propose base and bear scenarios.",
+        "phase-2": "Translate the approved thesis into expected returns, volatility, correlations, and macro filters.",
+        "phase-3": "Defend the market view and explain why the recommendation should work under the base case."
+      }
+    },
+    {
+      "id": "portfolio-construction",
+      "title": "Portfolio Construction Lead",
+      "shortTitle": "Portfolio Lead",
+      "color": "steel",
+      "mandate": "Own capital-market expectations, optimization, security selection, allocation, and implementation feasibility.",
+      "phaseResponsibilities": {
+        "phase-1": "Identify the portfolio decisions that the approved market view and client mandates must support.",
+        "phase-2": "Run the CME and Solver work, select securities, document weights, and propose implementation trades.",
+        "phase-3": "Defend portfolio construction, security-level choices, and the path from evidence to weights."
+      }
+    },
+    {
+      "id": "risk-controls",
+      "title": "Risk, Controls & Challenge Lead",
+      "shortTitle": "Risk & Challenge",
+      "color": "terra",
+      "mandate": "Own independent challenge, stress testing, hedge analysis, the AI audit, and mandate-breach escalation.",
+      "phaseResponsibilities": {
+        "phase-1": "Challenge scenario assumptions, verify sources, and define the evidence required at the first gate.",
+        "phase-2": "Run the bear-case stress test, compare hedges, identify breaches, and require corrective action.",
+        "phase-3": "Present the strongest downside case and lead preparation for adversarial Q&A."
+      }
+    }
+  ],
+  "committeeProtocol": [
+    {
+      "step": "Pre-read",
+      "description": "Circulate the required evidence before the meeting. Every member reviews the full package."
+    },
+    {
+      "step": "Recommendation",
+      "description": "The workstream lead states a clear recommendation and cites the evidence that supports it."
+    },
+    {
+      "step": "Independent challenge",
+      "description": "The Risk, Controls & Challenge Lead presents the strongest counterargument or mandate risk."
+    },
+    {
+      "step": "Motion and vote",
+      "description": "The Chair records approve, revise, or reject. All four members vote; ties require revision."
+    },
+    {
+      "step": "Decision record",
+      "description": "Capture evidence reviewed, dissent or reservations, owners, and actions before the next gate."
+    }
+  ],
+  "phases": [
+    {
+      "id": "phase-1",
+      "number": 1,
+      "title": "Frame the Mandate",
+      "shortTitle": "Mandate",
+      "tagline": "Agree on the world you are investing in and the rules you cannot break.",
+      "keyQuestion": "What must be true about markets and each client before we are willing to invest?",
+      "objective": "Establish one defensible 12-month market view and convert each assigned client profile into an approved investment mandate.",
+      "gate": "Approve or revise the common market view and all three client mandates. Portfolio construction cannot begin until the vote and action items are recorded.",
+      "meetingMotion": "Motion to approve the committee's market view and the investment mandate for each assigned client.",
+      "workstreams": [
+        {
+          "title": "Market view",
+          "description": "Read the historical data before using AI, compare the committee view with FactSet/FRED consensus, and build bull/base/bear scenarios."
+        },
+        {
+          "title": "Client mandate",
+          "description": "Translate each client profile into RRTTLLU constraints, return targets, liquidity needs, and an explicit drawdown tripwire."
+        },
+        {
+          "title": "Conflict register",
+          "description": "Surface tensions among return, risk, liquidity, taxes, legal restrictions, and unique circumstances before approving the mandate."
+        }
+      ],
+      "evidence": [
+        "Human-first five-year macro read with source dates",
+        "FactSet/FRED consensus comparison and team forecast",
+        "Bull/base/bear scenarios with probabilities totaling 100%",
+        "RRTTLLU analysis for all three assigned clients",
+        "Return target, maximum volatility, and drawdown tripwire for each client",
+        "Phase 1 decision record signed by all four members"
+      ],
+      "deliverables": [
+        "Completed macro starter workbook",
+        "Three completed client IPS documents",
+        "One-page committee mandate memo",
+        "Phase 1 decision record"
+      ],
+      "resources": [
+        "macro-starter",
+        "client-profiles",
+        "client-data",
+        "ips-framework",
+        "decision-record"
+      ]
+    },
+    {
+      "id": "phase-2",
+      "number": 2,
+      "title": "Build & Challenge",
+      "shortTitle": "Portfolio",
+      "tagline": "Turn the approved view into portfolios, then try to break them.",
+      "keyQuestion": "Does each portfolio earn its place inside the client mandate after costs, constraints, and the bear case?",
+      "objective": "Translate the Phase 1 view into capital-market expectations, construct client portfolios, select securities, design risk mitigation, and challenge each recommendation under stress.",
+      "gate": "Approve, revise, or reject each client portfolio. A failed tripwire cannot receive approval without a documented correction.",
+      "meetingMotion": "Motion to approve the proposed portfolio and risk-mitigation plan for each assigned client.",
+      "workstreams": [
+        {
+          "title": "A · Capital-market expectations",
+          "description": "Convert the market view into expected returns, volatility, correlations, and Solver constraints for base and bear cases."
+        },
+        {
+          "title": "B · Securities & implementation",
+          "description": "Select and weight securities, document macro and client fit, and compare at least two risk-mitigation approaches."
+        },
+        {
+          "title": "C · Stress test & corrective action",
+          "description": "Run the bear case, test the tripwire, quantify hedge effects, and document trades required to cure any breach."
+        }
+      ],
+      "evidence": [
+        "Base and bear CME inputs with cited rationale",
+        "Solver output and constraint checks for each client",
+        "Security-selection table with macro connection, client fit, weight, and source",
+        "Risk-mitigation comparison showing cost and trade-offs",
+        "Stress-test result against each approved tripwire",
+        "Before/after record for any corrective trades",
+        "AI audit entries linked to human verification",
+        "Phase 2 decision record signed by all four members"
+      ],
+      "deliverables": [
+        "Completed CME workbook",
+        "Completed security-selection and thesis workbook",
+        "Completed stress-test workbook",
+        "Phase 2 decision record with client-by-client votes"
+      ],
+      "resources": [
+        "cme-template",
+        "security-template",
+        "stress-template",
+        "cme-technical-guide",
+        "security-technical-guide",
+        "stress-technical-guide",
+        "decision-record"
+      ]
+    },
+    {
+      "id": "phase-3",
+      "number": 3,
+      "title": "Defend the Recommendation",
+      "shortTitle": "Decision",
+      "tagline": "Make the recommendation visible, auditable, and defensible under pressure.",
+      "keyQuestion": "Can every committee member defend the same evidence-linked recommendation to the panel?",
+      "objective": "Integrate the committee's work into a concise decision package and defend the client recommendations before an investment-committee panel.",
+      "gate": "Issue the final recommendation, record dissent or reservations, and defend the evidence. Every member must answer questions outside the workstream they led.",
+      "meetingMotion": "Motion to issue the committee's final recommendation and implementation plan for all assigned clients.",
+      "workstreams": [
+        {
+          "title": "Decision memo",
+          "description": "State the recommendation first, then connect the market view, client mandate, portfolio, and risk decision."
+        },
+        {
+          "title": "Technical exhibit book",
+          "description": "Present the auditable evidence: scenarios, IPS constraints, allocations, securities, stress results, and sources."
+        },
+        {
+          "title": "Committee defense",
+          "description": "Deliver a visual pitch, answer adversarial questions, and show that all four members understand the integrated decision."
+        }
+      ],
+      "evidence": [
+        "Executive recommendation and decision memo",
+        "Technical exhibit book linking macro, mandate, allocation, securities, and risk",
+        "Client-specific recommendation for all three assigned clients",
+        "Final decision record with vote, reservations, and implementation actions",
+        "Visual oral presentation with balanced speaking time",
+        "Cross-functional Q&A preparation"
+      ],
+      "deliverables": [
+        "Final committee decision memo",
+        "Technical exhibit book or dossier",
+        "Oral presentation",
+        "Final decision record and AI audit appendix"
+      ],
+      "resources": [
+        "decision-record",
+        "phase-3-assessment"
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "macro-starter",
+      "label": "Macro starter workbook",
+      "type": "XLSX",
+      "path": "files/Macro_Starter_Template_Student.xlsx",
+      "description": "Historical data, human-first analysis, consensus comparison, scenarios, and sensitivity modeling.",
+      "audience": "student"
+    },
+    {
+      "id": "client-profiles",
+      "label": "Assigned client profiles",
+      "type": "PPTX",
+      "path": "files/Client_Scenarios_Profiles.pptx",
+      "description": "Five team sets with three client mandates per team.",
+      "audience": "student"
+    },
+    {
+      "id": "client-data",
+      "label": "Client scenario data",
+      "type": "XLSX",
+      "path": "files/Client_Scenarios_Data_File.xlsx",
+      "description": "Structured profile data, targets, volatility limits, and risk classifications.",
+      "audience": "student"
+    },
+    {
+      "id": "ips-framework",
+      "label": "IPS client-analysis framework",
+      "type": "DOCX",
+      "path": "files/Investment_Policy_Statement_Template_Client_Analysis_Framework.docx",
+      "description": "Blank framework for objectives, RRTTLLU constraints, allocation, monitoring, and acknowledgment.",
+      "audience": "student"
+    },
+    {
+      "id": "cme-template",
+      "label": "CME & optimization workbook",
+      "type": "XLSX",
+      "path": "files/BUS331_InvProject_CMEMatrix_Template.xlsx",
+      "description": "Base and bear assumptions, correlations, client constraints, and Solver-ready allocations.",
+      "audience": "student"
+    },
+    {
+      "id": "security-template",
+      "label": "Security selection & hedge workbook",
+      "type": "XLSX",
+      "path": "files/BUS331_InvProject_SecuritySelection_Template.xlsx",
+      "description": "Three client tabs with weights, thesis blocks, macro filters, and hedge comparison.",
+      "audience": "student"
+    },
+    {
+      "id": "stress-template",
+      "label": "Stress-test & audit workbook",
+      "type": "XLSX",
+      "path": "files/BUS331_InvProject_StressTest_Template.xlsx",
+      "description": "Base/bear metrics, tripwire status, corrective-action record, and client summary.",
+      "audience": "student"
+    },
+    {
+      "id": "cme-technical-guide",
+      "label": "CME technical reference",
+      "type": "HTML",
+      "path": "project/BUS331_InvProject_Bridge_CME_Guide.html",
+      "description": "Supporting detail for scenario translation, correlation assumptions, and portfolio optimization.",
+      "audience": "student"
+    },
+    {
+      "id": "security-technical-guide",
+      "label": "Security & hedge technical reference",
+      "type": "HTML",
+      "path": "project/BUS331_InvProject_SecuritySelection_Guide.html",
+      "description": "Supporting detail for security theses, macro filters, and hedge alternatives.",
+      "audience": "student"
+    },
+    {
+      "id": "stress-technical-guide",
+      "label": "Stress-test technical reference",
+      "type": "HTML",
+      "path": "project/BUS331_InvProject_StressTest_Guide.html",
+      "description": "Supporting detail for bear-case mechanics, tripwires, and corrective action.",
+      "audience": "student"
+    },
+    {
+      "id": "decision-record",
+      "label": "Committee decision record",
+      "type": "XLSX",
+      "path": "files/BUS331_Investment_Committee_Decision_Record_Student.xlsx",
+      "description": "Role charter, gate-by-gate evidence review, motions, client-level votes, dissent, action items, and AI audit log.",
+      "audience": "student"
+    },
+    {
+      "id": "phase-3-assessment",
+      "label": "Assessment & submission guide",
+      "type": "HTML",
+      "path": "project/assessment.html",
+      "description": "Student-facing evidence, written/oral criteria, submission checklist, and Q&A expectations.",
+      "audience": "student"
+    }
+  ],
+  "aiRules": [
+    {
+      "status": "Permitted",
+      "tone": "green",
+      "title": "Logic, debugging & challenge",
+      "description": "Use AI to explain formulas, test reasoning, generate counterarguments, or surface missing risks."
+    },
+    {
+      "status": "Verify before use",
+      "tone": "yellow",
+      "title": "Summaries, scenarios & estimates",
+      "description": "Cross-check every factual claim and number against FactSet, FRED, SEC filings, or the team's workbook."
+    },
+    {
+      "status": "Not acceptable",
+      "tone": "red",
+      "title": "Unverified decisions",
+      "description": "Do not submit AI-generated allocations, risk metrics, citations, or client recommendations without human verification."
+    }
+  ],
+  "assessment": {
+    "note": "Canvas remains the authority for due dates, submission mechanics, and the project's course-grade weight. The criteria below preserve the existing written/oral assessment emphasis while aligning it to Phase 3.",
+    "writtenWeight": 50,
+    "oralWeight": 50,
+    "writtenCriteria": [
+      {
+        "criterion": "Technical accuracy",
+        "weight": 25,
+        "standard": "Calculations, formulas, sources, and portfolio metrics are correct, traceable, and interpreted."
+      },
+      {
+        "criterion": "Evidence bridge",
+        "weight": 25,
+        "standard": "The market view visibly drives CME assumptions, portfolio weights, securities, and client recommendations."
+      },
+      {
+        "criterion": "Stress test & mandate compliance",
+        "weight": 25,
+        "standard": "Each portfolio is tested against its tripwire; breaches trigger documented corrective action."
+      },
+      {
+        "criterion": "Visualization & documentation",
+        "weight": 15,
+        "standard": "Exhibits communicate the decision clearly and include complete sources and the AI audit."
+      },
+      {
+        "criterion": "Client and regulatory constraints",
+        "weight": 10,
+        "standard": "RRTTLLU constraints change the actual portfolio rather than appearing as generic narrative."
+      }
+    ],
+    "oralCriteria": [
+      {
+        "criterion": "Narrative flow & clarity",
+        "weight": 30,
+        "standard": "The committee tells one coherent story from market view to client action."
+      },
+      {
+        "criterion": "Defense of strategy",
+        "weight": 30,
+        "standard": "Members defend the base case, bear case, trade-offs, and quantitative evidence under questioning."
+      },
+      {
+        "criterion": "Professional presence",
+        "weight": 20,
+        "standard": "The team speaks as advisors to the committee with confident, concise, client-aware language."
+      },
+      {
+        "criterion": "Committee cohesion",
+        "weight": 10,
+        "standard": "All four members contribute, transition cleanly, and can answer beyond their lead workstream."
+      },
+      {
+        "criterion": "Visual-aid efficacy",
+        "weight": 10,
+        "standard": "Slides make the recommendation and key evidence visible at a glance rather than serving as a script."
+      }
+    ]
+  }
+}
