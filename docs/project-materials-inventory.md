@@ -25,6 +25,7 @@ One critical public/private boundary issue was identified during inventory:
 | `BUS331_InvProject_Requirements_AllPhases.html` | Student/public | Scenario, client mandate, four roles, technical expectations, checklists | Replace with a generated three-phase project guide; retain the path only as a compatibility entry point |
 | `project/macro-analysis.html` | Student/public | Macro objective, indicator list, starter-workbook link | Fold into Phase 1; replace broken PDF dependency with public-safe instructions |
 | `project/ips-client-profiles.html` | Student/public | RRTTLLU framing and links to client resources | Fold into Phase 1 as the client-mandate workstream |
+| `project/client-discovery-ai-protocol.html` | Student/public | Five fictional-client team sets, bounded AI role-play, four analyst interview rounds, source verification, and guardrail handoff | Generate from `project-model.json` as the Phase 1 launch experience |
 | `project/BUS331_InvProject_Bridge_CME_Guide.html` | Student/public | CME logic, scenario translation, Solver workflow | Preserve as Phase 2 Workstream A |
 | `project/BUS331_InvProject_SecuritySelection_Guide.html` | Student/public | Macro filter, security thesis, derivative hedge comparison | Preserve as Phase 2 Workstream B; keep exemplars clearly separate from assigned clients |
 | `project/BUS331_InvProject_StressTest_Guide.html` | Student/public | Base/bear metrics, tripwire logic, reallocation decision, AI audit | Preserve as Phase 2 Workstream C |
@@ -59,10 +60,10 @@ One critical public/private boundary issue was identified during inventory:
 
 ## Four-person committee roles
 
-1. **Committee Chair and Client Mandate Lead** - owns meeting discipline, client suitability, the decision record, and phase integration.
-2. **Markets and Economic Strategist** - owns the macro thesis, scenarios, data provenance, and macro-to-portfolio transmission logic.
-3. **Portfolio Construction Lead** - owns CME inputs, optimization, security selection, allocation, and implementation feasibility.
-4. **Risk, Controls, and Challenge Lead** - owns independent challenge, stress testing, hedge analysis, AI audit, and mandate-breach escalation.
+1. **Client and Macro Strategist** - owns client discovery, the market view, IPS objectives and constraints, and the handoff from client needs to investment criteria.
+2. **Fixed-Income Analyst** - owns income, preservation, maturity, duration, credit, liquidity, and tax questions for the fixed-income sleeve.
+3. **Fund and ETF Analyst** - owns pooled-vehicle due diligence, diversification, benchmark fit, fees, liquidity, taxes, and active/passive implementation.
+4. **Portfolio Manager and Risk Analyst** - owns portfolio integration, risk capacity versus willingness, decision-log quality, stress testing, and mandate-breach escalation.
 
 All four members vote in every phase, sign the decision record, and must be able to defend any section. A recommendation is not approved until the committee records the motion, evidence reviewed, vote, dissent or reservation, and action items.
 
@@ -74,10 +75,12 @@ All four members vote in every phase, sign the decision record, and must be able
 ## Redesign implementation status
 
 - `project-model.json` now defines the three phases, four committee seats, approval gates, deliverables, resource manifest, AI rules, and public assessment language.
+- The Phase 1 model now defines the existing five fictional-client team sets, the human-first decision cycle, one interview round per analyst role, bounded role-play and challenge prompts, approved-source rules, and CFA Level I foundation links.
 - The shared builder now generates the portal, comprehensive guide, three phase guides, compatibility guide, and assessment page.
+- The shared builder now also generates the student-facing Client Discovery and AI Decision Protocol and integrates it into the portal, project guide, and Phase 1 guide.
 - The generated pages no longer link to either missing legacy resource.
 - The validator checks phase and role counts, local links, accessibility landmarks, retired phase language, public resource names, and the known instructor-only PDF.
-- A new student committee decision-record workbook provides the role charter, gate-by-gate evidence review, four-person votes, dissent, action items, and AI audit log.
+- The student committee decision-record workbook now provides an Analyst Decision Log with a 12-cell role-by-client coverage gate, plus the role charter, gate-by-gate evidence review, four-person votes, dissent, action items, and AI audit log.
 - Release-mode validation now passes after the instructor-only PDF was moved to the private workspace.
 
 Nothing was deleted, committed, pushed, or published during this inventory. The instructor-only PDF was moved only after explicit approval in the follow-up task.

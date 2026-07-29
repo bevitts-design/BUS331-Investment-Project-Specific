@@ -6,6 +6,7 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, "..");
 const model = JSON.parse(await fs.readFile(path.join(rootDir, "project-model.json"), "utf8"));
 const resourceById = new Map(model.resources.map((resource) => [resource.id, resource]));
+const roleById = new Map(model.roles.map((role) => [role.id, role]));
 
 const escapeHtml = (value = "") => String(value)
   .replaceAll("&", "&amp;")
@@ -15,6 +16,7 @@ const escapeHtml = (value = "") => String(value)
   .replaceAll("'", "&#039;");
 
 const phasePath = (phase) => `project/${phase.id}-${phase.title.toLowerCase().replaceAll("&", "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.html`;
+const clientDiscoveryPath = "project/client-discovery-ai-protocol.html";
 const prefixPath = (prefix, target) => `${prefix}${target}`;
 
 function siteHeader(prefix) {
@@ -29,6 +31,7 @@ function siteHeader(prefix) {
       <nav class="site-nav" aria-label="Project navigation">
         <a href="${prefixPath(prefix, "project/guide.html")}">Project guide</a>
         <a href="${prefixPath(prefix, phasePath(model.phases[0]))}">Phase 1</a>
+        <a href="${prefixPath(prefix, clientDiscoveryPath)}">Discovery protocol</a>
         <a href="${prefixPath(prefix, "project/assessment.html")}">Assessment</a>
       </nav>
     </div>
@@ -110,6 +113,65 @@ function aiRulesMarkup() {
   </div>`;
 }
 
+function decisionCycleMarkup() {
+  return `<div class="decision-cycle">
+    ${model.phase1Experience.decisionCycle.map((item, index) => `<article class="decision-cycle-step">
+      <p class="cycle-count">${index + 1}</p>
+      <div><h3>${escapeHtml(item.stage)}</h3><p>${escapeHtml(item.action)}</p><p class="log-evidence"><strong>Log:</strong> ${escapeHtml(item.logEvidence)}</p></div>
+    </article>`).join("\n")}
+  </div>`;
+}
+
+function clientSetBoard() {
+  return `<div class="client-set-board">
+    ${model.phase1Experience.clientSets.map((set) => `<article class="client-set">
+      <p class="role-tag">${escapeHtml(set.team)}</p>
+      <h3>${set.clients.map(escapeHtml).join(" · ")}</h3>
+      <p>${escapeHtml(set.inquiry)}</p>
+    </article>`).join("\n")}
+  </div>`;
+}
+
+function interviewRoundBoard() {
+  return `<div class="interview-rounds">
+    ${model.phase1Experience.interviewRounds.map((round) => {
+      const role = roleById.get(round.roleId);
+      if (!role) throw new Error(`Unknown role id in interview round: ${round.roleId}`);
+      return `<article class="interview-round" data-color="${escapeHtml(role.color)}">
+        <p class="role-tag">${escapeHtml(round.round)}</p>
+        <h3>${escapeHtml(role.title)}</h3>
+        <ul class="clean-list">${round.questionThemes.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+        <div class="handoff"><strong>Handoff</strong>${escapeHtml(round.handoff)}</div>
+      </article>`;
+    }).join("\n")}
+  </div>`;
+}
+
+function sourceBoard() {
+  return `<div class="source-board">
+    ${model.phase1Experience.approvedSources.map((item) => `<article class="source-card">
+      <p class="role-tag">Approved evidence</p>
+      <h3>${item.url ? `<a href="${escapeHtml(item.url)}">${escapeHtml(item.label)}</a>` : escapeHtml(item.label)}</h3>
+      <p>${escapeHtml(item.use)}</p>
+      <p class="source-note">${escapeHtml(item.source || "Open the official source and record the series or document used.")}</p>
+    </article>`).join("\n")}
+  </div>`;
+}
+
+function phaseOneLaunchMarkup(prefix) {
+  return `<div class="milestone-banner">
+    <div>
+      <p class="section-kicker">Phase 1 launch experience</p>
+      <h2>${escapeHtml(model.phase1Experience.title)}</h2>
+      <p>${escapeHtml(model.phase1Experience.subtitle)}</p>
+    </div>
+    <div class="milestone-actions">
+      <a class="button button-primary" href="${escapeHtml(prefixPath(prefix, clientDiscoveryPath))}">Open the discovery protocol</a>
+      <a class="button" href="${escapeHtml(prefixPath(prefix, resourceById.get("decision-record").path))}">Open the Analyst Decision Log <span>XLSX</span></a>
+    </div>
+  </div>`;
+}
+
 function phasePanel(phase) {
   const nextPath = phasePath(phase);
   return `<article class="phase-panel">
@@ -180,6 +242,18 @@ function landingPage() {
         ${roleBoard()}
       </section>
 
+      <section class="section" aria-labelledby="discovery-title">
+        <div class="section-header">
+          <p class="section-kicker">Start here · Phase 1</p>
+          <h2 id="discovery-title">Client needs become investment guardrails</h2>
+          <p>Each analyst commits to a human-first view, uses AI to challenge it, verifies material claims, and records the final reasoning before the team evaluates any security or portfolio weight.</p>
+        </div>
+        ${phaseOneLaunchMarkup("")}
+        <div class="cycle-strip" aria-label="Client discovery decision cycle">
+          ${model.phase1Experience.decisionCycle.map((item) => `<span>${escapeHtml(item.stage)}</span>`).join("\n")}
+        </div>
+      </section>
+
       <section class="section" aria-labelledby="phases-title">
         <div class="section-header">
           <p class="section-kicker">Project phases</p>
@@ -240,6 +314,8 @@ function phasePage(phase) {
             <p>${escapeHtml(phase.objective)}</p>
             <div class="callout"><h3>Committee motion</h3><p>${escapeHtml(phase.meetingMotion)}</p></div>
           </section>
+
+          ${phase.id === "phase-1" ? `<section>${phaseOneLaunchMarkup(prefix)}</section>` : ""}
 
           <section>
             <h2>Workstreams</h2>
@@ -320,6 +396,7 @@ function guidePage(prefix = "../") {
           <h2>Rules of engagement</h2>
           ${aiRulesMarkup()}
           <div class="callout"><h3>Verification standard</h3><p>Every AI-assisted factual claim or number must be traceable to a human-verified source. Record the prompt, output summary, verification source, and final human decision.</p></div>
+          <div class="hero-actions"><a class="button button-primary" href="${escapeHtml(`${localProjectPrefix}${path.basename(clientDiscoveryPath)}`)}">Open the Client Discovery and AI Decision Protocol</a></div>
         </section>
 
         <section>
@@ -338,6 +415,116 @@ function guidePage(prefix = "../") {
     prefix,
     body,
     pageClass: "guide-page"
+  });
+}
+
+function clientDiscoveryPage() {
+  const prefix = "../";
+  const experience = model.phase1Experience;
+  const body = `
+  <main id="main-content">
+    ${pageHero("Phase 1 · Student launch experience", experience.title, experience.subtitle)}
+    <div class="page-shell">
+      <div class="content-flow">
+        <section>
+          <div class="launch-grid">
+            <div>
+              <p class="section-kicker">Outcome</p>
+              <h2>Discover before you prescribe</h2>
+              <p>${escapeHtml(experience.purpose)}</p>
+            </div>
+            <div class="time-card"><strong>Working time</strong><span>${escapeHtml(experience.duration)}</span></div>
+          </div>
+          <div class="callout"><h3>Non-negotiable sequence</h3><p>Human judgment comes first. AI may interview and challenge. Approved evidence verifies. The team—not the AI—makes and owns the final decision.</p></div>
+        </section>
+
+        <section>
+          <p class="section-kicker">Decision cycle</p>
+          <h2>Five moves from profile to guardrail</h2>
+          ${decisionCycleMarkup()}
+        </section>
+
+        <section>
+          <p class="section-kicker">Fictional client assignments</p>
+          <h2>Meet the five committee case sets</h2>
+          <p>Use your assigned three-client set. The inquiry line identifies tensions to investigate, not a conclusion to copy.</p>
+          ${clientSetBoard()}
+          <div class="resource-list resource-list-inline">${resourceLinks(["client-profiles", "client-data"], prefix, { includeDescription: true })}</div>
+        </section>
+
+        <section>
+          <p class="section-kicker">Four-person interview</p>
+          <h2>One round per analyst role</h2>
+          <p>Each analyst asks questions in their lane, then hands a usable constraint or information gap to the next analyst. All four roles enter a human-first judgment for all three clients before AI use.</p>
+          ${interviewRoundBoard()}
+        </section>
+
+        <section>
+          <p class="section-kicker">Bounded role-play</p>
+          <h2>Start with this prompt</h2>
+          <p>Replace the bracketed text with one assigned fictional client. Do not paste private information, proprietary FactSet content, or any real person's data into an AI tool.</p>
+          <pre class="prompt-block"><code>${escapeHtml(experience.rolePlayPrompt.join("\n\n"))}</code></pre>
+          <div class="callout"><h3>When the brief is silent</h3><p>Record the answer as an information gap. An invented client preference is not discovery and cannot support an investment decision.</p></div>
+        </section>
+
+        <section>
+          <p class="section-kicker">Challenge round</p>
+          <h2>Ask AI to attack the reasoning</h2>
+          <div class="challenge-grid">${experience.challengerPrompts.map((prompt) => `<article><p>${escapeHtml(prompt)}</p></article>`).join("\n")}</div>
+        </section>
+
+        <section>
+          <p class="section-kicker">Human verification</p>
+          <h2>Use an approved evidence path</h2>
+          <p>AI output is never a source. Match the claim to the strongest available evidence, record an as-of date, and classify the result as Confirmed, Qualified, Contradicted, or Not verifiable.</p>
+          ${sourceBoard()}
+        </section>
+
+        <section>
+          <p class="section-kicker">Analyst Decision Log</p>
+          <h2>Make the change in judgment visible</h2>
+          <div class="content-grid compact-grid">
+            <div>
+              <ul class="clean-list">${experience.decisionLogFields.map((field) => `<li>${escapeHtml(field)}</li>`).join("\n")}</ul>
+            </div>
+            <aside class="side-rail static-rail">
+              <p class="section-kicker">Student workbook</p>
+              <h2>Log every material decision</h2>
+              <div class="resource-list">${resourceLinks(["decision-record"], prefix, { includeDescription: true })}</div>
+            </aside>
+          </div>
+        </section>
+
+        <section>
+          <p class="section-kicker">Quality gate</p>
+          <h2>Ready for the Phase 1 vote?</h2>
+          <ul class="check-list">${experience.qualityGate.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+          <div class="callout"><h3>Stop condition</h3><p>If a material claim is contradicted or not verifiable, revise the judgment or mark the mandate incomplete. Do not carry uncertainty forward as a fact.</p></div>
+        </section>
+
+        <section>
+          <p class="section-kicker">CFA Level I foundation</p>
+          <h2>Use foundational concepts to organize the judgment</h2>
+          <div class="foundation-grid">${experience.cfaFoundations.map((item) => `<article><h3><a href="${escapeHtml(item.url)}">${escapeHtml(item.topic)}</a></h3><p>${escapeHtml(item.application)}</p></article>`).join("\n")}</div>
+          <p class="fine-print">Course alignment only. CFA Institute does not sponsor or endorse this project, and the linked pages remain the authority for current CFA Program descriptions.</p>
+        </section>
+
+        <section>
+          <div class="milestone-banner">
+            <div><p class="section-kicker">Next decision</p><h2>Convert discovery into the client mandate</h2><p>Carry each approved guardrail into the IPS, then use it as a pass/fail screen when the team evaluates bonds, mutual funds, ETFs, portfolio weights, and stress results.</p></div>
+            <div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(path.basename(phasePath(model.phases[0])))}">Return to Phase 1</a><a class="button" href="${escapeHtml(prefixPath(prefix, "project/guide.html"))}">Project guide</a></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>`;
+
+  return shell({
+    title: experience.title,
+    description: experience.purpose,
+    prefix,
+    body,
+    pageClass: "guide-page discovery-page"
   });
 }
 
@@ -392,9 +579,10 @@ await fs.mkdir(path.join(rootDir, "project"), { recursive: true });
 await fs.writeFile(path.join(rootDir, "index.html"), landingPage());
 await fs.writeFile(path.join(rootDir, "project", "guide.html"), guidePage("../"));
 await fs.writeFile(path.join(rootDir, "BUS331_InvProject_Requirements_AllPhases.html"), guidePage(""));
+await fs.writeFile(path.join(rootDir, clientDiscoveryPath), clientDiscoveryPage());
 for (const phase of model.phases) {
   await fs.writeFile(path.join(rootDir, phasePath(phase)), phasePage(phase));
 }
 await fs.writeFile(path.join(rootDir, "project", "assessment.html"), assessmentPage());
 
-console.log(`Built ${model.phases.length + 4} project pages from project-model.json.`);
+console.log(`Built ${model.phases.length + 5} project pages from project-model.json.`);

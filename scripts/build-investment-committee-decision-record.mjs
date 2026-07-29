@@ -8,6 +8,7 @@ if (!targetRoot) throw new Error("Usage: node build-decision-record.mjs <target-
 const model = JSON.parse(await fs.readFile(path.join(targetRoot, "project-model.json"), "utf8"));
 const outputPath = path.join(targetRoot, "files", "BUS331_Investment_Committee_Decision_Record_Student.xlsx");
 const previewDir = path.join(path.dirname(new URL(import.meta.url).pathname), "previews");
+const minimumDecisionLogEntries = model.project.clientCount * model.project.committeeSize;
 
 const COLORS = {
   navy: "#0B1F35",
@@ -33,6 +34,7 @@ const COLORS = {
 const workbook = Workbook.create();
 const start = workbook.worksheets.add("START HERE");
 const roster = workbook.worksheets.add("COMMITTEE ROSTER");
+const analystLog = workbook.worksheets.add("ANALYST DECISION LOG");
 const decisionSheets = [
   workbook.worksheets.add("PHASE 1"),
   workbook.worksheets.add("PHASE 2 CLIENT 1"),
@@ -115,6 +117,37 @@ function addStatusFormatting(range) {
   });
 }
 
+function addDecisionLogFormatting(range) {
+  range.conditionalFormats.add("containsText", {
+    text: "EVIDENCE READY",
+    format: { fill: COLORS.green, font: { bold: true, color: COLORS.greenText } }
+  });
+  range.conditionalFormats.add("containsText", {
+    text: "REVISE",
+    format: { fill: COLORS.red, font: { bold: true, color: COLORS.redText } }
+  });
+  range.conditionalFormats.add("containsText", {
+    text: "INCOMPLETE",
+    format: { fill: COLORS.yellow, font: { bold: true, color: COLORS.yellowText } }
+  });
+  range.conditionalFormats.add("containsText", {
+    text: "MINIMUM",
+    format: { fill: COLORS.yellow, font: { bold: true, color: COLORS.yellowText } }
+  });
+  range.conditionalFormats.add("containsText", {
+    text: "REVIEW",
+    format: { fill: COLORS.red, font: { bold: true, color: COLORS.redText } }
+  });
+  range.conditionalFormats.add("containsText", {
+    text: "MISSING",
+    format: { fill: COLORS.red, font: { bold: true, color: COLORS.redText } }
+  });
+  range.conditionalFormats.add("containsText", {
+    text: "ENTER",
+    format: { fill: COLORS.red, font: { bold: true, color: COLORS.redText } }
+  });
+}
+
 function configureDecisionSheet(sheet, { phaseNumber, phaseTitle, scopeLabel, gateLabel }) {
   titleBand(sheet, `BUS331 Investment Committee — Phase ${phaseNumber} Decision Record`, `${phaseTitle} | All four committee members review, vote, and sign this record.`);
   setColumnWidths(sheet, { A: 20, B: 22, C: 16, D: 24, E: 20, F: 18, G: 18, H: 4 });
@@ -193,18 +226,18 @@ function configureDecisionSheet(sheet, { phaseNumber, phaseTitle, scopeLabel, ga
   sheet.freezePanes.freezeRows(8);
 }
 
-titleBand(start, "BUS331 Investment Committee Decision Record", "One auditable record for every approval gate | Student template");
+titleBand(start, "BUS331 Investment Committee Decision Record", "Analyst Decision Log + one auditable record for every approval gate | Student template");
 setColumnWidths(start, { A: 22, B: 30, C: 22, D: 22, E: 22, F: 18, G: 18, H: 4 });
 start.getRange("A4:G4").merge();
-start.getRange("A4").values = [["Use this workbook to show how analysis became a committee decision. Complete the roster first, then use one decision sheet at each gate. Phase 2 requires a separate vote for each assigned client."]];
+start.getRange("A4").values = [["Use this workbook to show how analysis became a committee decision. Complete the roster, enter human-first Phase 1 judgments in the Analyst Decision Log, then use one decision sheet at each gate. Phase 2 requires a separate vote for each assigned client."]];
 start.getRange("A4:G4").format = { fill: COLORS.goldLight, font: { color: COLORS.ink, size: 11 }, wrapText: true, rowHeight: 42 };
 sectionBand(start, 6, "WORKFLOW");
 start.getRange("A7:G11").values = [
-  ["Before the meeting", "Circulate the pre-read and complete the evidence table.", "", "", "", "", ""],
-  ["During challenge", "Record the strongest counterargument, source, and unresolved issue.", "", "", "", "", ""],
-  ["At the vote", "Each of the four committee members votes Approve, Revise, or Reject.", "", "", "", "", ""],
-  ["After the vote", "Record dissent, conditions, action owners, due dates, and evidence of completion.", "", "", "", "", ""],
-  ["Before the next gate", "Confirm revisions are complete and the decision status is APPROVED.", "", "", "", "", ""]
+  ["Initial judgment", "Before AI use, each role records one provisional judgment for each assigned client and names the fact or assumption driving it.", "", "", "", "", ""],
+  ["AI interview + challenge", "Summarize the bounded client interview and the strongest counterargument; do not paste a transcript as analysis.", "", "", "", "", ""],
+  ["Human verification", "Check client facts, calculations, and outside claims with an approved source and as-of date.", "", "", "", "", ""],
+  ["Final reasoning", "State what changed, the final judgment, and the guardrail later security and portfolio decisions must honor.", "", "", "", "", ""],
+  ["Committee gate", "Circulate the evidence, challenge the recommendation, vote, and record dissent, conditions, owners, and actions.", "", "", "", "", ""]
 ];
 start.getRange("A7:A11").format = { fill: "#E7EEF5", font: { bold: true, color: COLORS.navy }, wrapText: true };
 start.getRange("B7:G11").merge(true);
@@ -227,12 +260,19 @@ addStatusFormatting(start.getRange("C15:C19"));
 start.getRange("A21").values = [["Overall readiness"]];
 start.getRange("A21").format.font = { bold: true, color: COLORS.ink };
 start.getRange("B21:C21").merge();
-start.getRange("B21").formulas = [["=IF(COUNTIF(C15:C19,\"INCOMPLETE\")>0,\"INCOMPLETE\",IF(COUNTIF(C15:C19,\"REVISION REQUIRED\")>0,\"REVISION REQUIRED\",\"READY FOR FINAL DEFENSE\"))"]];
+start.getRange("B21").formulas = [["=IF(B23<>\"READY FOR PHASE 1 GATE\",\"PHASE 1 LOG INCOMPLETE\",IF(COUNTIF(C15:C19,\"INCOMPLETE\")>0,\"INCOMPLETE\",IF(COUNTIF(C15:C19,\"REVISION REQUIRED\")>0,\"REVISION REQUIRED\",\"READY FOR FINAL DEFENSE\")))"]];
 start.getRange("B21:C21").format = { fill: COLORS.yellow, font: { bold: true, size: 12, color: COLORS.ink }, borders: { preset: "outside", style: "medium", color: COLORS.navy } };
 addStatusFormatting(start.getRange("B21:C21"));
-start.getRange("A24:G24").merge();
-start.getRange("A24").values = [[model.project.scopeNote]];
-start.getRange("A24:G24").format = { fill: "#F5F8FA", font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 28 };
+start.getRange("A23").values = [["Phase 1 log readiness"]];
+start.getRange("A23").format.font = { bold: true, color: COLORS.ink };
+start.getRange("B23:C23").merge();
+start.getRange("B23").formulas = [["='ANALYST DECISION LOG'!K40"]];
+start.getRange("B23:C23").format = { fill: COLORS.yellow, font: { bold: true, color: COLORS.ink }, borders: { preset: "outside", style: "thin", color: COLORS.navy } };
+start.getRange("B23:C23").format.font = { bold: true, color: "#008000" };
+addDecisionLogFormatting(start.getRange("B23:C23"));
+start.getRange("A25:G25").merge();
+start.getRange("A25").values = [[model.project.scopeNote]];
+start.getRange("A25:G25").format = { fill: "#F5F8FA", font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 28 };
 start.freezePanes.freezeRows(6);
 
 titleBand(roster, "Committee Roster & Role Charter", "Assign one student to each committee seat. Roles define leadership; all members share the final decision.");
@@ -264,6 +304,92 @@ roster.getRange("A11:A15").format = { fill: COLORS.goldLight, font: { bold: true
 roster.getRange("B11:F15").merge(true);
 roster.getRange("B11:F15").format = { font: { color: COLORS.slate }, wrapText: true };
 roster.freezePanes.freezeRows(4);
+
+titleBand(analystLog, "Analyst Decision Log", "Human-first judgment → AI interview and challenge → human verification → final reasoning → downstream guardrail", "T");
+setColumnWidths(analystLog, {
+  A: 13, B: 13, C: 20, D: 27, E: 28, F: 34, G: 14, H: 19, I: 32, J: 32,
+  K: 27, L: 34, M: 14, N: 19, O: 28, P: 36, Q: 34, R: 16, S: 21, T: 19
+});
+analystLog.getRange("A4:T4").merge();
+analystLog.getRange("A4").values = [[`Before using AI, each of the four roles records at least one initial judgment for each assigned client. Minimum Phase 1 evidence: ${minimumDecisionLogEntries} complete role-by-client entries across the team.`]];
+analystLog.getRange("A4:T4").format = { fill: COLORS.goldLight, font: { bold: true, color: COLORS.ink }, wrapText: true, rowHeight: 30 };
+analystLog.getRange("A5:T5").merge();
+analystLog.getRange("A5").values = [["Summarize AI output; do not paste transcripts. Unknown client information stays unknown. Do not enter real personal information or proprietary FactSet data into an AI tool."]];
+analystLog.getRange("A5:T5").format = { fill: "#F5F8FA", font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 30 };
+analystLog.getRange("A6:L6").values = [["Team / committee", "", "", "Assigned Client 1", "", "", "Assigned Client 2", "", "", "Assigned Client 3", "", ""]];
+analystLog.getRange("A6").format.font = { bold: true, color: COLORS.ink };
+analystLog.getRange("D6").format.font = { bold: true, color: COLORS.ink };
+analystLog.getRange("G6").format.font = { bold: true, color: COLORS.ink };
+analystLog.getRange("J6").format.font = { bold: true, color: COLORS.ink };
+analystLog.getRange("B6:C6").merge();
+analystLog.getRange("E6:F6").merge();
+analystLog.getRange("H6:I6").merge();
+analystLog.getRange("K6:L6").merge();
+styleInputs(analystLog.getRange("B6:C6"));
+styleInputs(analystLog.getRange("E6:F6"));
+styleInputs(analystLog.getRange("H6:I6"));
+styleInputs(analystLog.getRange("K6:L6"));
+analystLog.getRange("A7:T7").values = [[
+  "Decision ID", "Date", "Client", "Owner role", "Decision / question", "Initial judgment", "Confidence",
+  "Claim type", "AI challenge prompt / purpose", "AI output summary", "Claim to verify", "Verification source / link",
+  "Source as-of", "Verification result", "Change to reasoning", "Final judgment and rationale", "Downstream investment guardrail",
+  "Peer reviewer", "Peer review status", "Entry status"
+]];
+styleHeaders(analystLog.getRange("A7:T7"));
+analystLog.getRange("A7:T7").format.rowHeight = 48;
+styleInputs(analystLog.getRange("A8:S37"));
+analystLog.getRange("A8:S37").format.rowHeight = 66;
+analystLog.getRange("B8:B37").format.numberFormat = "mmm d, yyyy";
+analystLog.getRange("M8:M37").format.numberFormat = "mmm d, yyyy";
+analystLog.getRange("D8:D37").dataValidation = { rule: { type: "list", values: model.roles.map((role) => role.title) } };
+analystLog.getRange("G8:G37").dataValidation = { rule: { type: "list", values: ["Low", "Medium", "High"] } };
+analystLog.getRange("H8:H37").dataValidation = { rule: { type: "list", values: ["Client fact", "Analyst assumption", "Market claim", "Product / security claim"] } };
+analystLog.getRange("N8:N37").dataValidation = { rule: { type: "list", values: ["Confirmed", "Qualified", "Contradicted", "Not verifiable"] } };
+analystLog.getRange("S8:S37").dataValidation = { rule: { type: "list", values: ["Cleared", "Cleared after revision", "Needs revision"] } };
+analystLog.getRange("T8").formulas = [["=IF(COUNTA(A8:S8)=0,\"NOT STARTED\",IF(OR(A8=\"\",B8=\"\",C8=\"\",D8=\"\",E8=\"\",F8=\"\",G8=\"\",H8=\"\",I8=\"\",J8=\"\",K8=\"\",L8=\"\",M8=\"\",N8=\"\",O8=\"\",P8=\"\",Q8=\"\",R8=\"\",S8=\"\"),\"INCOMPLETE\",IF(OR(S8=\"Needs revision\",AND(OR(N8=\"Contradicted\",N8=\"Not verifiable\"),S8<>\"Cleared after revision\")),\"REVISE / FLAG\",\"EVIDENCE READY\")))"]];
+analystLog.getRange("T8:T37").fillDown();
+analystLog.getRange("T8:T37").format = { fill: "#F5F8FA", font: { bold: true, color: COLORS.ink }, wrapText: true, verticalAlignment: "center" };
+addDecisionLogFormatting(analystLog.getRange("T8:T37"));
+
+sectionBand(analystLog, 39, "PHASE 1 READINESS", "T");
+analystLog.getRange("A40:H40").values = [["Evidence-ready entries", "", "", "Entries to revise / flag", "", "", "Minimum required", minimumDecisionLogEntries]];
+analystLog.getRange("A40:G40").format.font = { bold: true, color: COLORS.ink };
+analystLog.getRange("B40:C40").merge();
+analystLog.getRange("B40").formulas = [["=COUNTIF(T8:T37,\"EVIDENCE READY\")"]];
+analystLog.getRange("E40:F40").merge();
+analystLog.getRange("E40").formulas = [["=COUNTIF(T8:T37,\"REVISE / FLAG\")"]];
+analystLog.getRange("J40").values = [["Log readiness"]];
+analystLog.getRange("J40").format.font = { bold: true, color: COLORS.ink };
+analystLog.getRange("K40:M40").merge();
+analystLog.getRange("K40").formulas = [["=IF(OR(E6=\"\",H6=\"\",K6=\"\"),\"ENTER 3 CLIENTS\",IF(COUNTIF(B47:D50,\"READY\")<H40,\"COVERAGE INCOMPLETE\",IF(COUNTIF(T8:T37,\"INCOMPLETE\")+E40>0,\"REVIEW LOG\",\"READY FOR PHASE 1 GATE\")))"]];
+analystLog.getRange("B40:C40").format = { fill: "#E7EEF5", font: { bold: true, color: COLORS.ink } };
+analystLog.getRange("E40:F40").format = { fill: COLORS.red, font: { bold: true, color: COLORS.redText } };
+analystLog.getRange("H40").format = { fill: COLORS.goldLight, font: { bold: true, color: COLORS.ink } };
+analystLog.getRange("K40:M40").format = { fill: COLORS.yellow, font: { bold: true, color: COLORS.ink }, borders: { preset: "outside", style: "medium", color: COLORS.navy } };
+addDecisionLogFormatting(analystLog.getRange("K40:M40"));
+analystLog.getRange("A42:T42").merge();
+analystLog.getRange("A42").values = [["Evidence-ready means the entry shows the initial judgment, the AI challenge, a human-verified source and as-of date, what changed, the final reasoning, a downstream guardrail, and peer review. Contradicted or unverifiable material claims must be revised or carried to the committee as an explicit open issue."]];
+analystLog.getRange("A42:T42").format = { fill: COLORS.goldLight, font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 34 };
+sectionBand(analystLog, 45, "ROLE × CLIENT COVERAGE", "T");
+analystLog.getRange("A46:E46").values = [["Committee role", "Assigned Client 1", "Assigned Client 2", "Assigned Client 3", "Role coverage"]];
+styleHeaders(analystLog.getRange("A46:E46"));
+analystLog.getRange("A47:A50").values = model.roles.map((role) => [role.title]);
+analystLog.getRange("A47:A50").format = { fill: "#E7EEF5", font: { bold: true, color: COLORS.navy }, wrapText: true, borders: { preset: "all", style: "thin", color: "#D5DFE7" } };
+analystLog.getRange("B47").formulas = [["=IF(OR($E$6=\"\",COUNTIFS($C$8:$C$37,$E$6,$D$8:$D$37,$A47,$T$8:$T$37,\"EVIDENCE READY\")=0),\"MISSING\",\"READY\")"]];
+analystLog.getRange("B47:B50").fillDown();
+analystLog.getRange("C47").formulas = [["=IF(OR($H$6=\"\",COUNTIFS($C$8:$C$37,$H$6,$D$8:$D$37,$A47,$T$8:$T$37,\"EVIDENCE READY\")=0),\"MISSING\",\"READY\")"]];
+analystLog.getRange("C47:C50").fillDown();
+analystLog.getRange("D47").formulas = [["=IF(OR($K$6=\"\",COUNTIFS($C$8:$C$37,$K$6,$D$8:$D$37,$A47,$T$8:$T$37,\"EVIDENCE READY\")=0),\"MISSING\",\"READY\")"]];
+analystLog.getRange("D47:D50").fillDown();
+analystLog.getRange("E47").formulas = [["=IF(COUNTIF(B47:D47,\"MISSING\")>0,\"MISSING\",\"READY\")"]];
+analystLog.getRange("E47:E50").fillDown();
+analystLog.getRange("B47:E50").format = { fill: "#F5F8FA", font: { bold: true, color: COLORS.ink }, wrapText: true, borders: { preset: "all", style: "thin", color: "#D5DFE7" } };
+addDecisionLogFormatting(analystLog.getRange("B47:E50"));
+analystLog.getRange("A52:T52").merge();
+analystLog.getRange("A52").values = [["The Phase 1 gate remains closed until every role has at least one evidence-ready entry for each of the three assigned clients. The client names in row 6 must match the Client column exactly."]];
+analystLog.getRange("A52:T52").format = { fill: COLORS.goldLight, font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 30 };
+analystLog.freezePanes.freezeRows(7);
+analystLog.freezePanes.freezeColumns(4);
 
 configureDecisionSheet(decisionSheets[0], {
   phaseNumber: 1,
@@ -320,19 +446,32 @@ const formulaErrors = await workbook.inspect({
   kind: "match",
   searchTerm: "#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A",
   options: { useRegex: true, maxResults: 200 },
+  maxChars: 4000,
   summary: "decision record formula error scan"
 });
 console.log(formulaErrors.ndjson);
 
 const summaryCheck = await workbook.inspect({
   kind: "table",
-  range: "START HERE!A13:C21",
+  range: "START HERE!A13:C25",
   include: "values,formulas",
-  tableMaxRows: 12,
-  tableMaxCols: 5
+  tableMaxRows: 15,
+  tableMaxCols: 5,
+  maxChars: 6000
 });
 console.log(summaryCheck.ndjson);
 
+const decisionLogCheck = await workbook.inspect({
+  kind: "table",
+  range: "ANALYST DECISION LOG!A39:M52",
+  include: "values,formulas",
+  tableMaxRows: 15,
+  tableMaxCols: 13,
+  maxChars: 10000
+});
+console.log(decisionLogCheck.ndjson);
+
 const output = await SpreadsheetFile.exportXlsx(workbook);
 await output.save(outputPath);
+await fs.rm(`${outputPath}.inspect.ndjson`, { force: true });
 console.log(`Saved ${outputPath}`);

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "course": {
     "code": "BUS331",
     "name": "Investments",
@@ -18,51 +18,51 @@
   },
   "roles": [
     {
-      "id": "chair-mandate",
-      "title": "Committee Chair & Client Mandate Lead",
-      "shortTitle": "Chair & Mandate",
+      "id": "client-macro",
+      "title": "Client and Macro Strategist",
+      "shortTitle": "Client & Macro",
       "color": "gold",
-      "mandate": "Own the meeting process, client suitability, decision record, and integration across all three phases.",
+      "mandate": "Own client discovery, the 12-month market view, IPS objectives and constraints, and the handoff from client needs to investment criteria.",
       "phaseResponsibilities": {
-        "phase-1": "Lead the RRTTLLU review, resolve client constraint conflicts, and frame the approval motion.",
-        "phase-2": "Test whether proposed allocations and securities stay inside each approved mandate.",
-        "phase-3": "Open the committee meeting, state the recommendation, record the vote, and close with actions."
+        "phase-1": "Lead the client interview, document goals and RRTTLLU constraints, establish the macro context, and name unresolved information gaps.",
+        "phase-2": "Test whether proposed allocations and securities fit the approved client mandate and the committee's market view.",
+        "phase-3": "Defend client suitability, the macro assumptions, and the line from discovered need to recommendation."
       }
     },
     {
-      "id": "markets-strategy",
-      "title": "Markets & Economic Strategist",
-      "shortTitle": "Markets Strategist",
+      "id": "fixed-income",
+      "title": "Fixed-Income Analyst",
+      "shortTitle": "Fixed Income",
       "color": "teal",
-      "mandate": "Own the 12-month macro thesis, scenario probabilities, data provenance, and transmission logic.",
+      "mandate": "Own the income, capital-preservation, maturity, duration, credit-quality, liquidity, and tax questions that shape the fixed-income sleeve.",
       "phaseResponsibilities": {
-        "phase-1": "Build the human-first macro read, compare it with consensus, and propose base and bear scenarios.",
-        "phase-2": "Translate the approved thesis into expected returns, volatility, correlations, and macro filters.",
-        "phase-3": "Defend the market view and explain why the recommendation should work under the base case."
+        "phase-1": "Translate cash-flow needs, time horizon, liquidity, taxes, and loss capacity into fixed-income questions and provisional guardrails.",
+        "phase-2": "Analyze yields, duration, credit, liquidity, and structure; recommend fixed-income exposures that meet the approved guardrails.",
+        "phase-3": "Defend the portfolio's income, capital-preservation, interest-rate, and credit-risk trade-offs."
       }
     },
     {
-      "id": "portfolio-construction",
-      "title": "Portfolio Construction Lead",
-      "shortTitle": "Portfolio Lead",
+      "id": "fund-etf",
+      "title": "Fund and ETF Analyst",
+      "shortTitle": "Fund & ETF",
       "color": "steel",
-      "mandate": "Own capital-market expectations, optimization, security selection, allocation, and implementation feasibility.",
+      "mandate": "Own pooled-vehicle due diligence, diversification, benchmark fit, fees, liquidity, tax considerations, and active-versus-passive implementation.",
       "phaseResponsibilities": {
-        "phase-1": "Identify the portfolio decisions that the approved market view and client mandates must support.",
-        "phase-2": "Run the CME and Solver work, select securities, document weights, and propose implementation trades.",
-        "phase-3": "Defend portfolio construction, security-level choices, and the path from evidence to weights."
+        "phase-1": "Identify the client's diversification, access, liquidity, cost, tax, values, and vehicle requirements before screening products.",
+        "phase-2": "Evaluate funds and ETFs using objective, holdings, benchmark, fees, liquidity, tax efficiency, and tracking evidence.",
+        "phase-3": "Defend vehicle selection, implementation feasibility, diversification, and product-level due diligence."
       }
     },
     {
-      "id": "risk-controls",
-      "title": "Risk, Controls & Challenge Lead",
-      "shortTitle": "Risk & Challenge",
+      "id": "portfolio-risk",
+      "title": "Portfolio Manager and Risk Analyst",
+      "shortTitle": "Portfolio & Risk",
       "color": "terra",
-      "mandate": "Own independent challenge, stress testing, hedge analysis, the AI audit, and mandate-breach escalation.",
+      "mandate": "Own portfolio integration, risk capacity versus willingness, the drawdown tripwire, decision-log quality, stress testing, and mandate-breach escalation.",
       "phaseResponsibilities": {
-        "phase-1": "Challenge scenario assumptions, verify sources, and define the evidence required at the first gate.",
-        "phase-2": "Run the bear-case stress test, compare hedges, identify breaches, and require corrective action.",
-        "phase-3": "Present the strongest downside case and lead preparation for adversarial Q&A."
+        "phase-1": "Reconcile risk capacity and willingness, set provisional portfolio guardrails, challenge assumptions, and audit the Analyst Decision Log.",
+        "phase-2": "Integrate the allocation, run bear-case stress tests, compare mitigants, identify breaches, and require corrective action.",
+        "phase-3": "State the integrated recommendation, present the strongest downside case, and lead preparation for adversarial Q&A."
       }
     }
   ],
@@ -77,17 +77,196 @@
     },
     {
       "step": "Independent challenge",
-      "description": "The Risk, Controls & Challenge Lead presents the strongest counterargument or mandate risk."
+      "description": "The Portfolio Manager and Risk Analyst coordinates the strongest counterargument; the analyst whose judgment is challenged must respond with evidence."
     },
     {
       "step": "Motion and vote",
-      "description": "The Chair records approve, revise, or reject. All four members vote; ties require revision."
+      "description": "The phase lead states the motion. The Portfolio Manager and Risk Analyst records approve, revise, or reject; all four members vote and ties require revision."
     },
     {
       "step": "Decision record",
       "description": "Capture evidence reviewed, dissent or reservations, owners, and actions before the next gate."
     }
   ],
+  "phase1Experience": {
+    "title": "Client Discovery and AI Decision Protocol",
+    "subtitle": "Interview the client. Challenge the first answer. Verify the evidence. Set the guardrails.",
+    "purpose": "Turn a fictional client profile into documented investment criteria before the team screens a bond, mutual fund, ETF, or portfolio allocation.",
+    "duration": "70–85 minutes plus source verification",
+    "clientSets": [
+      {
+        "team": "Team One",
+        "clients": ["Eleanor Vance", "Marcus Chen", "David and Sarah Miller"],
+        "inquiry": "Investigate how near-term spending, concentrated wealth, and overlapping goals change the meaning of risk."
+      },
+      {
+        "team": "Team Two",
+        "clients": ["Javier Rodriguez", "Linda Sterling", "Robert Halloway"],
+        "inquiry": "Investigate how illiquidity, taxes, a known cash need, and retirement urgency constrain an otherwise attractive return target."
+      },
+      {
+        "team": "Team Three",
+        "clients": ["Chloe Dubois", "Dr. Amara Okafor", "Zoe Jenkins"],
+        "inquiry": "Investigate how experience, values, variable income, and emergency reserves affect capacity, willingness, and product fit."
+      },
+      {
+        "team": "Team Four",
+        "clients": ["Thomas Murphy", "Yuki Tanaka", "Elena Rossi"],
+        "inquiry": "Investigate how loss aversion, currency exposure, relocation, taxes, and restricted holdings affect implementable choices."
+      },
+      {
+        "team": "Team Five",
+        "clients": ["Arthur Sterling", "The Petersons", "Tyler Reed"],
+        "inquiry": "Investigate how philanthropy, debt, uneven cash flow, starting capital, and multigenerational goals change portfolio priorities."
+      }
+    ],
+    "decisionCycle": [
+      {
+        "stage": "Initial judgment",
+        "action": "Before opening an AI tool, each analyst records one provisional interpretation for each assigned client and names the fact or assumption driving it.",
+        "logEvidence": "Initial judgment, confidence, and unresolved question"
+      },
+      {
+        "stage": "AI client interview",
+        "action": "Use the bounded role-play prompt. Ask open, neutral questions; mark any answer not established by the case as unknown.",
+        "logEvidence": "Prompt purpose and output summary—not a pasted transcript"
+      },
+      {
+        "stage": "AI challenge",
+        "action": "Ask AI for the strongest counterinterpretation, hidden assumption, and missing downside—not for the final recommendation.",
+        "logEvidence": "Material challenge and the claim that now requires checking"
+      },
+      {
+        "stage": "Human verification",
+        "action": "Verify client facts in the assigned files, calculations in the team workbook, and external claims in an approved source with an as-of date.",
+        "logEvidence": "Source, link or file location, source date, and Confirmed / Qualified / Contradicted / Not verifiable"
+      },
+      {
+        "stage": "Final reasoning",
+        "action": "State what changed, what remains uncertain, the final judgment, and the guardrail that later security selection or portfolio construction must honor.",
+        "logEvidence": "Final decision, concise rationale, downstream guardrail, and peer review"
+      }
+    ],
+    "interviewRounds": [
+      {
+        "roleId": "client-macro",
+        "round": "Goals and context",
+        "questionThemes": ["Primary and secondary goals", "Time horizons and decision dates", "Income, spending, and liquidity events", "Tax, legal, values, and other unique constraints", "Macro conditions that could change the plan"],
+        "handoff": "Draft the client objective, the RRTTLLU facts, and a list of facts still missing."
+      },
+      {
+        "roleId": "fixed-income",
+        "round": "Income and capital protection",
+        "questionThemes": ["Required cash-flow floor", "Known liability dates", "Tolerance for price changes when rates move", "Credit-loss capacity", "Liquidity and tax treatment"],
+        "handoff": "Draft the provisional maturity, duration, credit-quality, liquidity, and income guardrails."
+      },
+      {
+        "roleId": "fund-etf",
+        "round": "Vehicle and implementation fit",
+        "questionThemes": ["Need for diversification", "Active or passive preference, if any", "Fee sensitivity", "Trading and liquidity needs", "Tax, values, benchmark, and product restrictions"],
+        "handoff": "Draft the screen the team will later apply to mutual funds and ETFs; do not name a winning product yet."
+      },
+      {
+        "roleId": "portfolio-risk",
+        "round": "Capacity, willingness, and downside",
+        "questionThemes": ["Required return versus desired return", "Ability and willingness to bear loss", "Reaction to a one-year drawdown", "Concentration and correlation risks", "Tripwire, monitoring trigger, and revision conditions"],
+        "handoff": "Reconcile conflicts, propose a drawdown tripwire, and identify which assumptions must be verified before approval."
+      }
+    ],
+    "rolePlayPrompt": [
+      "You are role-playing [CLIENT NAME], a fictional client in a BUS331 investment-analysis simulation.",
+      "Use only the facts inside the CLIENT BRIEF below. If the brief does not establish an answer, say: Not established—record this as an information gap.",
+      "Stay in the client's first-person voice. Do not recommend securities, mutual funds, ETFs, asset weights, or a risk score. Do not invent preferences, numbers, life events, sources, or certainty.",
+      "Answer one neutral interview question at a time. When the analyst asks about a trade-off, explain the client's stated priorities and the missing fact needed to decide.",
+      "CLIENT BRIEF: [paste only the assigned fictional profile facts from the public course files]"
+    ],
+    "challengerPrompts": [
+      "What is the strongest reasonable interpretation that contradicts our initial judgment? Separate case facts from assumptions.",
+      "Which client answer may reflect willingness to take risk but not financial capacity—or the reverse? What evidence would resolve the conflict?",
+      "Which claim, number, or product characteristic cannot be accepted until a human checks an approved source?",
+      "How could this proposed guardrail fail to protect the client's most important goal in a bear case?",
+      "What later bond, mutual-fund/ETF, or allocation decision would change if this assumption is wrong?"
+    ],
+    "approvedSources": [
+      {
+        "label": "Assigned fictional client files",
+        "use": "Client facts, goals, constraints, and case-specific values",
+        "source": "Client_Scenarios_Profiles.pptx and Client_Scenarios_Data_File.xlsx"
+      },
+      {
+        "label": "Team workbooks",
+        "use": "Team calculations, scenarios, and model outputs",
+        "source": "Use an exact sheet and cell or table location"
+      },
+      {
+        "label": "FactSet",
+        "use": "Course-authorized market, security, fund, and consensus data",
+        "source": "Record the data item, entity, as-of date, and FactSet workspace"
+      },
+      {
+        "label": "FRED, BLS, BEA, and U.S. Treasury",
+        "use": "Macroeconomic series, releases, and Treasury rates",
+        "url": "https://fred.stlouisfed.org/"
+      },
+      {
+        "label": "SEC EDGAR and issuer filings",
+        "use": "Company disclosures, risks, financial statements, and filed fund documents",
+        "url": "https://www.sec.gov/edgar/search/"
+      },
+      {
+        "label": "Official fund sponsor documents",
+        "use": "Prospectus objective, benchmark, holdings, expenses, risks, distributions, and tax disclosures",
+        "source": "Cite the official prospectus, summary prospectus, annual report, or fund page with an as-of date"
+      }
+    ],
+    "cfaFoundations": [
+      {
+        "topic": "Portfolio planning and construction",
+        "application": "Understand the client's objectives and constraints before asset allocation and security analysis.",
+        "url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/basics-of-portfolio-planning-and-construction"
+      },
+      {
+        "topic": "Economics",
+        "application": "Connect business-cycle and macroeconomic conditions to the client's decision context without treating forecasts as facts.",
+        "url": "https://www.cfainstitute.org/programs/cfa-program/candidate-resources/level-i-exam"
+      },
+      {
+        "topic": "Fixed income",
+        "application": "Use cash-flow features, yield measures, interest-rate risk, liquidity, and credit analysis to frame later bond decisions.",
+        "url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/fixed-income-cash-flows-and-types"
+      },
+      {
+        "topic": "Pooled investment products",
+        "application": "Compare mutual funds and ETFs as implementation vehicles and examine diversification, benchmark, cost, liquidity, and fit.",
+        "url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-management-overview"
+      },
+      {
+        "topic": "Risk and professional judgment",
+        "application": "Separate risk capacity from willingness, document a reasonable basis, challenge uncertainty, and preserve client-first reasoning.",
+        "url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/introduction-risk-management"
+      }
+    ],
+    "decisionLogFields": [
+      "Initial judgment and confidence",
+      "Case fact, assumption, or market claim",
+      "AI challenge summary",
+      "Verification source and as-of date",
+      "Verification result",
+      "Change to reasoning",
+      "Final judgment and rationale",
+      "Downstream investment guardrail",
+      "Peer reviewer and status"
+    ],
+    "qualityGate": [
+      "Each role records at least one human-first judgment for each assigned client before using AI.",
+      "Every material AI challenge is summarized in the Analyst Decision Log; raw transcripts are not a substitute for analysis.",
+      "Every factual claim or number used in the final reasoning has an approved source and as-of date.",
+      "Unknown client information remains labeled unknown; it is not filled with invented AI detail.",
+      "The final reasoning states whether AI changed the judgment and why.",
+      "Each final judgment creates a testable guardrail for later fixed-income, mutual-fund/ETF, allocation, or risk decisions.",
+      "A second team member reviews the evidence trail before the Phase 1 gate."
+    ]
+  },
   "phases": [
     {
       "id": "phase-1",
@@ -105,12 +284,12 @@
           "description": "Read the historical data before using AI, compare the committee view with FactSet/FRED consensus, and build bull/base/bear scenarios."
         },
         {
-          "title": "Client mandate",
-          "description": "Translate each client profile into RRTTLLU constraints, return targets, liquidity needs, and an explicit drawdown tripwire."
+          "title": "Client discovery",
+          "description": "Make a human-first judgment, interview the fictional client through the bounded AI protocol, and translate verified needs into RRTTLLU constraints."
         },
         {
-          "title": "Conflict register",
-          "description": "Surface tensions among return, risk, liquidity, taxes, legal restrictions, and unique circumstances before approving the mandate."
+          "title": "Decision log and guardrails",
+          "description": "Use AI to challenge the initial view, verify material claims, record final reasoning, and set criteria for later bonds, mutual funds/ETFs, allocation, and risk."
         }
       ],
       "evidence": [
@@ -119,20 +298,23 @@
         "Bull/base/bear scenarios with probabilities totaling 100%",
         "RRTTLLU analysis for all three assigned clients",
         "Return target, maximum volatility, and drawdown tripwire for each client",
+        "Analyst Decision Log showing initial judgment, AI challenge, verification, final reasoning, and downstream guardrail",
         "Phase 1 decision record signed by all four members"
       ],
       "deliverables": [
         "Completed macro starter workbook",
+        "Completed Analyst Decision Log for all three assigned clients",
         "Three completed client IPS documents",
         "One-page committee mandate memo",
         "Phase 1 decision record"
       ],
       "resources": [
+        "client-discovery-protocol",
+        "decision-record",
         "macro-starter",
         "client-profiles",
         "client-data",
-        "ips-framework",
-        "decision-record"
+        "ips-framework"
       ]
     },
     {
@@ -231,6 +413,14 @@
   ],
   "resources": [
     {
+      "id": "client-discovery-protocol",
+      "label": "Client Discovery and AI Decision Protocol",
+      "type": "HTML",
+      "path": "project/client-discovery-ai-protocol.html",
+      "description": "Fictional-client team sets, four-role interview rounds, bounded AI prompts, approved-source rules, and the human-first decision cycle.",
+      "audience": "student"
+    },
+    {
       "id": "macro-starter",
       "label": "Macro starter workbook",
       "type": "XLSX",
@@ -312,10 +502,10 @@
     },
     {
       "id": "decision-record",
-      "label": "Committee decision record",
+      "label": "Committee workbook & Analyst Decision Log",
       "type": "XLSX",
       "path": "files/BUS331_Investment_Committee_Decision_Record_Student.xlsx",
-      "description": "Role charter, gate-by-gate evidence review, motions, client-level votes, dissent, action items, and AI audit log.",
+      "description": "Analyst Decision Log, role charter, gate-by-gate evidence review, client-level votes, dissent, actions, and AI audit trail.",
       "audience": "student"
     },
     {

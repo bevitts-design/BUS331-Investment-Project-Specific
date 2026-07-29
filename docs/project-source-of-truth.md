@@ -12,6 +12,9 @@ The committee establishes one defensible 12-month market view and converts each 
 
 Required evidence:
 
+- Human-first client judgment recorded before AI use
+- Bounded AI client interview and adversarial challenge for each assigned client
+- Human verification trail and final reasoning in the Analyst Decision Log
 - Human-first macro read using the historical dataset
 - FactSet/FRED consensus comparison with source dates
 - Bull/base/bear scenarios and probabilities totaling 100%
@@ -65,6 +68,7 @@ BUS331-Investment-Project-Specific/
   index.html                            # generated student portal
   project/
     guide.html                          # generated comprehensive project guide
+    client-discovery-ai-protocol.html  # generated Phase 1 launch experience
     phase-1-frame-the-mandate.html      # generated Phase 1 guide
     phase-2-build-and-challenge.html    # generated Phase 2 guide
     phase-3-defend-the-recommendation.html
@@ -85,6 +89,8 @@ BUS331-Investment-Project-Specific/
 - the three stable phase IDs
 - the four stable role IDs
 - phase objectives, evidence, committee gates, and deliverables
+- fictional-client team sets, four-role interview rounds, bounded AI prompts, and the Phase 1 decision cycle
+- the Analyst Decision Log contract, including evidence-ready fields and complete four-role-by-three-client coverage before the Phase 1 gate
 - resource labels and relative paths
 - AI rules and verification requirements
 - public assessment language
@@ -124,6 +130,8 @@ The validator should fail when it detects:
 
 - a phase count other than three in generated pages;
 - a role count other than four in the committee roster;
+- committee roles that do not match the Client/Macro, Fixed-Income, Fund/ETF, and Portfolio/Risk contract;
+- a Phase 1 protocol that skips the initial-judgment, AI-challenge, verification, or final-reasoning stage;
 - references to old project Phases 4, 5, or 6 in generated student pages;
 - missing local resources;
 - filenames or visible text marked `INSTRUCTOR`, `Solution`, `Answer Key`, or similar in the public manifest;

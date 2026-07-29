@@ -25,6 +25,39 @@ const phasePath = (phase) => `project/${phase.id}-${phase.title.toLowerCase().re
 if (model.phases.length !== 3) fail(`Expected exactly 3 phases; found ${model.phases.length}.`);
 if (model.roles.length !== 4) fail(`Expected exactly 4 committee roles; found ${model.roles.length}.`);
 
+const requiredRoleTitles = [
+  "Client and Macro Strategist",
+  "Fixed-Income Analyst",
+  "Fund and ETF Analyst",
+  "Portfolio Manager and Risk Analyst"
+];
+if (model.roles.map((role) => role.title).join("|") !== requiredRoleTitles.join("|")) {
+  fail("The four committee roles must match the Client/Macro, Fixed-Income, Fund/ETF, and Portfolio/Risk milestone contract in order.");
+}
+
+const experience = model.phase1Experience;
+if (!experience) {
+  fail("Missing phase1Experience in the public model.");
+} else {
+  if (experience.clientSets?.length !== 5) fail("Phase 1 must present five fictional-client team sets.");
+  if (experience.clientSets?.some((set) => set.clients?.length !== 3)) fail("Every fictional-client team set must contain three clients.");
+  if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Initial judgment|AI client interview|AI challenge|Human verification|Final reasoning") {
+    fail("Phase 1 decision cycle must preserve the human-first, AI-challenge, verification, and final-reasoning sequence.");
+  }
+  if (experience.interviewRounds?.length !== 4) fail("Phase 1 must define one interview round for each of the four roles.");
+  const roundRoleIds = new Set(experience.interviewRounds?.map((round) => round.roleId));
+  for (const role of model.roles) {
+    if (!roundRoleIds.has(role.id)) fail(`Phase 1 is missing an interview round for ${role.title}.`);
+  }
+  const promptText = (experience.rolePlayPrompt || []).join(" ");
+  if (!/use only the facts/i.test(promptText) || !/do not invent/i.test(promptText) || !/do not recommend/i.test(promptText)) {
+    fail("The public AI role-play prompt must prohibit invented facts and AI-generated recommendations.");
+  }
+  if (!experience.approvedSources?.length) fail("Phase 1 must define approved verification sources.");
+  if (!experience.qualityGate?.some((item) => /human-first/i.test(item))) fail("Phase 1 quality gate must require a human-first judgment.");
+  if (!experience.qualityGate?.some((item) => /guardrail/i.test(item))) fail("Phase 1 quality gate must connect final reasoning to later investment guardrails.");
+}
+
 const phaseIds = new Set(model.phases.map((phase) => phase.id));
 const roleIds = new Set(model.roles.map((role) => role.id));
 if (phaseIds.size !== model.phases.length) fail("Phase IDs must be unique.");
@@ -58,6 +91,7 @@ const generatedFiles = [
   "index.html",
   "BUS331_InvProject_Requirements_AllPhases.html",
   "project/guide.html",
+  "project/client-discovery-ai-protocol.html",
   ...model.phases.map(phasePath),
   "project/assessment.html"
 ];
@@ -107,6 +141,39 @@ for (const phase of model.phases) {
 for (const role of model.roles) {
   const encoded = role.title.replaceAll("&", "&amp;");
   if (!indexHtml.includes(encoded) && !indexHtml.includes(role.title)) fail(`Portal does not show role: ${role.title}.`);
+}
+
+const discoveryHtml = await fs.readFile(path.join(rootDir, "project", "client-discovery-ai-protocol.html"), "utf8");
+for (const requiredText of [
+  "Initial judgment",
+  "AI client interview",
+  "AI challenge",
+  "Human verification",
+  "Final reasoning",
+  "Analyst Decision Log"
+]) {
+  if (!discoveryHtml.includes(requiredText)) fail(`Client discovery protocol is missing required stage or artifact: ${requiredText}.`);
+}
+for (const roleTitle of requiredRoleTitles) {
+  if (!discoveryHtml.includes(roleTitle)) fail(`Client discovery protocol is missing role: ${roleTitle}.`);
+}
+if (/Committee Chair|Markets &amp; Economic Strategist|Portfolio Construction Lead|Risk, Controls/i.test(discoveryHtml)) {
+  fail("Client discovery protocol contains a retired committee-role title.");
+}
+
+const decisionRecordResource = model.resources.find((resource) => resource.id === "decision-record");
+if (!decisionRecordResource || !/Analyst Decision Log/i.test(`${decisionRecordResource.label} ${decisionRecordResource.description}`)) {
+  fail("The public committee workbook resource must identify the Analyst Decision Log.");
+}
+
+const workbookBuilderPath = path.join(rootDir, "scripts", "build-investment-committee-decision-record.mjs");
+if (!(await exists(workbookBuilderPath))) {
+  fail("Missing maintained committee-workbook builder.");
+} else {
+  const workbookBuilder = await fs.readFile(workbookBuilderPath, "utf8");
+  for (const marker of ["ROLE × CLIENT COVERAGE", "minimumDecisionLogEntries", "COUNTIFS($C$8:$C$37"]) {
+    if (!workbookBuilder.includes(marker)) fail(`Committee-workbook builder is missing the role-by-client readiness control: ${marker}.`);
+  }
 }
 
 const privateArtifact = path.join(rootDir, "files", "MACROE~2.PDF");
