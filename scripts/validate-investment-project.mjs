@@ -141,6 +141,23 @@ if (phaseIds.size !== model.phases.length) fail("Phase IDs must be unique.");
 if (roleIds.size !== model.roles.length) fail("Role IDs must be unique.");
 if (model.phases.map((phase) => phase.number).join(",") !== "1,2,3") fail("Phase numbers must be 1, 2, and 3 in order.");
 
+if (model.canvasSubmissions?.assignments?.map((item) => item.phaseId).join(",") !== "phase-1,phase-2,phase-3") {
+  fail("Canvas submission workflow must define one assignment for each phase in order.");
+} else {
+  const submissionNames = new Set();
+  for (const assignment of model.canvasSubmissions.assignments) {
+    if (!assignment.requiredFiles?.length || !assignment.preflight?.length) fail(`${assignment.phaseId} Canvas submission is incomplete.`);
+    for (const file of assignment.requiredFiles || []) {
+      if (!/^BUS331_Team##_/i.test(file.name)) fail(`${assignment.phaseId} Canvas filename must use the BUS331_Team##_ convention: ${file.name}.`);
+      if (submissionNames.has(file.name)) fail(`Duplicate Canvas submission filename: ${file.name}.`);
+      submissionNames.add(file.name);
+    }
+  }
+  const submissionBoundary = `${model.canvasSubmissions.authority} ${(model.canvasSubmissions.sharedRules || []).join(" ")}`;
+  if (!/one designated submitter/i.test(submissionBoundary) || !/Canvas submission receipt/i.test(submissionBoundary)) fail("Canvas workflow must define one submitter and a receipt check.");
+  if (!/licensed FactSet evidence/i.test(submissionBoundary) || !/private evidence ZIP/i.test(submissionBoundary)) fail("Canvas workflow must define the private licensed-evidence bundle.");
+}
+
 for (const role of model.roles) {
   for (const phase of model.phases) {
     if (!role.phaseResponsibilities?.[phase.id]) fail(`${role.id} is missing a responsibility for ${phase.id}.`);
@@ -171,9 +188,15 @@ const generatedFiles = [
   "project/client-discovery-ai-protocol.html",
   "project/security-analysis-selection.html",
   "project/portfolio-management-stress-testing.html",
+  "project/canvas-submission-guide.html",
   ...model.phases.map(phasePath),
   "project/assessment.html"
 ];
+
+const canvasFragments = model.canvasSubmissions.assignments.map((assignment) => {
+  const phase = model.phases.find((item) => item.id === assignment.phaseId);
+  return `canvas/phase-${phase.number}-assignment.html`;
+});
 
 const supportingHtmlFiles = [
   "project/BUS331_InvProject_Bridge_CME_Guide.html",
@@ -211,6 +234,22 @@ for (const relative of generatedFiles) {
       continue;
     }
     if (!(await exists(target))) fail(`${relative} has a broken local link: ${href}.`);
+  }
+}
+
+for (const [index, relative] of canvasFragments.entries()) {
+  const absolute = path.join(rootDir, relative);
+  if (!(await exists(absolute))) {
+    fail(`Missing Canvas assignment fragment: ${relative}.`);
+    continue;
+  }
+  const html = await fs.readFile(absolute, "utf8");
+  if (/<(?:html|head|body|script|style)\b/i.test(html)) fail(`${relative} contains markup that is unsafe or unnecessary for a Canvas fragment.`);
+  if ((html.match(/<h1\b/gi) || []).length !== 1) fail(`${relative} must contain exactly one h1.`);
+  if (!/style="/i.test(html)) fail(`${relative} must use inline Canvas-safe styling.`);
+  if (!/private Canvas assignment/i.test(html) || !/Canvas receipt/i.test(html)) fail(`${relative} is missing the private-submission or receipt boundary.`);
+  for (const file of model.canvasSubmissions.assignments[index].requiredFiles) {
+    if (!html.includes(file.name)) fail(`${relative} is missing required filename ${file.name}.`);
   }
 }
 
@@ -391,9 +430,10 @@ if (!(await exists(simulatorRuntimePath))) {
   fail("Missing maintained client interview simulator runtime.");
 } else {
   const simulatorRuntime = await fs.readFile(simulatorRuntimePath, "utf8");
-  for (const marker of ["MediaRecorder", "getUserMedia", "audioBase64", "transcriptionEndpoint", "responseEndpoint", "data-start-interview", "data-record-question", "data-interview-transcript", "data-download-session"]) {
+  for (const marker of ["MediaRecorder", "getUserMedia", "transcriptionEndpoint", "responseEndpoint", "data-start-interview", "data-record-question", "data-interview-transcript", "data-download-session"]) {
     if (!simulatorRuntime.includes(marker)) fail(`Client interview simulator runtime is missing required control: ${marker}.`);
   }
+  if (!/audioBase64|SpeechSynthesisUtterance/.test(simulatorRuntime)) fail("Client interview simulator runtime must expose an accessible spoken-response path when supported.");
   if (/OPENAI_API_KEY|api\.openai\.com|scenarioFacts|dialoguePaths|riskAversionScore/.test(simulatorRuntime)) {
     fail("Public client interview runtime exposes an API credential surface or instructor-only scenario control.");
   }

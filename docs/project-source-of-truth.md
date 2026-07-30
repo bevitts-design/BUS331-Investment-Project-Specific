@@ -83,6 +83,7 @@ BUS331-Investment-Project-Specific/
   index.html                            # generated student portal
   project/
     guide.html                          # generated comprehensive project guide
+    canvas-submission-guide.html        # generated student submission contract
     client-discovery-ai-protocol.html   # generated Phase 1 launch experience
     security-analysis-selection.html    # generated Phase 2 security workflow and templates
     portfolio-management-stress-testing.html
@@ -93,6 +94,10 @@ BUS331-Investment-Project-Specific/
                                         # generated Phase 3 guide
     assessment.html                     # generated student-facing assessment guide
     supporting references              # static technical guides aligned to the current phase model
+  canvas/
+    phase-1-assignment.html             # generated inline-styled Canvas assignment fragment
+    phase-2-assignment.html             # generated inline-styled Canvas assignment fragment
+    phase-3-assignment.html             # generated inline-styled Canvas assignment fragment
   files/
     ...Student...                       # blank student templates and public scenario data only
   docs/
@@ -110,15 +115,18 @@ BUS331-Investment-Project-Specific/
 - fictional-client team sets, four-role interview rounds, bounded AI prompts, the Phase 1 decision cycle, and the public endpoint/privacy contract for the Client Option 1 voice interview
 - Phase 2 security-analysis, Issuer Reality Check, FactSet evidence-log, portfolio-integration, IPS-compliance, bear-case, correction, and re-test contracts
 - the Analyst Decision Log contract, including evidence-ready fields and complete four-role-by-three-client coverage before the Phase 1 gate
+- the three Canvas assignment contracts, including exact filenames, allowed file types, preflight checks, private licensed-evidence handling, and receipt retention
 - resource labels and relative paths
 - AI rules and verification requirements
 - public assessment language
 
 Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
 
-The Client Option 1 experience is a turn-based, instructor-hosted voice scaffold. Students record their own question or type it, confirm the speech transcript, hear Eleanor's generated response, and retain a text process record and analyst notes. The public `project-model.json` supplies only the intentionally incomplete intake dossier, fictional voice disclosure, endpoint contract, limits, and optional opening ideas. `scripts/client-interview-simulator.js` records one question at a time, sends it only to the configured instructor service, plays returned audio, and keeps the visible transcript in the browser session. It contains no OpenAI key, complete scenario facts, hidden prompt, or recommendation logic. A continuous Realtime conversation upgrade is intentionally deferred; no service has been deployed or configured with a real key.
+`canvasSubmissions` is the authoritative team-submission contract. The builder turns it into the public student guide and three inline-styled fragments ready to paste into Canvas. Those generated fragments do not change the live Canvas course. An instructor must separately configure each assignment as a group file-upload assignment, choose the correct group set, preserve the course's approved points and dates, and confirm the contract in Student View.
 
-The private source of truth is `BUS331-instructor/Investment_Project/client-interview/eleanor-vance-scenario.json`. It maintains the approved facts, information gaps, progressive-disclosure rules, required goal-versus-medical-liquidity complication, and recommendation-refusal boundary. `server.mjs` constructs the private prompt, transcribes audio, generates the bounded text-and-voice response, and intentionally writes neither audio nor transcripts to disk. Deployment credentials, logs, rate controls, and instructor scenario changes remain private.
+The Client Option 1 experience is a turn-based, instructor-hosted voice scaffold. Students record their own question or type it, confirm the speech transcript, hear Eleanor's returned text through browser speech when available, and retain a text process record and analyst notes. The public `project-model.json` supplies only the intentionally incomplete intake dossier, fictional voice disclosure, endpoint contract, limits, and optional opening ideas. `scripts/client-interview-simulator.js` records one question at a time, sends it only to the configured instructor service, uses browser speech rather than storing a generated audio file, and keeps the visible transcript in the browser session. It contains no API key, complete scenario facts, hidden prompt, or recommendation logic. The Eleanor voice pilot is paused and is not a dependency for the Sally exemplar, Canvas workflow, or bounded redesign pilot. A continuous realtime conversation upgrade is intentionally deferred; no service has been deployed or configured with a real key.
+
+The private source of truth is `BUS331-instructor/Investment_Project/client-interview/eleanor-vance-scenario.json`. It maintains the approved facts, information gaps, progressive-disclosure rules, required goal-versus-medical-liquidity complication, and recommendation-refusal boundary. `server.mjs` constructs the private prompt, sends microphone audio only for in-memory transcription, generates the bounded text response through Gemini, and intentionally writes neither audio nor transcripts to disk. Deployment credentials, logs, rate controls, and instructor scenario changes remain private.
 
 ## Instructor-only structure
 
@@ -131,6 +139,14 @@ BUS331-instructor/
       server.mjs
       validate-voice-interview.mjs
       README.md
+    exemplars/
+      worked-practice-case.*
+    pilot/
+      bus331-redesign-pilot-test.md
+      run-pilot-test.mjs
+      pilot-test-report.md
+    canvas/
+      canvas-installation-checklist.md
     README.md
     source/
       instructor-guide.*
@@ -142,7 +158,7 @@ BUS331-instructor/
       instructor-scoring-map.*
 ```
 
-The private workspace may share stable phase and role IDs for coordination, but it must not be imported by the public builder. Public files must never link to private paths. Instructor exemplars should use a clearly fictional practice client unless the assignment deliberately reveals that example.
+The private workspace may share stable phase and role IDs for coordination, but it must not be imported by the public builder. Public files must never link to private paths. Instructor exemplars should use a clearly fictional practice client unless the assignment deliberately reveals that example, and private exemplar identities should not appear in generated student files.
 
 ## Public/private release rules
 

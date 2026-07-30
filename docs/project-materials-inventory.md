@@ -8,10 +8,12 @@ Working status at inventory: clean `main`; no changes committed or published
 
 The repository contains a visually coherent, three-phase investment-committee simulation with a maintained content model, shared builder, and validator. Public materials are organized around Phase 1 client and macro framing, Phase 2 portfolio construction and challenge, and Phase 3 committee defense.
 
-Two portal links are broken:
+The original inventory found two broken portal links:
 
 - `files/Macroeconomic_Forecast_Instructions_Student.pdf` does not exist.
 - `files/BUS331_InvProject_ThesisTemplate_Phase4.xlsx` was deleted; the current security-selection workbook already includes thesis blocks, so a separate link is unnecessary.
+
+The redesigned generated pages no longer link to either retired path.
 
 One critical public/private boundary issue was identified during inventory:
 
@@ -39,6 +41,8 @@ One critical public/private boundary issue was identified during inventory:
 | `files/BUS331_InvProject_SecuritySelection_Template.xlsx` | Student/public | Three client selection tabs, required Issuer Reality Check, and reusable FactSet Research and Evidence Log | Updated student edition; maintain with `scripts/update-security-selection-workbook.mjs`; never store completed FactSet data in the public repository |
 | `files/BUS331_InvProject_StressTest_Template.xlsx` | Student/public | Three client stress tests, summary, tripwire status, corrective-action logic | Maintain as Phase 2 Workstream C |
 | `project/portfolio-management-stress-testing.html` | Student/public | Integrated allocation, full IPS scorecard, bear-case test, breach correction, re-test, role handoffs | Generated Phase 2 workflow; use with the supporting stress-test technical reference |
+| `project/canvas-submission-guide.html` | Student/public | One team submission per phase, exact filenames, private licensed-evidence rules, preflight checks, and receipt retention | Generate from `project-model.json`; treat its contract as authoritative |
+| `canvas/phase-1-assignment.html`, `phase-2-assignment.html`, `phase-3-assignment.html` | Canvas-ready/public | Accessible inline-styled assignment instructions with exact upload packages | Generate from `project-model.json`; paste into Canvas only after instructor review |
 | `files/final-rubric.pdf` | Student/public | Written/oral criteria, Q&A expectations, cohesion, visual standards | Generate from `project-model.json` with `scripts/build-final-rubric-pdf.py` |
 | `files/MACROE~2.PDF` | Instructor only | Instructor scorecards, grading diagnostics, model anchors, worked submission | Resolved: moved to `BUS331-instructor/Investment_Project/source/Macroeconomic_Forecast_Instructor_Master_Guide.pdf` after explicit approval |
 
@@ -49,7 +53,7 @@ One critical public/private boundary issue was identified during inventory:
 - The CME, security-selection, and stress-test workbooks contain formulas and explanatory comments but no hidden answer-key sheet.
 - The client profile deck contains five team assignments with three clients per team.
 - The public client-data workbook and profile deck agree on the fifteen client records reviewed.
-- The repository has no project builder, shared project stylesheet, content manifest, link validator, or privacy-boundary validator.
+- The redesign now has a project builder, shared project stylesheet, content manifest, link validator, Canvas-fragment validator, and privacy-boundary validator.
 - Current student-facing artifacts use the Fall 2026 term. Generated pages take the term from `project-model.json`; binary resources are checked during release validation.
 
 ## Content consolidation map
@@ -81,12 +85,14 @@ All four members vote in every phase, sign the decision record, and must be able
 - `project-model.json` now also defines the Phase 2 bond/fund/ETF comparison, Issuer Reality Check, integrated allocation, IPS compliance, bear-case, breach-correction, and re-test requirements.
 - FactSet is required through a tool-neutral retrieval-and-interpretation record that connects issuer, credit, fund/ETF, corporate-financial, and portfolio-risk research without embedding proprietary captures or exports.
 - The Phase 1 public model defines the existing five fictional-client team sets, the human-first decision cycle, one interview round per analyst role, bounded role-play and challenge prompts, approved-source rules, CFA Level I foundation links, the intentionally incomplete Client Option 1 intake card, and the public voice-service endpoint contract. Eleanor's complete facts, progressive-disclosure rules, complication, information gaps, and recommendation refusal are maintained only in `BUS331-instructor/Investment_Project/client-interview/`.
-- The shared builder now generates the portal, comprehensive guide, three phase guides, compatibility guide, and assessment page.
+- The shared builder now generates the portal, comprehensive guide, three phase guides, compatibility guide, assessment page, Canvas submission guide, and three Canvas-ready assignment fragments.
 - The shared builder now also generates the student-facing Client Discovery and AI Decision Protocol and integrates it into the portal, project guide, and Phase 1 guide.
 - The generated pages no longer link to either missing retired resource.
 - The validator checks phase and role counts, local links, accessibility landmarks, retired phase language, public resource names, and the known instructor-only PDF.
 - The validator also checks the Phase 1-to-Phase 2 handoff, instrument-specific evidence, all four Issuer Reality Check responsibilities, portfolio/IPS/stress contracts, rubric weight totals, committee questions, and public/private boundaries.
 - The student committee decision-record workbook now provides an Analyst Decision Log with a 12-cell role-by-client coverage gate, plus the role charter, gate-by-gate evidence review, four-person votes, dissent, action items, and AI audit log.
 - Release-mode validation now passes after the instructor-only PDF was moved to the private workspace.
+- The private instructor workspace now contains a clearly fictional three-phase worked exemplar and a bounded pilot harness. Neither is linked or copied into generated student materials.
+- The Eleanor voice pilot remains paused and is outside the dependency path for this workflow pilot.
 
 Nothing was deleted, committed, pushed, or published during this inventory. The instructor-only PDF was moved only after explicit approval in the follow-up task.

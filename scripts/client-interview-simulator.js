@@ -19,7 +19,6 @@
   const transcript = root.querySelector("[data-interview-transcript]");
   const emptyState = root.querySelector("[data-empty-transcript]");
   const notes = root.querySelector("#interview-notes");
-  const clientAudio = root.querySelector("[data-client-audio]");
   const suggestedButtons = [...root.querySelectorAll("[data-suggested-question]")];
   const serviceOverrides = window.BUS331_CLIENT_INTERVIEW || {};
   const state = {
@@ -34,7 +33,7 @@
     discardRecording: false,
     recordingTimer: null,
     sessionTimer: null,
-    audioUrl: null
+    utterance: null
   };
 
   const endpoint = (name) => serviceOverrides[name] || live[name];
@@ -88,26 +87,22 @@
     state.messages.push({ role, speaker, content: message });
   }
 
-  function revokeAudioUrl() {
-    if (!state.audioUrl) return;
-    URL.revokeObjectURL(state.audioUrl);
-    state.audioUrl = null;
-  }
-
-  async function playClientResponse(result) {
-    const binary = atob(result.audioBase64);
-    const bytes = new Uint8Array(binary.length);
-    for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
-    revokeAudioUrl();
-    state.audioUrl = URL.createObjectURL(new Blob([bytes], { type: result.mimeType || "audio/wav" }));
-    clientAudio.src = state.audioUrl;
-    clientAudio.hidden = false;
-    try {
-      await clientAudio.play();
-      connectionState.textContent = `${config.clientName} is speaking.`;
-    } catch {
-      connectionState.textContent = "Response ready. Press play to hear Eleanor.";
+  function speakClientResponse(transcript) {
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+      connectionState.textContent = "Response ready to read in the transcript.";
+      return;
     }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(transcript);
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+    utterance.addEventListener("start", () => { connectionState.textContent = `${config.clientName} is speaking.`; }, { once: true });
+    utterance.addEventListener("end", () => {
+      if (state.active && !state.busy) connectionState.textContent = "Interview ready";
+    }, { once: true });
+    utterance.addEventListener("error", () => { connectionState.textContent = "Response ready to read in the transcript."; }, { once: true });
+    state.utterance = utterance;
+    window.speechSynthesis.speak(utterance);
   }
 
   function stopMediaStream() {
@@ -223,7 +218,7 @@
       connectionState.textContent = "Interview ready";
       recordStatus.textContent = "Record a question or type one below.";
       state.sessionTimer = setTimeout(() => endInterview("The interview ended after the time limit."), live.maximumMinutes * 60000);
-      await playClientResponse(result);
+      speakClientResponse(result.transcript);
     } catch (error) {
       connectionState.textContent = "Service unavailable";
       sessionStatus.textContent = `${error.message} The instructor-hosted service must be running before a live interview can begin.`;
@@ -241,7 +236,7 @@
     state.sessionTimer = null;
     state.active = false;
     state.busy = false;
-    clientAudio.pause();
+    window.speechSynthesis?.cancel();
     stopMediaStream();
     connectionState.textContent = "Ended";
     recordStatus.textContent = "Start a new interview to ask more questions.";
@@ -266,7 +261,7 @@
         ? "Turn limit reached. Preserve your transcript and continue to the Decision Record."
         : "Response added. Ask a follow-up or move to another discovery area.";
       connectionState.textContent = atTurnLimit() ? "Turn limit reached" : "Interview ready";
-      await playClientResponse(result);
+      speakClientResponse(result.transcript);
     } catch (error) {
       formStatus.textContent = `${error.message} Your question remains in the box so you can try again.`;
       connectionState.textContent = "Interview ready";
@@ -296,10 +291,7 @@
     emptyState.hidden = false;
     notes.value = "";
     questionInput.value = "";
-    clientAudio.removeAttribute("src");
-    clientAudio.load();
-    clientAudio.hidden = true;
-    revokeAudioUrl();
+    window.speechSynthesis?.cancel();
     connectionState.textContent = "Not started";
     recordStatus.textContent = "Start the interview first.";
     formStatus.textContent = "";
@@ -353,12 +345,9 @@
   });
 
   root.querySelector("[data-clear-session]").addEventListener("click", clearSession);
-  clientAudio.addEventListener("ended", () => {
-    if (state.active && !state.busy) connectionState.textContent = "Interview ready";
-  });
   window.addEventListener("beforeunload", () => {
     stopMediaStream();
-    revokeAudioUrl();
+    window.speechSynthesis?.cancel();
   });
 
   updateControls();

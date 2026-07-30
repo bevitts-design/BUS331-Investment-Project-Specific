@@ -144,7 +144,7 @@
         "maximumMinutes": 12,
         "maximumTurns": 12,
         "startLabel": "Start live interview",
-        "privacyNotice": "When you start, microphone audio and typed questions are sent to the instructor-hosted AI service for this fictional classroom interview. The portal keeps only the visible text transcript in this browser session and does not intentionally store raw audio.",
+        "privacyNotice": "Do not say or type your name. When you start, microphone audio is sent only long enough for the instructor-hosted AI service to transcribe your question. The service does not intentionally store raw audio, student names, or transcripts. The portal keeps only the visible text transcript in this browser session; download it only if you choose to keep it.",
         "availabilityNotice": "Live voice requires an instructor-hosted session service, a supported browser, microphone permission, and an internet connection. If microphone access is unavailable, continue with typed questions in the same live interview."
       },
       "openingQuestions": [
@@ -608,6 +608,7 @@
         "Phase 1 decision record"
       ],
       "resources": [
+        "canvas-submission-guide",
         "client-discovery-protocol",
         "decision-record",
         "macro-starter",
@@ -662,6 +663,7 @@
         "Phase 2 decision record with client-by-client votes"
       ],
       "resources": [
+        "canvas-submission-guide",
         "security-analysis-workflow",
         "portfolio-stress-workflow",
         "cme-template",
@@ -712,13 +714,93 @@
         "Final decision record and AI audit appendix"
       ],
       "resources": [
+        "canvas-submission-guide",
         "decision-record",
         "phase-3-assessment",
         "phase-3-rubric-pdf"
       ]
     }
   ],
+  "canvasSubmissions": {
+    "title": "Canvas Submission Workflow",
+    "purpose": "Use one clearly named team submission at each approval gate so the committee's decision trail, owned work, and licensed evidence remain private and reviewable.",
+    "authority": "The Canvas assignment controls the due date, points, availability window, and attempt policy. This guide controls the required package, filenames, and public/private boundary.",
+    "sharedRules": [
+      "One designated submitter uploads the complete package for the Canvas group; all four members confirm the receipt before the deadline.",
+      "Use Team01, Team02, and so on in filenames. Replace the two-digit placeholder; do not add student names to filenames.",
+      "Keep formulas live in required XLSX files. Export narrative and exhibit deliverables to PDF unless PPTX or XLSX is explicitly required.",
+      "Put only licensed FactSet evidence in the private evidence ZIP. Do not place credentials, raw student data, or unrelated downloads in the bundle.",
+      "Before submitting, open every file, confirm the three assigned clients and four analyst owners are visible, and verify that all cited as-of dates match the analysis.",
+      "After upload, open the Canvas submission receipt and confirm that every required filename appears. A local file or public-repository link is not a submission."
+    ],
+    "assignments": [
+      {
+        "phaseId": "phase-1",
+        "canvasTitle": "BUS331 Investment Committee · Phase 1 Gate · Frame the Mandate",
+        "decision": "Approve or revise the common market view and all three client mandates before portfolio construction begins.",
+        "requiredFiles": [
+          {"name": "BUS331_Team##_Phase1_MandateMemo.pdf", "description": "One-page committee mandate memo covering the common market view and three client mandates."},
+          {"name": "BUS331_Team##_Phase1_Macro.xlsx", "description": "Completed macro starter workbook with human-first read, consensus comparison, and bull/base/bear scenarios."},
+          {"name": "BUS331_Team##_Phase1_ClientIPS.pdf", "description": "One combined PDF containing the three completed client IPS documents in assigned-client order."},
+          {"name": "BUS331_Team##_Phase1_DecisionRecord.xlsx", "description": "Current Analyst Decision Log and signed Phase 1 vote with four-role-by-three-client coverage."}
+        ],
+        "allowedExtensions": ["pdf", "xlsx"],
+        "preflight": [
+          "Scenario probabilities total 100% and every macro claim has a source and as-of date.",
+          "Each client has an objective, RRTTLLU constraints, return target, volatility limit, drawdown tripwire, and unresolved information gaps.",
+          "The Decision Record shows initial judgment, AI challenge, human verification, final reasoning, downstream guardrail, owner, and peer reviewer.",
+          "All four members recorded the Phase 1 vote and any revision action."
+        ]
+      },
+      {
+        "phaseId": "phase-2",
+        "canvasTitle": "BUS331 Investment Committee · Phase 2 Gate · Build and Challenge",
+        "decision": "Approve, revise, or reject each client portfolio after security due diligence, full IPS review, bear-case stress, correction, and re-test.",
+        "requiredFiles": [
+          {"name": "BUS331_Team##_Phase2_CME.xlsx", "description": "Completed capital-market-expectations and optimization workbook."},
+          {"name": "BUS331_Team##_Phase2_SecuritySelection.xlsx", "description": "Completed bond, mutual-fund, and ETF comparisons, Issuer Reality Checks, AI decisions, and FactSet Evidence Log."},
+          {"name": "BUS331_Team##_Phase2_StressTest.xlsx", "description": "Integrated allocation, full IPS scorecard, bear-case results, corrective actions, and re-test."},
+          {"name": "BUS331_Team##_Phase2_DecisionRecord.xlsx", "description": "Current committee record with client-by-client votes, dissent, actions, owners, and deadlines."},
+          {"name": "BUS331_Team##_Phase2_LicensedEvidence.zip", "description": "Private course-use evidence files referenced by the FactSet Evidence Log; no credentials or unrelated exports."}
+        ],
+        "allowedExtensions": ["xlsx", "zip"],
+        "preflight": [
+          "Every recommended bond, mutual fund, and ETF passed a documented candidate comparison and client guardrail check.",
+          "Issuer Reality Checks and licensed-evidence references cover every required direct and look-through exposure.",
+          "Every client allocation totals 100%, all IPS objectives and constraints were tested, and any breach has a corrected full re-test.",
+          "All four members recorded the Phase 2 vote and can identify the evidence they own and reviewed."
+        ]
+      },
+      {
+        "phaseId": "phase-3",
+        "canvasTitle": "BUS331 Investment Committee · Phase 3 Gate · Defend the Recommendation",
+        "decision": "Issue one integrated recommendation for all three clients, preserve the audit trail, and arrive ready for the scheduled committee defense.",
+        "requiredFiles": [
+          {"name": "BUS331_Team##_Phase3_DecisionMemo.pdf", "description": "Final committee decision memo with recommendation first, client-specific actions, reservations, and monitoring triggers."},
+          {"name": "BUS331_Team##_Phase3_TechnicalDossier.pdf", "description": "Auditable exhibit book linking macro, mandates, allocations, security evidence, stress results, corrections, and sources."},
+          {"name": "BUS331_Team##_Phase3_Presentation.pptx", "description": "Final visual committee presentation with balanced speaking responsibility."},
+          {"name": "BUS331_Team##_Phase3_DecisionRecord.xlsx", "description": "Final vote, dissent or reservations, implementation actions, Analyst Decision Log, and AI audit appendix."},
+          {"name": "BUS331_Team##_Phase3_LicensedEvidence.zip", "description": "Final private evidence bundle containing only licensed supporting files cited in the dossier and Evidence Log."}
+        ],
+        "allowedExtensions": ["pdf", "pptx", "xlsx", "zip"],
+        "preflight": [
+          "The memo, dossier, presentation, and decision record state the same allocations, securities, and monitoring actions.",
+          "Every recommendation traces backward to a Phase 1 client guardrail and forward to a monitoring trigger.",
+          "Every material number has a source, definition, unit, as-of date, interpretation, and limitation.",
+          "Each member can defend owned work and answer questions outside that workstream during the scheduled oral defense."
+        ]
+      }
+    ]
+  },
   "resources": [
+    {
+      "id": "canvas-submission-guide",
+      "label": "Canvas submission workflow",
+      "type": "HTML",
+      "path": "project/canvas-submission-guide.html",
+      "description": "Exact phase-by-phase filenames, private evidence packaging, team receipt check, and pre-submission controls.",
+      "audience": "student"
+    },
     {
       "id": "client-discovery-protocol",
       "label": "Client Discovery and AI Decision Protocol",

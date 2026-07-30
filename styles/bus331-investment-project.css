@@ -1389,6 +1389,7 @@ h2 .accent {
 }
 
 .callout {
+  min-width: 0;
   margin: 30px 0;
   padding: 24px 26px;
   border-left: 5px solid var(--gold-500);
@@ -1415,7 +1416,14 @@ h2 .accent {
 }
 
 .content-flow > section {
+  min-width: 0;
   margin-bottom: 62px;
+}
+
+.content-flow,
+.resource-stack,
+.resource-link {
+  min-width: 0;
 }
 
 .content-flow h2 {
@@ -1505,6 +1513,7 @@ h2 .accent {
 .resource-link strong {
   display: block;
   color: var(--navy-900);
+  overflow-wrap: anywhere;
 }
 
 .resource-link span:last-child {

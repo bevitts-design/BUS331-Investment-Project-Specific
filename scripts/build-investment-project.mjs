@@ -19,7 +19,8 @@ const phasePath = (phase) => `project/${phase.id}-${phase.title.toLowerCase().re
 const clientDiscoveryPath = "project/client-discovery-ai-protocol.html";
 const securityWorkflowPath = "project/security-analysis-selection.html";
 const portfolioStressPath = "project/portfolio-management-stress-testing.html";
-const assetVersion = "20260730-phase2-workflows-1";
+const canvasSubmissionPath = "project/canvas-submission-guide.html";
+const assetVersion = "20260730-canvas-workflow-2";
 const prefixPath = (prefix, target) => `${prefix}${target}`;
 
 function siteHeader(prefix) {
@@ -37,6 +38,7 @@ function siteHeader(prefix) {
         <a href="${prefixPath(prefix, clientDiscoveryPath)}">Discovery protocol</a>
         <a href="${prefixPath(prefix, securityWorkflowPath)}">Security selection</a>
         <a href="${prefixPath(prefix, portfolioStressPath)}">Portfolio stress</a>
+        <a href="${prefixPath(prefix, canvasSubmissionPath)}">Canvas submissions</a>
         <a href="${prefixPath(prefix, "project/assessment.html")}">Assessment</a>
       </nav>
     </div>
@@ -176,7 +178,7 @@ function interviewSimulatorMarkup(prefix) {
           <button class="button simulator-secondary" type="button" data-end-interview disabled>End interview</button>
           <span class="connection-state" data-connection-state role="status" aria-live="polite">Not started</span>
         </div>
-        <audio data-client-audio controls hidden aria-label="Eleanor Vance's latest spoken response"></audio>
+        <p class="voice-playback-note">Eleanor's reply is spoken by your browser when available and always appears in the text transcript. No generated audio file is saved.</p>
         <div class="record-question-card">
           <div><h3>Record your own question</h3><p>Start recording, ask one question naturally, then stop. Review and edit the transcript before sending it to Eleanor.</p></div>
           <div class="record-controls"><button class="button simulator-secondary" type="button" data-record-question disabled>Start recording</button><span data-record-status role="status" aria-live="polite">Start the interview first.</span></div>
@@ -393,6 +395,7 @@ function landingPage() {
       <div class="callout">
         <h2>Canvas controls dates and submissions</h2>
         <p>${escapeHtml(model.project.scopeNote)}</p>
+        <p><a class="button" href="${escapeHtml(canvasSubmissionPath)}">Open the Canvas submission workflow</a></p>
       </div>
     </div>
   </main>`;
@@ -797,6 +800,71 @@ function assessmentTable(criteria) {
   </table></div>`;
 }
 
+function submissionFileList(assignment) {
+  return `<div class="resource-stack">${assignment.requiredFiles.map((file) => `<article class="resource-link"><span class="resource-type">Required file</span><strong>${escapeHtml(file.name)}</strong><span>${escapeHtml(file.description)}</span></article>`).join("\n")}</div>`;
+}
+
+function canvasSubmissionPage() {
+  const prefix = "../";
+  const workflow = model.canvasSubmissions;
+  const body = `
+  <main id="main-content">
+    ${pageHero("Private team submissions · All three phases", workflow.title, workflow.purpose)}
+    <div class="page-shell">
+      <div class="content-flow">
+        <section><div class="callout"><h2>Canvas is the private submission record</h2><p>${escapeHtml(workflow.authority)}</p></div></section>
+        <section>
+          <p class="section-kicker">Rules that apply at every gate</p>
+          <h2>Submit once, verify twice</h2>
+          <ul class="check-list">${workflow.sharedRules.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+        </section>
+        ${workflow.assignments.map((assignment) => {
+          const phase = model.phases.find((item) => item.id === assignment.phaseId);
+          return `<section id="${escapeHtml(assignment.phaseId)}-canvas">
+            <p class="section-kicker">Phase ${phase.number} Canvas gate</p>
+            <h2>${escapeHtml(assignment.canvasTitle)}</h2>
+            <div class="callout"><h3>Decision recorded</h3><p>${escapeHtml(assignment.decision)}</p></div>
+            <h3>Upload these exact files</h3>
+            ${submissionFileList(assignment)}
+            <h3>Pre-submission check</h3>
+            <ul class="check-list">${assignment.preflight.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+            <p><strong>Allowed file extensions:</strong> ${assignment.allowedExtensions.map((item) => `.${escapeHtml(item)}`).join(", ")}</p>
+          </section>`;
+        }).join("\n")}
+        <section>
+          <p class="section-kicker">Submission receipt</p>
+          <h2>The gate is not complete until the team confirms Canvas</h2>
+          <p>After the designated submitter uploads the package, each member opens the Canvas receipt, confirms the required filenames, and records the receipt check in the committee Decision Record. If a file is missing or cannot be opened, use the attempt and revision policy shown in Canvas.</p>
+        </section>
+      </div>
+    </div>
+  </main>`;
+  return shell({title: workflow.title, description: workflow.purpose, prefix, body, pageClass: "guide-page workflow-page"});
+}
+
+function canvasAssignmentFragment(assignment) {
+  const phase = model.phases.find((item) => item.id === assignment.phaseId);
+  const palette = {navy: "#0B1F3A", gold: "#C99A2E", teal: "#187C78", paper: "#F7F4EC", ink: "#172033", line: "#D8D2C4"};
+  const card = "border:1px solid #D8D2C4;border-radius:12px;padding:16px;margin:14px 0;background:#ffffff;";
+  const canvasText = (value) => escapeHtml(value).replaceAll("·", "&middot;");
+  return `<div style="max-width:980px;margin:0 auto;color:${palette.ink};font-family:Arial,Helvetica,sans-serif;line-height:1.55;">
+  <div style="background:${palette.navy};color:#ffffff;border-top:8px solid ${palette.gold};padding:24px;border-radius:14px 14px 6px 6px;">
+    <p style="margin:0 0 6px;font-size:14px;font-weight:bold;letter-spacing:.06em;text-transform:uppercase;color:#F1D48E;">BUS331 &middot; Phase ${phase.number} approval gate</p>
+    <h1 style="margin:0;font-size:30px;line-height:1.2;color:#ffffff;">${canvasText(assignment.canvasTitle)}</h1>
+    <p style="margin:12px 0 0;color:#ffffff;">${escapeHtml(assignment.decision)}</p>
+  </div>
+  <div style="background:${palette.paper};padding:20px;border:1px solid ${palette.line};border-top:0;border-radius:0 0 14px 14px;">
+    <div style="${card}border-left:6px solid ${palette.teal};"><h2 style="margin:0 0 8px;color:${palette.navy};font-size:22px;">Submit as one Canvas group</h2><p style="margin:0;">One designated team member uploads the full package. All four members must open the Canvas receipt and confirm every required filename. Canvas controls the due date, points, availability window, and attempt policy.</p></div>
+    <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Required files</h2>
+    ${assignment.requiredFiles.map((file) => `<div style="${card}"><p style="margin:0 0 4px;font-weight:bold;color:${palette.navy};overflow-wrap:anywhere;">${escapeHtml(file.name)}</p><p style="margin:0;">${escapeHtml(file.description)}</p></div>`).join("\n")}
+    <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Pre-submission check</h2>
+    <ul style="margin:0;padding-left:24px;">${assignment.preflight.map((item) => `<li style="margin:8px 0;">${escapeHtml(item)}</li>`).join("")}</ul>
+    <div style="${card}border-left:6px solid ${palette.gold};"><h2 style="margin:0 0 8px;color:${palette.navy};font-size:22px;">Private evidence boundary</h2><p style="margin:0;">Submit final work and required licensed-source evidence only through this private Canvas assignment. Never place FactSet captures, exports, credentials, completed proprietary data files, or student work in the public repository.</p></div>
+    <p style="margin:18px 0 0;font-size:14px;"><strong>Allowed extensions:</strong> ${assignment.allowedExtensions.map((item) => `.${escapeHtml(item)}`).join(", ")}</p>
+  </div>
+</div>\n`;
+}
+
 function assessmentPage() {
   const phase = model.phases[2];
   const prefix = "../";
@@ -844,15 +912,21 @@ function assessmentPage() {
 }
 
 await fs.mkdir(path.join(rootDir, "project"), { recursive: true });
+await fs.mkdir(path.join(rootDir, "canvas"), { recursive: true });
 await fs.writeFile(path.join(rootDir, "index.html"), landingPage());
 await fs.writeFile(path.join(rootDir, "project", "guide.html"), guidePage("../"));
 await fs.writeFile(path.join(rootDir, "BUS331_InvProject_Requirements_AllPhases.html"), guidePage(""));
 await fs.writeFile(path.join(rootDir, clientDiscoveryPath), clientDiscoveryPage());
 await fs.writeFile(path.join(rootDir, securityWorkflowPath), securityAnalysisPage());
 await fs.writeFile(path.join(rootDir, portfolioStressPath), portfolioStressPage());
+await fs.writeFile(path.join(rootDir, canvasSubmissionPath), canvasSubmissionPage());
 for (const phase of model.phases) {
   await fs.writeFile(path.join(rootDir, phasePath(phase)), phasePage(phase));
 }
 await fs.writeFile(path.join(rootDir, "project", "assessment.html"), assessmentPage());
+for (const assignment of model.canvasSubmissions.assignments) {
+  const phase = model.phases.find((item) => item.id === assignment.phaseId);
+  await fs.writeFile(path.join(rootDir, "canvas", `phase-${phase.number}-assignment.html`), canvasAssignmentFragment(assignment));
+}
 
-console.log(`Built ${model.phases.length + 7} project pages from project-model.json.`);
+console.log(`Built ${model.phases.length + 8} project pages and ${model.canvasSubmissions.assignments.length} Canvas fragments from project-model.json.`);
