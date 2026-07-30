@@ -120,11 +120,69 @@
         "inquiry": "Investigate how philanthropy, debt, uneven cash flow, starting capital, and multigenerational goals change portfolio priorities."
       }
     ],
+    "interviewPrototype": {
+      "label": "Client Option 1 · Controlled prototype",
+      "clientName": "Eleanor Vance",
+      "initials": "EV",
+      "caseLabel": "Case #01 · Team One",
+      "identity": "Age 72 · Retired librarian",
+      "boundary": "Responses use only Eleanor's approved fictional profile. The simulator will mark anything else as an information gap and will not recommend investments.",
+      "facts": [
+        {"label": "Risk profile", "value": "Risk averse"},
+        {"label": "Annual income", "value": "$30,000 pension"},
+        {"label": "Net worth", "value": "$1.2 million"},
+        {"label": "Primary goal", "value": "Capital preservation and income"},
+        {"label": "Key constraints", "value": "High liquidity needs for medical expenses; 2–5 year horizon"},
+        {"label": "Profile metrics", "value": "E(R) 4.5%; standard deviation 6.0%; risk-aversion score 8.0"}
+      ],
+      "openingQuestions": [
+        "What are your primary investment goals?",
+        "Which upcoming cash needs most constrain the plan?",
+        "What is your investment time horizon?",
+        "How would you describe your comfort with investment risk?"
+      ],
+      "responseTopics": [
+        {
+          "keywords": ["age", "retired", "retirement", "librarian", "work", "job", "occupation"],
+          "response": "I am 72 and a retired librarian."
+        },
+        {
+          "keywords": ["income", "pension", "earn", "cash flow"],
+          "response": "My approved profile lists $30,000 in annual pension income."
+        },
+        {
+          "keywords": ["net worth", "wealth", "assets"],
+          "response": "My approved profile lists my net worth as $1.2 million."
+        },
+        {
+          "keywords": ["goal", "objective", "priority", "preservation"],
+          "response": "My stated primary goal is capital preservation and income."
+        },
+        {
+          "keywords": ["medical", "liquidity", "liquid", "cash need", "spending", "expense"],
+          "response": "I have high liquidity needs for medical expenses. The profile does not provide an amount or date, so those details remain information gaps."
+        },
+        {
+          "keywords": ["horizon", "time", "when", "years"],
+          "response": "My approved investment horizon is 2–5 years."
+        },
+        {
+          "keywords": ["risk", "loss", "volatility", "comfortable", "comfort", "drawdown"],
+          "response": "My profile describes me as risk averse and lists a risk-aversion score of 8.0. It does not establish how I would respond to a specific loss scenario."
+        },
+        {
+          "keywords": ["expected return", "return target", "standard deviation", "metric", "score"],
+          "response": "The approved profile lists E(R) at 4.5%, standard deviation at 6.0%, and risk aversion at 8.0. Those are case inputs, not an investment recommendation."
+        }
+      ],
+      "recommendationResponse": "I cannot recommend a security, fund, ETF, bond, or portfolio weight. Use my documented goals and constraints as inputs to your team's analysis, verify the evidence, and make the investment decision yourselves.",
+      "unknownResponse": "Not established—record this as an information gap. My approved profile does not provide that detail, so you should not assume an answer."
+    },
     "decisionCycle": [
       {
         "stage": "Initial judgment",
-        "action": "Before opening an AI tool, each analyst records one provisional interpretation for each assigned client and names the fact or assumption driving it.",
-        "logEvidence": "Initial judgment, confidence, and unresolved question"
+        "action": "Before any AI interaction, the team records one tentative, evidence-based interpretation for each assigned client: what the client needs, which constraints matter, and the preliminary investment implications.",
+        "logEvidence": "The interpretation; supporting case evidence and assumptions; unanswered questions; and the portfolio or security decision it could affect"
       },
       {
         "stage": "AI client interview",

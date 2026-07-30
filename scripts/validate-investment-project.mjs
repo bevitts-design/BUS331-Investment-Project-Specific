@@ -41,6 +41,18 @@ if (!experience) {
 } else {
   if (experience.clientSets?.length !== 5) fail("Phase 1 must present five fictional-client team sets.");
   if (experience.clientSets?.some((set) => set.clients?.length !== 3)) fail("Every fictional-client team set must contain three clients.");
+  const interviewPrototype = experience.interviewPrototype;
+  if (!interviewPrototype) {
+    fail("Phase 1 must include the controlled Client Option 1 interview prototype.");
+  } else {
+    if (!experience.clientSets?.[0]?.clients?.includes(interviewPrototype.clientName)) fail("The interview prototype client must remain in Team One's existing client set.");
+    if (!interviewPrototype.facts?.length || !interviewPrototype.responseTopics?.length) fail("The interview prototype must define approved facts and bounded response topics.");
+    if (interviewPrototype.openingQuestions?.length < 3) fail("The interview prototype must provide suggested opening questions.");
+    const boundaryText = `${interviewPrototype.boundary} ${interviewPrototype.recommendationResponse} ${interviewPrototype.unknownResponse}`;
+    if (!/approved fictional profile/i.test(boundaryText) || !/cannot recommend/i.test(boundaryText) || !/information gap/i.test(boundaryText)) {
+      fail("The interview prototype must prohibit invented facts and recommendations and label unknowns as information gaps.");
+    }
+  }
   if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Initial judgment|AI client interview|AI challenge|Human verification|Final reasoning") {
     fail("Phase 1 decision cycle must preserve the human-first, AI-challenge, verification, and final-reasoning sequence.");
   }
@@ -159,6 +171,20 @@ for (const roleTitle of requiredRoleTitles) {
 }
 if (/Committee Chair|Markets &amp; Economic Strategist|Portfolio Construction Lead|Risk, Controls/i.test(discoveryHtml)) {
   fail("Client discovery protocol contains a retired committee-role title.");
+}
+for (const requiredText of ["Client Option 1", "Practice a bounded client interview", "Suggested opening questions", "Interview transcript", "Analyst notes for the Decision Record"]) {
+  if (!discoveryHtml.includes(requiredText)) fail(`Client discovery protocol is missing interview-prototype content: ${requiredText}.`);
+}
+if (!discoveryHtml.includes('../scripts/client-interview-simulator.js')) fail("Client discovery protocol is missing the local simulator runtime.");
+
+const simulatorRuntimePath = path.join(rootDir, "scripts", "client-interview-simulator.js");
+if (!(await exists(simulatorRuntimePath))) {
+  fail("Missing maintained client interview simulator runtime.");
+} else {
+  const simulatorRuntime = await fs.readFile(simulatorRuntimePath, "utf8");
+  for (const marker of ["recommendationPattern", "unknownResponse", "data-interview-transcript", "data-download-session"]) {
+    if (!simulatorRuntime.includes(marker)) fail(`Client interview simulator runtime is missing required control: ${marker}.`);
+  }
 }
 
 const decisionRecordResource = model.resources.find((resource) => resource.id === "decision-record");

@@ -60,6 +60,7 @@ BUS331-Investment-Project-Specific/
   project-model.json                    # canonical public content and resource manifest
   scripts/
     build-investment-project.mjs        # generates portal and public guide pages
+    client-interview-simulator.js       # local, no-key Client Option 1 prototype runtime
     build-investment-committee-decision-record.mjs
                                         # generates the student committee record workbook
     validate-investment-project.mjs     # phase, role, link, accessibility, and privacy checks
@@ -89,13 +90,15 @@ BUS331-Investment-Project-Specific/
 - the three stable phase IDs
 - the four stable role IDs
 - phase objectives, evidence, committee gates, and deliverables
-- fictional-client team sets, four-role interview rounds, bounded AI prompts, and the Phase 1 decision cycle
+- fictional-client team sets, four-role interview rounds, bounded AI prompts, the Phase 1 decision cycle, and approved facts/responses for the controlled Client Option 1 prototype
 - the Analyst Decision Log contract, including evidence-ready fields and complete four-role-by-three-client coverage before the Phase 1 gate
 - resource labels and relative paths
 - AI rules and verification requirements
 - public assessment language
 
 Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
+
+The guided Client Interview Simulator is an assessment-fair interaction mock-up, not a live AI service. `project-model.json` supplies Eleanor Vance's approved fictional profile, suggested questions, bounded topic responses, recommendation refusal, and information-gap response. `scripts/client-interview-simulator.js` handles the local transcript and notes interface without an API key, external request, or persistent server-side storage.
 
 ## Instructor-only structure
 
