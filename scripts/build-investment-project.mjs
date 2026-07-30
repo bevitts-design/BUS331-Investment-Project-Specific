@@ -693,6 +693,15 @@ function securityAnalysisPage() {
         <p class="fine-print">This is part of the candidate's analysis and selection record, not a separate accounting unit. Keep it concise, cited, and decision-focused.</p>
       </section>
 
+      <section class="factset-section">
+        <p class="section-kicker">Required licensed-source research</p><h2>${escapeHtml(experience.factSetWorkflow.title)}</h2>
+        <div class="callout"><h3>Public/private data boundary</h3><p>${escapeHtml(experience.factSetWorkflow.licenseBoundary)}</p></div>
+        <p>${escapeHtml(experience.factSetWorkflow.navigationBoundary)}</p>
+        ${workflowSteps(experience.factSetWorkflow.steps)}
+        <div class="factset-connections">${experience.factSetWorkflow.connections.map((item) => `<article><h3>${escapeHtml(item.workstream)}</h3><p>${escapeHtml(item.application)}</p></article>`).join("\n")}</div>
+        ${studentTemplateTable("FactSet Research and Evidence Log. Record the retrieval and interpretation; submit required licensed-source evidence privately through Canvas, never the public repository.", experience.factSetWorkflow.evidenceLogFields)}
+      </section>
+
       <section>
         <p class="section-kicker">Student template</p><h2>Candidate comparison and decision record</h2>
         <p>Complete one row per serious candidate in the security-selection workbook or team record. Keep rejected candidates: the comparison is evidence that the committee considered alternatives.</p>
@@ -756,6 +765,7 @@ function portfolioStressPage() {
         <p class="section-kicker">Bear-case template</p><h2>Quantify the downside and the client consequence</h2>
         ${studentTemplateTable("Bear-case stress template. Apply the approved Phase 1 assumptions and show both percentage and dollar impacts.", experience.stressTemplateColumns)}
         <div class="callout"><h3>Interpret before correcting</h3><p>Name the exposure that causes the loss, the client goal or constraint placed at risk, the limits of the estimate, and whether the result is a pass, warning, or breach.</p></div>
+        <div class="callout"><h3>FactSet input record</h3><p>For each FactSet-derived return, risk, exposure, correlation, or benchmark input, record what was retrieved, the retrieval date, definition and units, as-of period, source reference as appropriate, limitation, and effect on the portfolio decision. Submit the required licensed evidence privately through Canvas; do not place proprietary exports or student work in the public repository.</p></div>
       </section>
 
       <section>

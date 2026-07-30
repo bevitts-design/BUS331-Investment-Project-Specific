@@ -31,6 +31,8 @@ The maintained `phase2Experience` contract in `project-model.json` requires two 
 
 The Issuer Reality Check sits inside security analysis rather than as another course unit. It is required for every direct bond or equity exposure and the most material relevant issuer or holding inside each selected mutual fund or ETF. Yield or recent return alone is never sufficient evidence; the snapshot covers the business and revenue drivers, macro and industry sensitivity, financial trend, liquidity and leverage, coverage and maturities where relevant, issuer-specific risk, client fit, allocation implication, and monitoring trigger.
 
+FactSet is a required licensed research source in Phase 2, not a public data dependency. Students research and download evidence inside their own licensed access, then record the item retrieved, retrieval date, relevant metrics, entity/security, as-of period, source or document reference as appropriate, interpretation, and effect on the recommendation. Students submit their final work and any required licensed-source supporting evidence privately through Canvas. No student work, FactSet capture, export, credential, or completed proprietary dataset belongs in this public repository, and public guidance must remain tool-neutral because layouts and entitlements can differ.
+
 Required evidence:
 
 - Base and bear CME assumptions with cited rationale
@@ -40,7 +42,7 @@ Required evidence:
 - Derivative or other risk-mitigation comparison with cost and trade-off
 - Stress-test result against the client's approved tripwire
 - Corrective trades when a portfolio breaches its mandate
-- AI audit entries tied to human verification
+- AI audit entries tied to human verification and FactSet retrieval records tied to student interpretation
 
 Committee gate: approve, revise, or reject each client portfolio. A failed tripwire cannot receive approval without a documented correction.
 
@@ -105,7 +107,7 @@ BUS331-Investment-Project-Specific/
 - the four stable role IDs
 - phase objectives, evidence, committee gates, and deliverables
 - fictional-client team sets, four-role interview rounds, bounded AI prompts, the Phase 1 decision cycle, and the public endpoint/privacy contract for the Client Option 1 voice interview
-- Phase 2 security-analysis, Issuer Reality Check, portfolio-integration, IPS-compliance, bear-case, correction, and re-test contracts
+- Phase 2 security-analysis, Issuer Reality Check, FactSet evidence-log, portfolio-integration, IPS-compliance, bear-case, correction, and re-test contracts
 - the Analyst Decision Log contract, including evidence-ready fields and complete four-role-by-three-client coverage before the Phase 1 gate
 - resource labels and relative paths
 - AI rules and verification requirements

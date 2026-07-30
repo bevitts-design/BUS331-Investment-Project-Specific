@@ -57,6 +57,15 @@ if (!phase2Experience) {
   if (issuerCheck?.roleResponsibilities?.length !== 4) fail("Issuer Reality Check must assign all four committee roles.");
   const issuerRoleIds = new Set(issuerCheck?.roleResponsibilities?.map((item) => item.roleId));
   for (const role of model.roles) if (!issuerRoleIds.has(role.id)) fail(`Issuer Reality Check is missing ${role.title}.`);
+  const factSetWorkflow = phase2Experience.factSetWorkflow;
+  const factSetText = JSON.stringify(factSetWorkflow || {});
+  if (!factSetWorkflow || !/licensed FactSet access/i.test(factSetText) || !/public repository/i.test(factSetText)) fail("Phase 2 must define the licensed FactSet workflow and public-repository boundary.");
+  for (const required of ["retrieved", "retrieval date", "metric", "source", "document reference", "interpretation", "effect on the recommendation", "canvas submission item"]) {
+    if (!new RegExp(required, "i").test(factSetText)) fail(`FactSet evidence contract is missing ${required}.`);
+  }
+  for (const required of ["Issuer Reality Check", "Credit and fixed income", "Mutual funds and ETFs", "Corporate issuer analysis", "Portfolio risk inputs"]) {
+    if (!factSetWorkflow?.connections?.some((item) => item.workstream === required)) fail(`FactSet workflow is missing the ${required} connection.`);
+  }
   if (phase2Experience.roleIntegration?.length !== 4) fail("Phase 2 must define security and portfolio ownership for all four roles.");
   if (!phase2Experience.securityQualityGate?.some((item) => /AI/i.test(item) && /evidence/i.test(item))) fail("Security quality gate must preserve AI challenge and human evidence verification.");
   if (!phase2Experience.portfolioQualityGate?.some((item) => /breach/i.test(item) && /re-test/i.test(item))) fail("Portfolio quality gate must require breach correction and re-testing.");
@@ -229,6 +238,10 @@ for (const requiredText of [
   "Yield or recent return alone cannot support a recommendation",
   "Business model and principal revenue drivers",
   "Interest coverage and debt-maturity considerations",
+  "FactSet Research and Evidence Record",
+  "Public/private data boundary",
+  "Data as-of period and retrieval date",
+  "licensed-source evidence",
   "AI challenge-and-verification checkpoint",
   "Accept, Modify, or Reject"
 ]) {
@@ -249,6 +262,9 @@ for (const requiredText of [
   "AI boundary"
 ]) {
   if (!portfolioHtml.includes(requiredText)) fail(`Portfolio and Stress Testing page is missing required student workflow content: ${requiredText}.`);
+}
+if (!portfolioHtml.includes("FactSet input record") || !portfolioHtml.includes("privately through Canvas") || !portfolioHtml.includes("do not place proprietary exports or student work in the public repository")) {
+  fail("Portfolio and Stress Testing page is missing the FactSet input and proprietary-data boundary.");
 }
 for (const roleTitle of requiredRoleTitles) {
   if (!portfolioHtml.includes(roleTitle)) fail(`Portfolio and Stress Testing page is missing role ownership for ${roleTitle}.`);
@@ -296,6 +312,16 @@ if (!(await exists(workbookBuilderPath))) {
   const workbookBuilder = await fs.readFile(workbookBuilderPath, "utf8");
   for (const marker of ["ROLE × CLIENT COVERAGE", "minimumDecisionLogEntries", "COUNTIFS($C$8:$C$37"]) {
     if (!workbookBuilder.includes(marker)) fail(`Committee-workbook builder is missing the role-by-client readiness control: ${marker}.`);
+  }
+}
+
+const securityWorkbookUpdaterPath = path.join(rootDir, "scripts", "update-security-selection-workbook.mjs");
+if (!(await exists(securityWorkbookUpdaterPath))) {
+  fail("Missing maintained security-selection workbook updater.");
+} else {
+  const updater = await fs.readFile(securityWorkbookUpdaterPath, "utf8");
+  for (const marker of ["ISSUER CHECK", "EVIDENCE LOG", "Yield or recent return alone cannot support a recommendation", "Business Model", "Interest Coverage / Debt Maturities", "Fund/ETF look-through", "Client-Fit Conclusion", "FactSet Data / Research Retrieved", "Effect on Recommendation", "Canvas Submission Item / Evidence-File Reference"]) {
+    if (!updater.includes(marker)) fail(`Security-selection workbook updater is missing Issuer Reality Check control: ${marker}.`);
   }
 }
 

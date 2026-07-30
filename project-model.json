@@ -401,6 +401,40 @@
         {"roleId": "portfolio-risk", "responsibility": "Apply the issuer-health and concentration conclusion to position size, portfolio risk, diversification, stress testing, and monitoring or exit triggers."}
       ]
     },
+    "factSetWorkflow": {
+      "title": "FactSet Research and Evidence Record",
+      "licenseBoundary": "Use your licensed FactSet access to research and download data for your own course work. Submit the final project package and any required licensed-source supporting evidence privately through Canvas. Do not place FactSet captures, exports, credentials, completed proprietary data files, or student work in the public repository.",
+      "navigationBoundary": "FactSet layouts, entitlements, and labels can differ. Use course demonstrations and current FactSet support for navigation; this public guide defines the evidence standard, not a click path.",
+      "steps": [
+        {"stage": "Frame the research question", "action": "Name the client guardrail, issuer claim, product comparison, or portfolio-risk input the FactSet research must test."},
+        {"stage": "Retrieve licensed evidence", "action": "Research the relevant security, issuer, credit, financial-statement, fund/ETF, benchmark, holdings, or portfolio-risk data available in your licensed workspace."},
+        {"stage": "Record the retrieval", "action": "Log what was retrieved, retrieval date, relevant metric or research item, entity/security, as-of period, and source or document reference as appropriate."},
+        {"stage": "Interpret", "action": "Explain what the evidence means for return drivers, risk, issuer health, product exposure, diversification, or client fit. Do not substitute copied output for analysis."},
+        {"stage": "Apply and retain", "action": "State how the evidence confirmed, qualified, contradicted, or changed the recommendation, then retain and submit the required licensed-source evidence privately through Canvas under course policy."}
+      ],
+      "connections": [
+        {"workstream": "Issuer Reality Check", "application": "Use current issuer, financial-statement, estimates, industry, ownership, or research evidence as appropriate to evaluate revenue and margin drivers, cash flow, liquidity, leverage, coverage, maturities, outlook, and issuer-specific risk."},
+        {"workstream": "Credit and fixed income", "application": "Use relevant issue and issuer evidence for price/yield context, maturity and structure, duration or rate sensitivity, credit quality, spreads, liquidity, coverage, debt maturities, and downside risk."},
+        {"workstream": "Mutual funds and ETFs", "application": "Use relevant product, holdings, benchmark, style, performance, flow, risk, cost, liquidity, and overlap evidence while verifying official product facts in sponsor or filed documents when appropriate."},
+        {"workstream": "Corporate issuer analysis", "application": "Use consistent financial periods and appropriate issuer evidence to interpret revenue, margins, cash flow, liquidity, leverage, and operating or industry sensitivity."},
+        {"workstream": "Portfolio risk inputs", "application": "Use appropriately dated risk, return, exposure, correlation, or benchmark inputs and document their definitions, units, limitations, and role in the team calculation."}
+      ],
+      "evidenceLogFields": [
+        "Client and workstream",
+        "Security, issuer, fund/ETF, benchmark, or portfolio input",
+        "Research question or decision claim tested",
+        "FactSet data or research retrieved",
+        "Relevant metric(s) and units",
+        "Entity/security identifier",
+        "Source, screen, research, or document reference as appropriate",
+        "Data as-of period and retrieval date",
+        "Analyst interpretation and limitation",
+        "Confirmed / Qualified / Contradicted / Changed",
+        "Effect on the recommendation or portfolio input",
+        "Canvas submission item or evidence-file reference",
+        "Analyst owner, peer reviewer, and status"
+      ]
+    },
     "candidateTemplateColumns": [
       "Candidate and instrument type",
       "Role owner",
@@ -421,6 +455,7 @@
       "Every selection names the Phase 1 client guardrail it satisfies and the unresolved fact that could change it.",
       "Return, yield, duration, credit, fee, benchmark, holdings, liquidity, and performance claims use appropriate approved sources and as-of dates.",
       "Every direct bond or equity exposure and the most material relevant holding inside each selected fund or ETF has an Issuer Reality Check; yield or recent return is never the sole rationale.",
+      "Each recommendation includes a FactSet retrieval record identifying the research retrieved, retrieval date, relevant metrics, source/document reference as appropriate, interpretation, and effect on the decision; licensed evidence is retained according to course policy.",
       "The team distinguishes issuer risk, market risk, product risk, and client-suitability risk.",
       "AI challenges the provisional judgment, but no AI output is treated as evidence or copied in place of analysis.",
       "Each analyst records accept, modify, or reject after human verification and a second member reviews the evidence trail.",
@@ -612,6 +647,7 @@
         "Mutual-fund and ETF comparison with objective, benchmark/style, holdings, costs, liquidity, taxes, performance context, client fit, and sources",
         "Issuer Reality Check for every direct bond or equity exposure and the most material relevant issuer/holding within each selected fund or ETF",
         "Candidate decision records showing the provisional judgment, AI challenge, verification, final select/reject decision, and portfolio role",
+        "FactSet Research and Evidence Log for every recommended security and material portfolio-risk input",
         "Integrated allocation with a purpose, owner, Phase 1 guardrail, risk contribution, and monitoring trigger for every holding",
         "Risk-mitigation comparison showing cost and trade-offs",
         "Full IPS compliance scorecard and bear-case stress result against each approved tripwire and relevant constraint",
@@ -748,10 +784,10 @@
     },
     {
       "id": "security-template",
-      "label": "Security selection & hedge workbook",
+      "label": "Security selection & Issuer Reality Check workbook",
       "type": "XLSX",
       "path": "files/BUS331_InvProject_SecuritySelection_Template.xlsx",
-      "description": "Three client tabs with weights, thesis blocks, macro filters, and hedge comparison.",
+      "description": "Three client tabs with weights, thesis blocks, macro filters, hedge comparison, the required Issuer Reality Check, and a blank FactSet Research and Evidence Log.",
       "audience": "student"
     },
     {
@@ -831,7 +867,7 @@
       {
         "criterion": "Evidence quality & technical accuracy",
         "weight": 25,
-        "standard": "Claims, calculations, formulas, sources, as-of dates, and portfolio metrics are correct, comparable, traceable, and interpreted; AI output is never treated as evidence."
+        "standard": "Claims, calculations, formulas, sources, FactSet retrieval records, as-of dates, and portfolio metrics are correct, comparable, traceable, and interpreted; required licensed evidence is submitted privately through Canvas and AI output is never treated as evidence."
       },
       {
         "criterion": "Security analysis & selection",
@@ -918,6 +954,7 @@
         "audience": "Any committee member",
         "questions": [
           "What was the team's strongest initial judgment that changed after AI challenge and human verification?",
+          "Which FactSet retrieval most affected the recommendation, how did you interpret it, and where is the licensed-source evidence retained under course policy?",
           "Which source or calculation carries the most decision weight, and what are its limitations?",
           "What is the strongest reasonable case against the final recommendation?",
           "What monitoring trigger would force the committee to reconvene before the normal review date?"
