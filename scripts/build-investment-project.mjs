@@ -329,7 +329,7 @@ function landingPage() {
       <section class="section" aria-labelledby="path-title">
         <div class="section-header">
           <p class="section-kicker">Decision path</p>
-          <h2 id="path-title">Three gates replace six handoffs</h2>
+          <h2 id="path-title">One decision path from mandate to defense</h2>
           <p>Each phase combines related analysis and ends with a committee vote. The output of one gate becomes the constraint for the next.</p>
         </div>
         <div class="decision-path">
