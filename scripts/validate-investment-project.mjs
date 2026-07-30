@@ -22,6 +22,8 @@ const exists = async (target) => {
 
 const phasePath = (phase) => `project/${phase.id}-${phase.title.toLowerCase().replaceAll("&", "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.html`;
 
+if (model.schemaVersion < 3) fail("Project model schema must include the Phase 2 workflow contract.");
+
 if (model.phases.length !== 3) fail(`Expected exactly 3 phases; found ${model.phases.length}.`);
 if (model.roles.length !== 4) fail(`Expected exactly 4 committee roles; found ${model.roles.length}.`);
 
@@ -35,6 +37,31 @@ if (model.roles.map((role) => role.title).join("|") !== requiredRoleTitles.join(
   fail("The four committee roles must match the Client/Macro, Fixed-Income, Fund/ETF, and Portfolio/Risk milestone contract in order.");
 }
 
+const phase2Experience = model.phase2Experience;
+if (!phase2Experience) {
+  fail("Missing phase2Experience in the public model.");
+} else {
+  if (!/Phase 1/i.test(phase2Experience.handoffRule || "") || !/guardrail/i.test(phase2Experience.handoffRule || "")) fail("Phase 2 must require a Phase 1 client-guardrail handoff.");
+  if (phase2Experience.securityWorkflow?.length < 5) fail("Security analysis must define a complete compare, challenge, verify, and decide workflow.");
+  if (phase2Experience.portfolioWorkflow?.length < 6) fail("Portfolio management must define allocation, IPS, stress, correction, re-test, and vote steps.");
+  const instrumentText = JSON.stringify(phase2Experience.instrumentStandards || []);
+  for (const required of ["Bond", "Mutual fund", "ETF", "duration", "credit", "benchmark", "style", "diversification", "cost", "liquidity", "client suitability"]) {
+    if (!new RegExp(required, "i").test(instrumentText)) fail(`Phase 2 instrument analysis is missing ${required}.`);
+  }
+  const issuerCheck = phase2Experience.issuerRealityCheck;
+  if (!issuerCheck || !/yield or recent return alone/i.test(issuerCheck.decisionRule || "")) fail("Issuer Reality Check must prohibit yield or recent return as the sole recommendation basis.");
+  const issuerText = JSON.stringify(issuerCheck || {});
+  for (const required of ["business model", "revenue drivers", "macro sensitivity", "margin", "cash-flow", "liquidity", "leverage", "interest coverage", "debt-maturity", "issuer-specific risk", "client fit"]) {
+    if (!new RegExp(required, "i").test(issuerText)) fail(`Issuer Reality Check is missing ${required}.`);
+  }
+  if (issuerCheck?.roleResponsibilities?.length !== 4) fail("Issuer Reality Check must assign all four committee roles.");
+  const issuerRoleIds = new Set(issuerCheck?.roleResponsibilities?.map((item) => item.roleId));
+  for (const role of model.roles) if (!issuerRoleIds.has(role.id)) fail(`Issuer Reality Check is missing ${role.title}.`);
+  if (phase2Experience.roleIntegration?.length !== 4) fail("Phase 2 must define security and portfolio ownership for all four roles.");
+  if (!phase2Experience.securityQualityGate?.some((item) => /AI/i.test(item) && /evidence/i.test(item))) fail("Security quality gate must preserve AI challenge and human evidence verification.");
+  if (!phase2Experience.portfolioQualityGate?.some((item) => /breach/i.test(item) && /re-test/i.test(item))) fail("Portfolio quality gate must require breach correction and re-testing.");
+}
+
 const experience = model.phase1Experience;
 if (!experience) {
   fail("Missing phase1Experience in the public model.");
@@ -43,32 +70,22 @@ if (!experience) {
   if (experience.clientSets?.some((set) => set.clients?.length !== 3)) fail("Every fictional-client team set must contain three clients.");
   const interviewPrototype = experience.interviewPrototype;
   if (!interviewPrototype) {
-    fail("Phase 1 must include the controlled Client Option 1 interview prototype.");
+    fail("Phase 1 must include the instructor-hosted Client Option 1 voice interview.");
   } else {
     if (!experience.clientSets?.[0]?.clients?.includes(interviewPrototype.clientName)) fail("The interview prototype client must remain in Team One's existing client set.");
-    if (!interviewPrototype.visibleDossier?.length || !interviewPrototype.dialoguePaths?.length) fail("The interview prototype must define an intentionally incomplete dossier and controlled dialogue paths.");
+    if (!interviewPrototype.visibleDossier?.length) fail("The voice interview must define an intentionally incomplete public dossier.");
     if (interviewPrototype.openingQuestions?.length < 3) fail("The interview prototype must provide suggested opening questions.");
-    const boundaryText = `${interviewPrototype.boundary} ${(interviewPrototype.recommendationResponses || []).join(" ")} ${(interviewPrototype.unknownResponses || []).join(" ")}`;
-    if (!/instructor-approved paths/i.test(boundaryText) || !/cannot (?:choose|tell)/i.test(boundaryText) || !/information gap/i.test(boundaryText)) {
-      fail("The interview prototype must prohibit invented facts and recommendations and label unknowns as information gaps.");
+    const boundaryText = `${interviewPrototype.boundary} ${interviewPrototype.liveMode?.privacyNotice || ""} ${interviewPrototype.liveMode?.availabilityNotice || ""}`;
+    if (!/instructor-hosted/i.test(boundaryText) || !/never recommends/i.test(boundaryText) || !/information gap/i.test(boundaryText)) {
+      fail("The public voice interview must identify the instructor-hosted boundary, information gaps, and recommendation refusal.");
     }
-    const expectedScenarioFacts = {
-      annualIncome: "$30,000 in annual pension income",
-      netWorth: "$1.2 million",
-      goal: "capital preservation and income",
-      liquidityNeed: "high liquidity needs for medical expenses",
-      horizon: "2–5 years",
-      expectedReturn: "4.5%",
-      standardDeviation: "6.0%",
-      riskAversionScore: "8.0",
-      riskClassification: "risk averse"
-    };
-    if (JSON.stringify(interviewPrototype.scenarioFacts) !== JSON.stringify(expectedScenarioFacts)) fail("The Eleanor prototype facts must match the approved public scenario record exactly.");
-    const requiredPaths = ["goals", "liquidity", "cashFlow", "horizon", "resources", "riskWillingness", "riskCapacity", "caseMetrics", "taxes", "holdings", "family", "values"];
-    const dialoguePathIds = new Set(interviewPrototype.dialoguePaths?.map((item) => item.id));
-    for (const id of requiredPaths) if (!dialoguePathIds.has(id)) fail(`The interview prototype is missing the ${id} dialogue path.`);
-    if (!interviewPrototype.complication?.requires?.includes("goal") || !interviewPrototype.complication?.requires?.includes("liquidityNeed")) fail("The interview complication must be triggered by the approved goal-versus-liquidity tension.");
-    if (!interviewPrototype.greeting || !interviewPrototype.voiceCue || !interviewPrototype.clarificationResponses?.risk) fail("The interview prototype must include a greeting, text voice cue, and clarification behavior.");
+    for (const privateKey of ["scenarioFacts", "dialoguePaths", "complication", "recommendationResponses", "unknownResponses", "acknowledgements", "clarificationResponses"]) {
+      if (Object.hasOwn(interviewPrototype, privateKey)) fail(`The public interview model exposes instructor-only scenario control: ${privateKey}.`);
+    }
+    if (!interviewPrototype.liveMode?.transcriptionEndpoint || !interviewPrototype.liveMode?.responseEndpoint || interviewPrototype.liveMode?.maximumTurns < 1) {
+      fail("The public voice interview must define bounded transcription and response endpoint contracts.");
+    }
+    if (!interviewPrototype.voiceCue) fail("The interview prototype must include a student-facing fictional voice cue.");
     if (!interviewPrototype.portrait?.path || !/fictional/i.test(`${interviewPrototype.portrait.alt} ${interviewPrototype.portrait.caption}`)) fail("The interview prototype portrait must be clearly labeled fictional and have alt text.");
     if (interviewPrototype.portrait?.path && !(await exists(path.join(rootDir, interviewPrototype.portrait.path)))) fail(`Missing interview prototype portrait: ${interviewPrototype.portrait.path}.`);
   }
@@ -123,6 +140,8 @@ const generatedFiles = [
   "BUS331_InvProject_Requirements_AllPhases.html",
   "project/guide.html",
   "project/client-discovery-ai-protocol.html",
+  "project/security-analysis-selection.html",
+  "project/portfolio-management-stress-testing.html",
   ...model.phases.map(phasePath),
   "project/assessment.html"
 ];
@@ -191,20 +210,78 @@ for (const roleTitle of requiredRoleTitles) {
 if (/Committee Chair|Markets &amp; Economic Strategist|Portfolio Construction Lead|Risk, Controls/i.test(discoveryHtml)) {
   fail("Client discovery protocol contains a retired committee-role title.");
 }
-for (const requiredText of ["Client Option 1", "Practice a bounded client interview", "Suggested opening questions", "Interview transcript", "Analyst notes for the Decision Record", "Personality and voice cue", "AI-generated fictional portrait"]) {
+for (const requiredText of ["Client Option 1", "Interview a fictional client in your own voice", "Start live interview", "Record your own question", "Optional opening ideas", "Interview transcript", "Analyst notes for the Decision Record", "Personality and voice cue", "AI-generated fictional portrait"]) {
   if (!discoveryHtml.includes(requiredText)) fail(`Client discovery protocol is missing interview-prototype content: ${requiredText}.`);
 }
 if (!discoveryHtml.includes('../scripts/client-interview-simulator.js')) fail("Client discovery protocol is missing the local simulator runtime.");
+if (/\$30,000 in annual pension income|\$1\.2 million|riskAversionScore|dialoguePaths|recommendationResponses/.test(discoveryHtml)) {
+  fail("Generated student page exposes instructor-only Eleanor scenario controls.");
+}
+
+const securityHtml = await fs.readFile(path.join(rootDir, "project", "security-analysis-selection.html"), "utf8");
+for (const requiredText of [
+  "Phase 1 is the decision filter",
+  "Bond or fixed-income exposure",
+  "Mutual fund",
+  "ETF",
+  "Candidate comparison and decision record",
+  "Issuer Reality Check",
+  "Yield or recent return alone cannot support a recommendation",
+  "Business model and principal revenue drivers",
+  "Interest coverage and debt-maturity considerations",
+  "AI challenge-and-verification checkpoint",
+  "Accept, Modify, or Reject"
+]) {
+  if (!securityHtml.includes(requiredText)) fail(`Security Analysis page is missing required student workflow content: ${requiredText}.`);
+}
+for (const roleTitle of requiredRoleTitles) {
+  if (!securityHtml.includes(roleTitle)) fail(`Security Analysis page is missing role ownership for ${roleTitle}.`);
+}
+
+const portfolioHtml = await fs.readFile(path.join(rootDir, "project", "portfolio-management-stress-testing.html"), "utf8");
+for (const requiredText of [
+  "Integrated allocation record",
+  "Test the whole mandate",
+  "Bear-case stress template",
+  "Document the adjustment and re-test",
+  "Pass · Warning · Breach",
+  "Weights total 100%",
+  "AI boundary"
+]) {
+  if (!portfolioHtml.includes(requiredText)) fail(`Portfolio and Stress Testing page is missing required student workflow content: ${requiredText}.`);
+}
+for (const roleTitle of requiredRoleTitles) {
+  if (!portfolioHtml.includes(roleTitle)) fail(`Portfolio and Stress Testing page is missing role ownership for ${roleTitle}.`);
+}
+
+const assessmentHtml = await fs.readFile(path.join(rootDir, "project", "assessment.html"), "utf8");
+const writtenTotal = model.assessment.writtenCriteria.reduce((total, item) => total + item.weight, 0);
+const oralTotal = model.assessment.oralCriteria.reduce((total, item) => total + item.weight, 0);
+if (writtenTotal !== 100 || oralTotal !== 100) fail(`Written and oral rubric weights must each total 100; found ${writtenTotal} and ${oralTotal}.`);
+for (const requiredText of ["Evidence quality", "Security analysis", "Client suitability", "Portfolio integration", "Role ownership", "Live defense", "Team integration", "Issuer Reality Check"]) {
+  if (!assessmentHtml.includes(requiredText)) fail(`Assessment page is missing updated rubric or committee-defense content: ${requiredText}.`);
+}
+if (model.assessment.committeeQuestions?.length < 5) fail("Assessment must define role-specific and cross-committee defense questions.");
+
+for (const relative of ["project/security-analysis-selection.html", "project/portfolio-management-stress-testing.html", "project/assessment.html"]) {
+  const html = await fs.readFile(path.join(rootDir, relative), "utf8");
+  if (/OPENAI_API_KEY|eleanor-vance-scenario|approvedFacts|progressiveDisclosure|grading key|completed exemplar/i.test(html)) {
+    fail(`${relative} exposes private configuration, a key, or completed-answer language.`);
+  }
+}
 
 const simulatorRuntimePath = path.join(rootDir, "scripts", "client-interview-simulator.js");
 if (!(await exists(simulatorRuntimePath))) {
   fail("Missing maintained client interview simulator runtime.");
 } else {
   const simulatorRuntime = await fs.readFile(simulatorRuntimePath, "utf8");
-  for (const marker of ["recommendationPattern", "dialoguePaths", "complicationDelivered", "clarificationResponses", "appendGreeting", "data-interview-transcript", "data-download-session"]) {
+  for (const marker of ["MediaRecorder", "getUserMedia", "audioBase64", "transcriptionEndpoint", "responseEndpoint", "data-start-interview", "data-record-question", "data-interview-transcript", "data-download-session"]) {
     if (!simulatorRuntime.includes(marker)) fail(`Client interview simulator runtime is missing required control: ${marker}.`);
   }
-  if (/\bfetch\s*\(|XMLHttpRequest|WebSocket|EventSource/.test(simulatorRuntime)) fail("Client interview simulator runtime must not call an external service.");
+  if (/OPENAI_API_KEY|api\.openai\.com|scenarioFacts|dialoguePaths|riskAversionScore/.test(simulatorRuntime)) {
+    fail("Public client interview runtime exposes an API credential surface or instructor-only scenario control.");
+  }
+  if (!/fetch\s*\(url/.test(simulatorRuntime)) fail("Public voice runtime must call only the instructor-hosted endpoint supplied by the public model.");
 }
 
 const decisionRecordResource = model.resources.find((resource) => resource.id === "decision-record");

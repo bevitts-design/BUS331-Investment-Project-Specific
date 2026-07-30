@@ -4,191 +4,328 @@
   const root = document.querySelector("[data-client-interview-simulator]");
   if (!root) return;
 
-  const configElement = root.querySelector("[data-simulator-config]");
-  const config = JSON.parse(configElement.textContent);
+  const config = JSON.parse(root.querySelector("[data-simulator-config]").textContent);
+  const live = config.liveMode;
   const form = root.querySelector("[data-interview-form]");
   const questionInput = form.querySelector("textarea");
-  const transcript = root.querySelector("[data-interview-transcript]");
-  const emptyState = root.querySelector("[data-empty-transcript]");
+  const sendButton = form.querySelector("[data-send-question]");
+  const startButton = root.querySelector("[data-start-interview]");
+  const endButton = root.querySelector("[data-end-interview]");
+  const recordButton = root.querySelector("[data-record-question]");
+  const connectionState = root.querySelector("[data-connection-state]");
+  const recordStatus = root.querySelector("[data-record-status]");
   const formStatus = root.querySelector("[data-form-status]");
   const sessionStatus = root.querySelector("[data-session-status]");
+  const transcript = root.querySelector("[data-interview-transcript]");
+  const emptyState = root.querySelector("[data-empty-transcript]");
   const notes = root.querySelector("#interview-notes");
-  const turns = [];
+  const clientAudio = root.querySelector("[data-client-audio]");
+  const suggestedButtons = [...root.querySelectorAll("[data-suggested-question]")];
+  const serviceOverrides = window.BUS331_CLIENT_INTERVIEW || {};
   const state = {
-    turn: 0,
-    lastPathId: null,
-    lastAcknowledgementIndex: -1,
-    complicationDelivered: false,
-    askedCounts: new Map(),
-    disclosed: new Set()
+    active: false,
+    busy: false,
+    recording: false,
+    history: [],
+    messages: [],
+    mediaStream: null,
+    mediaRecorder: null,
+    audioChunks: [],
+    discardRecording: false,
+    recordingTimer: null,
+    sessionTimer: null,
+    audioUrl: null
   };
 
-  const normalize = (value) => value.toLowerCase().replace(/[^a-z0-9$%]+/g, " ").trim();
-  const recommendationPattern = /\b(recommend|recommendation|should (?:i|we|the team) (?:buy|sell|invest|allocate)|which (?:bond|fund|etf|security|stock)|what (?:bond|fund|etf|security|stock|investment|allocation)|buy|sell|allocate|allocation|portfolio weight)\b/i;
-  const followUpPattern = /\b(tell me more|what do you mean|why|how so|be specific|clarify|earlier|you said)\b/i;
-  const broadPattern = /\b(tell me everything|tell me your situation|anything else|what else|all the facts|full picture)\b/i;
-  const vagueRiskPattern = /^(?:tell me about )?risk\??$|^what about risk\??$/i;
+  const endpoint = (name) => serviceOverrides[name] || live[name];
+  const userTurnCount = () => state.history.filter((item) => item.role === "user").length;
+  const atTurnLimit = () => userTurnCount() >= live.maximumTurns;
 
-  function interpolate(value) {
-    return value.replace(/\{\{([a-zA-Z0-9]+)\}\}/g, (_, key) => config.scenarioFacts[key] || "[information gap]");
+  function updateControls() {
+    const questionLocked = !state.active || state.busy || state.recording || atTurnLimit();
+    startButton.disabled = state.active || state.busy;
+    endButton.disabled = !state.active;
+    recordButton.disabled = !state.active || (state.busy && !state.recording) || atTurnLimit();
+    questionInput.disabled = questionLocked;
+    sendButton.disabled = questionLocked;
+    suggestedButtons.forEach((button) => { button.disabled = questionLocked; });
   }
 
-  function pathScore(path, normalizedQuestion) {
-    const phraseScore = path.phrases.reduce((score, phrase) => score + (normalizedQuestion.includes(normalize(phrase)) ? 4 : 0), 0);
-    const keywordScore = path.keywords.reduce((score, keyword) => score + (normalizedQuestion.includes(normalize(keyword)) ? 1 : 0), 0);
-    return phraseScore + keywordScore;
+  function setBusy(busy, message = "") {
+    state.busy = busy;
+    if (message) connectionState.textContent = message;
+    updateControls();
   }
 
-  function selectPath(question) {
-    const normalizedQuestion = normalize(question);
-    const ranked = config.dialoguePaths
-      .map((path) => ({ path, score: pathScore(path, normalizedQuestion) }))
-      .sort((a, b) => b.score - a.score);
-    if (ranked[0]?.score > 0) return ranked[0].path;
-    if (followUpPattern.test(question) && state.lastPathId) {
-      return config.dialoguePaths.find((path) => path.id === state.lastPathId) || null;
+  async function requestJson(url, payload) {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    let result = {};
+    try {
+      result = await response.json();
+    } catch {
+      // The user-facing fallback below handles non-JSON server errors.
     }
-    return null;
+    if (!response.ok) throw new Error(result.error || `Interview service unavailable (${response.status}).`);
+    return result;
   }
 
-  function responseFor(question) {
-    if (recommendationPattern.test(question)) {
-      const refusal = config.recommendationResponses[state.turn % config.recommendationResponses.length];
-      state.turn += 1;
-      return { answer: refusal, cue: "" };
-    }
-
-    if (vagueRiskPattern.test(question.trim())) {
-      state.turn += 1;
-      return { answer: config.clarificationResponses.risk, cue: "" };
-    }
-
-    if (broadPattern.test(question)) {
-      const broad = config.broadResponses[state.turn % config.broadResponses.length];
-      state.turn += 1;
-      return { answer: broad, cue: "" };
-    }
-
-    const path = selectPath(question);
-    if (!path) {
-      const wordCount = normalize(question).split(" ").filter(Boolean).length;
-      const answer = wordCount < 4
-        ? config.clarificationResponses.general
-        : config.unknownResponses[state.turn % config.unknownResponses.length];
-      state.turn += 1;
-      return { answer, cue: "" };
-    }
-
-    const priorCount = state.askedCounts.get(path.id) || 0;
-    const isFollowUp = priorCount > 0 || followUpPattern.test(question);
-    const pool = isFollowUp && path.followUpResponses?.length ? path.followUpResponses : path.responses;
-    const answerIndex = (priorCount + state.turn) % pool.length;
-    let acknowledgementIndex = (state.turn + path.id.length) % config.acknowledgements.length;
-    if (acknowledgementIndex === state.lastAcknowledgementIndex) {
-      acknowledgementIndex = (acknowledgementIndex + 1) % config.acknowledgements.length;
-    }
-    const acknowledgement = config.acknowledgements[acknowledgementIndex];
-    state.lastAcknowledgementIndex = acknowledgementIndex;
-    let answer = `${acknowledgement} ${interpolate(pool[answerIndex])}`;
-
-    state.askedCounts.set(path.id, priorCount + 1);
-    path.discloses.forEach((fact) => state.disclosed.add(fact));
-    state.lastPathId = path.id;
-
-    if (!isFollowUp && path.followUpQuestion && state.turn % 2 === 0) {
-      answer += ` ${path.followUpQuestion}`;
-    }
-
-    let cue = "";
-    const complicationReady = config.complication.requires.every((fact) => state.disclosed.has(fact));
-    if (!state.complicationDelivered && complicationReady) {
-      const complicationText = state.disclosed.has("horizon")
-        ? config.complication.responseWithHorizon
-        : config.complication.response;
-      answer += ` ${interpolate(complicationText)}`;
-      cue = config.complication.recordPrompt;
-      state.complicationDelivered = true;
-    }
-
-    state.turn += 1;
-    return { answer, cue };
-  }
-
-  function appendMessage(speaker, message, className) {
+  function appendMessage(role, message) {
+    const item = document.createElement("li");
     const paragraph = document.createElement("p");
     const label = document.createElement("strong");
+    const speaker = role === "user" ? "Analyst" : config.clientName;
+    paragraph.className = role === "user" ? "transcript-question" : "transcript-response";
     label.textContent = `${speaker}: `;
-    paragraph.className = className;
     paragraph.append(label, document.createTextNode(message));
-    return paragraph;
-  }
-
-  function appendTurn(question, result) {
-    const item = document.createElement("li");
-    item.append(
-      appendMessage("Analyst", question, "transcript-question"),
-      appendMessage(config.clientName, result.answer, "transcript-response")
-    );
-    if (result.cue) item.append(appendMessage("Decision Record cue", result.cue, "transcript-cue"));
+    item.append(paragraph);
     transcript.append(item);
-    turns.push({ question, response: result.answer, cue: result.cue });
+    transcript.scrollTop = transcript.scrollHeight;
     emptyState.hidden = true;
+    state.messages.push({ role, speaker, content: message });
   }
 
-  function appendGreeting() {
-    const item = document.createElement("li");
-    item.className = "transcript-greeting";
-    item.append(appendMessage(config.clientName, config.greeting, "transcript-response"));
-    transcript.append(item);
+  function revokeAudioUrl() {
+    if (!state.audioUrl) return;
+    URL.revokeObjectURL(state.audioUrl);
+    state.audioUrl = null;
   }
 
-  function resetConversationState() {
-    state.turn = 0;
-    state.lastPathId = null;
-    state.lastAcknowledgementIndex = -1;
-    state.complicationDelivered = false;
-    state.askedCounts.clear();
-    state.disclosed.clear();
+  async function playClientResponse(result) {
+    const binary = atob(result.audioBase64);
+    const bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+    revokeAudioUrl();
+    state.audioUrl = URL.createObjectURL(new Blob([bytes], { type: result.mimeType || "audio/wav" }));
+    clientAudio.src = state.audioUrl;
+    clientAudio.hidden = false;
+    try {
+      await clientAudio.play();
+      connectionState.textContent = `${config.clientName} is speaking.`;
+    } catch {
+      connectionState.textContent = "Response ready. Press play to hear Eleanor.";
+    }
+  }
+
+  function stopMediaStream() {
+    state.mediaStream?.getTracks().forEach((track) => track.stop());
+    state.mediaStream = null;
+  }
+
+  function resetRecordingUi() {
+    clearTimeout(state.recordingTimer);
+    state.recordingTimer = null;
+    state.recording = false;
+    recordButton.textContent = "Start recording";
+    recordButton.setAttribute("aria-pressed", "false");
+    recordButton.classList.remove("is-recording");
+    stopMediaStream();
+    updateControls();
+  }
+
+  function chooseRecordingType() {
+    const candidates = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"];
+    return candidates.find((type) => window.MediaRecorder?.isTypeSupported(type)) || "";
+  }
+
+  function blobToBase64(blob) {
+    return blob.arrayBuffer().then((buffer) => {
+      const bytes = new Uint8Array(buffer);
+      let binary = "";
+      for (let offset = 0; offset < bytes.length; offset += 0x8000) {
+        binary += String.fromCharCode(...bytes.subarray(offset, offset + 0x8000));
+      }
+      return btoa(binary);
+    });
+  }
+
+  async function transcribeRecording(blob) {
+    setBusy(true, "Transcribing your question…");
+    recordStatus.textContent = "The recorded audio is being transcribed. No raw audio is saved by the portal.";
+    try {
+      const result = await requestJson(endpoint("transcriptionEndpoint"), {
+        audioBase64: await blobToBase64(blob),
+        mimeType: blob.type
+      });
+      questionInput.value = result.transcript;
+      formStatus.textContent = "Review and edit the transcript, then ask Eleanor.";
+      recordStatus.textContent = "Transcript ready. Record again if it did not capture your question accurately.";
+      connectionState.textContent = "Interview ready";
+      questionInput.focus();
+      questionInput.select();
+    } catch (error) {
+      recordStatus.textContent = `${error.message} You can record again or type the question.`;
+      connectionState.textContent = "Interview ready";
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function beginRecording() {
+    if (!window.MediaRecorder || !navigator.mediaDevices?.getUserMedia) {
+      recordStatus.textContent = "Recording is not supported in this browser. Type your question below.";
+      questionInput.focus();
+      return;
+    }
+    try {
+      state.mediaStream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
+      });
+      state.audioChunks = [];
+      const mimeType = chooseRecordingType();
+      state.mediaRecorder = new MediaRecorder(state.mediaStream, mimeType ? { mimeType } : undefined);
+      state.mediaRecorder.addEventListener("dataavailable", (event) => {
+        if (event.data.size) state.audioChunks.push(event.data);
+      });
+      state.mediaRecorder.addEventListener("stop", () => {
+        const blob = new Blob(state.audioChunks, { type: state.mediaRecorder.mimeType || "audio/webm" });
+        state.audioChunks = [];
+        const shouldDiscard = state.discardRecording;
+        state.discardRecording = false;
+        resetRecordingUi();
+        if (!shouldDiscard && blob.size) transcribeRecording(blob);
+      }, { once: true });
+      state.mediaRecorder.start();
+      state.recording = true;
+      recordButton.textContent = "Stop and transcribe";
+      recordButton.setAttribute("aria-pressed", "true");
+      recordButton.classList.add("is-recording");
+      recordStatus.textContent = "Recording. Ask one question, then stop.";
+      connectionState.textContent = "Listening…";
+      state.recordingTimer = setTimeout(() => stopRecording(), 45000);
+      updateControls();
+    } catch {
+      resetRecordingUi();
+      recordStatus.textContent = "Microphone access was unavailable. Continue by typing your question below.";
+      connectionState.textContent = "Typed interview ready";
+      questionInput.focus();
+    }
+  }
+
+  function stopRecording() {
+    if (!state.recording || state.mediaRecorder?.state !== "recording") return;
+    connectionState.textContent = "Preparing transcript…";
+    state.mediaRecorder.stop();
+  }
+
+  async function startInterview() {
+    if (state.active || state.busy) return;
+    setBusy(true, "Connecting to Eleanor…");
+    sessionStatus.textContent = "";
+    try {
+      const result = await requestJson(endpoint("responseEndpoint"), { begin: true, history: [] });
+      state.active = true;
+      state.history = [{ role: "assistant", content: result.transcript }];
+      appendMessage("assistant", result.transcript);
+      connectionState.textContent = "Interview ready";
+      recordStatus.textContent = "Record a question or type one below.";
+      state.sessionTimer = setTimeout(() => endInterview("The interview ended after the time limit."), live.maximumMinutes * 60000);
+      await playClientResponse(result);
+    } catch (error) {
+      connectionState.textContent = "Service unavailable";
+      sessionStatus.textContent = `${error.message} The instructor-hosted service must be running before a live interview can begin.`;
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function endInterview(message = "Interview ended. Your visible transcript and notes remain available.") {
+    if (state.recording) {
+      state.discardRecording = true;
+      stopRecording();
+    }
+    clearTimeout(state.sessionTimer);
+    state.sessionTimer = null;
+    state.active = false;
+    state.busy = false;
+    clientAudio.pause();
+    stopMediaStream();
+    connectionState.textContent = "Ended";
+    recordStatus.textContent = "Start a new interview to ask more questions.";
+    sessionStatus.textContent = message;
+    updateControls();
+  }
+
+  async function submitQuestion(question) {
+    if (!state.active || state.busy || atTurnLimit()) return;
+    setBusy(true, `${config.clientName} is considering your question…`);
+    formStatus.textContent = "Sending your confirmed question…";
+    try {
+      const result = await requestJson(endpoint("responseEndpoint"), {
+        question,
+        history: state.history
+      });
+      appendMessage("user", question);
+      appendMessage("assistant", result.transcript);
+      state.history.push({ role: "user", content: question }, { role: "assistant", content: result.transcript });
+      questionInput.value = "";
+      formStatus.textContent = atTurnLimit()
+        ? "Turn limit reached. Preserve your transcript and continue to the Decision Record."
+        : "Response added. Ask a follow-up or move to another discovery area.";
+      connectionState.textContent = atTurnLimit() ? "Turn limit reached" : "Interview ready";
+      await playClientResponse(result);
+    } catch (error) {
+      formStatus.textContent = `${error.message} Your question remains in the box so you can try again.`;
+      connectionState.textContent = "Interview ready";
+    } finally {
+      setBusy(false);
+      if (!atTurnLimit()) questionInput.focus();
+    }
   }
 
   function sessionText() {
     const lines = [
-      `BUS331 Client Interview Simulator — ${config.clientName}`,
+      `BUS331 Client Voice Interview — ${config.clientName}`,
       config.caseLabel,
-      "Controlled prototype: responses are limited to the approved fictional profile and are not investment recommendations.",
-      `${config.clientName}: ${config.greeting}`,
+      "Fictional client. AI output is a process record, not verified evidence or an investment recommendation.",
       ""
     ];
-    turns.forEach((turn, index) => {
-      lines.push(`Exchange ${index + 1}`);
-      lines.push(`Analyst: ${turn.question}`);
-      lines.push(`${config.clientName}: ${turn.response}`);
-      if (turn.cue) lines.push(`Decision Record cue: ${turn.cue}`);
-      lines.push("");
-    });
-    lines.push("Analyst notes for the Decision Record:");
-    lines.push(notes.value.trim() || "[No notes recorded]");
+    state.messages.forEach((message) => lines.push(`${message.speaker}: ${message.content}`, ""));
+    lines.push("Analyst notes for the Decision Record:", notes.value.trim() || "[No notes recorded]");
     return lines.join("\n");
   }
+
+  function clearSession() {
+    if (state.active) endInterview("Interview ended and the local session was cleared.");
+    state.history = [];
+    state.messages = [];
+    transcript.replaceChildren();
+    emptyState.hidden = false;
+    notes.value = "";
+    questionInput.value = "";
+    clientAudio.removeAttribute("src");
+    clientAudio.load();
+    clientAudio.hidden = true;
+    revokeAudioUrl();
+    connectionState.textContent = "Not started";
+    recordStatus.textContent = "Start the interview first.";
+    formStatus.textContent = "";
+    sessionStatus.textContent = "Local transcript and notes cleared.";
+    updateControls();
+  }
+
+  startButton.addEventListener("click", startInterview);
+  endButton.addEventListener("click", () => endInterview());
+  recordButton.addEventListener("click", () => state.recording ? stopRecording() : beginRecording());
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const question = questionInput.value.trim();
     if (!question) {
-      formStatus.textContent = "Enter one interview question.";
+      formStatus.textContent = "Record or type one interview question.";
       questionInput.focus();
       return;
     }
-    appendTurn(question, responseFor(question));
-    form.reset();
-    formStatus.textContent = "Response added to the transcript.";
-    questionInput.focus();
+    submitQuestion(question);
   });
 
-  root.querySelectorAll("[data-suggested-question]").forEach((button) => {
+  suggestedButtons.forEach((button) => {
     button.addEventListener("click", () => {
       questionInput.value = button.textContent.trim();
-      formStatus.textContent = "Suggested question loaded. Edit it or ask as written.";
+      formStatus.textContent = "Opening idea loaded. Edit it into your own question before sending.";
       questionInput.focus();
     });
   });
@@ -196,7 +333,7 @@
   root.querySelector("[data-copy-session]").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(sessionText());
-      sessionStatus.textContent = "Transcript and notes copied. Paste them into your working record, then verify material claims separately.";
+      sessionStatus.textContent = "Transcript and notes copied. Verify material claims separately before using them in a decision.";
     } catch {
       sessionStatus.textContent = "Copy was unavailable in this browser. Use Download .txt instead.";
     }
@@ -207,7 +344,7 @@
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "BUS331-Eleanor-Vance-interview-notes.txt";
+    link.download = "BUS331-Eleanor-Vance-voice-interview.txt";
     document.body.append(link);
     link.click();
     link.remove();
@@ -215,17 +352,14 @@
     sessionStatus.textContent = "Transcript and notes downloaded as a local text file.";
   });
 
-  root.querySelector("[data-clear-session]").addEventListener("click", () => {
-    turns.length = 0;
-    transcript.replaceChildren();
-    resetConversationState();
-    appendGreeting();
-    notes.value = "";
-    emptyState.hidden = false;
-    formStatus.textContent = "";
-    sessionStatus.textContent = "Local transcript and notes cleared.";
-    questionInput.focus();
+  root.querySelector("[data-clear-session]").addEventListener("click", clearSession);
+  clientAudio.addEventListener("ended", () => {
+    if (state.active && !state.busy) connectionState.textContent = "Interview ready";
+  });
+  window.addEventListener("beforeunload", () => {
+    stopMediaStream();
+    revokeAudioUrl();
   });
 
-  appendGreeting();
+  updateControls();
 })();

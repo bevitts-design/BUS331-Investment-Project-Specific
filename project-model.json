@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "course": {
     "code": "BUS331",
     "name": "Investments",
@@ -121,7 +121,7 @@
       }
     ],
     "interviewPrototype": {
-      "label": "Client Option 1 · Controlled prototype",
+      "label": "Client Option 1 · Live voice interview",
       "clientName": "Eleanor Vance",
       "initials": "EV",
       "caseLabel": "Case #01 · Team One",
@@ -131,237 +131,27 @@
         "alt": "Fictional portrait of Eleanor Vance, an older woman with silver hair and glasses in a softly lit library setting.",
         "caption": "AI-generated fictional portrait for this classroom simulation; not a real client."
       },
-      "voiceCue": "Simulation voice: thoughtful, measured, and cautious. Eleanor acknowledges uncertainty instead of filling gaps. This cue shapes delivery, not case evidence.",
-      "greeting": "Hello. I’m Eleanor Vance. I understand you want to learn what matters before your committee makes any decisions. I may need you to narrow a question, and if the case does not establish an answer, I’ll say so.",
-      "acknowledgements": [
-        "That is a useful place to start.",
-        "I see why you are asking.",
-        "Let me separate what I know from what I do not.",
-        "That question gets closer to the decision I am worried about."
-      ],
-      "clarificationResponses": {
-        "risk": "When you say risk, are you asking how I feel about a loss or how much loss my financial situation could absorb? Those are not the same question.",
-        "general": "Could you narrow that question to one decision-relevant area—goals, cash flow, timing, liquidity, risk, resources, taxes, holdings, family needs, or values?"
-      },
-      "boundary": "The intake card is intentionally incomplete. Responses follow the same instructor-approved paths for every student, disclose a case fact only after a materially relevant question, mark unsupported details as information gaps, and never recommend investments.",
+      "voiceCue": "Fictional AI voice: thoughtful, measured, and cautious. Eleanor may hesitate, ask for clarification, or acknowledge that the approved case does not establish an answer.",
+      "boundary": "The intake card is intentionally incomplete. The instructor-hosted interview is limited to the approved fictional scenario, discloses a case fact only after a materially relevant question, marks unsupported details as information gaps, and never recommends investments.",
       "visibleDossier": [
         {"label": "Known at intake", "value": "Age 72 · Retired librarian"},
         {"label": "Stated direction", "value": "Preservation and income matter"},
         {"label": "Still to discover", "value": "Cash needs, timing, resources, risk context, and unique constraints"}
       ],
-      "scenarioFacts": {
-        "annualIncome": "$30,000 in annual pension income",
-        "netWorth": "$1.2 million",
-        "goal": "capital preservation and income",
-        "liquidityNeed": "high liquidity needs for medical expenses",
-        "horizon": "2–5 years",
-        "expectedReturn": "4.5%",
-        "standardDeviation": "6.0%",
-        "riskAversionScore": "8.0",
-        "riskClassification": "risk averse"
+      "liveMode": {
+        "transcriptionEndpoint": "/api/client-interview/transcribe",
+        "responseEndpoint": "/api/client-interview/respond",
+        "maximumMinutes": 12,
+        "maximumTurns": 12,
+        "startLabel": "Start live interview",
+        "privacyNotice": "When you start, microphone audio and typed questions are sent to the instructor-hosted AI service for this fictional classroom interview. The portal keeps only the visible text transcript in this browser session and does not intentionally store raw audio.",
+        "availabilityNotice": "Live voice requires an instructor-hosted session service, a supported browser, microphone permission, and an internet connection. If microphone access is unavailable, continue with typed questions in the same live interview."
       },
       "openingQuestions": [
         "What matters most to you about this portfolio?",
         "What cash needs could change the plan?",
         "How soon might you need access to the money?",
         "What would make an investment loss difficult for you?"
-      ],
-      "dialoguePaths": [
-        {
-          "id": "goals",
-          "phrases": ["what matters most", "primary goal", "investment goal", "portfolio goal"],
-          "keywords": ["goal", "objective", "priority", "important", "preservation"],
-          "responses": [
-            "I keep coming back to two things: I want the savings protected, and I want it to help provide income. I am not sure which concern should dominate if they conflict.",
-            "Preservation and income are still the headline. The difficult part is deciding what has to come first when another need competes with them."
-          ],
-          "followUpResponses": [
-            "By preservation, I mean avoiding a result that puts an important near-term need at risk. The case does not establish a precise acceptable loss, so that remains a question for your team to frame carefully."
-          ],
-          "followUpQuestion": "Would it help if you asked what could force me to use the money sooner?",
-          "discloses": ["goal"]
-        },
-        {
-          "id": "liquidity",
-          "phrases": ["cash need", "access to the money", "access to funds", "medical expense", "medical spending"],
-          "keywords": ["liquidity", "liquid", "medical", "expense", "spending", "withdrawal"],
-          "responses": [
-            "There is a medical-spending concern behind my need for liquidity. Access matters, but I cannot give you an amount or exact date because the case does not establish either one.",
-            "I do need funds kept accessible for medical expenses. I hesitate to be more specific—the amount, frequency, and timing are all still information gaps."
-          ],
-          "followUpResponses": [
-            "That is exactly where the brief stops: the medical liquidity need is high, but no dollar amount or payment date is established. Please do not turn that uncertainty into an invented number."
-          ],
-          "followUpQuestion": "Do you want to separate what is known about that cash need from the amount and timing that are still missing?",
-          "discloses": ["liquidityNeed"]
-        },
-        {
-          "id": "cashFlow",
-          "phrases": ["annual income", "pension income", "cash flow", "living expenses"],
-          "keywords": ["income", "pension", "earn", "budget"],
-          "responses": [
-            "My documented income is {{annualIncome}}. Whether that pension covers ordinary spending or medical costs is not established.",
-            "The one dependable cash-flow fact in the file is {{annualIncome}}. I cannot tell you my spending level or any shortfall from the approved facts."
-          ],
-          "followUpResponses": [
-            "I can confirm {{annualIncome}}, but the case gives no expense budget. You still cannot calculate investable surplus or a required distribution from that number alone."
-          ],
-          "followUpQuestion": "Would you like to ask what that income does—and does not—tell you about my spending or distribution need?",
-          "discloses": ["annualIncome"]
-        },
-        {
-          "id": "horizon",
-          "phrases": ["time horizon", "how soon", "when will", "need the money", "decision date"],
-          "keywords": ["horizon", "timeline", "timing", "years", "soon"],
-          "responses": [
-            "The approved horizon is {{horizon}}. That range is wider than I would like, and the file does not tell us where inside it the need is most likely to fall.",
-            "I can narrow the planning window to {{horizon}}, but not to a single date. That uncertainty is part of the decision, not permission to pick the midpoint."
-          ],
-          "followUpResponses": [
-            "No, the case does not identify a more precise date than {{horizon}}. Your record should preserve that range and the uncertainty around it."
-          ],
-          "followUpQuestion": "What other need would you want to connect to that time window?",
-          "discloses": ["horizon"]
-        },
-        {
-          "id": "resources",
-          "phrases": ["net worth", "financial resources", "total assets", "how much do you have"],
-          "keywords": ["wealth", "assets", "resources", "worth"],
-          "responses": [
-            "The case lists my net worth as {{netWorth}}. It does not say how much is investable, liquid, or already committed.",
-            "My documented net worth is {{netWorth}}, but that total alone does not tell you what can safely be allocated or withdrawn."
-          ],
-          "followUpResponses": [
-            "I cannot break the {{netWorth}} into cash, securities, property, or other holdings because the approved scenario does not provide that allocation."
-          ],
-          "followUpQuestion": "Would you treat net worth as investable cash, or is there another question you need to ask first?",
-          "discloses": ["netWorth"]
-        },
-        {
-          "id": "riskWillingness",
-          "phrases": ["comfort with risk", "feel about losses", "reaction to loss", "market decline", "market drop"],
-          "keywords": ["risk", "loss", "volatility", "comfortable", "worry", "drawdown"],
-          "responses": [
-            "I would describe myself as cautious—the case classifies me as {{riskClassification}}. But it does not establish how I would react to a specific percentage loss.",
-            "I am uneasy with loss, which is consistent with the {{riskClassification}} classification. I cannot honestly give you a precise drawdown limit from the facts provided."
-          ],
-          "followUpResponses": [
-            "The file still does not establish a loss threshold or a past reaction to volatility. Treat willingness as cautious, but do not manufacture a percentage."
-          ],
-          "followUpQuestion": "Are you also going to ask whether my finances can bear a loss, rather than only how I feel about one?",
-          "discloses": ["riskClassification"]
-        },
-        {
-          "id": "riskCapacity",
-          "phrases": ["risk capacity", "capacity for loss", "ability to bear", "afford a loss", "financial capacity", "make an investment loss difficult", "loss difficult"],
-          "keywords": ["capacity", "afford", "ability", "bear"],
-          "responses": [
-            "My capacity is not answered by one number. The case gives a short planning window and a medical liquidity need, but it does not quantify the liability, so I would be careful about claiming I can absorb a loss.",
-            "I have resources, but the need for accessible medical funds complicates capacity. Without the amount and timing, the file does not support a precise loss capacity."
-          ],
-          "followUpResponses": [
-            "The unresolved medical amount is what prevents a confident capacity estimate. Net worth, income, and timing need to be considered together rather than used as substitutes for one another."
-          ],
-          "followUpQuestion": "Which missing cash-need fact would you need before setting a defensible risk limit?",
-          "discloses": ["riskCapacity"]
-        },
-        {
-          "id": "caseMetrics",
-          "phrases": ["expected return", "return target", "standard deviation", "risk aversion score", "case metric"],
-          "keywords": ["4.5", "6.0", "8.0", "metric", "score"],
-          "responses": [
-            "The case file lists expected return {{expectedReturn}}, standard deviation {{standardDeviation}}, and risk-aversion score {{riskAversionScore}}. Those are scenario inputs, not my recommendation or proof that a portfolio is suitable.",
-            "The approved metrics are E(R) {{expectedReturn}}, standard deviation {{standardDeviation}}, and risk aversion {{riskAversionScore}}. You still need to reconcile them with the actual goal, liquidity need, and horizon."
-          ],
-          "followUpResponses": [
-            "I cannot explain how those case metrics were derived because the scenario does not provide that methodology. Verify how your team uses them rather than treating them as self-justifying."
-          ],
-          "discloses": ["expectedReturn", "standardDeviation", "riskAversionScore"]
-        },
-        {
-          "id": "taxes",
-          "phrases": ["tax situation", "tax bracket", "taxable account", "tax exempt"],
-          "keywords": ["tax", "taxes", "taxable", "ira", "roth"],
-          "responses": [
-            "I do not want to guess about taxes. The approved case gives no tax bracket, account type, or tax restriction, so all three are information gaps.",
-            "Nothing in the scenario establishes my tax status or account registration. Please record that instead of assuming a taxable or retirement account."
-          ],
-          "followUpResponses": [
-            "There is no additional approved tax fact to disclose. The investment impact may be material, but the correct interview result is still ‘not established.’"
-          ],
-          "discloses": ["taxGap"]
-        },
-        {
-          "id": "holdings",
-          "phrases": ["existing holdings", "current portfolio", "what do you own", "concentrated position"],
-          "keywords": ["holdings", "portfolio", "stocks", "bonds", "funds", "concentration"],
-          "responses": [
-            "My current holdings are not in the approved brief. You should not infer a stock, bond, cash, or fund allocation from my net worth.",
-            "I cannot give you an existing portfolio because the case does not establish one. Record holdings and concentration as unresolved before evaluating a transition plan."
-          ],
-          "followUpResponses": [
-            "No specific security, account, cost basis, or concentration is approved for this case. That remains a material information gap."
-          ],
-          "discloses": ["holdingsGap"]
-        },
-        {
-          "id": "family",
-          "phrases": ["family needs", "beneficiary needs", "leave money", "estate goal", "dependents"],
-          "keywords": ["family", "beneficiary", "beneficiaries", "children", "heirs", "legacy", "estate", "dependent"],
-          "responses": [
-            "The scenario does not identify dependents, beneficiaries, heirs, or a legacy objective. I would rather leave that unanswered than invent a family situation.",
-            "No family or beneficiary need is established in my brief. It could change the plan, but it must stay on the information-gap list."
-          ],
-          "followUpResponses": [
-            "There is no approved follow-up fact about family, estate, or beneficiaries. Your analysis should show the uncertainty without filling it in."
-          ],
-          "discloses": ["familyGap"]
-        },
-        {
-          "id": "values",
-          "phrases": ["personal values", "ethical preference", "unique constraint", "investment restriction"],
-          "keywords": ["values", "ethical", "esg", "religious", "restriction", "restricted", "unique"],
-          "responses": [
-            "The approved facts do not establish an ethical screen, religious restriction, or other values-based exclusion for me.",
-            "I cannot add a values preference that is not in the case. Record values and unique restrictions as not established."
-          ],
-          "followUpResponses": [
-            "No additional values or unique-constraint fact is approved. The absence of a fact is not evidence that I have no preference; it is an information gap."
-          ],
-          "discloses": ["valuesGap"]
-        },
-        {
-          "id": "identity",
-          "phrases": ["tell me about yourself", "what did you do", "your background"],
-          "keywords": ["age", "retired", "librarian", "occupation", "job", "work"],
-          "responses": [
-            "I am 72 and retired after working as a librarian. The financial details that matter still depend on what you ask next.",
-            "My intake information identifies me as a 72-year-old retired librarian. I would rather discuss one planning issue at a time than have you infer the rest from my age."
-          ],
-          "followUpResponses": [
-            "That is the full approved background: age 72 and retired librarian. No additional biography is established."
-          ],
-          "discloses": ["identity"]
-        }
-      ],
-      "complication": {
-        "requires": ["goal", "liquidityNeed"],
-        "response": "I should clarify something because it changes the order of my priorities: when I say preservation and income, I do not mean tying up money I may need for medical expenses. If that need arrives sooner than expected, access comes before seeking more income.",
-        "responseWithHorizon": "I should clarify something because it changes the order of my priorities: within that {{horizon}} window, access for medical expenses comes before seeking more income. Preservation cannot mean tying up money I may need.",
-        "recordPrompt": "This is the complication to carry forward: liquidity may override the income objective, while the amount and timing remain unresolved."
-      },
-      "broadResponses": [
-        "That is a broad question, and I do not want to make up a complete story. Please narrow it to goals, cash flow, timing, liquidity, risk, resources, taxes, holdings, family needs, or values.",
-        "I can answer from the approved brief, but only one issue at a time. Which decision-relevant area do you want to clarify first?"
-      ],
-      "unknownResponses": [
-        "I cannot answer that from the approved brief. Please record it as an information gap rather than treating my hesitation as a fact.",
-        "That detail is not established in the case. It may matter, but your Decision Record should show it as unresolved.",
-        "I do not have an approved fact for that question. Please do not infer an answer from the other information I have shared."
-      ],
-      "recommendationResponses": [
-        "I cannot choose a security, fund, ETF, bond, or portfolio weight for you. Ask me about my needs or constraints; your team must verify the evidence and make the investment decision.",
-        "That would turn the interview into a recommendation. I can clarify priorities and information gaps, but I cannot tell you what to buy, sell, or allocate."
       ]
     },
     "decisionCycle": [
@@ -372,7 +162,7 @@
       },
       {
         "stage": "AI client interview",
-        "action": "Use the bounded role-play prompt. Ask open, neutral questions; mark any answer not established by the case as unknown.",
+        "action": "Ask your own open, neutral questions in the live voice interview or use the bounded text prompt. Confirm the transcript and mark any answer not established by the case as unknown.",
         "logEvidence": "Prompt purpose and output summary—not a pasted transcript"
       },
       {
@@ -511,6 +301,236 @@
       "A second team member reviews the evidence trail before the Phase 1 gate."
     ]
   },
+  "phase2Experience": {
+    "title": "Security Analysis, Portfolio Construction, and Stress Testing",
+    "subtitle": "Screen with the mandate. Select with evidence. Integrate the portfolio. Break it before the client does.",
+    "handoffTitle": "Phase 1 is the decision filter",
+    "handoffRule": "No candidate security or portfolio weight may be approved unless the team identifies the Phase 1 client need, constraint, unresolved question, or downstream guardrail it addresses.",
+    "requiredInputs": [
+      "Approved client objective and RRTTLLU constraints",
+      "Required and desired return, maximum volatility, and drawdown tripwire",
+      "Liquidity dates, cash-flow needs, tax considerations, values, and unique constraints",
+      "Committee base and bear macro scenarios with source dates",
+      "Phase 1 Analyst Decision Log, including unresolved information gaps and downstream guardrails"
+    ],
+    "securityWorkflow": [
+      {
+        "stage": "Translate the mandate",
+        "action": "Turn each Phase 1 guardrail into a measurable screen before researching products. Separate must-pass constraints from preferences."
+      },
+      {
+        "stage": "Build a candidate set",
+        "action": "Use approved sources to identify multiple plausible bonds, mutual funds, and ETFs. Record source and as-of date before ranking."
+      },
+      {
+        "stage": "Analyze and compare",
+        "action": "Explain return drivers, downside risks, costs, liquidity, diversification, and the instrument-specific evidence below."
+      },
+      {
+        "stage": "Challenge the leader",
+        "action": "Make a provisional choice first, then use AI to surface the strongest counterargument, missing risk, or contradictory interpretation."
+      },
+      {
+        "stage": "Verify and decide",
+        "action": "Check every material AI-assisted claim in an approved source, then accept, modify, or reject the provisional choice and record why."
+      },
+      {
+        "stage": "Hand off to the portfolio",
+        "action": "State the candidate's role, proposed weight range, risk contribution, client-fit condition, and the event that would trigger review or removal."
+      }
+    ],
+    "instrumentStandards": [
+      {
+        "instrument": "Bond or fixed-income exposure",
+        "ownerRoleId": "fixed-income",
+        "decisionQuestion": "Do the cash flows and risk exposures fit the client's income, capital-preservation, horizon, liquidity, tax, and loss-capacity guardrails?",
+        "requiredAnalysis": [
+          "Issuer, seniority, coupon, maturity, call or structural features, and source price",
+          "Yield measure used and the return drivers under the base and bear macro cases",
+          "Duration or interest-rate sensitivity and the effect of a rate move",
+          "Credit quality, spread or default/downgrade risk, and recovery considerations",
+          "Liquidity, minimum position size, tax treatment where relevant, and concentration",
+          "Client suitability, proposed portfolio role, monitoring trigger, and rejection reason"
+        ]
+      },
+      {
+        "instrument": "Mutual fund",
+        "ownerRoleId": "fund-etf",
+        "decisionQuestion": "Does the fund's mandate, portfolio, cost structure, and implementation fit improve the client's outcome relative to realistic alternatives?",
+        "requiredAnalysis": [
+          "Objective, strategy, benchmark, style/category, and active or passive approach",
+          "Return drivers, material risks, holdings or concentration, and diversification contribution",
+          "Expense ratio, loads or transaction costs, turnover, distributions, and tax considerations",
+          "Share class, minimum investment, trading frequency, liquidity, and redemption constraints",
+          "Performance compared with the stated benchmark using matching periods and as-of dates",
+          "Client suitability, portfolio role, monitoring trigger, and reason preferred or rejected"
+        ]
+      },
+      {
+        "instrument": "ETF",
+        "ownerRoleId": "fund-etf",
+        "decisionQuestion": "Does the ETF deliver the intended benchmark or style exposure efficiently without adding hidden concentration, trading, liquidity, or tax problems?",
+        "requiredAnalysis": [
+          "Objective, index or benchmark, methodology, style/sector exposure, and replication approach",
+          "Return drivers, material risks, top holdings, overlap, concentration, and diversification contribution",
+          "Expense ratio, bid-ask spread, premium/discount, trading volume, and other implementation costs",
+          "Liquidity at both the share and underlying-holdings level, distributions, and tax considerations",
+          "Tracking difference or error using an appropriate period and current source date",
+          "Client suitability, portfolio role, monitoring trigger, and reason preferred or rejected"
+        ]
+      }
+    ],
+    "issuerRealityCheck": {
+      "title": "Issuer Reality Check",
+      "decisionRule": "Yield or recent return alone cannot support a recommendation. The committee must evidence the issuer's financial health, operating outlook, and relevance to the client's mandate.",
+      "applicability": "Complete one concise snapshot for every direct bond or equity exposure and for the most material relevant issuer or holding exposure within each selected mutual fund or ETF.",
+      "requiredFields": [
+        "Security, issuer, exposure type, portfolio weight, source, and as-of date",
+        "Business model and principal revenue drivers",
+        "Industry and macro sensitivity under the committee's base and bear cases",
+        "Revenue, margin, and cash-flow trend using consistent periods",
+        "Liquidity and leverage",
+        "Interest coverage and debt-maturity considerations where relevant",
+        "One issuer-specific risk and the evidence that makes it material",
+        "Conclusion about client fit, allocation implication, and monitoring trigger"
+      ],
+      "roleResponsibilities": [
+        {"roleId": "fixed-income", "responsibility": "Own the credit-focused review for direct bonds: cash-flow durability, liquidity, leverage, coverage, maturity schedule, structural features, and downside risk."},
+        {"roleId": "fund-etf", "responsibility": "Perform look-through review of the most material relevant holdings and identify issuer concentration, overlap, and exposure that could dominate fund or ETF behavior."},
+        {"roleId": "client-macro", "responsibility": "Explain how the committee's macro scenarios and the issuer's industry sensitivity affect revenue, margins, cash flow, and the client-facing thesis."},
+        {"roleId": "portfolio-risk", "responsibility": "Apply the issuer-health and concentration conclusion to position size, portfolio risk, diversification, stress testing, and monitoring or exit triggers."}
+      ]
+    },
+    "candidateTemplateColumns": [
+      "Candidate and instrument type",
+      "Role owner",
+      "Phase 1 guardrail tested",
+      "Base-case return drivers",
+      "Material risks and bear-case sensitivity",
+      "Costs, taxes, and liquidity",
+      "Duration/credit quality or benchmark/style exposure",
+      "Issuer Reality Check reference and conclusion",
+      "Diversification contribution and overlap",
+      "Verified source and as-of date",
+      "Provisional choice and confidence",
+      "AI challenge and verification result",
+      "Final select/reject decision and rationale"
+    ],
+    "securityQualityGate": [
+      "The candidate set includes a real comparison; the team does not research only its preferred product.",
+      "Every selection names the Phase 1 client guardrail it satisfies and the unresolved fact that could change it.",
+      "Return, yield, duration, credit, fee, benchmark, holdings, liquidity, and performance claims use appropriate approved sources and as-of dates.",
+      "Every direct bond or equity exposure and the most material relevant holding inside each selected fund or ETF has an Issuer Reality Check; yield or recent return is never the sole rationale.",
+      "The team distinguishes issuer risk, market risk, product risk, and client-suitability risk.",
+      "AI challenges the provisional judgment, but no AI output is treated as evidence or copied in place of analysis.",
+      "Each analyst records accept, modify, or reject after human verification and a second member reviews the evidence trail.",
+      "The selected mix is evaluated for overlap and diversification as a portfolio, not only one instrument at a time."
+    ],
+    "portfolioWorkflow": [
+      {
+        "stage": "Assemble",
+        "action": "Place approved securities into sleeves and assign tentative weights. State the job of every sleeve and holding."
+      },
+      {
+        "stage": "Reconcile",
+        "action": "Check that weights total 100%, resources match the hypothetical AUM, and every holding traces to a Phase 1 guardrail and a verified selection decision."
+      },
+      {
+        "stage": "Measure",
+        "action": "Calculate expected return and required course risk measures consistently; identify concentration, overlap, duration, credit, liquidity, and benchmark/style exposures."
+      },
+      {
+        "stage": "Test the IPS",
+        "action": "Compare the integrated portfolio with every client objective, constraint, limit, and tripwire—not only the return target."
+      },
+      {
+        "stage": "Run the bear case",
+        "action": "Apply the approved Phase 1 bear assumptions without softening them, quantify portfolio and dollar impacts, and explain which client goal is most exposed."
+      },
+      {
+        "stage": "Correct and re-test",
+        "action": "For every breach, record specific trades or constraint changes, explain the trade-off, recalculate the full portfolio, and confirm whether the revised portfolio passes."
+      },
+      {
+        "stage": "Vote",
+        "action": "Approve, revise, or reject each client portfolio. Record dissent, monitoring triggers, and action owners."
+      }
+    ],
+    "allocationTemplateColumns": [
+      "Sleeve / holding",
+      "Ticker or identifier",
+      "Role owner",
+      "Portfolio job",
+      "Weight and dollar amount",
+      "Expected return contribution",
+      "Risk contribution or key exposure",
+      "Liquidity / cost / tax note",
+      "Phase 1 guardrail and selection-record reference",
+      "Monitoring or exit trigger"
+    ],
+    "ipsComplianceChecks": [
+      "Required return and priority client goals",
+      "Maximum volatility or other approved risk limit",
+      "Drawdown tripwire under the bear case",
+      "Liquidity reserve and known cash-flow dates",
+      "Time horizon and staged liabilities",
+      "Tax status and implementation consequences",
+      "Legal, values-based, concentration, or other unique constraints",
+      "Diversification, benchmark/style, duration, and credit exposures",
+      "Total weights, hypothetical dollars, and implementability"
+    ],
+    "stressTemplateColumns": [
+      "Scenario variable or asset class",
+      "Phase 1 bear assumption and source",
+      "Portfolio exposure / weight",
+      "Estimated return or value impact",
+      "Dollar impact",
+      "IPS limit or client goal tested",
+      "Pass / warning / breach",
+      "Evidence, limitation, or assumption"
+    ],
+    "adjustmentRecordFields": [
+      "Breach and root cause",
+      "Security or sleeve sold/reduced",
+      "Security or sleeve bought/increased",
+      "Old and revised weights and dollar amounts",
+      "Expected benefit and new trade-off",
+      "Revised return, risk, liquidity, and bear-case results",
+      "IPS re-test outcome",
+      "Committee decision, dissent, owner, and monitoring trigger"
+    ],
+    "roleIntegration": [
+      {
+        "roleId": "client-macro",
+        "securityResponsibility": "Audit every candidate against the approved client mandate and macro scenarios; reject any security whose rationale depends on an unapproved client fact.",
+        "portfolioResponsibility": "Confirm that the integrated allocation still serves the client's ranked goals and all RRTTLLU constraints."
+      },
+      {
+        "roleId": "fixed-income",
+        "securityResponsibility": "Lead bond and fixed-income analysis, including yield, duration, credit quality, structure, liquidity, taxes, and cash-flow fit.",
+        "portfolioResponsibility": "Explain how the fixed-income sleeve changes income reliability, rate sensitivity, credit risk, liquidity, and bear-case protection."
+      },
+      {
+        "roleId": "fund-etf",
+        "securityResponsibility": "Lead mutual-fund and ETF due diligence, benchmark/style mapping, holdings overlap, fees, trading, liquidity, taxes, and implementation fit.",
+        "portfolioResponsibility": "Test whether pooled vehicles deliver the intended exposure and diversification without hidden duplication or avoidable cost."
+      },
+      {
+        "roleId": "portfolio-risk",
+        "securityResponsibility": "Challenge candidate correlations, concentration, risk estimates, data comparability, and the claimed portfolio role.",
+        "portfolioResponsibility": "Own integration, calculation checks, IPS scorecard, bear-case test, breach escalation, corrections, re-test, and the committee vote record."
+      }
+    ],
+    "portfolioQualityGate": [
+      "Every holding has a verified selection record, a portfolio job, an accountable role owner, and a Phase 1 guardrail reference.",
+      "Weights total 100% and dollar allocations reconcile to the hypothetical AUM.",
+      "Return and risk calculations use consistent as-of dates, units, and scenario assumptions.",
+      "The IPS scorecard tests all relevant objectives and constraints; the team does not declare compliance from one metric.",
+      "The bear case exactly carries forward the approved Phase 1 assumptions and shows both percentage and dollar impact.",
+      "Every warning or breach has a documented decision; every breach is corrected and re-tested before approval.",
+      "The final portfolio states monitoring triggers, remaining uncertainties, and what would cause the committee to reconvene."
+    ]
+  },
   "phases": [
     {
       "id": "phase-1",
@@ -578,7 +598,7 @@
         },
         {
           "title": "B · Securities & implementation",
-          "description": "Select and weight securities, document macro and client fit, and compare at least two risk-mitigation approaches."
+          "description": "Compare and select bonds, mutual funds, and ETFs using instrument-specific evidence, client guardrails, costs, diversification, and a verified AI challenge."
         },
         {
           "title": "C · Stress test & corrective action",
@@ -588,20 +608,26 @@
       "evidence": [
         "Base and bear CME inputs with cited rationale",
         "Solver output and constraint checks for each client",
-        "Security-selection table with macro connection, client fit, weight, and source",
+        "Bond comparison with yield, return drivers, duration, credit quality, liquidity, taxes, client fit, and sources",
+        "Mutual-fund and ETF comparison with objective, benchmark/style, holdings, costs, liquidity, taxes, performance context, client fit, and sources",
+        "Issuer Reality Check for every direct bond or equity exposure and the most material relevant issuer/holding within each selected fund or ETF",
+        "Candidate decision records showing the provisional judgment, AI challenge, verification, final select/reject decision, and portfolio role",
+        "Integrated allocation with a purpose, owner, Phase 1 guardrail, risk contribution, and monitoring trigger for every holding",
         "Risk-mitigation comparison showing cost and trade-offs",
-        "Stress-test result against each approved tripwire",
+        "Full IPS compliance scorecard and bear-case stress result against each approved tripwire and relevant constraint",
         "Before/after record for any corrective trades",
         "AI audit entries linked to human verification",
         "Phase 2 decision record signed by all four members"
       ],
       "deliverables": [
         "Completed CME workbook",
-        "Completed security-selection and thesis workbook",
-        "Completed stress-test workbook",
+        "Completed bond, mutual-fund, and ETF analysis and selection record",
+        "Completed integrated allocation, IPS compliance, and stress-test record",
         "Phase 2 decision record with client-by-client votes"
       ],
       "resources": [
+        "security-analysis-workflow",
+        "portfolio-stress-workflow",
         "cme-template",
         "security-template",
         "stress-template",
@@ -697,6 +723,22 @@
       "audience": "student"
     },
     {
+      "id": "security-analysis-workflow",
+      "label": "Security Analysis & Selection workflow",
+      "type": "HTML",
+      "path": "project/security-analysis-selection.html",
+      "description": "Student workflow and comparison templates for evidence-backed bond, mutual-fund, and ETF decisions that begin with Phase 1 client guardrails.",
+      "audience": "student"
+    },
+    {
+      "id": "portfolio-stress-workflow",
+      "label": "Portfolio Management & Stress Testing workflow",
+      "type": "HTML",
+      "path": "project/portfolio-management-stress-testing.html",
+      "description": "Student workflow and templates for integrated allocation, IPS compliance, bear-case testing, corrective trades, re-testing, and committee approval.",
+      "audience": "student"
+    },
+    {
       "id": "cme-template",
       "label": "CME & optimization workbook",
       "type": "XLSX",
@@ -782,61 +824,104 @@
     }
   ],
   "assessment": {
-    "note": "Canvas remains the authority for due dates, submission mechanics, and the project's course-grade weight. The criteria below preserve the existing written/oral assessment emphasis while aligning it to Phase 3.",
+    "note": "Canvas remains the authority for due dates, submission mechanics, and the project's course-grade weight. The criteria below preserve the written/oral balance while assessing both individual role ownership and the committee's integrated decision.",
     "writtenWeight": 50,
     "oralWeight": 50,
     "writtenCriteria": [
       {
-        "criterion": "Technical accuracy",
+        "criterion": "Evidence quality & technical accuracy",
         "weight": 25,
-        "standard": "Calculations, formulas, sources, and portfolio metrics are correct, traceable, and interpreted."
+        "standard": "Claims, calculations, formulas, sources, as-of dates, and portfolio metrics are correct, comparable, traceable, and interpreted; AI output is never treated as evidence."
       },
       {
-        "criterion": "Evidence bridge",
-        "weight": 25,
-        "standard": "The market view visibly drives CME assumptions, portfolio weights, securities, and client recommendations."
+        "criterion": "Security analysis & selection",
+        "weight": 20,
+        "standard": "Bond, mutual-fund, and ETF choices follow real candidate comparisons and address return drivers, risks, costs, duration/credit or benchmark/style exposure, liquidity, diversification, Issuer Reality Checks, and monitoring."
       },
       {
-        "criterion": "Stress test & mandate compliance",
-        "weight": 25,
-        "standard": "Each portfolio is tested against its tripwire; breaches trigger documented corrective action."
+        "criterion": "Client suitability & IPS compliance",
+        "weight": 20,
+        "standard": "Each recommendation traces to Phase 1 client needs and guardrails, and the IPS scorecard tests all relevant objectives and RRTTLLU constraints."
       },
       {
-        "criterion": "Visualization & documentation",
+        "criterion": "Portfolio integration & risk response",
+        "weight": 20,
+        "standard": "Weights, diversification, overlap, risk exposures, bear-case results, breaches, corrective trades, and re-tests form one internally consistent portfolio decision."
+      },
+      {
+        "criterion": "Role ownership & team decision trail",
         "weight": 15,
-        "standard": "Exhibits communicate the decision clearly and include complete sources and the AI audit."
-      },
-      {
-        "criterion": "Client and regulatory constraints",
-        "weight": 10,
-        "standard": "RRTTLLU constraints change the actual portfolio rather than appearing as generic narrative."
+        "standard": "Each analyst's owned work is identifiable, peer-reviewed, and integrated into votes, dissent, action items, visual exhibits, and the Analyst Decision Log."
       }
     ],
     "oralCriteria": [
       {
-        "criterion": "Narrative flow & clarity",
-        "weight": 30,
-        "standard": "The committee tells one coherent story from market view to client action."
+        "criterion": "Live defense & evidence response",
+        "weight": 25,
+        "standard": "Members answer the question asked, use relevant evidence and calculations, acknowledge uncertainty, and defend or revise the judgment under challenge."
       },
       {
-        "criterion": "Defense of strategy",
-        "weight": 30,
-        "standard": "Members defend the base case, bear case, trade-offs, and quantitative evidence under questioning."
+        "criterion": "Individual role ownership",
+        "weight": 25,
+        "standard": "Each member demonstrates command of the work they owned and can explain the decision, evidence, AI challenge, verification, and limitations."
       },
       {
-        "criterion": "Professional presence",
+        "criterion": "Team integration",
         "weight": 20,
-        "standard": "The team speaks as advisors to the committee with confident, concise, client-aware language."
+        "standard": "The committee presents one coherent chain from client discovery through security selection, allocation, stress results, correction, and final recommendation."
       },
       {
-        "criterion": "Committee cohesion",
-        "weight": 10,
-        "standard": "All four members contribute, transition cleanly, and can answer beyond their lead workstream."
+        "criterion": "Client suitability & risk compliance",
+        "weight": 20,
+        "standard": "Members can show where client needs changed the portfolio, explain the strongest bear case, and defend compliance or the corrective action taken."
       },
       {
-        "criterion": "Visual-aid efficacy",
+        "criterion": "Clarity, professionalism & visual evidence",
         "weight": 10,
-        "standard": "Slides make the recommendation and key evidence visible at a glance rather than serving as a script."
+        "standard": "The team communicates concisely as client-focused professionals and uses legible exhibits that make the recommendation, trade-offs, and evidence visible."
+      }
+    ],
+    "committeeQuestions": [
+      {
+        "audience": "Client and Macro Strategist",
+        "questions": [
+          "Which Phase 1 client fact or guardrail most changed the final portfolio, and where can the committee see that change?",
+          "Which macro assumption matters most to this recommendation, and what evidence would cause the team to revise it?",
+          "Which unresolved client information gap remains material, and how did the portfolio avoid pretending it was known?"
+        ]
+      },
+      {
+        "audience": "Fixed-Income Analyst",
+        "questions": [
+          "Why does the selected fixed-income exposure fit the client's cash-flow horizon better than the strongest alternative?",
+          "What happens to price and income if rates or credit spreads move against the position, and which duration or credit evidence supports that answer?",
+          "What did the Issuer Reality Check reveal about cash flow, leverage, interest coverage, maturities, and the largest issuer-specific risk?"
+        ]
+      },
+      {
+        "audience": "Fund and ETF Analyst",
+        "questions": [
+          "Why is this mutual fund or ETF the best implementation vehicle after fees, trading costs, taxes, liquidity, and benchmark/style exposure?",
+          "What did the look-through Issuer Reality Check reveal about the most material relevant holding, overlap, concentration, and actual diversification?",
+          "Which performance or tracking comparison is decision-useful, and how did you make the periods and as-of dates comparable?"
+        ]
+      },
+      {
+        "audience": "Portfolio Manager and Risk Analyst",
+        "questions": [
+          "Which risk contributes most to the portfolio's bear-case loss, and which client goal is therefore most exposed?",
+          "Show the IPS compliance test. Which metric came closest to a warning or breach, and what action follows?",
+          "If the committee rejects one proposed adjustment, what alternative preserves the client goal and what new trade-off does it create?"
+        ]
+      },
+      {
+        "audience": "Any committee member",
+        "questions": [
+          "What was the team's strongest initial judgment that changed after AI challenge and human verification?",
+          "Which source or calculation carries the most decision weight, and what are its limitations?",
+          "What is the strongest reasonable case against the final recommendation?",
+          "What monitoring trigger would force the committee to reconvene before the normal review date?"
+        ]
       }
     ]
   }

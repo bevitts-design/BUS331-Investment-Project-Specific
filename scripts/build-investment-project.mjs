@@ -17,7 +17,9 @@ const escapeHtml = (value = "") => String(value)
 
 const phasePath = (phase) => `project/${phase.id}-${phase.title.toLowerCase().replaceAll("&", "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.html`;
 const clientDiscoveryPath = "project/client-discovery-ai-protocol.html";
-const assetVersion = "20260729-branching-client-interview-final-2";
+const securityWorkflowPath = "project/security-analysis-selection.html";
+const portfolioStressPath = "project/portfolio-management-stress-testing.html";
+const assetVersion = "20260730-phase2-workflows-1";
 const prefixPath = (prefix, target) => `${prefix}${target}`;
 
 function siteHeader(prefix) {
@@ -33,6 +35,8 @@ function siteHeader(prefix) {
         <a href="${prefixPath(prefix, "project/guide.html")}">Project guide</a>
         <a href="${prefixPath(prefix, phasePath(model.phases[0]))}">Phase 1</a>
         <a href="${prefixPath(prefix, clientDiscoveryPath)}">Discovery protocol</a>
+        <a href="${prefixPath(prefix, securityWorkflowPath)}">Security selection</a>
+        <a href="${prefixPath(prefix, portfolioStressPath)}">Portfolio stress</a>
         <a href="${prefixPath(prefix, "project/assessment.html")}">Assessment</a>
       </nav>
     </div>
@@ -142,10 +146,10 @@ function interviewSimulatorMarkup(prefix) {
     <div class="simulator-heading">
       <div>
         <p class="section-kicker">${escapeHtml(prototype.label)}</p>
-        <h2 id="simulator-title">Practice a bounded client interview</h2>
-        <p>Ask your own neutral questions, then preserve the exchange and your analyst notes for the Decision Record.</p>
+        <h2 id="simulator-title">Interview a fictional client in your own voice</h2>
+        <p>Speak or type your own neutral questions. Confirm the transcript, listen to Eleanor's in-character reply, and preserve the exchange for your Decision Record.</p>
       </div>
-      <p class="prototype-status"><span aria-hidden="true"></span>No API key · No live service · Local session only</p>
+      <p class="prototype-status"><span aria-hidden="true"></span>Instructor-hosted voice AI · Typed fallback · Local transcript</p>
     </div>
     <div class="simulator-layout">
       <article class="simulator-client-card" aria-labelledby="prototype-client-name">
@@ -162,18 +166,34 @@ function interviewSimulatorMarkup(prefix) {
         <div class="simulator-boundary"><strong>Prototype boundary</strong><p>${escapeHtml(prototype.boundary)}</p></div>
       </article>
       <div class="simulator-workspace">
+        <div class="live-interview-disclosure">
+          <h3>Before you start</h3>
+          <p>${escapeHtml(prototype.liveMode.privacyNotice)}</p>
+          <p>${escapeHtml(prototype.liveMode.availabilityNotice)}</p>
+        </div>
+        <div class="live-session-controls">
+          <button class="button button-primary" type="button" data-start-interview>${escapeHtml(prototype.liveMode.startLabel)}</button>
+          <button class="button simulator-secondary" type="button" data-end-interview disabled>End interview</button>
+          <span class="connection-state" data-connection-state role="status" aria-live="polite">Not started</span>
+        </div>
+        <audio data-client-audio controls hidden aria-label="Eleanor Vance's latest spoken response"></audio>
+        <div class="record-question-card">
+          <div><h3>Record your own question</h3><p>Start recording, ask one question naturally, then stop. Review and edit the transcript before sending it to Eleanor.</p></div>
+          <div class="record-controls"><button class="button simulator-secondary" type="button" data-record-question disabled>Start recording</button><span data-record-status role="status" aria-live="polite">Start the interview first.</span></div>
+        </div>
         <div class="suggested-questions" aria-labelledby="suggested-title">
-          <h3 id="suggested-title">Suggested opening questions</h3>
+          <h3 id="suggested-title">Optional opening ideas</h3>
+          <p>These are prompts to help you begin, not a question menu. You may ask any relevant question in your own words.</p>
           <div>${prototype.openingQuestions.map((question) => `<button class="question-chip" type="button" data-suggested-question>${escapeHtml(question)}</button>`).join("\n")}</div>
         </div>
         <form class="interview-form" data-interview-form>
-          <label for="client-question">Your interview question</label>
-          <textarea id="client-question" name="client-question" rows="3" maxlength="500" placeholder="Ask one neutral question about the client's goals, constraints, or risk context." required></textarea>
-          <div class="form-actions"><button class="button button-primary" type="submit">Ask ${escapeHtml(prototype.clientName.split(" ")[0])}</button><span data-form-status role="status" aria-live="polite"></span></div>
+          <label for="client-question">Confirmed transcript or typed question</label>
+          <textarea id="client-question" name="client-question" rows="3" maxlength="500" placeholder="Record a question above or type one here." required disabled></textarea>
+          <div class="form-actions"><button class="button button-primary" type="submit" data-send-question disabled>Ask ${escapeHtml(prototype.clientName.split(" ")[0])}</button><span data-form-status role="status" aria-live="polite"></span></div>
         </form>
         <div class="transcript-panel">
           <div class="panel-heading"><h3>Interview transcript</h3><span>Process record—not a verification source</span></div>
-          <p class="empty-transcript" data-empty-transcript>Eleanor has greeted your team. Start with a suggested prompt or write your own question.</p>
+          <p class="empty-transcript" data-empty-transcript>Start the live interview to hear Eleanor's greeting. The text record will appear here.</p>
           <ol class="interview-transcript" data-interview-transcript aria-live="polite" aria-label="Client interview transcript"></ol>
         </div>
         <div class="analyst-notes">
@@ -215,6 +235,30 @@ function sourceBoard() {
       <p>${escapeHtml(item.use)}</p>
       <p class="source-note">${escapeHtml(item.source || "Open the official source and record the series or document used.")}</p>
     </article>`).join("\n")}
+  </div>`;
+}
+
+function workflowSteps(items) {
+  return `<div class="workflow-steps">
+    ${items.map((item, index) => `<article class="workflow-step"><span aria-hidden="true">${index + 1}</span><div><h3>${escapeHtml(item.stage)}</h3><p>${escapeHtml(item.action)}</p></div></article>`).join("\n")}
+  </div>`;
+}
+
+function studentTemplateTable(caption, columns) {
+  return `<div class="matrix-wrap template-matrix"><table>
+    <caption>${escapeHtml(caption)}</caption>
+    <thead><tr>${columns.map((column) => `<th scope="col">${escapeHtml(column)}</th>`).join("")}</tr></thead>
+    <tbody><tr>${columns.map((column) => `<td><span class="template-line" aria-label="Team entry for ${escapeHtml(column)}"></span></td>`).join("")}</tr></tbody>
+  </table></div>`;
+}
+
+function roleIntegrationBoard(responsibilityKey) {
+  return `<div class="role-integration-grid">
+    ${model.phase2Experience.roleIntegration.map((item) => {
+      const role = roleById.get(item.roleId);
+      if (!role) throw new Error(`Unknown role id in Phase 2 integration: ${item.roleId}`);
+      return `<article data-color="${escapeHtml(role.color)}"><p class="role-tag">Owned work</p><h3>${escapeHtml(role.title)}</h3><p>${escapeHtml(item[responsibilityKey])}</p></article>`;
+    }).join("\n")}
   </div>`;
 }
 
@@ -323,6 +367,18 @@ function landingPage() {
         <div class="phase-runway">${model.phases.map(phasePanel).join("\n")}</div>
       </section>
 
+      <section class="section" aria-labelledby="phase-two-tools-title">
+        <div class="section-header">
+          <p class="section-kicker">Phase 2 student workflows</p>
+          <h2 id="phase-two-tools-title">Carry the client mandate into every investment decision</h2>
+          <p>Compare bonds, mutual funds, and ETFs with verified evidence, then integrate the selected holdings, test every IPS constraint, apply the approved bear case, and correct any breach.</p>
+        </div>
+        <div class="phase-two-launch">
+          <a href="${escapeHtml(securityWorkflowPath)}"><span>Analyze and select</span><strong>Bonds · Mutual funds · ETFs</strong><small>Candidate screen, AI challenge, human verification, select/reject record</small></a>
+          <a href="${escapeHtml(portfolioStressPath)}"><span>Integrate and challenge</span><strong>Portfolio · IPS · Bear case</strong><small>Allocation, compliance, stress test, correction, re-test, vote</small></a>
+        </div>
+      </section>
+
       <section class="section">${protocolMarkup()}</section>
 
       <section class="section" aria-labelledby="ai-title">
@@ -376,6 +432,7 @@ function phasePage(phase) {
           </section>
 
           ${phase.id === "phase-1" ? `<section>${phaseOneLaunchMarkup(prefix)}</section>` : ""}
+          ${phase.id === "phase-2" ? `<section><div class="milestone-banner"><div><p class="section-kicker">Phase 2 working sequence</p><h2>Analyze first. Integrate second. Stress before approval.</h2><p>${escapeHtml(model.phase2Experience.handoffRule)}</p></div><div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(path.basename(securityWorkflowPath))}">Security analysis & selection</a><a class="button" href="${escapeHtml(path.basename(portfolioStressPath))}">Portfolio & stress testing</a></div></div></section>` : ""}
 
           <section>
             <h2>Workstreams</h2>
@@ -591,6 +648,138 @@ function clientDiscoveryPage() {
   });
 }
 
+function securityAnalysisPage() {
+  const prefix = "../";
+  const experience = model.phase2Experience;
+  const securityWorkbook = resourceById.get("security-template");
+  const decisionRecord = resourceById.get("decision-record");
+  return shell({
+    title: "Security Analysis & Selection",
+    description: "Student workflow for evidence-backed bond, mutual-fund, and ETF selection in the BUS331 Investment Committee Simulation.",
+    prefix,
+    pageClass: "guide-page workflow-page",
+    body: `
+  <main id="main-content">
+    ${pageHero("Phase 2 · Security analysis and selection", "Select investments the client can actually own", "Evaluate bonds, mutual funds, and ETFs as competing implementations of an approved client mandate—not as isolated products.")}
+    <div class="page-shell"><div class="content-flow">
+      <section>
+        <div class="handoff-contract"><div><p class="section-kicker">Required handoff</p><h2>${escapeHtml(experience.handoffTitle)}</h2><p>${escapeHtml(experience.handoffRule)}</p></div><ol>${experience.requiredInputs.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ol></div>
+        <div class="callout"><h3>Stop before research</h3><p>If a client guardrail or information gap is missing, return to the Phase 1 decision record. A product search cannot repair an incomplete mandate.</p></div>
+      </section>
+
+      <section>
+        <p class="section-kicker">Committee workflow</p><h2>From guardrail to select/reject decision</h2>
+        ${workflowSteps(experience.securityWorkflow)}
+      </section>
+
+      <section>
+        <p class="section-kicker">Instrument-specific analysis</p><h2>Ask the questions that fit the instrument</h2>
+        <div class="instrument-grid">${experience.instrumentStandards.map((standard) => {
+          const role = roleById.get(standard.ownerRoleId);
+          return `<article><p class="role-tag">Lead: ${escapeHtml(role.title)}</p><h3>${escapeHtml(standard.instrument)}</h3><p class="decision-question">${escapeHtml(standard.decisionQuestion)}</p><h4>Document</h4><ul class="clean-list">${standard.requiredAnalysis.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></article>`;
+        }).join("\n")}</div>
+      </section>
+
+      <section class="issuer-check-section">
+        <p class="section-kicker">Required inside security analysis</p><h2>${escapeHtml(experience.issuerRealityCheck.title)}</h2>
+        <div class="issuer-rule"><strong>Decision rule</strong><p>${escapeHtml(experience.issuerRealityCheck.decisionRule)}</p><p>${escapeHtml(experience.issuerRealityCheck.applicability)}</p></div>
+        <div class="issuer-check-layout">
+          <div><h3>Concise issuer snapshot</h3><ol class="numbered-fields">${experience.issuerRealityCheck.requiredFields.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ol></div>
+          <div><h3>Role handoff</h3><div class="issuer-role-list">${experience.issuerRealityCheck.roleResponsibilities.map((item) => {
+            const role = roleById.get(item.roleId);
+            return `<article data-color="${escapeHtml(role.color)}"><h4>${escapeHtml(role.title)}</h4><p>${escapeHtml(item.responsibility)}</p></article>`;
+          }).join("\n")}</div></div>
+        </div>
+        <p class="fine-print">This is part of the candidate's analysis and selection record, not a separate accounting unit. Keep it concise, cited, and decision-focused.</p>
+      </section>
+
+      <section>
+        <p class="section-kicker">Student template</p><h2>Candidate comparison and decision record</h2>
+        <p>Complete one row per serious candidate in the security-selection workbook or team record. Keep rejected candidates: the comparison is evidence that the committee considered alternatives.</p>
+        ${studentTemplateTable("Candidate comparison template. Add one row for each bond, mutual fund, or ETF considered.", experience.candidateTemplateColumns)}
+        <div class="callout"><h3>AI challenge-and-verification checkpoint</h3><p>Record the provisional choice before asking AI for the strongest counterargument or missing risk. Verify each material claim with an approved source, then mark the final choice Accept, Modify, or Reject and explain the change. AI is not a source and may not choose the product for the team.</p></div>
+      </section>
+
+      <section>
+        <p class="section-kicker">Four-person ownership</p><h2>Distinct analysis, integrated selection</h2>
+        ${roleIntegrationBoard("securityResponsibility")}
+      </section>
+
+      <section>
+        <p class="section-kicker">Selection gate</p><h2>Ready to enter the portfolio?</h2>
+        <ul class="check-list">${experience.securityQualityGate.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+        <div class="milestone-banner"><div><h3>Record the handoff</h3><p>For every selected candidate, state its portfolio job, proposed weight range, risk contribution, client-fit condition, and monitoring or removal trigger.</p></div><div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, securityWorkbook.path))}">Open selection workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open Decision Log <span>XLSX</span></a><a class="button" href="${escapeHtml(path.basename(portfolioStressPath))}">Continue to portfolio & stress testing</a></div></div>
+      </section>
+    </div></div>
+  </main>`
+  });
+}
+
+function portfolioStressPage() {
+  const prefix = "../";
+  const experience = model.phase2Experience;
+  const stressWorkbook = resourceById.get("stress-template");
+  const cmeWorkbook = resourceById.get("cme-template");
+  const decisionRecord = resourceById.get("decision-record");
+  return shell({
+    title: "Portfolio Management & Stress Testing",
+    description: "Student workflow for integrated portfolio allocation, IPS compliance, bear-case stress testing, corrective action, and committee approval.",
+    prefix,
+    pageClass: "guide-page workflow-page",
+    body: `
+  <main id="main-content">
+    ${pageHero("Phase 2 · Portfolio management and stress testing", "Build the portfolio, then try to break it", "Integrate approved securities, test the whole IPS, apply the committee's bear case, and revise any portfolio that cannot meet the client mandate.")}
+    <div class="page-shell"><div class="content-flow">
+      <section>
+        <div class="handoff-contract"><div><p class="section-kicker">Inputs, not suggestions</p><h2>Carry forward the approved mandate and security decisions</h2><p>${escapeHtml(experience.handoffRule)}</p></div><ol>${experience.requiredInputs.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ol></div>
+        <div class="callout"><h3>Scenario integrity rule</h3><p>The bear case must use the Phase 1 assumptions the committee approved. Do not soften a return, volatility, rate, spread, or correlation assumption merely to make the portfolio pass.</p></div>
+      </section>
+
+      <section>
+        <p class="section-kicker">Portfolio workflow</p><h2>Allocate, test, correct, and vote</h2>
+        ${workflowSteps(experience.portfolioWorkflow)}
+      </section>
+
+      <section>
+        <p class="section-kicker">Student template</p><h2>Integrated allocation record</h2>
+        <p>Use one row for every sleeve or holding. The committee must be able to trace each weight backward to a verified selection decision and forward to a client goal, risk exposure, and monitoring action.</p>
+        ${studentTemplateTable("Integrated portfolio allocation template. Weights must total 100 percent and dollars must reconcile to the hypothetical AUM.", experience.allocationTemplateColumns)}
+      </section>
+
+      <section>
+        <p class="section-kicker">IPS compliance</p><h2>Test the whole mandate</h2>
+        <div class="compliance-board">${experience.ipsComplianceChecks.map((item, index) => `<article><span>${index + 1}</span><p>${escapeHtml(item)}</p><strong>Pass · Warning · Breach</strong></article>`).join("\n")}</div>
+        <p class="fine-print">A return target, volatility limit, or tripwire alone is not the IPS. A portfolio can pass one metric and still fail the client.</p>
+      </section>
+
+      <section>
+        <p class="section-kicker">Bear-case template</p><h2>Quantify the downside and the client consequence</h2>
+        ${studentTemplateTable("Bear-case stress template. Apply the approved Phase 1 assumptions and show both percentage and dollar impacts.", experience.stressTemplateColumns)}
+        <div class="callout"><h3>Interpret before correcting</h3><p>Name the exposure that causes the loss, the client goal or constraint placed at risk, the limits of the estimate, and whether the result is a pass, warning, or breach.</p></div>
+      </section>
+
+      <section>
+        <p class="section-kicker">Breach response</p><h2>Document the adjustment and re-test</h2>
+        <div class="field-board">${experience.adjustmentRecordFields.map((field) => `<article><span>${escapeHtml(field)}</span></article>`).join("\n")}</div>
+        <p>No breach is cured by narrative. Record the actual trade or approved constraint change, calculate the revised portfolio, identify the new trade-off, and run the IPS and bear-case tests again.</p>
+      </section>
+
+      <section>
+        <p class="section-kicker">Four-person ownership</p><h2>Risk belongs to the entire committee</h2>
+        ${roleIntegrationBoard("portfolioResponsibility")}
+      </section>
+
+      <section>
+        <p class="section-kicker">Portfolio approval gate</p><h2>Approve only a traceable, tested recommendation</h2>
+        <ul class="check-list">${experience.portfolioQualityGate.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+        <div class="callout"><h3>AI boundary</h3><p>AI may challenge assumptions, suggest a counter-scenario, or help debug a formula. The team must verify every factual or numerical claim, run its own calculations, and own the final allocation, correction, and vote.</p></div>
+        <div class="milestone-banner"><div><h3>Complete the decision package</h3><p>Attach the final IPS scorecard, bear-case result, correction and re-test if needed, all four votes, dissent or reservations, and monitoring triggers.</p></div><div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, cmeWorkbook.path))}">Open CME workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, stressWorkbook.path))}">Open stress workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open Decision Log <span>XLSX</span></a><a class="button" href="assessment.html">Prepare for defense</a></div></div>
+      </section>
+    </div></div>
+  </main>`
+  });
+}
+
 function assessmentTable(criteria) {
   return `<div class="matrix-wrap"><table>
     <thead><tr><th scope="col">Criterion</th><th scope="col">Weight</th><th scope="col">Committee-ready standard</th></tr></thead>
@@ -620,6 +809,12 @@ function assessmentPage() {
           ${assessmentTable(model.assessment.oralCriteria)}
         </section>
         <section>
+          <p class="section-kicker">Live defense question bank</p>
+          <h2>Prepare to defend owned work and the integrated decision</h2>
+          <p>The panel may direct any question to any member. Role ownership determines preparation responsibility, not permission to ignore the rest of the portfolio.</p>
+          <div class="question-bank">${model.assessment.committeeQuestions.map((group) => `<article><h3>${escapeHtml(group.audience)}</h3><ul class="clean-list">${group.questions.map((question) => `<li>${escapeHtml(question)}</li>`).join("\n")}</ul></article>`).join("\n")}</div>
+        </section>
+        <section>
           <p class="section-kicker">Final readiness check</p>
           <h2>Before the committee meeting</h2>
           <ul class="check-list">${phase.evidence.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
@@ -643,9 +838,11 @@ await fs.writeFile(path.join(rootDir, "index.html"), landingPage());
 await fs.writeFile(path.join(rootDir, "project", "guide.html"), guidePage("../"));
 await fs.writeFile(path.join(rootDir, "BUS331_InvProject_Requirements_AllPhases.html"), guidePage(""));
 await fs.writeFile(path.join(rootDir, clientDiscoveryPath), clientDiscoveryPage());
+await fs.writeFile(path.join(rootDir, securityWorkflowPath), securityAnalysisPage());
+await fs.writeFile(path.join(rootDir, portfolioStressPath), portfolioStressPage());
 for (const phase of model.phases) {
   await fs.writeFile(path.join(rootDir, phasePath(phase)), phasePage(phase));
 }
 await fs.writeFile(path.join(rootDir, "project", "assessment.html"), assessmentPage());
 
-console.log(`Built ${model.phases.length + 5} project pages from project-model.json.`);
+console.log(`Built ${model.phases.length + 7} project pages from project-model.json.`);
