@@ -67,6 +67,7 @@ BUS331-Investment-Project-Specific/
   project-model.json                    # canonical public content and resource manifest
   scripts/
     build-investment-project.mjs        # generates portal and public guide pages
+    build-final-rubric-pdf.py           # generates the public Phase 3 rubric from project-model.json
     client-interview-simulator.js       # voice recording, typed fallback, transcript, and notes client
     build-investment-committee-decision-record.mjs
                                         # generates the student committee record workbook
@@ -91,11 +92,11 @@ BUS331-Investment-Project-Specific/
     phase-3-defend-the-recommendation.html
                                         # generated Phase 3 guide
     assessment.html                     # generated student-facing assessment guide
-    legacy/                             # proposed future location; no files moved without approval
+    supporting references              # static technical guides aligned to the current phase model
   files/
     ...Student...                       # blank student templates and public scenario data only
   docs/
-    project-materials-inventory.md      # internal migration inventory
+    project-materials-inventory.md      # current material inventory
     project-source-of-truth.md          # architecture and boundary decisions
 ```
 
@@ -160,15 +161,15 @@ The validator should fail when it detects:
 - a role count other than four in the committee roster;
 - committee roles that do not match the Client/Macro, Fixed-Income, Fund/ETF, and Portfolio/Risk contract;
 - a Phase 1 protocol that skips the initial-judgment, AI-challenge, verification, or final-reasoning stage;
-- references to old project Phases 4, 5, or 6 in generated student pages;
+- phase numbering outside the current three-phase model in generated student pages;
 - missing local resources;
 - filenames or visible text marked `INSTRUCTOR`, `Solution`, `Answer Key`, or similar in the public manifest;
 - private-repository paths or non-public resources linked from generated pages.
 
-## Migration policy for this redesign
+## Maintenance policy
 
-- Add the new model, builder, validator, shared style, and generated pages first.
-- Preserve current files in place until the new outputs pass validation.
-- Create student-safe replacements or aliases before retiring legacy links.
+- Update the model, builder, validator, and maintained binary sources before regenerating dependent pages and deliverables.
+- Preserve current files in place until replacement outputs pass validation.
+- Create student-safe replacements or aliases before retiring public links.
 - Instructor PDF boundary resolved on 2026-07-29 after explicit approval: the file now resides at `BUS331-instructor/Investment_Project/source/Macroeconomic_Forecast_Instructor_Master_Guide.pdf` and is absent from the public staging repository.
 - Do not commit, push, publish, or alter Canvas as part of staging work.

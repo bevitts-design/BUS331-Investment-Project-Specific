@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BUS331 – Phase 5: The Stress Test & Quantitative Audit</title>
+<title>BUS331 – Phase 2 Workstream C: Portfolio Stress Test & Quantitative Audit</title>
 <style>
   :root {
     --navy: #0A1628;
@@ -236,26 +236,23 @@
 <div class="page-header">
   <div class="left">
     <div class="subtitle">BUS 331 · Investments · Endicott College</div>
-    <h1>Phase 5: The Stress Test &amp; Quantitative Audit</h1>
+    <h1>Phase 2 · Workstream C: Portfolio Stress Test &amp; Quantitative Audit</h1>
   </div>
-  <div class="phase-badge">Phase 5 of 6</div>
+  <div class="phase-badge">Phase 2 of 3</div>
 </div>
 <div class="gold-rule"></div>
 
 <div class="body-wrap">
 
   <div class="phase-flow">
-    <div class="pf-item done">✓ Phase 1: Macro</div><div class="pf-arrow">›</div>
-    <div class="pf-item done">✓ Phase 2: IPS</div><div class="pf-arrow">›</div>
-    <div class="pf-item done">✓ Phase 3: Bridge</div><div class="pf-arrow">›</div>
-    <div class="pf-item done">✓ Phase 4: Securities</div><div class="pf-arrow">›</div>
-    <div class="pf-item active">Phase 5: Audit ←</div><div class="pf-arrow">›</div>
-    <div class="pf-item">Phase 6: Pitch</div>
+    <div class="pf-item done">✓ Phase 1: Frame the Mandate</div><div class="pf-arrow">›</div>
+    <div class="pf-item active">Phase 2: Build &amp; Challenge ←</div><div class="pf-arrow">›</div>
+    <div class="pf-item">Phase 3: Defend the Recommendation</div>
   </div>
 
   <div class="callout navy">
     <div class="callout-label">Phase Objective</div>
-    <p>Phase 5 is the compliance check. You have built the portfolio — now you must <strong>prove it holds up</strong>. Run the fully constructed portfolio through the Bear Case scenario from Phase 1. Calculate three performance metrics — <strong>Portfolio Beta, Standard Deviation, and Sharpe Ratio</strong> — and confirm the Bear Case loss stays within each client's IPS drawdown tripwire. If a portfolio fails, you must re-allocate, document every change, and verify the fix before Phase 6.</p>
+    <p>Workstream C is the Phase 2 compliance check. You have built the portfolio — now you must <strong>prove it holds up</strong>. Run the fully constructed portfolio through the Bear Case approved in Phase 1. Calculate <strong>Portfolio Beta, Standard Deviation, and Sharpe Ratio</strong>, test every relevant IPS objective and constraint, and compare the Bear Case loss with the client's drawdown tripwire. If a portfolio fails, re-allocate, document every change, and verify the fix before Phase 3.</p>
   </div>
 
 
@@ -278,11 +275,11 @@
         <div class="client-stat"><div class="stat-label">Target E(R)</div><div class="stat-value">≥ 8.5%</div></div>
         <div class="client-stat"><div class="stat-label">Max Portfolio σ</div><div class="stat-value">≤ 16%</div></div>
         <div class="client-stat"><div class="stat-label">Risk Aversion (A)</div><div class="stat-value">3.5 — Moderate</div></div>
-        <div class="client-stat"><div class="stat-label">Phase 4 Hedge</div><div class="stat-value">Protective Put on SPY</div></div>
+        <div class="client-stat"><div class="stat-label">Selected Mitigant</div><div class="stat-value">Protective Put on SPY</div></div>
         <div class="client-stat"><div class="stat-label">AUM</div><div class="stat-value">$500,000</div></div>
       </div>
     </div>
-    <p style="font-size:13.5px;">Entering Phase 5, Priya's portfolio has been built (Phase 3 weights), stocked with 10 securities (Phase 4), and hedged with a Protective Put. The only question left before the final pitch: <em>does this portfolio survive the Bear Case?</em></p>
+    <p style="font-size:13.5px;">Entering Workstream C, Priya's portfolio has allocation weights from Workstream A, selected holdings from Workstream B, and a proposed Protective Put. The question before the Phase 2 committee vote is: <em>does the complete portfolio satisfy the IPS and survive the Bear Case?</em></p>
   </div>
 
 
@@ -298,7 +295,7 @@
   </div>
   <div class="section-body">
 
-    <p>These three metrics are the quantitative backbone of your Phase 6 presentation. Each answers a different question the Investment Committee will ask. You must calculate them, interpret them, and explain clearly how the Bear Case values differ from the Base Case — and why that difference matters for the client.</p>
+    <p>These three metrics are part of the quantitative backbone of your Phase 3 defense. Each answers a different question the Investment Committee may ask. Calculate and interpret them, then explain how the Bear Case differs from the Base Case and why that difference matters for the client. Do not treat these three metrics as a substitute for the full IPS compliance scorecard.</p>
 
     <div class="metric-grid">
 
@@ -326,7 +323,7 @@
         </div>
         <div class="mc-body">
           <div class="mc-formula">σp = SQRT(MMULT(<br>&nbsp;TRANSPOSE(w),<br>&nbsp;MMULT(CovMatrix, w)))</div>
-          <p>Total risk — both systematic and idiosyncratic. This is the same formula used in the Phase 3 Solver. In Phase 5, recalculate it with the <strong>Bear Case covariance matrix</strong> (stressed, tighter correlations).</p>
+          <p>Total risk — both systematic and idiosyncratic. This is the same formula used in the Workstream A Solver. In Workstream C, recalculate it with the <strong>Bear Case covariance matrix</strong> (stressed, tighter correlations).</p>
           <ul style="margin-top:8px;">
             <li>Bear Case σp will always be higher than Base Case</li>
             <li>Equity-to-equity correlations converge toward 1.0 in stress</li>
@@ -343,7 +340,7 @@
         </div>
         <div class="mc-body">
           <div class="mc-formula">S = ( E(Rp) − Rf ) ÷ σp</div>
-          <p>Return earned per unit of total risk taken. The risk-free rate (Rf) is your Cash/T-Bill CME return from Phase 3. Higher is better — but only compare Sharpe Ratios across clients with the same risk mandate.</p>
+          <p>Return earned per unit of total risk taken. The risk-free rate (Rf) is your Cash/T-Bill CME return from Workstream A. Higher is better — but only compare Sharpe Ratios across clients with the same risk mandate.</p>
           <ul style="margin-top:8px;">
             <li>Base Case Sharpe should be positive</li>
             <li>Bear Case Sharpe will typically be negative — that is expected</li>
@@ -357,13 +354,13 @@
 
     <div class="warning-box">
       <div class="warn-label">⚠ Excel Requirement — No Hard-Coded Metrics</div>
-      <p>All three metrics must be formula-driven and linked to your Phase 3 CME Matrix. If your instructor changes one CME input cell, βp, σp, and the Sharpe Ratio must update automatically. If nothing changes when an input is altered, you have hard-coded your audit — this is an automatic deduction.</p>
+      <p>All three metrics must be formula-driven and linked to your Phase 2 CME Matrix. If a reviewer changes one CME input cell, βp, σp, and the Sharpe Ratio must update automatically. If nothing changes when an input is altered, the audit is hard-coded and not decision-ready.</p>
     </div>
 
     <div class="worked-example">
       <span class="we-label">Worked Example — Priya Mehta</span>
       <h3>Calculated Metrics: Base Case vs. Bear Case</h3>
-      <p style="font-size:13px; color:#555; margin-bottom:14px;">Using the 10-security portfolio from Phase 4, with the Protective Put hedge applied to the equity sleeve. The Bear Case uses stressed correlations and the Red Zone CME inputs from Phase 1.</p>
+      <p style="font-size:13px; color:#555; margin-bottom:14px;">Using the selected Phase 2 holdings with the Protective Put applied to the equity sleeve. The Bear Case uses stressed correlations and the approved downside CME inputs from Phase 1.</p>
       <table class="data-table">
         <thead>
           <tr>
@@ -430,7 +427,7 @@
   </div>
   <div class="section-body">
 
-    <p>The crash test is not a new model — it is the Phase 3 Solver model re-run with Bear Case inputs. The difference in Phase 5 is that you are now applying that stress scenario to the <em>actual</em> Phase 4 portfolio, including its specific security betas and the derivative hedge, not just abstract asset class weights.</p>
+    <p>The crash test is not a new model — it is the Workstream A Solver model re-run with Bear Case inputs. Workstream C applies that stress scenario to the <em>actual</em> Workstream B portfolio, including specific security exposures and any approved risk mitigant, not just abstract asset-class weights.</p>
 
     <h3 class="sub">What Changes in the Bear Case Run</h3>
     <div class="two-col">
@@ -446,9 +443,9 @@
       <div class="info-card">
         <h4><div class="icon">≡</div> Keep These Fixed</h4>
         <ul>
-          <li>Portfolio weights — locked from Phase 4</li>
+          <li>Portfolio weights — carried forward from the integrated Phase 2 allocation</li>
           <li>Individual security betas — real market betas, not scenario-dependent</li>
-          <li>Hedge structure — strike, expiration, and contract count from Phase 4</li>
+          <li>Risk-mitigation structure — carried forward from Workstream B</li>
           <li>AUM — $500,000 throughout all scenarios</li>
         </ul>
       </div>
@@ -460,18 +457,18 @@
         <tr>
           <th>Crash Test Result</th>
           <th class="gold">Required Action</th>
-          <th>Where It Appears in Phase 6</th>
+          <th>Required Phase 2 action and Phase 3 evidence</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><span class="pass-text">✓ PASS — within IPS drawdown limit</span></td>
-          <td>Document the result. Confirm hedge was effective. Proceed to Phase 6.</td>
+          <td>Document the result and remaining limitations. Confirm the mitigant was effective and prepare the evidence for Phase 3.</td>
           <td>Presented as fiduciary compliance evidence in the IC Memo Risk section</td>
         </tr>
         <tr>
           <td><span class="fail-text">✗ FAIL — unhedged exceeds limit</span></td>
-          <td>Apply the Phase 4 hedge and recalculate. If the hedged portfolio passes, document the before/after. This is the expected outcome for most teams.</td>
+          <td>Apply the selected mitigant and recalculate. If the revised portfolio passes, document the before/after result and the new trade-off.</td>
           <td>The problem → solution narrative is a graded element of the oral presentation</td>
         </tr>
         <tr>
@@ -536,18 +533,18 @@
     <div class="step-num">3</div>
     <div>
       <h2>The Audit Scorecard</h2>
-      <div class="section-sub">One completed scorecard per client — your Phase 5 deliverable</div>
+      <div class="section-sub">One completed scorecard per client — your Workstream C deliverable</div>
     </div>
   </div>
   <div class="section-body">
 
-    <p>The Audit Scorecard is the single-page summary of Phase 5. It shows Base Case and Bear Case results side by side, and whether each IPS constraint is met. One scorecard per client. All three are compiled into the Phase 6 Technical Dossier.</p>
+    <p>The Audit Scorecard is the single-page summary of Workstream C. It shows Base Case and Bear Case results side by side and whether each relevant IPS objective and constraint is met. Complete one scorecard per client and carry all three into the Phase 3 technical exhibit book.</p>
 
     <h3 class="sub">Blank Template — Student Input Version</h3>
 
     <div class="scorecard">
       <div class="scorecard-head">
-        <div class="sc-title">Phase 5 Audit Scorecard</div>
+        <div class="sc-title">Phase 2 Portfolio Audit Scorecard</div>
         <div class="sc-client">Client: _________________________ &nbsp;|&nbsp; Team: _________________________ &nbsp;|&nbsp; AUM: $500,000</div>
       </div>
       <div class="scorecard-row header">
@@ -605,7 +602,7 @@
 
     <div class="scorecard">
       <div class="scorecard-head">
-        <div class="sc-title">Phase 5 Audit Scorecard</div>
+        <div class="sc-title">Phase 2 Portfolio Audit Scorecard</div>
         <div class="sc-client">Client: Priya Mehta &nbsp;|&nbsp; AUM: $500,000 &nbsp;|&nbsp; Hedge: Protective Put on SPY (4 contracts, 5% OTM, 6-month)</div>
       </div>
       <div class="scorecard-row header">
@@ -660,8 +657,8 @@
     </div>
 
     <div class="success-box">
-      <div class="succ-label">✓ Overall Verdict: PASS — Cleared for Phase 6</div>
-      <p>Priya's hedged portfolio satisfies the IPS drawdown tripwire (−9.8% vs. −12% limit). The σp breach of 16.8% vs. 16% is disclosed and attributed to stress-period correlation compression. Base Case E(Rp) of 8.7% meets the 8.5% minimum. The portfolio is approved to proceed to the Phase 6 pitch.</p>
+      <div class="succ-label">✓ Overall Verdict: PASS — Ready for Phase 3 Defense</div>
+      <p>Priya's hedged portfolio satisfies the IPS drawdown tripwire (−9.8% vs. −12% limit). The σp warning of 16.8% vs. 16% is disclosed and attributed to stress-period correlation compression. Base Case E(Rp) of 8.7% meets the 8.5% minimum. The committee must still document the warning, complete the full IPS scorecard, and record its Phase 2 vote before proceeding to Phase 3.</p>
     </div>
   </div>
 
@@ -701,17 +698,17 @@
           <td>Did the team's view agree or disagree? What specific data point resolved the conflict?</td>
         </tr>
         <tr>
-          <td><strong>Phase 3</strong></td>
+          <td><strong>Phase 2 · Workstream A</strong></td>
           <td>Any AI assistance with CME return estimates or correlation assumptions</td>
           <td>Were estimates verified against FactSet @ECO or FRED historical data?</td>
         </tr>
         <tr>
-          <td><strong>Phase 4</strong></td>
+          <td><strong>Phase 2 · Workstream B</strong></td>
           <td>Any AI-generated security analysis or derivative pricing</td>
           <td>Were betas, P/E ratios, and option premiums confirmed in a real data source before use?</td>
         </tr>
         <tr>
-          <td><strong>Phase 5</strong></td>
+          <td><strong>Phase 2 · Workstream C</strong></td>
           <td>Any AI used to interpret stress test results or frame the Bear Case narrative</td>
           <td>Did the AI's risk framing align with the Phase 1 macro thesis? Where did it diverge?</td>
         </tr>
@@ -719,7 +716,7 @@
     </table>
 
     <div class="worked-example">
-      <span class="we-label">Sample Log Entry — Phase 4 Option Pricing</span>
+      <span class="we-label">Sample Log Entry — Workstream B Option Pricing</span>
       <h3>Protective Put Premium Verification</h3>
       <table class="data-table" style="margin-top:8px;">
         <thead>
@@ -740,7 +737,7 @@
           </tr>
           <tr>
             <td><strong>Decision</strong></td>
-            <td>Used $18.00/share (conservatively rounded down) in the Phase 4 documentation. AI estimate accepted with independent verification.</td>
+            <td>Used $18.00/share (conservatively rounded down) in the Workstream B documentation. AI estimate accepted with independent verification.</td>
           </tr>
         </tbody>
       </table>
@@ -754,15 +751,15 @@
   <div class="section-header">
     <div class="step-num">✓</div>
     <div>
-      <h2>Phase 5 Submission Checklist</h2>
-      <div class="section-sub">Complete all items for all three clients before proceeding to Phase 6</div>
+      <h2>Phase 2 Workstream C Checklist</h2>
+      <div class="section-sub">Complete all items for all three clients before the Phase 2 committee vote and Phase 3 defense</div>
     </div>
   </div>
   <div class="section-body">
     <ul class="checklist">
-      <li><div class="check-box"></div><span><strong>Portfolio Beta calculated</strong> for all 3 clients — weighted average of Phase 4 security betas. Base Case and Bear Case both reported.</span></li>
+      <li><div class="check-box"></div><span><strong>Portfolio Beta calculated</strong> for all 3 clients — weighted average of selected security betas. Base Case and Bear Case both reported.</span></li>
       <li><div class="check-box"></div><span><strong>Portfolio Std Dev calculated</strong> for all 3 clients — MMULT/TRANSPOSE formula with the covariance matrix. Bear Case uses stressed (tighter) correlation inputs.</span></li>
-      <li><div class="check-box"></div><span><strong>Sharpe Ratio calculated</strong> for all 3 clients — Base Case and Bear Case. Risk-free rate is the Cash/T-Bill CME return from Phase 3.</span></li>
+      <li><div class="check-box"></div><span><strong>Sharpe Ratio calculated</strong> for all 3 clients — Base Case and Bear Case. Risk-free rate is the Cash/T-Bill CME return from Workstream A.</span></li>
       <li><div class="check-box"></div><span><strong>Bear Case drawdown confirmed</strong> — hedged portfolio loss is within each client's IPS drawdown tripwire. All three clients tested and documented individually.</span></li>
       <li><div class="check-box"></div><span><strong>Any σp breach disclosed</strong> — if Bear Case σp exceeds the IPS maximum, it is written up with an explanation of the stress-period cause. Not silently omitted.</span></li>
       <li><div class="check-box"></div><span><strong>Failed portfolios re-allocated</strong> — if a hedged Bear Case still exceeds the IPS tripwire, the re-allocation is documented with before/after metrics and the upside trade-off explained.</span></li>
@@ -775,7 +772,7 @@
 </div><!-- end body-wrap -->
 
 <div class="page-footer">
-  <span>BUS 331 · Investments · Endicott College</span> &nbsp;|&nbsp; Phase 5: The Stress Test &amp; Quantitative Audit &nbsp;|&nbsp; Fictional client (Priya Mehta) used for classroom illustration only
+  <span>BUS 331 · Investments · Endicott College</span> &nbsp;|&nbsp; Phase 2 · Workstream C: Portfolio Stress Test &amp; Quantitative Audit &nbsp;|&nbsp; Fictional client (Priya Mehta) used for classroom illustration only
 </div>
 
 </body>

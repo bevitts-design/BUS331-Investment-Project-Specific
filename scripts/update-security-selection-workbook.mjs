@@ -28,13 +28,13 @@ if (inspectOnly) {
     const region = await workbook.inspect({ kind: "region", sheetId: sheetName, range: "A1:K35", maxChars: 5000 });
     console.log(region.ndjson);
   }
-  const legacyLabels = await workbook.inspect({
+  const boundaryLabels = await workbook.inspect({
     kind: "match",
-    searchTerm: "Phase 4|four tabs|Before You Start",
+    searchTerm: "INSTRUCTOR|SOLUTION|ANSWER KEY|BUS331-instructor",
     options: { useRegex: true, maxResults: 50 },
-    summary: "legacy phase and workbook instruction labels"
+    summary: "public/private boundary labels"
   });
-  console.log(legacyLabels.ndjson);
+  console.log(boundaryLabels.ndjson);
   await renderSheets("before", sheetNames);
   console.log(`Rendered ${sheetNames.length} source sheets to ${outputRoot}.`);
   process.exit(0);

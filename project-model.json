@@ -713,7 +713,8 @@
       ],
       "resources": [
         "decision-record",
-        "phase-3-assessment"
+        "phase-3-assessment",
+        "phase-3-rubric-pdf"
       ]
     }
   ],
@@ -836,6 +837,14 @@
       "type": "HTML",
       "path": "project/assessment.html",
       "description": "Student-facing evidence, written/oral criteria, submission checklist, and Q&A expectations.",
+      "audience": "student"
+    },
+    {
+      "id": "phase-3-rubric-pdf",
+      "label": "Phase 3 assessment rubric",
+      "type": "PDF",
+      "path": "files/final-rubric.pdf",
+      "description": "Printable written and oral criteria, committee question bank, and submission-readiness checklist generated from the current assessment model.",
       "audience": "student"
     }
   ],

@@ -362,7 +362,7 @@ function landingPage() {
         <div class="section-header">
           <p class="section-kicker">Project phases</p>
           <h2 id="phases-title">Build the case in the order the committee needs it</h2>
-          <p>Use the phase guides as the current assignment authority. Supporting technical guides may retain older filenames while the migration is staged.</p>
+          <p>Use the phase guides as the current assignment authority. Supporting technical guides provide method details; current Canvas instructions control submission format and timing.</p>
         </div>
         <div class="phase-runway">${model.phases.map(phasePanel).join("\n")}</div>
       </section>

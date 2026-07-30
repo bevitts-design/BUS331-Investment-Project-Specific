@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BUS 331 — Phase 3: The Bridge | CME Matrix & Portfolio Optimization</title>
+<title>BUS 331 — Phase 2 Workstream A | CME Matrix & Portfolio Optimization</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -462,10 +462,10 @@
 <!-- HEADER -->
 <div class="header">
   <div class="header-kicker">BUS 331 &mdash; Investments &nbsp;|&nbsp; Endicott College</div>
-  <div class="header-title">Phase 3: The Bridge<br>CME Matrix &amp; Portfolio Optimization</div>
+  <h1 class="header-title">Phase 2 · Workstream A<br>CME Matrix &amp; Portfolio Optimization</h1>
   <div class="header-sub">From Macro Thesis to Optimized Asset Allocation</div>
   <div class="header-meta">
-    <div class="meta-pill">Phase 3 of 6</div>
+    <div class="meta-pill">Phase 2 of 3</div>
     <div class="meta-pill">Excel Workbook</div>
     <div class="meta-pill">Solver Required</div>
     <div class="meta-pill">Fictional Client — Classroom Use</div>
@@ -477,14 +477,14 @@
   <!-- OVERVIEW -->
   <div class="section-head">
     <div class="section-num">Overview</div>
-    <div class="section-title">What Phase 3 Does</div>
+    <div class="section-title">What Workstream A Does</div>
   </div>
 
-  <p>Phase 1 told you <em>what the economy is doing</em>. Phase 2 told you <em>what your client needs</em>. Phase 3 connects those two things mathematically. You convert your macro thesis into a set of return and risk assumptions for each asset class — the <strong>Capital Market Expectations (CME) Matrix</strong> — and then use Excel Solver to find the portfolio weights that maximize the Sharpe Ratio while staying within each client's IPS constraints.</p>
+  <p>Phase 1 established <em>what the economy may do</em> and <em>what each client needs</em>. Phase 2 Workstream A connects those approved judgments mathematically. You convert the committee's macro thesis into return and risk assumptions for each asset class — the <strong>Capital Market Expectations (CME) Matrix</strong> — and then use Excel Solver to identify portfolio weights that improve risk-adjusted return while staying within each client's IPS constraints.</p>
 
   <div class="callout warn">
     <div class="c-label">&#8594; The Connection Rule</div>
-    <p>Your CME Matrix numbers must be <strong>consistent with your Phase 1 macro thesis</strong>. If Phase 1 predicts high inflation, your Fixed Income expected return must be lower (bond prices fall as yields rise). If Phase 1 predicts a soft landing, equity returns should reflect moderate earnings growth. Graders will cross-check Phase 1 against Phase 3 directly.</p>
+    <p>Your CME Matrix numbers must be <strong>consistent with your approved Phase 1 macro thesis and client guardrails</strong>. If Phase 1 predicts high inflation, fixed-income assumptions must reflect the rate and spread implications. If Phase 1 predicts a soft landing, equity returns should reflect moderate earnings growth. The committee must be able to trace every Phase 2 assumption back to Phase 1 evidence.</p>
   </div>
 
   <!-- FICTIONAL CLIENT -->
@@ -502,11 +502,11 @@
     <table>
       <thead><tr><th>IPS Parameter</th><th>Value</th><th>Source</th></tr></thead>
       <tbody>
-        <tr><td class="td-key">Risk Aversion (A)</td><td>3.5</td><td>Phase 2 IPS — moderate risk tolerance</td></tr>
-        <tr><td class="td-key">Required Return E(R)</td><td>8.5%</td><td>Phase 2 IPS — 20-year growth horizon</td></tr>
-        <tr><td class="td-key">Max Standard Deviation (σ)</td><td>16.0%</td><td>Phase 2 IPS — acceptable volatility ceiling</td></tr>
-        <tr><td class="td-key">Max Drawdown (Tripwire)</td><td>&minus;12.0%</td><td>Phase 2 IPS — mandate breach threshold</td></tr>
-        <tr><td class="td-key">Time Horizon</td><td>20 years</td><td>Phase 2 IPS — retirement planning goal</td></tr>
+        <tr><td class="td-key">Risk Aversion (A)</td><td>3.5</td><td>Phase 1 mandate — moderate risk tolerance</td></tr>
+        <tr><td class="td-key">Required Return E(R)</td><td>8.5%</td><td>Phase 1 mandate — 20-year growth horizon</td></tr>
+        <tr><td class="td-key">Max Standard Deviation (σ)</td><td>16.0%</td><td>Phase 1 mandate — acceptable volatility ceiling</td></tr>
+        <tr><td class="td-key">Max Drawdown (Tripwire)</td><td>&minus;12.0%</td><td>Phase 1 mandate — breach threshold</td></tr>
+        <tr><td class="td-key">Time Horizon</td><td>20 years</td><td>Phase 1 mandate — retirement planning goal</td></tr>
         <tr><td class="td-key">Phase 1 Macro Regime</td><td>Late-Cycle / Base Case: Soft Landing</td><td>Phase 1 team thesis</td></tr>
       </tbody>
     </table>
@@ -520,7 +520,7 @@
 
   <div class="objective">The CME Matrix is a table of expected returns and standard deviations for each asset class under your Base Case macro scenario. It is the mathematical translation of your Phase 1 thesis.</div>
 
-  <p>The workbook has <strong>two CME Matrix tabs</strong> — one for the Base Case and one for the Bear Case. You must complete both. The Base Case drives your Solver optimization. The Bear Case is used in the Phase 5 stress test.</p>
+  <p>The workbook has <strong>two CME Matrix tabs</strong> — one for the Base Case and one for the Bear Case. You must complete both. The Base Case drives your Solver optimization. The Bear Case carries forward to Phase 2 Workstream C for the integrated portfolio stress test.</p>
 
   <span class="label">Step 1 — Enter asset class assumptions</span>
   <p>For each asset class, enter the <strong>expected annual return E(R)</strong> and <strong>standard deviation (σ)</strong> under your Base Case. These are not guesses — every number must be sourced:</p>
@@ -647,7 +647,7 @@
 
   <div class="callout warn">
     <div class="c-label">&#9888; The 262% Error</div>
-    <p>The most common Phase 3 mistake is entering returns as whole numbers (e.g., 8.5 instead of 0.085) in the CME Matrix. This causes the GDP-style formula to produce nonsensical results like 262% growth. Always use <strong>decimal format</strong>: 8.5% = 0.085 in Excel formula cells. Yellow input cells are pre-formatted to display as % — enter 0.085 and it will show 8.5%.</p>
+    <p>The most common Workstream A mistake is entering returns as whole numbers (e.g., 8.5 instead of 0.085) in the CME Matrix. This causes formulas to produce nonsensical results. Always use <strong>decimal format</strong>: 8.5% = 0.085 in Excel formula cells. Yellow input cells are pre-formatted to display as % — enter 0.085 and it will show 8.5%.</p>
   </div>
 
   <!-- SECTION 4: SOLVER OPTIMIZATION -->
@@ -662,7 +662,7 @@
   <ul class="req">
     <li>CME Matrix fully filled in (Section 1 and Section 2 complete)</li>
     <li>Risk-Free Rate entered (FRED TB3MS — 3-Month T-Bill yield)</li>
-    <li>IPS max σ and max drawdown limits from Phase 2 for this client</li>
+    <li>IPS max σ and max drawdown limits approved in Phase 1 for this client</li>
     <li>Solver add-in enabled: <strong>File → Options → Add-ins → Excel Add-ins → Solver Add-in ✓</strong></li>
   </ul>
 
@@ -677,7 +677,7 @@
     <div class="sg-label"></div>
     <div class="sg-val">w₁ ≥ 0, w₂ ≥ 0, w₃ ≥ 0 &nbsp;&nbsp;(no short-selling)</div>
     <div class="sg-label"></div>
-    <div class="sg-val">Portfolio σ ≤ IPS max σ &nbsp;&nbsp;(volatility constraint from Phase 2)</div>
+    <div class="sg-val">Portfolio σ ≤ IPS max σ &nbsp;&nbsp;(volatility constraint from Phase 1)</div>
     <div class="sg-label">Solving Method</div>
     <div class="sg-val"><strong>GRG Nonlinear</strong> &nbsp;(required for Sharpe Ratio — it is a non-linear objective)</div>
   </div>
@@ -689,12 +689,12 @@
     <li><div class="step-num">4</div><div>Click <strong>Add</strong> three times to set constraints: (1) weights = 1, (2) all weights ≥ 0, (3) portfolio σ ≤ IPS max σ.</div></li>
     <li><div class="step-num">5</div><div>Select <strong>GRG Nonlinear</strong> as the solving method. Click <strong>Solve</strong>.</div></li>
     <li><div class="step-num">6</div><div>When Solver returns a solution, select <strong>"Keep Solver Solution"</strong> and click OK. The weights now reflect the optimal allocation.</div></li>
-    <li><div class="step-num">7</div><div>Record the optimal weights, portfolio E(R), portfolio σ, and Sharpe Ratio. These carry forward into Phase 4 and Phase 5.</div></li>
+    <li><div class="step-num">7</div><div>Record the optimal weights, portfolio E(R), portfolio σ, and Sharpe Ratio. These carry forward into Workstream B security selection and Workstream C portfolio stress testing.</div></li>
   </ol>
 
   <div class="callout danger">
     <div class="c-label">&#9888; Hard-Coded Numbers = Zero Points</div>
-    <p>If a grader changes any input cell in your CME Matrix and the Sharpe Ratio, portfolio σ, and E(R) cells <strong>do not update</strong>, your model is hard-coded. This is the primary grading red flag for Phase 3. Every result cell must be a live formula — never type a calculated result directly into a cell.</p>
+    <p>If a reviewer changes any input cell in your CME Matrix and the Sharpe Ratio, portfolio σ, and E(R) cells <strong>do not update</strong>, your model is hard-coded. Every result cell must be a live formula — never type a calculated result directly into a cell.</p>
   </div>
 
   <!-- SECTION 5: WORKED EXAMPLE -->
@@ -768,7 +768,7 @@
         </table>
       </div>
 
-      <p style="margin-top:12px; font-size:13px; color:var(--muted);">Note: The E(R) of 7.26% falls slightly below Priya's 8.5% target. The team should document this shortfall and justify it — the σ constraint (16%) is preventing a more aggressive allocation. This is a legitimate trade-off, not an error. The Phase 3 grade rewards honest acknowledgment of constraint trade-offs.</p>
+      <p style="margin-top:12px; font-size:13px; color:var(--muted);">Note: The E(R) of 7.26% falls slightly below Priya's 8.5% target. The team should document this shortfall and justify it — the σ constraint (16%) is preventing a more aggressive allocation. This is a legitimate trade-off, not an error. Strong committee work acknowledges constraint trade-offs instead of hiding them.</p>
     </div>
   </div>
 
@@ -823,16 +823,16 @@
         <span class="verdict fail">FAIL</span>
       </div>
 
-      <p style="margin-top:14px; font-size:13.5px;">This portfolio <strong>fails Priya's Tripwire in the Bear Case</strong>. In Phase 5, the team will need to re-allocate — typically by reducing equity exposure or adding a derivative hedge. For example, shifting to 60% equities / 28% bonds / 12% cash drops the Bear Case return to approximately –11.6%, which passes the –12% limit.</p>
+      <p style="margin-top:14px; font-size:13.5px;">This portfolio <strong>fails Priya's Tripwire in the Bear Case</strong>. In Workstream C, the team must diagnose the exposure, consider re-allocation or an appropriate risk mitigant, document the change, and run the full IPS and bear-case tests again.</p>
 
-      <p style="font-size:13px; color:var(--muted); margin-top:8px;">Note: This Bear Case calculation is a preview only. The full stress test, re-allocation, and final risk metrics are completed in Phase 5. Phase 3 requires you to <em>build</em> the Bear Case CME Matrix — Phase 5 requires you to <em>act on it</em>.</p>
+      <p style="font-size:13px; color:var(--muted); margin-top:8px;">Note: This Bear Case calculation is a preview only. Workstream A requires you to <em>build</em> the Bear Case CME Matrix; Workstream C requires you to <em>act on it</em> using the selected holdings and complete IPS compliance tests.</p>
     </div>
   </div>
 
   <!-- SECTION 6: DELIVERABLES -->
   <div class="section-head">
     <div class="section-num">Section 6</div>
-    <div class="section-title">Phase 3 Deliverables &amp; Submission Checklist</div>
+    <div class="section-title">Phase 2 Workstream A Deliverables &amp; Checklist</div>
   </div>
 
   <span class="label">Required Deliverables</span>
@@ -928,7 +928,7 @@
 
 <div class="footer">
   BUS 331 &nbsp;&middot;&nbsp; Investments &nbsp;&middot;&nbsp; Endicott College &nbsp;&nbsp;|&nbsp;&nbsp;
-  Phase 3: The Bridge — CME Matrix &amp; Portfolio Optimization &nbsp;&nbsp;|&nbsp;&nbsp;
+  Phase 2 · Workstream A — CME Matrix &amp; Portfolio Optimization &nbsp;&nbsp;|&nbsp;&nbsp;
   Fictional client (Priya Mehta) used for classroom illustration only
 </div>
 

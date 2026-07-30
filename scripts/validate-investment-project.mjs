@@ -1,6 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, "..");
@@ -8,6 +10,7 @@ const releaseMode = process.argv.includes("--release");
 const model = JSON.parse(await fs.readFile(path.join(rootDir, "project-model.json"), "utf8"));
 const errors = [];
 const warnings = [];
+const execFileAsync = promisify(execFile);
 
 const fail = (message) => errors.push(message);
 const warn = (message) => warnings.push(message);
@@ -18,6 +21,23 @@ const exists = async (target) => {
   } catch {
     return false;
   }
+};
+
+const extractPdfText = async (pdfPath) => {
+  const candidates = ["pdftotext"];
+  if (process.env.HOME) {
+    candidates.push(path.join(process.env.HOME, ".cache", "codex-runtimes", "codex-primary-runtime", "dependencies", "native", "poppler", "poppler", "bin", "pdftotext"));
+  }
+  let lastError;
+  for (const command of candidates) {
+    try {
+      const { stdout } = await execFileAsync(command, [pdfPath, "-"], { maxBuffer: 4 * 1024 * 1024 });
+      return stdout;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  throw lastError;
 };
 
 const phasePath = (phase) => `project/${phase.id}-${phase.title.toLowerCase().replaceAll("&", "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.html`;
@@ -155,6 +175,13 @@ const generatedFiles = [
   "project/assessment.html"
 ];
 
+const supportingHtmlFiles = [
+  "project/BUS331_InvProject_Bridge_CME_Guide.html",
+  "project/BUS331_InvProject_SecuritySelection_Guide.html",
+  "project/BUS331_InvProject_StressTest_Guide.html",
+  "project/BUS331_InvProject_FinalPitch_Guide.html"
+];
+
 const hrefPattern = /href="([^"]+)"/g;
 const oldPhasePattern = /\bPhase\s+(?:0?[4-6])\b/i;
 
@@ -184,6 +211,79 @@ for (const relative of generatedFiles) {
       continue;
     }
     if (!(await exists(target))) fail(`${relative} has a broken local link: ${href}.`);
+  }
+}
+
+for (const relative of supportingHtmlFiles) {
+  const absolute = path.join(rootDir, relative);
+  if (!(await exists(absolute))) {
+    fail(`Missing supporting student guide: ${relative}.`);
+    continue;
+  }
+  const html = await fs.readFile(absolute, "utf8");
+  if (!/<html\b[^>]*lang="en"/i.test(html)) fail(`${relative} is missing lang="en".`);
+  if ((html.match(/<h1\b/gi) || []).length !== 1) fail(`${relative} must contain exactly one h1.`);
+  if (!/<title>[^<]+<\/title>/i.test(html)) fail(`${relative} is missing a non-empty title.`);
+  if (oldPhasePattern.test(html)) fail(`${relative} contains retired phase language.`);
+  if (/Spring 2026/i.test(html)) fail(`${relative} contains a retired course term.`);
+
+  for (const match of html.matchAll(hrefPattern)) {
+    const href = match[1];
+    if (/^(?:https?:|mailto:|tel:|#)/i.test(href)) continue;
+    const cleanHref = href.split("#")[0].split("?")[0];
+    if (!cleanHref) continue;
+    const target = path.resolve(path.dirname(absolute), cleanHref);
+    if (!target.startsWith(rootDir)) {
+      fail(`${relative} links outside the public repository: ${href}.`);
+      continue;
+    }
+    if (!(await exists(target))) fail(`${relative} has a broken local link: ${href}.`);
+  }
+}
+
+async function extractOfficeText(relative) {
+  const absolute = path.join(rootDir, relative);
+  const { stdout: listing } = await execFileAsync("unzip", ["-Z1", absolute], { maxBuffer: 4 * 1024 * 1024 });
+  const entries = listing
+    .split(/\r?\n/)
+    .filter((entry) => entry.endsWith(".xml") && !entry.startsWith("[") && !entry.includes("/theme/") && !entry.includes("/styles"));
+  if (!entries.length) return "";
+  const { stdout } = await execFileAsync("unzip", ["-p", absolute, ...entries], {
+    encoding: "utf8",
+    maxBuffer: 32 * 1024 * 1024
+  });
+  return stdout.replace(/<[^>]+>/g, " ");
+}
+
+const officeArtifacts = [
+  ...new Set(
+    model.resources
+      .map((resource) => resource.path)
+      .filter((resourcePath) => /\.(?:xlsx|pptx|docx)$/i.test(resourcePath))
+  )
+];
+
+for (const relative of officeArtifacts) {
+  try {
+    const text = await extractOfficeText(relative);
+    if (oldPhasePattern.test(text)) fail(`${relative} contains retired phase language inside the Office package.`);
+    if (/Spring 2026/i.test(text)) fail(`${relative} contains a retired course term inside the Office package.`);
+  } catch (error) {
+    fail(`Could not inspect public Office artifact ${relative}: ${error.message}`);
+  }
+}
+
+const rubricPdfPath = path.join(rootDir, "files", "final-rubric.pdf");
+if (!(await exists(rubricPdfPath))) {
+  fail("Missing public Phase 3 rubric PDF.");
+} else {
+  try {
+    const rubricPdfText = await extractPdfText(rubricPdfPath);
+    if (oldPhasePattern.test(rubricPdfText)) fail("files/final-rubric.pdf contains retired phase language.");
+    if (/Spring 2026/i.test(rubricPdfText)) fail("files/final-rubric.pdf contains a retired course term.");
+    if (!rubricPdfText.includes("Phase 3 Assessment Rubric")) fail("files/final-rubric.pdf was not generated from the current Phase 3 rubric source.");
+  } catch (error) {
+    fail(`Could not inspect public rubric PDF: ${error.message}`);
   }
 }
 
