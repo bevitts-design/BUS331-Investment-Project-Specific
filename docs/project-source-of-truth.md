@@ -66,6 +66,10 @@ BUS331-Investment-Project-Specific/
     validate-investment-project.mjs     # phase, role, link, accessibility, and privacy checks
   styles/
     bus331-investment-project.css       # shared public visual system
+  assets/
+    clients/
+      eleanor-vance-fictional-portrait.jpg
+                                        # rights-safe fictional simulator portrait
   index.html                            # generated student portal
   project/
     guide.html                          # generated comprehensive project guide
@@ -98,7 +102,9 @@ BUS331-Investment-Project-Specific/
 
 Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
 
-The guided Client Interview Simulator is an assessment-fair interaction mock-up, not a live AI service. `project-model.json` supplies Eleanor Vance's approved fictional profile, suggested questions, bounded topic responses, recommendation refusal, and information-gap response. `scripts/client-interview-simulator.js` handles the local transcript and notes interface without an API key, external request, or persistent server-side storage.
+The guided Client Interview Simulator is an assessment-fair interaction mock-up, not a live AI service. `project-model.json` supplies Eleanor Vance's exact approved scenario facts, intentionally incomplete intake dossier, greeting and voice cue, stateful dialogue paths, goal-versus-liquidity complication, recommendation refusals, and information-gap responses. `scripts/client-interview-simulator.js` handles the local branching conversation, transcript, and notes interface without an API key, external request, audio requirement, or persistent server-side storage. The fictional portrait is presentation only; alt text and the text interview remain the functional experience.
+
+Taxes, account type, existing holdings, beneficiaries or family needs, values, and other unique constraints are not established in the approved Eleanor scenario. Their interview paths must preserve those categories as information gaps unless the maintained scenario source is explicitly expanded by the instructor.
 
 ## Instructor-only structure
 

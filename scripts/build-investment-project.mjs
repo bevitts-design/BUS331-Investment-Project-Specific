@@ -17,7 +17,7 @@ const escapeHtml = (value = "") => String(value)
 
 const phasePath = (phase) => `project/${phase.id}-${phase.title.toLowerCase().replaceAll("&", "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.html`;
 const clientDiscoveryPath = "project/client-discovery-ai-protocol.html";
-const assetVersion = "20260729-client-interview-contrast-2";
+const assetVersion = "20260729-branching-client-interview";
 const prefixPath = (prefix, target) => `${prefix}${target}`;
 
 function siteHeader(prefix) {
@@ -134,11 +134,11 @@ function clientSetBoard() {
   </div>`;
 }
 
-function interviewSimulatorMarkup() {
+function interviewSimulatorMarkup(prefix) {
   const prototype = model.phase1Experience.interviewPrototype;
   if (!prototype) return "";
   const data = JSON.stringify(prototype).replaceAll("<", "\\u003c");
-  return `<section class="interview-simulator" aria-labelledby="simulator-title" data-client-interview-simulator>
+  return `<section class="interview-simulator" id="client-interview-simulator" aria-labelledby="simulator-title" data-client-interview-simulator>
     <div class="simulator-heading">
       <div>
         <p class="section-kicker">${escapeHtml(prototype.label)}</p>
@@ -149,11 +149,16 @@ function interviewSimulatorMarkup() {
     </div>
     <div class="simulator-layout">
       <article class="simulator-client-card" aria-labelledby="prototype-client-name">
+        <figure class="client-portrait">
+          <img src="${escapeHtml(prefixPath(prefix, prototype.portrait.path))}" alt="${escapeHtml(prototype.portrait.alt)}" width="720" height="720" loading="lazy" decoding="async">
+          <figcaption>${escapeHtml(prototype.portrait.caption)}</figcaption>
+        </figure>
         <div class="client-identity">
           <div class="client-avatar" aria-hidden="true">${escapeHtml(prototype.initials)}</div>
           <div><p>${escapeHtml(prototype.caseLabel)}</p><h3 id="prototype-client-name">${escapeHtml(prototype.clientName)}</h3><span>${escapeHtml(prototype.identity)}</span></div>
         </div>
-        <dl class="client-facts">${prototype.facts.map((fact) => `<div><dt>${escapeHtml(fact.label)}</dt><dd>${escapeHtml(fact.value)}</dd></div>`).join("\n")}</dl>
+        <p class="voice-cue"><strong>Personality and voice cue</strong>${escapeHtml(prototype.voiceCue)}</p>
+        <dl class="client-facts">${prototype.visibleDossier.map((fact) => `<div><dt>${escapeHtml(fact.label)}</dt><dd>${escapeHtml(fact.value)}</dd></div>`).join("\n")}</dl>
         <div class="simulator-boundary"><strong>Prototype boundary</strong><p>${escapeHtml(prototype.boundary)}</p></div>
       </article>
       <div class="simulator-workspace">
@@ -168,7 +173,7 @@ function interviewSimulatorMarkup() {
         </form>
         <div class="transcript-panel">
           <div class="panel-heading"><h3>Interview transcript</h3><span>Process record—not a verification source</span></div>
-          <p class="empty-transcript" data-empty-transcript>No questions asked yet. Start with a suggested prompt or write your own.</p>
+          <p class="empty-transcript" data-empty-transcript>Eleanor has greeted your team. Start with a suggested prompt or write your own question.</p>
           <ol class="interview-transcript" data-interview-transcript aria-live="polite" aria-label="Client interview transcript"></ol>
         </div>
         <div class="analyst-notes">
@@ -507,7 +512,7 @@ function clientDiscoveryPage() {
           <div class="resource-list resource-list-inline">${resourceLinks(["client-profiles", "client-data"], prefix, { includeDescription: true })}</div>
         </section>
 
-        ${interviewSimulatorMarkup()}
+        ${interviewSimulatorMarkup(prefix)}
 
         <section>
           <p class="section-kicker">Four-person interview</p>

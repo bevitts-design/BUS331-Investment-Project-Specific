@@ -25,7 +25,7 @@ One critical public/private boundary issue was identified during inventory:
 | `BUS331_InvProject_Requirements_AllPhases.html` | Student/public | Scenario, client mandate, four roles, technical expectations, checklists | Replace with a generated three-phase project guide; retain the path only as a compatibility entry point |
 | `project/macro-analysis.html` | Student/public | Macro objective, indicator list, starter-workbook link | Fold into Phase 1; replace broken PDF dependency with public-safe instructions |
 | `project/ips-client-profiles.html` | Student/public | RRTTLLU framing and links to client resources | Fold into Phase 1 as the client-mandate workstream |
-| `project/client-discovery-ai-protocol.html` | Student/public | Five fictional-client team sets, bounded AI role-play, a controlled Client Option 1 interview prototype, four analyst interview rounds, source verification, and guardrail handoff | Generate from `project-model.json` as the Phase 1 launch experience; use the local simulator runtime without API keys or live services |
+| `project/client-discovery-ai-protocol.html` | Student/public | Five fictional-client team sets, bounded AI role-play, a stateful Client Option 1 interview prototype with a clearly fictional portrait, four analyst interview rounds, source verification, and guardrail handoff | Generate from `project-model.json` as the Phase 1 launch experience; use the local simulator runtime without API keys, audio, or live services |
 | `project/BUS331_InvProject_Bridge_CME_Guide.html` | Student/public | CME logic, scenario translation, Solver workflow | Preserve as Phase 2 Workstream A |
 | `project/BUS331_InvProject_SecuritySelection_Guide.html` | Student/public | Macro filter, security thesis, derivative hedge comparison | Preserve as Phase 2 Workstream B; keep exemplars clearly separate from assigned clients |
 | `project/BUS331_InvProject_StressTest_Guide.html` | Student/public | Base/bear metrics, tripwire logic, reallocation decision, AI audit | Preserve as Phase 2 Workstream C |
@@ -75,7 +75,7 @@ All four members vote in every phase, sign the decision record, and must be able
 ## Redesign implementation status
 
 - `project-model.json` now defines the three phases, four committee seats, approval gates, deliverables, resource manifest, AI rules, and public assessment language.
-- The Phase 1 model now defines the existing five fictional-client team sets, the human-first decision cycle, one interview round per analyst role, bounded role-play and challenge prompts, approved-source rules, CFA Level I foundation links, and the approved facts and response boundaries for the Client Option 1 simulator prototype.
+- The Phase 1 model now defines the existing five fictional-client team sets, the human-first decision cycle, one interview round per analyst role, bounded role-play and challenge prompts, approved-source rules, CFA Level I foundation links, and the incomplete dossier, approved facts, stateful response paths, clarification behavior, and goal-versus-liquidity complication for the Client Option 1 simulator prototype.
 - The shared builder now generates the portal, comprehensive guide, three phase guides, compatibility guide, and assessment page.
 - The shared builder now also generates the student-facing Client Discovery and AI Decision Protocol and integrates it into the portal, project guide, and Phase 1 guide.
 - The generated pages no longer link to either missing legacy resource.

@@ -46,12 +46,31 @@ if (!experience) {
     fail("Phase 1 must include the controlled Client Option 1 interview prototype.");
   } else {
     if (!experience.clientSets?.[0]?.clients?.includes(interviewPrototype.clientName)) fail("The interview prototype client must remain in Team One's existing client set.");
-    if (!interviewPrototype.facts?.length || !interviewPrototype.responseTopics?.length) fail("The interview prototype must define approved facts and bounded response topics.");
+    if (!interviewPrototype.visibleDossier?.length || !interviewPrototype.dialoguePaths?.length) fail("The interview prototype must define an intentionally incomplete dossier and controlled dialogue paths.");
     if (interviewPrototype.openingQuestions?.length < 3) fail("The interview prototype must provide suggested opening questions.");
-    const boundaryText = `${interviewPrototype.boundary} ${interviewPrototype.recommendationResponse} ${interviewPrototype.unknownResponse}`;
-    if (!/approved fictional profile/i.test(boundaryText) || !/cannot recommend/i.test(boundaryText) || !/information gap/i.test(boundaryText)) {
+    const boundaryText = `${interviewPrototype.boundary} ${(interviewPrototype.recommendationResponses || []).join(" ")} ${(interviewPrototype.unknownResponses || []).join(" ")}`;
+    if (!/instructor-approved paths/i.test(boundaryText) || !/cannot (?:choose|tell)/i.test(boundaryText) || !/information gap/i.test(boundaryText)) {
       fail("The interview prototype must prohibit invented facts and recommendations and label unknowns as information gaps.");
     }
+    const expectedScenarioFacts = {
+      annualIncome: "$30,000 in annual pension income",
+      netWorth: "$1.2 million",
+      goal: "capital preservation and income",
+      liquidityNeed: "high liquidity needs for medical expenses",
+      horizon: "2–5 years",
+      expectedReturn: "4.5%",
+      standardDeviation: "6.0%",
+      riskAversionScore: "8.0",
+      riskClassification: "risk averse"
+    };
+    if (JSON.stringify(interviewPrototype.scenarioFacts) !== JSON.stringify(expectedScenarioFacts)) fail("The Eleanor prototype facts must match the approved public scenario record exactly.");
+    const requiredPaths = ["goals", "liquidity", "cashFlow", "horizon", "resources", "riskWillingness", "riskCapacity", "caseMetrics", "taxes", "holdings", "family", "values"];
+    const dialoguePathIds = new Set(interviewPrototype.dialoguePaths?.map((item) => item.id));
+    for (const id of requiredPaths) if (!dialoguePathIds.has(id)) fail(`The interview prototype is missing the ${id} dialogue path.`);
+    if (!interviewPrototype.complication?.requires?.includes("goal") || !interviewPrototype.complication?.requires?.includes("liquidityNeed")) fail("The interview complication must be triggered by the approved goal-versus-liquidity tension.");
+    if (!interviewPrototype.greeting || !interviewPrototype.voiceCue || !interviewPrototype.clarificationResponses?.risk) fail("The interview prototype must include a greeting, text voice cue, and clarification behavior.");
+    if (!interviewPrototype.portrait?.path || !/fictional/i.test(`${interviewPrototype.portrait.alt} ${interviewPrototype.portrait.caption}`)) fail("The interview prototype portrait must be clearly labeled fictional and have alt text.");
+    if (interviewPrototype.portrait?.path && !(await exists(path.join(rootDir, interviewPrototype.portrait.path)))) fail(`Missing interview prototype portrait: ${interviewPrototype.portrait.path}.`);
   }
   if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Initial judgment|AI client interview|AI challenge|Human verification|Final reasoning") {
     fail("Phase 1 decision cycle must preserve the human-first, AI-challenge, verification, and final-reasoning sequence.");
@@ -172,7 +191,7 @@ for (const roleTitle of requiredRoleTitles) {
 if (/Committee Chair|Markets &amp; Economic Strategist|Portfolio Construction Lead|Risk, Controls/i.test(discoveryHtml)) {
   fail("Client discovery protocol contains a retired committee-role title.");
 }
-for (const requiredText of ["Client Option 1", "Practice a bounded client interview", "Suggested opening questions", "Interview transcript", "Analyst notes for the Decision Record"]) {
+for (const requiredText of ["Client Option 1", "Practice a bounded client interview", "Suggested opening questions", "Interview transcript", "Analyst notes for the Decision Record", "Personality and voice cue", "AI-generated fictional portrait"]) {
   if (!discoveryHtml.includes(requiredText)) fail(`Client discovery protocol is missing interview-prototype content: ${requiredText}.`);
 }
 if (!discoveryHtml.includes('../scripts/client-interview-simulator.js')) fail("Client discovery protocol is missing the local simulator runtime.");
@@ -182,9 +201,10 @@ if (!(await exists(simulatorRuntimePath))) {
   fail("Missing maintained client interview simulator runtime.");
 } else {
   const simulatorRuntime = await fs.readFile(simulatorRuntimePath, "utf8");
-  for (const marker of ["recommendationPattern", "unknownResponse", "data-interview-transcript", "data-download-session"]) {
+  for (const marker of ["recommendationPattern", "dialoguePaths", "complicationDelivered", "clarificationResponses", "appendGreeting", "data-interview-transcript", "data-download-session"]) {
     if (!simulatorRuntime.includes(marker)) fail(`Client interview simulator runtime is missing required control: ${marker}.`);
   }
+  if (/\bfetch\s*\(|XMLHttpRequest|WebSocket|EventSource/.test(simulatorRuntime)) fail("Client interview simulator runtime must not call an external service.");
 }
 
 const decisionRecordResource = model.resources.find((resource) => resource.id === "decision-record");
