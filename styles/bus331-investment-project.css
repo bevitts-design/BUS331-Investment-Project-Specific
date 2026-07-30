@@ -751,6 +751,7 @@ h2 .accent {
 
 .interview-simulator {
   overflow: hidden;
+  scroll-margin-top: 84px;
   border: 1px solid #cbd8e2;
   border-radius: var(--radius-lg);
   background: var(--white);
@@ -1525,6 +1526,10 @@ tr:last-child td {
 }
 
 @media (max-width: 760px) {
+  .interview-simulator {
+    scroll-margin-top: 172px;
+  }
+
   .nav-shell {
     align-items: flex-start;
     padding-top: 14px;

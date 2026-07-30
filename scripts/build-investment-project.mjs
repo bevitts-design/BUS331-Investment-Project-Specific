@@ -17,7 +17,7 @@ const escapeHtml = (value = "") => String(value)
 
 const phasePath = (phase) => `project/${phase.id}-${phase.title.toLowerCase().replaceAll("&", "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.html`;
 const clientDiscoveryPath = "project/client-discovery-ai-protocol.html";
-const assetVersion = "20260729-branching-client-interview";
+const assetVersion = "20260729-branching-client-interview-final-2";
 const prefixPath = (prefix, target) => `${prefix}${target}`;
 
 function siteHeader(prefix) {
