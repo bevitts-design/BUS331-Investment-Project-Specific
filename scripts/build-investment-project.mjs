@@ -34,9 +34,9 @@ function siteHeader(prefix) {
         <span>${escapeHtml(model.course.code)} · ${escapeHtml(model.course.name)}<small>${escapeHtml(model.project.title)}</small></span>
       </a>
       <nav class="site-nav" aria-label="Project navigation">
-        <a href="${prefixPath(prefix, roadmapPath)}">Your roadmap</a>
         <a href="${prefixPath(prefix, "project/guide.html")}">Project guide</a>
-        <a href="${prefixPath(prefix, phasePath(model.phases[0]))}">Phase 1</a>
+        <a href="${prefixPath(prefix, roadmapPath)}">Your roadmap</a>
+        <a href="${prefixPath(prefix, phasePath(model.phases[0]))}">Frame the mandate</a>
         <a href="${prefixPath(prefix, clientDiscoveryPath)}">Discovery protocol</a>
         <a href="${prefixPath(prefix, securityWorkflowPath)}">Security selection</a>
         <a href="${prefixPath(prefix, portfolioStressPath)}">Portfolio stress</a>
@@ -316,8 +316,9 @@ function landingPage() {
           <h1>Think as a committee.<br><span class="accent">Decide with evidence.</span></h1>
           <p class="hero-copy">${escapeHtml(model.project.premise)}</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="${roadmapPath}">Open your roadmap</a>
-            <a class="button button-secondary" href="${escapeHtml(phasePath(model.phases[0]))}">Start Phase 1</a>
+            <a class="button button-primary" href="project/guide.html">Open the Project Guide</a>
+            <a class="button button-secondary" href="${roadmapPath}">Then open your roadmap</a>
+            <a class="button button-secondary" href="${escapeHtml(phasePath(model.phases[0]))}">Frame the mandate</a>
           </div>
         </div>
         <div class="hero-scoreboard" aria-label="Project structure">
@@ -341,11 +342,20 @@ function landingPage() {
         </div>
       </section>
 
-      <section class="section" aria-labelledby="roadmap-title">
+      <section class="section" aria-labelledby="project-guide-title">
         <div class="section-header">
           <p class="section-kicker">Start here</p>
-          <h2 id="roadmap-title">Know what to do before you open a workbook</h2>
-          <p>Use the roadmap for the ordered phase steps, readiness checks, and the boundary between course scaffolds and work your committee creates.</p>
+          <h2 id="project-guide-title">Start with the Project Guide</h2>
+          <p>Read the project purpose, deliverables, roles, and approval gates before you open a workbook or begin a phase.</p>
+        </div>
+        <div class="milestone-banner"><div><h3>Project Guide</h3><p>Understand the complete assignment first: the committee’s purpose, work products, roles, evidence expectations, and approval gates.</p></div><div class="milestone-actions"><a class="button button-primary" href="project/guide.html">Open the Project Guide</a></div></div>
+      </section>
+
+      <section class="section" aria-labelledby="roadmap-title">
+        <div class="section-header">
+          <p class="section-kicker">Next</p>
+          <h2 id="roadmap-title">Use the Roadmap to organize the work</h2>
+          <p>Follow the ordered phase steps, readiness checks, and the boundary between course scaffolds and work your committee creates.</p>
         </div>
         <div class="milestone-banner"><div><h3>${escapeHtml(model.studentRoadmap.title)}</h3><p>${escapeHtml(model.studentRoadmap.boundary)}</p></div><div class="milestone-actions"><a class="button button-primary" href="${roadmapPath}">Open your roadmap</a></div></div>
       </section>
@@ -378,18 +388,6 @@ function landingPage() {
           <p>Use the phase guides as the current assignment authority. Supporting technical guides provide method details; current Canvas instructions control submission format and timing.</p>
         </div>
         <div class="phase-runway">${model.phases.map(phasePanel).join("\n")}</div>
-      </section>
-
-      <section class="section" aria-labelledby="phase-two-tools-title">
-        <div class="section-header">
-          <p class="section-kicker">Phase 2 student workflows</p>
-          <h2 id="phase-two-tools-title">Carry the client mandate into every investment decision</h2>
-          <p>Compare bonds, mutual funds, and ETFs with verified evidence, then integrate the selected holdings, test every IPS constraint, apply the approved bear case, and correct any breach.</p>
-        </div>
-        <div class="phase-two-launch">
-          <a href="${escapeHtml(securityWorkflowPath)}"><span>Analyze and select</span><strong>Bonds · Mutual funds · ETFs</strong><small>Candidate screen, AI challenge, human verification, select/reject record</small></a>
-          <a href="${escapeHtml(portfolioStressPath)}"><span>Integrate and challenge</span><strong>Portfolio · IPS · Bear case</strong><small>Allocation, compliance, stress test, correction, re-test, vote</small></a>
-        </div>
       </section>
 
       <section class="section">${protocolMarkup()}</section>
