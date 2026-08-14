@@ -16,6 +16,62 @@
     "hypotheticalAum": "$500,000",
     "scopeNote": "Canvas remains the authority for due dates, submission links, and course-grade weights."
   },
+  "studentRoadmap": {
+    "title": "Your Project Roadmap",
+    "subtitle": "Follow the decision path. Build the analysis. Defend your recommendation.",
+    "boundary": "BUS331 provides structured Excel workbooks and client data. Your committee completes the analysis, reaches its own conclusions, and creates its own final PowerPoint presentation.",
+    "beforeYouBegin": [
+      "Confirm the four committee roles and your three assigned clients.",
+      "Create a shared team workspace and agree on a file-naming system.",
+      "Read the current phase checklist together before beginning work.",
+      "Schedule a short committee meeting before each approval gate."
+    ],
+    "phaseSequences": {
+      "phase-1": [
+        "Set roles, client assignments, and the team workspace.",
+        "Complete the detailed macro analysis in the provided workbook: review historical evidence, form a human-first interpretation, and document sources.",
+        "Compare the committee view with FactSet and/or FRED evidence, then create bull, base, and bear scenarios with probabilities totaling 100%.",
+        "Analyze each client's goals, constraints, risk, and unresolved information gaps.",
+        "Translate the macro outlook into a client-specific mandate, including return target, risk limit, and drawdown tripwire.",
+        "Hold Gate 1: challenge the evidence, vote, and record required revisions before any portfolio construction begins."
+      ],
+      "phase-2": [
+        "Reopen the approved client mandate before researching investments.",
+        "Use the structured workbooks to develop capital-market expectations and draft allocations.",
+        "Research and compare candidate bonds, mutual funds, and ETFs against client guardrails.",
+        "Build the proposed portfolios and identify the purpose of every holding.",
+        "Run the approved bear-case stress test, correct any breach, and re-test.",
+        "Hold Gate 2: approve, revise, or reject each client portfolio and record the decision."
+      ],
+      "phase-3": [
+        "Convert approved analysis into a clear committee recommendation for each client.",
+        "Create the decision memo and technical evidence package.",
+        "Design and build the committee's own visual PowerPoint presentation.",
+        "Rehearse cross-functional questions and the strongest trade-offs.",
+        "Hold Gate 3, submit the required package in Canvas, and defend the recommendation."
+      ]
+    },
+    "definitionOfDone": {
+      "phase-1": [
+        "The macro workbook documents historical analysis, consensus comparison, and weighted bull, base, and bear scenarios.",
+        "Each client has objectives, RRTTLLU constraints, a return target, risk limit, drawdown tripwire, and identified information gaps.",
+        "The committee can explain how its macro outlook changes each client mandate.",
+        "All four members have recorded the Gate 1 vote and any revision actions."
+      ],
+      "phase-2": [
+        "Each client portfolio traces back to an approved mandate and has a stated purpose for every holding.",
+        "Evidence supports the material investment choices and their client fit.",
+        "Each portfolio has passed, or been revised and re-tested to meet, its client constraints.",
+        "All four members have recorded the Gate 2 vote and any revision actions."
+      ],
+      "phase-3": [
+        "The memo, evidence package, and presentation tell one consistent recommendation story.",
+        "A reviewer can trace each major claim to evidence.",
+        "Every member has rehearsed and can defend both owned work and the integrated decision.",
+        "The team has checked Canvas for the correct required files and deadline."
+      ]
+    }
+  },
   "roles": [
     {
       "id": "client-macro",

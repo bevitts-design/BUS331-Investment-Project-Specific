@@ -41,8 +41,26 @@ const extractPdfText = async (pdfPath) => {
 };
 
 const phasePath = (phase) => `project/${phase.id}-${phase.title.toLowerCase().replaceAll("&", "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.html`;
+const roadmapPath = "project/roadmap.html";
 
 if (model.schemaVersion < 3) fail("Project model schema must include the Phase 2 workflow contract.");
+
+const roadmap = model.studentRoadmap;
+if (!roadmap) {
+  fail("Missing student roadmap in the public model.");
+} else {
+  if (!/structured Excel workbooks/i.test(roadmap.boundary || "") || !/PowerPoint presentation/i.test(roadmap.boundary || "")) {
+    fail("Student roadmap must preserve the provided-Excel and student-created-PowerPoint boundary.");
+  }
+  for (const phaseId of ["phase-1", "phase-2", "phase-3"]) {
+    if (roadmap.phaseSequences?.[phaseId]?.length < 4) fail(`Student roadmap needs a complete sequence for ${phaseId}.`);
+    if (roadmap.definitionOfDone?.[phaseId]?.length < 3) fail(`Student roadmap needs a definition of done for ${phaseId}.`);
+  }
+  const phaseOneText = JSON.stringify(roadmap.phaseSequences?.["phase-1"] || []);
+  for (const required of ["historical", "human-first", "FactSet", "FRED", "bull", "base", "bear", "100%", "macro", "mandate"]) {
+    if (!new RegExp(required, "i").test(phaseOneText)) fail(`Phase 1 roadmap sequence is missing its detailed macro-analysis requirement: ${required}.`);
+  }
+}
 
 if (model.phases.length !== 3) fail(`Expected exactly 3 phases; found ${model.phases.length}.`);
 if (model.roles.length !== 4) fail(`Expected exactly 4 committee roles; found ${model.roles.length}.`);
@@ -184,6 +202,7 @@ for (const phase of model.phases) {
 const generatedFiles = [
   "index.html",
   "BUS331_InvProject_Requirements_AllPhases.html",
+  roadmapPath,
   "project/guide.html",
   "project/client-discovery-ai-protocol.html",
   "project/security-analysis-selection.html",
@@ -331,9 +350,21 @@ if (!(await exists(path.join(rootDir, "styles", "bus331-investment-project.css")
 }
 
 const indexHtml = await fs.readFile(path.join(rootDir, "index.html"), "utf8");
+if (!indexHtml.includes("Open your roadmap")) fail("Portal is missing the student roadmap entry point.");
+const roadmapHtml = await fs.readFile(path.join(rootDir, roadmapPath), "utf8");
+for (const requiredText of ["What BUS331 provides—and what your committee creates", "structured Excel workbooks", "PowerPoint presentation", "Complete the detailed macro analysis", "Definition of done"]) {
+  if (!roadmapHtml.includes(requiredText)) fail(`Student roadmap is missing required student-navigation content: ${requiredText}.`);
+}
 for (const phase of model.phases) {
   if (!indexHtml.includes(phase.title.replaceAll("&", "&amp;")) && !indexHtml.includes(phase.title)) {
     fail(`Portal does not show phase title: ${phase.title}.`);
+  }
+}
+
+for (const phase of model.phases) {
+  const html = await fs.readFile(path.join(rootDir, phasePath(phase)), "utf8");
+  if (!html.includes(`Your Phase ${phase.number} sequence`) || !html.includes("Definition of done")) {
+    fail(`Phase ${phase.number} page is missing its ordered sequence or definition of done.`);
   }
 }
 for (const role of model.roles) {

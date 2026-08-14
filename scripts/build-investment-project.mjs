@@ -20,6 +20,7 @@ const clientDiscoveryPath = "project/client-discovery-ai-protocol.html";
 const securityWorkflowPath = "project/security-analysis-selection.html";
 const portfolioStressPath = "project/portfolio-management-stress-testing.html";
 const canvasSubmissionPath = "project/canvas-submission-guide.html";
+const roadmapPath = "project/roadmap.html";
 const assetVersion = "20260730-canvas-workflow-2";
 const prefixPath = (prefix, target) => `${prefix}${target}`;
 
@@ -33,6 +34,7 @@ function siteHeader(prefix) {
         <span>${escapeHtml(model.course.code)} · ${escapeHtml(model.course.name)}<small>${escapeHtml(model.project.title)}</small></span>
       </a>
       <nav class="site-nav" aria-label="Project navigation">
+        <a href="${prefixPath(prefix, roadmapPath)}">Your roadmap</a>
         <a href="${prefixPath(prefix, "project/guide.html")}">Project guide</a>
         <a href="${prefixPath(prefix, phasePath(model.phases[0]))}">Phase 1</a>
         <a href="${prefixPath(prefix, clientDiscoveryPath)}">Discovery protocol</a>
@@ -314,7 +316,7 @@ function landingPage() {
           <h1>Think as a committee.<br><span class="accent">Decide with evidence.</span></h1>
           <p class="hero-copy">${escapeHtml(model.project.premise)}</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="project/guide.html">Read the project guide</a>
+            <a class="button button-primary" href="${roadmapPath}">Open your roadmap</a>
             <a class="button button-secondary" href="${escapeHtml(phasePath(model.phases[0]))}">Start Phase 1</a>
           </div>
         </div>
@@ -337,6 +339,15 @@ function landingPage() {
         <div class="decision-path">
           ${model.phases.map((phase) => `<article class="path-stop"><p class="phase-number">Phase ${phase.number}</p><h3>${escapeHtml(phase.title)}</h3><p>${escapeHtml(phase.tagline)}</p></article>`).join("\n")}
         </div>
+      </section>
+
+      <section class="section" aria-labelledby="roadmap-title">
+        <div class="section-header">
+          <p class="section-kicker">Start here</p>
+          <h2 id="roadmap-title">Know what to do before you open a workbook</h2>
+          <p>Use the roadmap for the ordered phase steps, readiness checks, and the boundary between course scaffolds and work your committee creates.</p>
+        </div>
+        <div class="milestone-banner"><div><h3>${escapeHtml(model.studentRoadmap.title)}</h3><p>${escapeHtml(model.studentRoadmap.boundary)}</p></div><div class="milestone-actions"><a class="button button-primary" href="${roadmapPath}">Open your roadmap</a></div></div>
       </section>
 
       <section class="section" aria-labelledby="roles-title">
@@ -419,6 +430,18 @@ function rolePhaseMatrix(phase) {
   </table></div>`;
 }
 
+function orderedPhaseSteps(phase) {
+  const steps = model.studentRoadmap.phaseSequences[phase.id];
+  if (!steps) throw new Error(`Missing roadmap sequence for ${phase.id}.`);
+  return `<ol class="workflow-steps">${steps.map((step, index) => `<li class="workflow-step"><span aria-hidden="true">${index + 1}</span><div><p>${escapeHtml(step)}</p></div></li>`).join("\n")}</ol>`;
+}
+
+function phaseReadinessChecklist(phase) {
+  const items = model.studentRoadmap.definitionOfDone[phase.id];
+  if (!items) throw new Error(`Missing definition of done for ${phase.id}.`);
+  return `<ul class="check-list">${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>`;
+}
+
 function phasePage(phase) {
   const prefix = "../";
   const body = `
@@ -436,6 +459,18 @@ function phasePage(phase) {
 
           ${phase.id === "phase-1" ? `<section>${phaseOneLaunchMarkup(prefix)}</section>` : ""}
           ${phase.id === "phase-2" ? `<section><div class="milestone-banner"><div><p class="section-kicker">Phase 2 working sequence</p><h2>Analyze first. Integrate second. Stress before approval.</h2><p>${escapeHtml(model.phase2Experience.handoffRule)}</p></div><div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(path.basename(securityWorkflowPath))}">Security analysis & selection</a><a class="button" href="${escapeHtml(path.basename(portfolioStressPath))}">Portfolio & stress testing</a></div></div></section>` : ""}
+
+          <section>
+            <p class="section-kicker">Do this in order</p>
+            <h2>Your Phase ${phase.number} sequence</h2>
+            ${orderedPhaseSteps(phase)}
+          </section>
+
+          <section>
+            <p class="section-kicker">Before the gate</p>
+            <h2>Definition of done</h2>
+            ${phaseReadinessChecklist(phase)}
+          </section>
 
           <section>
             <h2>Workstreams</h2>
@@ -478,6 +513,43 @@ function phasePage(phase) {
     prefix,
     body,
     pageClass: "guide-page"
+  });
+}
+
+function roadmapPage() {
+  const prefix = "../";
+  const roadmap = model.studentRoadmap;
+  const body = `
+  <main id="main-content">
+    ${pageHero("Student action guide", roadmap.title, roadmap.subtitle)}
+    <div class="page-shell"><div class="content-flow">
+      <section>
+        <div class="callout"><h2>What BUS331 provides—and what your committee creates</h2><p>${escapeHtml(roadmap.boundary)}</p></div>
+      </section>
+      <section>
+        <p class="section-kicker">Before you begin</p>
+        <h2>Set up your committee for the full project</h2>
+        <ul class="check-list">${roadmap.beforeYouBegin.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+      </section>
+      <section>
+        <p class="section-kicker">Your path</p>
+        <h2>Complete one decision before moving to the next</h2>
+        <div class="phase-runway">${model.phases.map((phase) => `<article class="phase-panel"><div class="phase-panel-top"><div><p class="phase-number">Phase ${phase.number}</p><h3>${escapeHtml(phase.title)}</h3><p class="phase-question">${escapeHtml(phase.keyQuestion)}</p></div><div class="gate"><strong>Approval gate</strong>${escapeHtml(phase.gate)}</div></div><div class="phase-panel-bottom"><div><h4>Do this in order</h4>${orderedPhaseSteps(phase)}<h4>Definition of done</h4>${phaseReadinessChecklist(phase)}</div><div class="phase-links"><a class="button button-primary" href="${escapeHtml(path.basename(phasePath(phase)))}">Open Phase ${phase.number} checklist <span aria-hidden="true">→</span></a></div></div></article>`).join("\n")}</div>
+      </section>
+      <section>
+        <p class="section-kicker">Submission check</p>
+        <h2>Canvas records the submitted work</h2>
+        <p>${escapeHtml(model.project.scopeNote)} Use this roadmap and the phase checklists to organize your work; use Canvas to confirm the date, group-submission rules, and exact files required at each gate.</p>
+        <div class="hero-actions"><a class="button button-primary" href="${escapeHtml(path.basename(canvasSubmissionPath))}">Open Canvas submission workflow</a><a class="button" href="${escapeHtml(path.basename(phasePath(model.phases[0])))}">Begin Phase 1</a></div>
+      </section>
+    </div></div>
+  </main>`;
+  return shell({
+    title: roadmap.title,
+    description: roadmap.subtitle,
+    prefix,
+    body,
+    pageClass: "guide-page roadmap-page"
   });
 }
 
@@ -914,6 +986,7 @@ function assessmentPage() {
 await fs.mkdir(path.join(rootDir, "project"), { recursive: true });
 await fs.mkdir(path.join(rootDir, "canvas"), { recursive: true });
 await fs.writeFile(path.join(rootDir, "index.html"), landingPage());
+await fs.writeFile(path.join(rootDir, roadmapPath), roadmapPage());
 await fs.writeFile(path.join(rootDir, "project", "guide.html"), guidePage("../"));
 await fs.writeFile(path.join(rootDir, "BUS331_InvProject_Requirements_AllPhases.html"), guidePage(""));
 await fs.writeFile(path.join(rootDir, clientDiscoveryPath), clientDiscoveryPage());
