@@ -390,7 +390,7 @@ function landingPage() {
 
       <section class="section" aria-labelledby="roles-title">
         <div class="section-header">
-          <p class="section-kicker">Four-person committee</p>
+          <p class="section-kicker">Five-person committee</p>
           <h2 id="roles-title">Distinct ownership, shared accountability</h2>
           <p>Each member leads a workstream, but every member reviews, votes, signs the decision record, and answers questions across the full recommendation.</p>
         </div>
@@ -544,7 +544,7 @@ function roadmapPage() {
         <p class="section-kicker">See the whole path</p>
         <h2>From mandate to defense</h2>
         <p>Use this visual to orient your committee before you begin the detailed phase checklists below.</p>
-        <figure class="roadmap-visual"><img src="${escapeHtml(prefixPath(prefix, roadmap.visual.path))}" alt="${escapeHtml(roadmap.visual.alt)}" width="2800" height="1600" loading="eager" decoding="async"><figcaption>This visual is an orientation tool. The phase checklists below remain the complete guide to required work and approval readiness.</figcaption></figure>
+        <figure class="roadmap-visual"><img src="${escapeHtml(prefixPath(prefix, roadmap.visual.path))}" alt="${escapeHtml(roadmap.visual.alt)}" width="1600" height="900" loading="eager" decoding="async"><figcaption>This visual is an orientation tool. The phase checklists below remain the complete guide to required work and approval readiness.</figcaption></figure>
       </section>
       <section>
         <p class="section-kicker">Before you begin</p>
@@ -584,12 +584,12 @@ function guidePage(prefix = "../") {
           <p class="section-kicker">Simulation premise</p>
           <h2>Act as the investment committee</h2>
           <p>Your committee is accountable for three client mandates and ${escapeHtml(model.project.hypotheticalAum)} in hypothetical assets. The work is cumulative: Phase 1 sets the constraints, Phase 2 builds and challenges the portfolios, and Phase 3 issues and defends the recommendation.</p>
-          <div class="callout"><h3>Shared accountability</h3><p>Roles define leadership, not silos. All four members review the full evidence package, vote at every gate, sign the decision record, and prepare to answer questions about any section.</p></div>
+          <div class="callout"><h3>Shared accountability</h3><p>Roles define leadership, not silos. All ${model.project.committeeSize} members review the full evidence package, vote at every gate, sign the decision record, and prepare to answer questions about any section.</p></div>
         </section>
 
         <section>
           <p class="section-kicker">Committee seats</p>
-          <h2>Four roles</h2>
+          <h2>${model.project.committeeSize} roles</h2>
           ${roleBoard()}
         </section>
 
@@ -663,9 +663,9 @@ function clientDiscoveryPage() {
         </section>
 
         <section>
-          <p class="section-kicker">Four-person interview</p>
+          <p class="section-kicker">Five-person interview</p>
           <h2>One round per analyst role</h2>
-          <p>Each analyst asks questions in their lane, then hands a usable constraint or information gap to the next analyst. All four roles enter a human-first judgment for all three clients before AI use.</p>
+          <p>Each analyst asks questions in their lane, then hands a usable constraint or information gap to the next analyst. All five roles enter a human-first judgment for all three clients before AI use.</p>
           ${interviewRoundBoard()}
         </section>
 
@@ -738,12 +738,12 @@ function securityAnalysisPage() {
   const decisionRecord = resourceById.get("decision-record");
   return shell({
     title: "Security Analysis & Selection",
-    description: "Student workflow for evidence-backed bond, mutual-fund, and ETF selection in the BUS331 Investment Committee Simulation.",
+    description: "Student workflow for focused, evidence-backed fund, ETF, and limited individual-security selection in the BUS331 Investment Committee Simulation.",
     prefix,
     pageClass: "guide-page workflow-page",
     body: `
   <main id="main-content">
-    ${pageHero("Phase 2 · Security analysis and selection", "Select investments the client can actually own", "Evaluate bonds, mutual funds, and ETFs as competing implementations of an approved client mandate—not as isolated products.")}
+    ${pageHero("Phase 2 · Security analysis and selection", "Select investments the client can actually own", "Translate the approved allocation into a focused candidate set, use funds and ETFs as the primary vehicles, and build an intentional portfolio of 8–10 holdings—never more than 10.")}
     <div class="page-shell"><div class="content-flow">
       <section>
         <div class="handoff-contract"><div><p class="section-kicker">Required handoff</p><h2>${escapeHtml(experience.handoffTitle)}</h2><p>${escapeHtml(experience.handoffRule)}</p></div><ol>${experience.requiredInputs.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ol></div>
@@ -753,6 +753,20 @@ function securityAnalysisPage() {
       <section>
         <p class="section-kicker">Committee workflow</p><h2>From guardrail to select/reject decision</h2>
         ${workflowSteps(experience.securityWorkflow)}
+      </section>
+
+      <section>
+        <p class="section-kicker">Portfolio boundaries</p><h2>Build a focused candidate set</h2>
+        <div class="callout"><h3>Holding count and vehicle mix</h3><p>${escapeHtml(experience.selectionContract.portfolioSize)}</p><p>${escapeHtml(experience.selectionContract.vehicleMix)}</p></div>
+        <ul class="check-list">${experience.selectionContract.inclusionBoundaries.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+      </section>
+
+      <section>
+        <p class="section-kicker">Consistent final-holding analysis</p><h2>Use one concise scorecard</h2>
+        ${studentTemplateTable("Complete this scorecard for each final holding. Do not complete a full scorecard for every screened name.", experience.selectionContract.scorecardFields)}
+        <h3>Added analysis for an individual security</h3>
+        <ul class="clean-list">${experience.selectionContract.individualSecurityAdditions.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+        <div class="callout"><h3>Rejected alternatives</h3><p>${escapeHtml(experience.selectionContract.alternativeStandard)}</p></div>
       </section>
 
       <section>
@@ -787,13 +801,13 @@ function securityAnalysisPage() {
 
       <section>
         <p class="section-kicker">Student template</p><h2>Candidate comparison and decision record</h2>
-        <p>Complete one row per serious candidate in the security-selection workbook or team record. Keep rejected candidates: the comparison is evidence that the committee considered alternatives.</p>
-        ${studentTemplateTable("Candidate comparison template. Add one row for each bond, mutual fund, or ETF considered.", experience.candidateTemplateColumns)}
+        <p>Complete one row for each final holding and a concise record for the strongest realistic alternative rejected. The comparison should show judgment without creating duplicate analysis for every screened name.</p>
+        ${studentTemplateTable("Final-holding scorecard and concise alternative-decision template.", experience.candidateTemplateColumns)}
         <div class="callout"><h3>AI challenge-and-verification checkpoint</h3><p>Record the provisional choice before asking AI for the strongest counterargument or missing risk. Verify each material claim with an approved source, then mark the final choice Accept, Modify, or Reject and explain the change. AI is not a source and may not choose the product for the team.</p></div>
       </section>
 
       <section>
-        <p class="section-kicker">Four-person ownership</p><h2>Distinct analysis, integrated selection</h2>
+        <p class="section-kicker">Five-person ownership</p><h2>Distinct analysis, integrated selection</h2>
         ${roleIntegrationBoard("securityResponsibility")}
       </section>
 
@@ -863,13 +877,21 @@ function portfolioStressPage() {
       </section>
 
       <section>
+        <p class="section-kicker">Residual-risk decision</p><h2>Conclude hedge or no hedge</h2>
+        <div class="callout"><h3>One targeted hedge at most</h3><p>${escapeHtml(experience.derivativeHedge.decisionRule)}</p></div>
+        <div class="callout"><h3>No hedge is a valid conclusion</h3><p>${escapeHtml(experience.derivativeHedge.noHedgeStandard)}</p></div>
+        <h3>If a hedge is proposed, document all six fields</h3>
+        <div class="field-board">${experience.derivativeHedge.proposalFields.map((field) => `<article><span>${escapeHtml(field)}</span></article>`).join("\n")}</div>
+      </section>
+
+      <section>
         <p class="section-kicker">Breach response</p><h2>Document the adjustment and re-test</h2>
         <div class="field-board">${experience.adjustmentRecordFields.map((field) => `<article><span>${escapeHtml(field)}</span></article>`).join("\n")}</div>
         <p>No breach is cured by narrative. Record the actual trade or approved constraint change, calculate the revised portfolio, identify the new trade-off, and run the IPS and bear-case tests again.</p>
       </section>
 
       <section>
-        <p class="section-kicker">Four-person ownership</p><h2>Risk belongs to the entire committee</h2>
+        <p class="section-kicker">Five-person ownership</p><h2>Risk belongs to the entire committee</h2>
         ${roleIntegrationBoard("portfolioResponsibility")}
       </section>
 
@@ -877,7 +899,7 @@ function portfolioStressPage() {
         <p class="section-kicker">Portfolio approval gate</p><h2>Approve only a traceable, tested recommendation</h2>
         <ul class="check-list">${experience.portfolioQualityGate.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
         <div class="callout"><h3>AI boundary</h3><p>AI may challenge assumptions, suggest a counter-scenario, or help debug a formula. The team must verify every factual or numerical claim, run its own calculations, and own the final allocation, correction, and vote.</p></div>
-        <div class="milestone-banner"><div><h3>Complete the decision package</h3><p>Attach the final IPS scorecard, bear-case result, correction and re-test if needed, all four votes, dissent or reservations, and monitoring triggers.</p></div><div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, cmeWorkbook.path))}">Open CME workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, stressWorkbook.path))}">Open stress workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open Decision Log <span>XLSX</span></a><a class="button" href="assessment.html">Prepare for defense</a></div></div>
+        <div class="milestone-banner"><div><h3>Complete the decision package</h3><p>Attach the final IPS scorecard, bear-case result, residual-risk and hedge/no-hedge conclusion, correction and re-test if needed, all five votes, dissent or reservations, and monitoring triggers.</p></div><div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, cmeWorkbook.path))}">Open CME workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, stressWorkbook.path))}">Open stress workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open Decision Log <span>XLSX</span></a><a class="button" href="assessment.html">Prepare for defense</a></div></div>
       </section>
     </div></div>
   </main>`
@@ -976,6 +998,7 @@ function assessmentPage() {
         <section>
           <p class="section-kicker">Investment Project Presentation rubric · ${model.assessment.presentationPoints} points</p>
           <h2>Live committee presentation and defense</h2>
+          <div class="callout"><h3>The defense is part of the presentation</h3><p>Keep the existing final presentation and include a compact investment-committee defense within it. Each student must be ready for targeted questions tied to role-specific evidence, the Analyst Decision Log contribution, an alternative rejected, a key trade-off, and the integrated portfolio decision.</p></div>
           ${assessmentTable(model.assessment.oralCriteria)}
         </section>
         <section>

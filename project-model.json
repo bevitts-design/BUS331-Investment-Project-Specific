@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "course": {
     "code": "BUS331",
     "name": "Investments",
@@ -9,10 +9,10 @@
   },
   "project": {
     "title": "Investment Committee Simulation",
-    "subtitle": "Three approval gates. Four committee members. One integrated recommendation.",
-    "premise": "Your four-person investment committee advises three client mandates and manages $500,000 in hypothetical assets. The committee must establish a market view, build and challenge each portfolio, and defend one evidence-linked recommendation.",
+    "subtitle": "Three approval gates. Five committee members. One integrated recommendation.",
+    "premise": "Your five-person investment committee advises three client mandates and manages $500,000 in hypothetical assets. The committee must establish a market view, build and challenge each portfolio, and defend one evidence-linked recommendation.",
     "clientCount": 3,
-    "committeeSize": 4,
+    "committeeSize": 5,
     "hypotheticalAum": "$500,000",
     "scopeNote": "Canvas remains the authority for due dates, submission links, and course-grade weights."
   },
@@ -20,12 +20,12 @@
     "title": "Your Project Roadmap",
     "subtitle": "Follow the decision path. Build the analysis. Defend your recommendation.",
     "visual": {
-      "path": "assets/roadmap/investment-committee-roadmap.png",
-      "alt": "Investment Committee Simulation roadmap showing Phase 1 client and macro analysis, Phase 2 portfolio construction and stress testing, Phase 3 decision package and defense, approval gates, shared committee responsibility, and AI verification rules."
+      "path": "assets/roadmap/investment-committee-roadmap-5-role.svg",
+      "alt": "Investment Committee Simulation roadmap showing Phase 1 mandate approval, Phase 2 focused 8–10 holding selection, portfolio integration, stress testing and hedge or no-hedge conclusion, Phase 3 presentation and compact defense, and five distinct committee roles."
     },
     "boundary": "BUS331 provides structured Excel workbooks and client data. Your committee completes the analysis, reaches its own conclusions, and creates its own final PowerPoint presentation.",
     "beforeYouBegin": [
-      "Confirm the four committee roles and your three assigned clients.",
+      "Confirm the five committee roles and your three assigned clients.",
       "Create a shared team workspace and agree on a file-naming system.",
       "Read the current phase checklist together before beginning work.",
       "Schedule a short committee meeting before each approval gate."
@@ -42,8 +42,9 @@
       "phase-2": [
         "Reopen the approved client mandate before researching investments.",
         "Use the structured workbooks to develop capital-market expectations and draft allocations.",
-        "Research and compare candidate bonds, mutual funds, and ETFs against client guardrails.",
-        "Build the proposed portfolios, identify the purpose of every holding, and submit the locked baseline snapshot before the Scenario Reveal.",
+        "Translate each approved allocation and client mandate into a candidate set, then compare serious alternatives against client guardrails.",
+        "Select 8–10 final holdings per portfolio, never more than 10, using funds and ETFs as the primary vehicles; limit individual securities to two or three total and add at most one targeted derivative hedge only when justified.",
+        "Build the proposed portfolios, identify the purpose and concise scorecard for every final holding, resolve overlap and concentration, and submit the locked baseline snapshot before the Scenario Reveal.",
         "After the instructor releases the client-specific Scenario Reveal, apply its exact inputs, identify the client consequence, correct the required breach, and re-test.",
         "Hold Gate 2: approve, revise, or reject each client portfolio and record the decision."
       ],
@@ -60,13 +61,15 @@
         "The macro workbook documents historical analysis, consensus comparison, and weighted bull, base, and bear scenarios.",
         "Each client has objectives, RRTTLLU constraints, a return target, risk limit, drawdown tripwire, and identified information gaps.",
         "The committee can explain how its macro outlook changes each client mandate.",
-        "All four members have recorded the Gate 1 vote and any revision actions."
+        "All five members have recorded the Gate 1 vote and any revision actions."
       ],
       "phase-2": [
         "Each client portfolio traces back to an approved mandate and has a stated purpose for every holding.",
-        "Evidence supports the material investment choices and their client fit.",
+        "Each portfolio has 8–10 final holdings, never more than 10, with no requirement to fill every slot; funds and ETFs are the primary vehicles and individual securities are limited to two or three total.",
+        "Every final holding has a concise scorecard, rejected alternatives have a concise comparison, and the team has resolved unnecessary overlap or concentration.",
+        "Any derivative hedge is limited to one targeted residual risk and documents instrument, size, cost, liquidity, trade-offs, residual risk, and adjustment or removal condition; a supported no-hedge conclusion is equally complete.",
         "The baseline snapshot was submitted before the Scenario Reveal; each revealed-scenario breach has a documented corrective trade, trade-off, and full re-test.",
-        "All four members have recorded the Gate 2 vote and any revision actions."
+        "All five members have recorded the Gate 2 vote and any revision actions."
       ],
       "phase-3": [
         "The memo, evidence package, and presentation tell one consistent recommendation story.",
@@ -102,27 +105,39 @@
       }
     },
     {
-      "id": "fund-etf",
-      "title": "Fund and ETF Analyst",
-      "shortTitle": "Fund & ETF",
+      "id": "equity",
+      "title": "Equity Analyst",
+      "shortTitle": "Equity",
       "color": "steel",
-      "mandate": "Own pooled-vehicle due diligence, diversification, benchmark fit, fees, liquidity, tax considerations, and active-versus-passive implementation.",
+      "mandate": "Own equity-fund and ETF due diligence and the limited use of individual equities, including exposure, style, sector, holdings, costs, liquidity, overlap, idiosyncratic risk, and position-size evidence.",
       "phaseResponsibilities": {
-        "phase-1": "Identify the client's diversification, access, liquidity, cost, tax, values, and vehicle requirements before screening products.",
-        "phase-2": "Evaluate funds and ETFs using objective, holdings, benchmark, fees, liquidity, tax efficiency, and tracking evidence.",
-        "phase-3": "Defend vehicle selection, implementation feasibility, diversification, and product-level due diligence."
+        "phase-1": "Translate the client's growth needs, time horizon, values, tax position, liquidity, and concentration limits into equity-selection guardrails.",
+        "phase-2": "Recommend equity funds and ETFs as the primary equity vehicles and analyze any limited individual equities, including rationale, idiosyncratic risk, and position size.",
+        "phase-3": "Defend equity exposures, vehicle choices, limited individual-security decisions, rejected alternatives, and their client fit."
       }
     },
     {
-      "id": "portfolio-risk",
-      "title": "Portfolio Manager and Risk Analyst",
-      "shortTitle": "Portfolio & Risk",
+      "id": "portfolio-manager",
+      "title": "Portfolio Manager",
+      "shortTitle": "Portfolio Manager",
       "color": "terra",
-      "mandate": "Own portfolio integration, risk capacity versus willingness, the drawdown tripwire, decision-log quality, stress testing, and mandate-breach escalation.",
+      "mandate": "Own portfolio integration: resolve overlap and concentration, set final selection and weights, record explicit trade-offs, maintain decision-log quality, and move the integrated recommendation to a vote.",
       "phaseResponsibilities": {
-        "phase-1": "Reconcile risk capacity and willingness, set provisional portfolio guardrails, challenge assumptions, and audit the Analyst Decision Log.",
-        "phase-2": "Integrate the allocation, run bear-case stress tests, compare mitigants, identify breaches, and require corrective action.",
-        "phase-3": "State the integrated recommendation, present the strongest downside case, and lead preparation for adversarial Q&A."
+        "phase-1": "Reconcile risk capacity and willingness, set provisional portfolio guardrails, coordinate the committee challenge, and audit the Analyst Decision Log.",
+        "phase-2": "Integrate analyst recommendations, resolve duplication and concentration, choose the final 8–10 holdings and weights, and record the trade-offs behind every integration decision.",
+        "phase-3": "State and defend the integrated recommendation, portfolio construction decisions, final weights, rejected integrations, and implementation priorities."
+      }
+    },
+    {
+      "id": "risk-derivatives",
+      "title": "Risk and Derivatives Analyst",
+      "shortTitle": "Risk & Derivatives",
+      "color": "risk",
+      "mandate": "Own portfolio-level risk diagnosis, stress testing, residual-risk evidence, mandate-breach escalation, and the hedge or no-hedge conclusion; do not manufacture a derivative position when no targeted hedge is justified.",
+      "phaseResponsibilities": {
+        "phase-1": "Define the downside questions, drawdown tripwire, stress priorities, and residual-risk evidence the final portfolio must address.",
+        "phase-2": "Run portfolio-level stress tests, identify residual risk, and document either one targeted hedge or a fully supported no-hedge conclusion, including cost, liquidity, trade-offs, residual risk, and adjustment or removal conditions.",
+        "phase-3": "Defend the stress evidence, residual risk, hedge or no-hedge decision, limits of the analysis, and conditions that would change the risk response."
       }
     }
   ],
@@ -137,11 +152,11 @@
     },
     {
       "step": "Independent challenge",
-      "description": "The Portfolio Manager and Risk Analyst coordinates the strongest counterargument; the analyst whose judgment is challenged must respond with evidence."
+      "description": "The Portfolio Manager coordinates the strongest counterargument; the analyst whose judgment is challenged must respond with evidence, and the Risk and Derivatives Analyst independently tests the residual risk."
     },
     {
       "step": "Motion and vote",
-      "description": "The phase lead states the motion. The Portfolio Manager and Risk Analyst records approve, revise, or reject; all four members vote and ties require revision."
+      "description": "The phase lead states the motion. The Portfolio Manager records approve, revise, or reject; all five members vote and any non-approval vote requires revision."
     },
     {
       "step": "Decision record",
@@ -200,9 +215,9 @@
     },
     "rolePlaySequence": [
       {"stage":"Instructor demonstration","action":"Before teams begin, the instructor gives one volunteer the sealed Sally Hart client card. The class observes a short interview, pauses to identify established facts and information gaps, and records one sample client guardrail."},
-      {"stage":"Prepare the team role-play","action":"After macro analysis, each team receives three sealed client cards. For the first case, the Client and Macro Strategist begins as the client; the other three members act as analysts. Do not open a card assigned to another student."},
-      {"stage":"Interview and rotate","action":"Run a 12-minute interview for each client. Rotate the client role for the second and third cases so different members experience the client perspective. The Portfolio Manager and Risk Analyst keeps the decision-log record consistent across all three cases."},
-      {"stage":"Translate and challenge","action":"After each interview, all four members identify established facts, information gaps, and provisional guardrails. Challenge the first interpretation as a committee before moving to the next client."},
+      {"stage":"Prepare the team role-play","action":"After macro analysis, each team receives three sealed client cards. For the first case, the Client and Macro Strategist begins as the client; the other four members act as analysts. Do not open a card assigned to another student."},
+      {"stage":"Interview and rotate","action":"Run a 12-minute interview for each client. Rotate the client role for the second and third cases so different members experience the client perspective. The Portfolio Manager keeps the decision-log record consistent across all three cases."},
+      {"stage":"Translate and challenge","action":"After each interview, all five members identify established facts, information gaps, and provisional guardrails. Challenge the first interpretation as a committee before moving to the next client."},
       {"stage":"Finish the mandate","action":"Use the three interview summaries, the macro outlook, and the assigned case files to complete the IPS analysis and prepare for Gate 1."}
     ],
     "rolePlayProfiles": [
@@ -263,16 +278,22 @@
         "handoff": "Draft the provisional maturity, duration, credit-quality, liquidity, and income guardrails."
       },
       {
-        "roleId": "fund-etf",
-        "round": "Vehicle and implementation fit",
-        "questionThemes": ["Need for diversification", "Active or passive preference, if any", "Fee sensitivity", "Trading and liquidity needs", "Tax, values, benchmark, and product restrictions"],
-        "handoff": "Draft the screen the team will later apply to mutual funds and ETFs; do not name a winning product yet."
+        "roleId": "equity",
+        "round": "Growth exposure and equity fit",
+        "questionThemes": ["Long-term growth need and equity-loss capacity", "Diversification and concentration limits", "Sector, style, values, and benchmark restrictions", "Fee, tax, trading, and liquidity sensitivity", "Conditions for any limited individual-security exposure"],
+        "handoff": "Draft the screen for equity funds and ETFs and any limited individual equity; do not name a winning product yet."
       },
       {
-        "roleId": "portfolio-risk",
-        "round": "Capacity, willingness, and downside",
-        "questionThemes": ["Required return versus desired return", "Ability and willingness to bear loss", "Reaction to a one-year drawdown", "Concentration and correlation risks", "Tripwire, monitoring trigger, and revision conditions"],
-        "handoff": "Reconcile conflicts, propose a drawdown tripwire, and identify which assumptions must be verified before approval."
+        "roleId": "portfolio-manager",
+        "round": "Integration and trade-offs",
+        "questionThemes": ["Required return versus desired return", "Ability and willingness to bear loss", "Concentration and correlation risks", "Priority among competing goals", "Weight, liquidity, and implementation trade-offs"],
+        "handoff": "Reconcile conflicts, identify portfolio-level trade-offs, and specify which selection or weighting decisions require committee approval."
+      },
+      {
+        "roleId": "risk-derivatives",
+        "round": "Downside, residual risk, and hedge conditions",
+        "questionThemes": ["Reaction to a one-year drawdown", "Client goal most exposed in a bear case", "Drawdown tripwire and monitoring trigger", "Residual risks the client can or cannot accept", "Conditions under which a targeted hedge could be justified or removed"],
+        "handoff": "Propose the drawdown tripwire, name the residual risks to stress, and identify which facts must be verified before any hedge or no-hedge conclusion."
       }
     ],
     "committeeChallengeQuestions": [
@@ -358,13 +379,13 @@
       "Every factual claim or number used in the final reasoning has an approved source and as-of date.",
       "Unknown client information remains labeled unknown; it is not filled with invented detail.",
       "The final reasoning states what changed the judgment and why.",
-      "Each final judgment creates a testable guardrail for later fixed-income, mutual-fund/ETF, allocation, or risk decisions.",
+      "Each final judgment creates a testable guardrail for later fixed-income, equity, allocation, stress-test, or hedge/no-hedge decisions.",
       "A second team member reviews the evidence trail before the Phase 1 gate."
     ]
   },
   "phase2Experience": {
-    "title": "Security Analysis, Portfolio Construction, and Stress Testing",
-    "subtitle": "Screen with the mandate. Select with evidence. Integrate the portfolio. Break it before the client does.",
+    "title": "Security Selection, Portfolio Integration, and Risk Testing",
+    "subtitle": "Translate the mandate. Compare serious alternatives. Select a focused portfolio. Test the residual risk.",
     "handoffTitle": "Phase 1 is the decision filter",
     "handoffRule": "No candidate security or portfolio weight may be approved unless the team identifies the Phase 1 client need, constraint, unresolved question, or downstream guardrail it addresses.",
     "requiredInputs": [
@@ -377,15 +398,15 @@
     "securityWorkflow": [
       {
         "stage": "Translate the mandate",
-        "action": "Turn each Phase 1 guardrail into a measurable screen before researching products. Separate must-pass constraints from preferences."
+        "action": "Turn each Phase 1 guardrail and the approved allocation into a measurable screen before researching products. Separate must-pass constraints from preferences."
       },
       {
         "stage": "Build a candidate set",
-        "action": "Use approved sources to identify multiple plausible bonds, mutual funds, and ETFs. Record source and as-of date before ranking."
+        "action": "Translate the approved allocation and client mandate into a focused candidate set. Funds and ETFs are the primary vehicles; individual securities are limited implementation choices, and individual bonds are not required."
       },
       {
         "stage": "Analyze and compare",
-        "action": "Explain return drivers, downside risks, costs, liquidity, diversification, and the instrument-specific evidence below."
+        "action": "Use a concise, consistent scorecard for each serious finalist. Compare and reject alternatives briefly; do not complete a full scorecard for every screened name."
       },
       {
         "stage": "Challenge the leader",
@@ -397,54 +418,79 @@
       },
       {
         "stage": "Hand off to the portfolio",
-        "action": "State the candidate's role, proposed weight range, risk contribution, client-fit condition, and the event that would trigger review or removal."
+        "action": "State the finalist's portfolio purpose, proposed weight, scorecard conclusion, key trade-off, client-fit condition, and the event that would trigger review or removal."
       }
     ],
+    "selectionContract": {
+      "portfolioSize": "Target 8–10 final holdings per client portfolio and never exceed 10. Eight is a valid complete portfolio; do not add a holding merely to fill a slot.",
+      "vehicleMix": "Funds and ETFs are the primary implementation vehicles. Individual securities are permitted only when they add a distinct, mandate-aligned benefit and are limited to two or three total per portfolio. Individual bonds are not required.",
+      "inclusionBoundaries": [
+        "Every holding has a distinct purpose in the portfolio and fits the approved client mandate.",
+        "The holding adds useful exposure or diversification without unnecessary duplication or concentration.",
+        "The position and its underlying exposure have liquidity appropriate to the client and the planned weight.",
+        "The holding's cost, trading expenses, risks, and implementation demands are proportionate to its benefit."
+      ],
+      "scorecardFields": [
+        "Exposure and role in the portfolio",
+        "Cost and trading expenses",
+        "Liquidity",
+        "Holdings, sector, and style overlap",
+        "Diversification contribution",
+        "Key risks",
+        "Client-mandate fit"
+      ],
+      "individualSecurityAdditions": [
+        "Why an individual security is superior to a fund or ETF for this specific role",
+        "Idiosyncratic risk",
+        "Position-size rationale and concentration limit"
+      ],
+      "alternativeStandard": "Compare the strongest realistic alternatives and record why they were rejected in one concise decision record. Full scorecards are required for final holdings, not every screened name."
+    },
     "instrumentStandards": [
       {
-        "instrument": "Bond or fixed-income exposure",
+        "instrument": "Fixed-income fund, ETF, or limited direct exposure",
         "ownerRoleId": "fixed-income",
-        "decisionQuestion": "Do the cash flows and risk exposures fit the client's income, capital-preservation, horizon, liquidity, tax, and loss-capacity guardrails?",
+        "decisionQuestion": "Does the exposure fit the client's income, capital-preservation, duration, credit, liquidity, tax, and rate-risk guardrails?",
         "requiredAnalysis": [
-          "Issuer, seniority, coupon, maturity, call or structural features, and source price",
-          "Yield measure used and the return drivers under the base and bear macro cases",
+          "Fund or ETF objective, benchmark, holdings, cost, liquidity, and income characteristics; use direct-bond terms only if a direct bond is actually proposed",
+          "Yield or income measure and the return drivers under the base and bear macro cases",
           "Duration or interest-rate sensitivity and the effect of a rate move",
-          "Credit quality, spread or default/downgrade risk, and recovery considerations",
-          "Liquidity, minimum position size, tax treatment where relevant, and concentration",
-          "Client suitability, proposed portfolio role, monitoring trigger, and rejection reason"
+          "Credit quality, spread, downgrade/default, and concentration risk",
+          "Overlap, diversification contribution, client fit, proposed portfolio role, and monitoring trigger",
+          "Concise alternative rejected and the key trade-off"
         ]
       },
       {
-        "instrument": "Mutual fund",
-        "ownerRoleId": "fund-etf",
-        "decisionQuestion": "Does the fund's mandate, portfolio, cost structure, and implementation fit improve the client's outcome relative to realistic alternatives?",
+        "instrument": "Equity fund or ETF",
+        "ownerRoleId": "equity",
+        "decisionQuestion": "Does the vehicle deliver the intended equity exposure efficiently without hidden concentration, overlap, trading, liquidity, tax, or style problems?",
         "requiredAnalysis": [
-          "Objective, strategy, benchmark, style/category, and active or passive approach",
-          "Return drivers, material risks, holdings or concentration, and diversification contribution",
-          "Expense ratio, loads or transaction costs, turnover, distributions, and tax considerations",
-          "Share class, minimum investment, trading frequency, liquidity, and redemption constraints",
-          "Performance compared with the stated benchmark using matching periods and as-of dates",
-          "Client suitability, portfolio role, monitoring trigger, and reason preferred or rejected"
+          "Objective, benchmark or index methodology, style, sector, region, and active or passive approach",
+          "Top holdings, concentration, sector/style overlap, and diversification contribution",
+          "Expense ratio, trading expenses, turnover, distributions, and tax considerations",
+          "Liquidity at both the vehicle and underlying-holdings level",
+          "Performance or tracking context using comparable periods and current as-of dates",
+          "Client fit, portfolio role, monitoring trigger, concise rejected alternative, and key trade-off"
         ]
       },
       {
-        "instrument": "ETF",
-        "ownerRoleId": "fund-etf",
-        "decisionQuestion": "Does the ETF deliver the intended benchmark or style exposure efficiently without adding hidden concentration, trading, liquidity, or tax problems?",
+        "instrument": "Limited individual equity",
+        "ownerRoleId": "equity",
+        "decisionQuestion": "Does this individual security add a mandate-aligned benefit that a fund or ETF cannot provide without creating excessive idiosyncratic or concentration risk?",
         "requiredAnalysis": [
-          "Objective, index or benchmark, methodology, style/sector exposure, and replication approach",
-          "Return drivers, material risks, top holdings, overlap, concentration, and diversification contribution",
-          "Expense ratio, bid-ask spread, premium/discount, trading volume, and other implementation costs",
-          "Liquidity at both the share and underlying-holdings level, distributions, and tax considerations",
-          "Tracking difference or error using an appropriate period and current source date",
-          "Client suitability, portfolio role, monitoring trigger, and reason preferred or rejected"
+          "Distinct portfolio purpose and evidence that a fund or ETF is not the better implementation",
+          "Business and return drivers, valuation context where relevant, and base/bear sensitivity",
+          "Liquidity, trading expenses, tax considerations, and client fit",
+          "Idiosyncratic risks and the evidence that makes them material",
+          "Position-size rationale, concentration limit, diversification effect, and monitoring or exit trigger",
+          "Concise alternative rejected and the key trade-off"
         ]
       }
     ],
     "issuerRealityCheck": {
       "title": "Issuer Reality Check",
       "decisionRule": "Yield or recent return alone cannot support a recommendation. The committee must evidence the issuer's financial health, operating outlook, and relevance to the client's mandate.",
-      "applicability": "Complete one concise snapshot for every direct bond or equity exposure and for the most material relevant issuer or holding exposure within each selected mutual fund or ETF.",
+      "applicability": "Complete one concise snapshot for every direct individual security. For a selected fund or ETF, use look-through issuer analysis only when one holding or issuer is material to the exposure, concentration, or risk conclusion; do not create issuer work that duplicates the holding scorecard.",
       "requiredFields": [
         "Security, issuer, exposure type, portfolio weight, source, and as-of date",
         "Business model and principal revenue drivers",
@@ -456,10 +502,11 @@
         "Conclusion about client fit, allocation implication, and monitoring trigger"
       ],
       "roleResponsibilities": [
-        {"roleId": "fixed-income", "responsibility": "Own the credit-focused review for direct bonds: cash-flow durability, liquidity, leverage, coverage, maturity schedule, structural features, and downside risk."},
-        {"roleId": "fund-etf", "responsibility": "Perform look-through review of the most material relevant holdings and identify issuer concentration, overlap, and exposure that could dominate fund or ETF behavior."},
-        {"roleId": "client-macro", "responsibility": "Explain how the committee's macro scenarios and the issuer's industry sensitivity affect revenue, margins, cash flow, and the client-facing thesis."},
-        {"roleId": "portfolio-risk", "responsibility": "Apply the issuer-health and concentration conclusion to position size, portfolio risk, diversification, stress testing, and monitoring or exit triggers."}
+        {"roleId": "fixed-income", "responsibility": "Own credit, duration, income, liquidity, and rate-risk evidence for fixed-income funds, ETFs, and any limited direct exposure."},
+        {"roleId": "equity", "responsibility": "Own equity-fund and ETF look-through review and the issuer analysis, idiosyncratic risk, and position-size rationale for any limited individual equity."},
+        {"roleId": "client-macro", "responsibility": "Explain how the committee's macro scenarios and the issuer's industry sensitivity affect the client-facing thesis and mandate fit."},
+        {"roleId": "portfolio-manager", "responsibility": "Apply exposure, overlap, issuer-health, and concentration conclusions to final selection, weight, portfolio trade-offs, and monitoring or exit triggers."},
+        {"roleId": "risk-derivatives", "responsibility": "Use material issuer and concentration evidence in portfolio-level stress tests and the residual-risk and hedge/no-hedge conclusion."}
       ]
     },
     "factSetWorkflow": {
@@ -499,37 +546,40 @@
     "candidateTemplateColumns": [
       "Candidate and instrument type",
       "Role owner",
-      "Phase 1 guardrail tested",
-      "Base-case return drivers",
-      "Material risks and bear-case sensitivity",
-      "Costs, taxes, and liquidity",
-      "Duration/credit quality or benchmark/style exposure",
-      "Issuer Reality Check reference and conclusion",
-      "Diversification contribution and overlap",
+      "Approved allocation sleeve and Phase 1 guardrail",
+      "Portfolio exposure and role",
+      "Cost and trading expenses",
+      "Liquidity",
+      "Holdings, sector, and style overlap",
+      "Diversification contribution",
+      "Key risks and bear-case sensitivity",
+      "Client-mandate fit",
+      "Individual-security rationale, idiosyncratic risk, and position size if applicable",
       "Verified source and as-of date",
-      "Provisional choice and confidence",
-      "AI challenge and verification result",
-      "Final select/reject decision and rationale"
+      "Final select/reject decision, concise alternative rejected, and key trade-off"
     ],
     "securityQualityGate": [
-      "The candidate set includes a real comparison; the team does not research only its preferred product.",
+      "The candidate set translates the approved allocation and client mandate into plausible implementations; the team does not research only its preferred product.",
+      "Each client portfolio targets 8–10 final holdings and never exceeds 10; eight is complete and no slot is filled without a distinct portfolio purpose.",
+      "Funds and ETFs are the primary vehicles. Individual securities are limited to two or three total, individual bonds are not required, and any individual security has added rationale, idiosyncratic-risk, and position-size evidence.",
       "Every selection names the Phase 1 client guardrail it satisfies and the unresolved fact that could change it.",
-      "Return, yield, duration, credit, fee, benchmark, holdings, liquidity, and performance claims use appropriate approved sources and as-of dates.",
-      "Every direct bond or equity exposure and the most material relevant holding inside each selected fund or ETF has an Issuer Reality Check; yield or recent return is never the sole rationale.",
+      "Every final holding has the consistent concise scorecard; alternatives rejected are compared concisely without full analysis of every screened name.",
+      "The team excludes candidates that duplicate exposure, create unnecessary concentration, lack appropriate liquidity, or fail the client mandate.",
+      "Return, yield, duration, credit, fee, trading-expense, benchmark, holdings, liquidity, overlap, and performance claims use appropriate approved sources and as-of dates.",
+      "Every direct individual security has an Issuer Reality Check; fund/ETF look-through is required only when an issuer is material to the exposure, concentration, or risk conclusion.",
       "Each recommendation includes a FactSet retrieval record identifying the research retrieved, retrieval date, relevant metrics, source/document reference as appropriate, interpretation, and effect on the decision; licensed evidence is retained according to course policy.",
       "The team distinguishes issuer risk, market risk, product risk, and client-suitability risk.",
-      "AI challenges the provisional judgment, but no AI output is treated as evidence or copied in place of analysis.",
-      "Each analyst records accept, modify, or reject after human verification and a second member reviews the evidence trail.",
+      "Each analyst records recommendations, alternatives rejected, and a key trade-off; a second member reviews the evidence trail.",
       "The selected mix is evaluated for overlap and diversification as a portfolio, not only one instrument at a time."
     ],
     "portfolioWorkflow": [
       {
         "stage": "Assemble",
-        "action": "Place approved securities into sleeves and assign tentative weights. State the job of every sleeve and holding."
+        "action": "Place analyst finalists into sleeves and assign tentative weights. Target 8–10 holdings, never exceed 10, and do not fill a slot without a distinct portfolio job."
       },
       {
         "stage": "Reconcile",
-        "action": "Check that weights total 100%, resources match the hypothetical AUM, and every holding traces to a Phase 1 guardrail and a verified selection decision."
+        "action": "The Portfolio Manager checks that weights total 100%, resources match the hypothetical AUM, and every holding traces to a Phase 1 guardrail and a verified selection decision; resolve overlap, concentration, and conflicting recommendations."
       },
       {
         "stage": "Measure",
@@ -541,7 +591,11 @@
       },
       {
         "stage": "Run the bear case",
-        "action": "Apply the approved Phase 1 bear assumptions without softening them, quantify portfolio and dollar impacts, and explain which client goal is most exposed."
+        "action": "The Risk and Derivatives Analyst applies the approved Phase 1 bear assumptions without softening them, quantifies portfolio and dollar impacts, and identifies the residual risk and client goal most exposed."
+      },
+      {
+        "stage": "Conclude hedge or no hedge",
+        "action": "Use the stress evidence to document either no hedge or one targeted derivative hedge. A hedge is valid only when it solves an identified residual risk; no hedge is fully valid when the evidence shows costs or trade-offs outweigh the benefit."
       },
       {
         "stage": "Correct and re-test",
@@ -559,6 +613,18 @@
       "test": "Apply the released inputs exactly, quantify percentage and dollar impact, and state whether the affected client condition is a Pass, Warning, or Breach.",
       "remediate": "For every Breach, make a real security, sleeve, or weight change; explain the trade-off; then re-run the full scenario and IPS scorecard. If a released case unexpectedly passes, report it to the instructor rather than using the result to skip the checkpoint.",
       "boundary": "You may not change the client mandate, tripwire, or released scenario inputs to make the portfolio pass."
+    },
+    "derivativeHedge": {
+      "decisionRule": "A derivative is optional, never performative. Use at most one targeted hedge per client portfolio and only when it addresses an identified residual risk that cannot be handled more appropriately through the holdings or weights.",
+      "noHedgeStandard": "A no-hedge conclusion is complete when the Risk and Derivatives Analyst identifies the residual risk, explains why the portfolio should retain it, and supports why hedge cost, liquidity, complexity, basis risk, or other trade-offs outweigh the expected benefit.",
+      "proposalFields": [
+        "Residual risk being hedged and stress evidence",
+        "Derivative instrument and why it targets that risk",
+        "Hedge size and sizing rationale",
+        "Cost, liquidity, implementation demands, and trade-offs",
+        "Residual risk and basis or execution risk after the hedge",
+        "Adjustment, removal, or expiration condition"
+      ]
     },
     "allocationTemplateColumns": [
       "Sleeve / holding",
@@ -611,27 +677,35 @@
       },
       {
         "roleId": "fixed-income",
-        "securityResponsibility": "Lead bond and fixed-income analysis, including yield, duration, credit quality, structure, liquidity, taxes, and cash-flow fit.",
+        "securityResponsibility": "Own fixed-income funds and ETFs and any limited direct exposure, including income, yield, duration, credit quality, liquidity, costs, taxes, overlap, and rate-risk fit.",
         "portfolioResponsibility": "Explain how the fixed-income sleeve changes income reliability, rate sensitivity, credit risk, liquidity, and bear-case protection."
       },
       {
-        "roleId": "fund-etf",
-        "securityResponsibility": "Lead mutual-fund and ETF due diligence, benchmark/style mapping, holdings overlap, fees, trading, liquidity, taxes, and implementation fit.",
-        "portfolioResponsibility": "Test whether pooled vehicles deliver the intended exposure and diversification without hidden duplication or avoidable cost."
+        "roleId": "equity",
+        "securityResponsibility": "Own equity funds and ETFs and the limited use of individual equities, including benchmark/style mapping, holdings overlap, fees, trading, liquidity, taxes, idiosyncratic risk, and position size.",
+        "portfolioResponsibility": "Explain how the equity sleeve delivers the intended growth exposure and diversification without hidden duplication, unnecessary concentration, or avoidable cost."
       },
       {
-        "roleId": "portfolio-risk",
-        "securityResponsibility": "Challenge candidate correlations, concentration, risk estimates, data comparability, and the claimed portfolio role.",
-        "portfolioResponsibility": "Own integration, calculation checks, IPS scorecard, bear-case test, breach escalation, corrections, re-test, and the committee vote record."
+        "roleId": "portfolio-manager",
+        "securityResponsibility": "Integrate analyst finalists, resolve overlap and concentration, set the final 8–10 holdings and weights, and record recommendations rejected and explicit portfolio trade-offs.",
+        "portfolioResponsibility": "Own integration, weight and calculation checks, IPS scorecard coordination, implementation decisions, corrective trades, and the committee vote record."
+      },
+      {
+        "roleId": "risk-derivatives",
+        "securityResponsibility": "Challenge risk estimates and data comparability, identify residual portfolio risk, and own the evidence for one targeted hedge or a fully supported no-hedge conclusion.",
+        "portfolioResponsibility": "Own portfolio-level stress tests, breach escalation, residual-risk evidence, hedge sizing and trade-offs when proposed, and the full post-adjustment re-test."
       }
     ],
     "portfolioQualityGate": [
-      "Every holding has a verified selection record, a portfolio job, an accountable role owner, and a Phase 1 guardrail reference.",
+      "Every final holding has a concise scorecard, a distinct portfolio job, an accountable role owner, a Phase 1 guardrail reference, and a concise alternative rejected.",
+      "The portfolio contains 8–10 final holdings and never more than 10; funds and ETFs are primary, individual securities total no more than two or three, and no unnecessary duplicate exposure remains.",
       "Weights total 100% and dollar allocations reconcile to the hypothetical AUM.",
       "Return and risk calculations use consistent as-of dates, units, and scenario assumptions.",
       "The IPS scorecard tests all relevant objectives and constraints; the team does not declare compliance from one metric.",
       "The bear case exactly carries forward the approved Phase 1 assumptions and shows both percentage and dollar impact.",
       "Every warning or breach has a documented decision; every breach is corrected and re-tested before approval.",
+      "The Risk and Derivatives Analyst documents residual risk and either a supported no-hedge conclusion or one targeted hedge with instrument, size, cost, liquidity, trade-offs, remaining risk, and adjustment or removal condition.",
+      "The Portfolio Manager records final selection and weight decisions, overlap and concentration resolutions, alternatives rejected, and explicit portfolio trade-offs.",
       "The final portfolio states monitoring triggers, remaining uncertainties, and what would cause the committee to reconvene."
     ]
   },
@@ -667,7 +741,7 @@
         "RRTTLLU analysis for all three assigned clients",
         "Return target, maximum volatility, and drawdown tripwire for each client",
         "Analyst Decision Log showing initial judgment, committee challenge, verification, final reasoning, and downstream guardrail",
-        "Phase 1 decision record signed by all four members"
+        "Phase 1 decision record signed by all five members"
       ],
       "deliverables": [
         "Completed macro starter workbook",
@@ -691,8 +765,8 @@
       "title": "Build & Challenge",
       "shortTitle": "Portfolio",
       "tagline": "Build the baseline, respond to the Scenario Reveal, and defend the revised portfolio.",
-      "keyQuestion": "Does each portfolio earn its place inside the client mandate after costs, constraints, and the instructor-issued Scenario Reveal?",
-      "objective": "Translate the Phase 1 view into capital-market expectations, construct client portfolios, select securities, design risk mitigation, and challenge each recommendation under stress.",
+      "keyQuestion": "Do 8–10 purposeful holdings—and no more than 10—implement the client mandate without avoidable overlap, concentration, cost, or residual risk?",
+      "objective": "Translate the approved allocation and client mandate into a focused portfolio, select funds and ETFs as the primary vehicles, limit individual securities, resolve portfolio trade-offs, and document stress-tested residual risk and a hedge or no-hedge conclusion.",
       "gate": "Approve, revise, or reject each client portfolio. The baseline snapshot must precede the Scenario Reveal, and a revealed breach cannot receive approval without a documented corrective trade and re-test.",
       "meetingMotion": "Motion to approve the proposed portfolio and risk-mitigation plan for each assigned client.",
       "workstreams": [
@@ -702,32 +776,35 @@
         },
         {
           "title": "B · Securities & implementation",
-          "description": "Compare and select bonds, mutual funds, and ETFs using instrument-specific evidence, client guardrails, costs, diversification, and a verified AI challenge."
+          "description": "Translate the approved allocation into candidates, use concise scorecards to select 8–10 holdings, reject alternatives briefly, and keep funds and ETFs as the primary vehicles."
         },
         {
           "title": "C · Scenario Reveal & corrective action",
-          "description": "Submit the baseline, apply the instructor-issued adverse-event packet, test the tripwire, quantify client impact, and document the trades required to cure each breach."
+          "description": "Integrate final weights, resolve overlap and concentration, submit the baseline, apply the instructor-issued adverse-event packet, test residual risk, and document corrective trades plus a hedge or no-hedge conclusion."
         }
       ],
       "evidence": [
         "Base and bear CME inputs with cited rationale",
         "Solver output and constraint checks for each client",
-        "Bond comparison with yield, return drivers, duration, credit quality, liquidity, taxes, client fit, and sources",
-        "Mutual-fund and ETF comparison with objective, benchmark/style, holdings, costs, liquidity, taxes, performance context, client fit, and sources",
-        "Issuer Reality Check for every direct bond or equity exposure and the most material relevant issuer/holding within each selected fund or ETF",
-        "Candidate decision records showing the provisional judgment, AI challenge, verification, final select/reject decision, and portfolio role",
+        "Focused candidate set translated from the approved allocation and client mandate",
+        "Final portfolio of 8–10 holdings, never more than 10, using funds and ETFs as the primary vehicles and no more than two or three individual securities",
+        "Concise final-holding scorecards covering exposure/role, cost and trading expenses, liquidity, holdings/sector/style overlap, diversification contribution, key risks, and client-mandate fit",
+        "Added rationale, idiosyncratic-risk, and position-size evidence for every individual security; individual bonds are not required",
+        "Concise comparisons and rejection reasons for realistic alternatives without full analysis of every screened name",
+        "Issuer Reality Check for every direct individual security and only material look-through issuer exposures within selected funds or ETFs",
         "FactSet Research and Evidence Log for every recommended security and material portfolio-risk input",
-        "Integrated allocation with a purpose, owner, Phase 1 guardrail, risk contribution, and monitoring trigger for every holding",
-        "Risk-mitigation comparison showing cost and trade-offs",
+        "Integrated allocation with a purpose, owner, Phase 1 guardrail, risk contribution, and monitoring trigger for every holding, plus the Portfolio Manager's overlap, concentration, final-weight, and trade-off decisions",
+        "Portfolio-level stress tests and the Risk and Derivatives Analyst's residual-risk evidence",
+        "Supported no-hedge conclusion or one targeted derivative hedge with risk, instrument, size, cost, liquidity, trade-offs, residual risk, and adjustment/removal condition",
         "Locked baseline snapshot and instructor-issued Scenario Reveal log for every client",
         "Full IPS compliance scorecard and Scenario Reveal result against each approved tripwire and relevant constraint",
         "Before/after record, trade-off, and full re-test for every corrective trade",
         "AI audit entries linked to human verification",
-        "Phase 2 decision record signed by all four members"
+        "Phase 2 decision record signed by all five members"
       ],
       "deliverables": [
         "Completed CME workbook",
-        "Completed bond, mutual-fund, and ETF analysis and selection record",
+        "Completed final-holding scorecards, concise alternative decisions, and fixed-income/equity selection record",
         "Baseline snapshot plus completed Scenario Reveal, remediation, IPS compliance, and re-test record",
         "Phase 2 decision record with client-by-client votes"
       ],
@@ -765,7 +842,7 @@
         },
         {
           "title": "Committee defense",
-          "description": "Deliver a visual pitch, answer adversarial questions, and show that all four members understand the integrated decision."
+          "description": "Deliver the visual pitch and a compact investment-committee defense within it, with each member answering targeted questions from their role evidence and the integrated decision."
         }
       ],
       "evidence": [
@@ -773,7 +850,8 @@
         "Technical exhibit book linking macro, mandate, allocation, securities, and risk",
         "Client-specific recommendation for all three assigned clients",
         "Final decision record with vote, reservations, and implementation actions",
-        "Visual oral presentation with balanced speaking time",
+        "Visual oral presentation with balanced speaking time and a compact investment-committee defense",
+        "Role-specific evidence and targeted-question preparation for all five seats",
         "Cross-functional Q&A preparation"
       ],
       "deliverables": [
@@ -795,11 +873,11 @@
     "purpose": "Use one clearly named team submission at each approval gate so the committee's decision trail, owned work, and licensed evidence remain private and reviewable.",
     "authority": "The Canvas assignment controls the due date, points, availability window, and attempt policy. This guide controls the required package, filenames, and public/private boundary.",
     "sharedRules": [
-      "One designated submitter uploads the complete package for the Canvas group; all four members confirm the receipt before the deadline.",
+      "One designated submitter uploads the complete package for the Canvas group; all five members confirm the receipt before the deadline.",
       "Use Team01, Team02, and so on in filenames. Replace the two-digit placeholder; do not add student names to filenames.",
       "Keep formulas live in required XLSX files. Export narrative and exhibit deliverables to PDF unless PPTX or XLSX is explicitly required.",
       "Put only licensed FactSet evidence in the private evidence ZIP. Do not place credentials, raw student data, or unrelated downloads in the bundle.",
-      "Before submitting, open every file, confirm the three assigned clients and four analyst owners are visible, and verify that all cited as-of dates match the analysis.",
+      "Before submitting, open every file, confirm the three assigned clients and five analyst owners are visible, and verify that all cited as-of dates match the analysis.",
       "After upload, open the Canvas submission receipt and confirm that every required filename appears. A local file or public-repository link is not a submission."
     ],
     "assignments": [
@@ -807,31 +885,31 @@
         "phaseId": "phase-1",
         "canvasTitle": "BUS331 Investment Committee · Phase 1 Gate · Frame the Mandate",
         "decision": "Approve or revise the common market view and all three client mandates before portfolio construction begins.",
-        "submissionProcess": "Submit the complete Phase 1 package after the committee has completed its Gate 1 vote. One designated team member submits for the group; all four members verify the Canvas receipt.",
+        "submissionProcess": "Submit the complete Phase 1 package after the committee has completed its Gate 1 vote. One designated team member submits for the group; all five members verify the Canvas receipt.",
         "includePrivateEvidenceBoundary": false,
         "requiredFiles": [
           {"name": "BUS331_Team##_Phase1_MandateMemo.pdf", "description": "One-page committee mandate memo covering the common market view and three client mandates."},
           {"name": "BUS331_Team##_Phase1_Macro.xlsx", "description": "Completed macro starter workbook with human-first read, consensus comparison, and bull/base/bear scenarios."},
           {"name": "BUS331_Team##_Phase1_ClientIPS.pdf", "description": "One combined PDF containing the three completed client IPS documents in assigned-client order."},
-          {"name": "BUS331_Team##_Phase1_DecisionRecord.xlsx", "description": "Current Analyst Decision Log and signed Phase 1 vote with four-role-by-three-client coverage."}
+          {"name": "BUS331_Team##_Phase1_DecisionRecord.xlsx", "description": "Current Analyst Decision Log and signed Phase 1 vote with five-role-by-three-client coverage."}
         ],
         "allowedExtensions": ["pdf", "xlsx"],
         "preflight": [
           "Scenario probabilities total 100% and every macro claim has a source and as-of date.",
           "Each client has an objective, RRTTLLU constraints, return target, volatility limit, drawdown tripwire, and unresolved information gaps.",
           "The Decision Record shows initial judgment, committee challenge, human verification, final reasoning, downstream guardrail, owner, and peer reviewer.",
-          "All four members recorded the Phase 1 vote and any revision action."
+          "All five members recorded the Phase 1 vote and any revision action."
         ]
       },
       {
         "phaseId": "phase-2",
         "canvasTitle": "BUS331 Investment Committee · Phase 2 Gate · Build and Challenge",
         "decision": "Approve, revise, or reject each client portfolio after the locked baseline, instructor-issued Scenario Reveal, full IPS review, corrective trade, and re-test.",
-        "submissionProcess": "Phase 2 has two checkpoints. At the instructor-designated baseline checkpoint, submit the Baseline Snapshot before the Scenario Reveal. After the reveal, complete the corrective trade and re-test, then submit the complete Gate 2 package. One designated team member submits for the group; all four members verify the Canvas receipt.",
+        "submissionProcess": "Phase 2 has two checkpoints. At the instructor-designated baseline checkpoint, submit the Baseline Snapshot before the Scenario Reveal. After the reveal, complete the corrective trade and re-test, then submit the complete Gate 2 package. One designated team member submits for the group; all five members verify the Canvas receipt.",
         "includePrivateEvidenceBoundary": true,
         "requiredFiles": [
           {"name": "BUS331_Team##_Phase2_CME.xlsx", "description": "Completed capital-market-expectations and optimization workbook."},
-          {"name": "BUS331_Team##_Phase2_SecuritySelection.xlsx", "description": "Completed bond, mutual-fund, and ETF comparisons, Issuer Reality Checks, AI decisions, and FactSet Evidence Log."},
+          {"name": "BUS331_Team##_Phase2_SecuritySelection.xlsx", "description": "Completed final-holding scorecards, concise rejected alternatives, required individual-security evidence, Issuer Reality Checks, and FactSet Evidence Log."},
           {"name": "BUS331_Team##_Phase2_BaselineSnapshot.pdf", "description": "Submitted baseline allocation, IPS scorecard, and initial stress result retained before the Scenario Reveal."},
           {"name": "BUS331_Team##_Phase2_StressTest.xlsx", "description": "Scenario Release Log, integrated allocation, full IPS scorecard, revealed-scenario results, corrective trades, and re-test."},
           {"name": "BUS331_Team##_Phase2_DecisionRecord.xlsx", "description": "Current committee record with client-by-client votes, dissent, actions, owners, and deadlines."},
@@ -839,22 +917,23 @@
         ],
         "allowedExtensions": ["pdf", "xlsx", "zip"],
         "preflight": [
-          "Every recommended bond, mutual fund, and ETF passed a documented candidate comparison and client guardrail check.",
-          "Issuer Reality Checks and licensed-evidence references cover every required direct and look-through exposure.",
+          "Each client portfolio contains 8–10 holdings and never more than 10; funds and ETFs are primary, individual securities total no more than two or three, and no slot is filled without a purpose.",
+          "Every final holding has the concise scorecard, realistic alternatives are rejected briefly, and direct individual securities include rationale, idiosyncratic-risk, and position-size evidence.",
+          "The Portfolio Manager recorded overlap, concentration, final-selection, weight, and trade-off decisions; the Risk and Derivatives Analyst recorded residual risk and a supported hedge or no-hedge conclusion.",
           "The baseline snapshot was submitted before the Scenario Reveal; every client allocation totals 100%, all IPS objectives and constraints were re-tested, and every revealed breach has a corrective trade and full re-test.",
-          "All four members recorded the Phase 2 vote and can identify the evidence they own and reviewed."
+          "All five members recorded the Phase 2 vote and can identify their recommendation, alternative rejected, key trade-off, and evidence reviewed."
         ]
       },
       {
         "phaseId": "phase-3",
         "canvasTitle": "BUS331 Investment Committee · Phase 3 Gate · Defend the Recommendation",
         "decision": "Issue one integrated recommendation for all three clients, preserve the audit trail, and arrive ready for the scheduled committee defense.",
-        "submissionProcess": "Submit the complete Phase 3 package before the scheduled committee defense. One designated team member submits for the group; all four members verify the Canvas receipt.",
+        "submissionProcess": "Submit the complete Phase 3 package before the scheduled committee defense. One designated team member submits for the group; all five members verify the Canvas receipt.",
         "includePrivateEvidenceBoundary": true,
         "requiredFiles": [
           {"name": "BUS331_Team##_Phase3_DecisionMemo.pdf", "description": "Final committee decision memo with recommendation first, client-specific actions, reservations, and monitoring triggers."},
           {"name": "BUS331_Team##_Phase3_TechnicalDossier.pdf", "description": "Auditable exhibit book linking macro, mandates, allocations, security evidence, stress results, corrections, and sources."},
-          {"name": "BUS331_Team##_Phase3_Presentation.pptx", "description": "Final visual committee presentation with balanced speaking responsibility."},
+          {"name": "BUS331_Team##_Phase3_Presentation.pptx", "description": "Final visual committee presentation with balanced speaking responsibility and a compact role-specific investment-committee defense."},
           {"name": "BUS331_Team##_Phase3_DecisionRecord.xlsx", "description": "Final vote, dissent or reservations, implementation actions, Analyst Decision Log, and AI audit appendix."},
           {"name": "BUS331_Team##_Phase3_LicensedEvidence.zip", "description": "Final private evidence bundle containing only licensed supporting files cited in the dossier and Evidence Log."}
         ],
@@ -863,7 +942,7 @@
           "The memo, dossier, presentation, and decision record state the same allocations, securities, and monitoring actions.",
           "Every recommendation traces backward to a Phase 1 client guardrail and forward to a monitoring trigger.",
           "Every material number has a source, definition, unit, as-of date, interpretation, and limitation.",
-          "Each member can defend owned work and answer questions outside that workstream during the scheduled oral defense."
+          "Each member can defend role-specific evidence, the Decision Log contribution, one rejected alternative and key trade-off, and answer targeted questions within the compact committee defense."
         ]
       }
     ]
@@ -890,7 +969,7 @@
       "label": "Client Discovery and Decision Protocol",
       "type": "HTML",
       "path": "project/client-discovery-ai-protocol.html",
-      "description": "Classroom demonstration, team-specific structured role-play, four-role interview rounds, approved-source rules, and the human-first decision cycle.",
+      "description": "Classroom demonstration, team-specific structured role-play, five-role interview rounds, approved-source rules, and the human-first decision cycle.",
       "audience": "student"
     },
     {
@@ -962,7 +1041,7 @@
       "label": "Security Analysis & Selection workflow",
       "type": "HTML",
       "path": "project/security-analysis-selection.html",
-      "description": "Student workflow and comparison templates for evidence-backed bond, mutual-fund, and ETF decisions that begin with Phase 1 client guardrails.",
+      "description": "Student workflow for a focused 8–10 holding portfolio, consistent final-holding scorecards, concise rejected alternatives, and fixed-income/equity role ownership.",
       "audience": "student"
     },
     {
@@ -970,7 +1049,7 @@
       "label": "Portfolio Management & Stress Testing workflow",
       "type": "HTML",
       "path": "project/portfolio-management-stress-testing.html",
-      "description": "Student workflow and templates for integrated allocation, IPS compliance, bear-case testing, corrective trades, re-testing, and committee approval.",
+      "description": "Student workflow and templates for integrated allocation, IPS compliance, portfolio-level stress testing, corrective trades, residual risk, and hedge/no-hedge approval.",
       "audience": "student"
     },
     {
@@ -986,7 +1065,7 @@
       "label": "Security selection & Issuer Reality Check workbook",
       "type": "XLSX",
       "path": "files/BUS331_InvProject_SecuritySelection_Template.xlsx",
-      "description": "Three client tabs with weights, thesis blocks, macro filters, hedge comparison, the required Issuer Reality Check, and a blank FactSet Research and Evidence Log.",
+      "description": "Final-holding scorecards for 8–10 holdings per client, concise alternatives, individual-security evidence, residual-risk and hedge/no-hedge record, Issuer Reality Check, and FactSet Evidence Log.",
       "audience": "student"
     },
     {
@@ -1026,7 +1105,7 @@
       "label": "Committee workbook & Analyst Decision Log",
       "type": "XLSX",
       "path": "files/BUS331_Investment_Committee_Decision_Record_Student.xlsx",
-      "description": "Analyst Decision Log, role charter, gate-by-gate evidence review, client-level votes, dissent, actions, and AI audit trail.",
+      "description": "Five-role Analyst Decision Log with recommendations, alternatives rejected, key trade-offs, PM integration, residual-risk and hedge/no-hedge evidence, votes, dissent, actions, and AI audit trail.",
       "audience": "student"
     },
     {
@@ -1075,50 +1154,50 @@
     "writtenCriteria": [
       {
         "criterion": "Evidence quality & technical accuracy",
-        "weight": 25,
+        "weight": 20,
         "standard": "Claims, calculations, formulas, sources, FactSet retrieval records, as-of dates, and portfolio metrics are correct, comparable, traceable, and interpreted; required licensed evidence is submitted privately through Canvas and AI output is never treated as evidence."
       },
       {
-        "criterion": "Security analysis & selection",
+        "criterion": "Focused security selection",
         "weight": 20,
-        "standard": "Bond, mutual-fund, and ETF choices follow real candidate comparisons and address return drivers, risks, costs, duration/credit or benchmark/style exposure, liquidity, diversification, Issuer Reality Checks, and monitoring."
+        "standard": "Each client portfolio contains 8–10 holdings and never more than 10; funds and ETFs are primary, individual securities total no more than two or three, final holdings have concise scorecards, and realistic alternatives are rejected briefly without duplicate exposure or unnecessary concentration."
       },
       {
         "criterion": "Client suitability & IPS compliance",
-        "weight": 20,
+        "weight": 15,
         "standard": "Each recommendation traces to Phase 1 client needs and guardrails, and the IPS scorecard tests all relevant objectives and RRTTLLU constraints."
       },
       {
-        "criterion": "Portfolio integration & risk response",
-        "weight": 20,
-        "standard": "Weights, diversification, overlap, risk exposures, bear-case results, breaches, corrective trades, and re-tests form one internally consistent portfolio decision."
+        "criterion": "Shared portfolio quality & risk response",
+        "weight": 25,
+        "standard": "Final selection and weights, diversification, overlap, concentration, portfolio trade-offs, stress results, breaches, corrective trades, re-tests, and the supported hedge or no-hedge conclusion form one internally consistent portfolio decision."
       },
       {
-        "criterion": "Role ownership & team decision trail",
-        "weight": 15,
-        "standard": "Each analyst's owned work is identifiable, peer-reviewed, and integrated into votes, dissent, action items, visual exhibits, and the Analyst Decision Log."
+        "criterion": "Individual role evidence & decision trail",
+        "weight": 20,
+        "standard": "For each student, role-specific evidence is identifiable and peer-reviewed, and the Analyst Decision Log records recommendation(s), alternative(s) rejected, a key trade-off, contribution to integration or residual-risk decisions, and the link to the committee vote."
       }
     ],
     "oralCriteria": [
       {
-        "criterion": "Live defense & evidence response",
+        "criterion": "Role-specific committee defense",
         "weight": 25,
-        "standard": "Members answer the question asked, use relevant evidence and calculations, acknowledge uncertainty, and defend or revise the judgment under challenge."
+        "standard": "Within the presentation's compact investment-committee defense, each member answers targeted questions for their role, uses relevant evidence and calculations, acknowledges uncertainty, and defends or revises the judgment under challenge."
       },
       {
-        "criterion": "Individual role ownership",
-        "weight": 25,
-        "standard": "Each member demonstrates command of the work they owned and can explain the decision, evidence, AI challenge, verification, and limitations."
-      },
-      {
-        "criterion": "Team integration",
+        "criterion": "Individual evidence & Decision Log contribution",
         "weight": 20,
-        "standard": "The committee presents one coherent chain from client discovery through security selection, allocation, stress results, correction, and final recommendation."
+        "standard": "Each member demonstrates command of owned evidence and can explain their recommendation, alternative rejected, key trade-off, Decision Log contribution, verification, and limitations."
+      },
+      {
+        "criterion": "Shared portfolio quality & integration",
+        "weight": 25,
+        "standard": "The committee presents one coherent chain from client discovery through the focused 8–10 holding selection, final weights, overlap/concentration decisions, stress results, hedge or no-hedge conclusion, correction, and final recommendation."
       },
       {
         "criterion": "Client suitability & risk compliance",
         "weight": 20,
-        "standard": "Members can show where client needs changed the portfolio, explain the strongest bear case, and defend compliance or the corrective action taken."
+        "standard": "Members can show where client needs changed the portfolio, explain the strongest bear case and residual risk, and defend compliance, corrective action, and the hedge or no-hedge conclusion."
       },
       {
         "criterion": "Clarity, professionalism & visual evidence",
@@ -1144,19 +1223,27 @@
         ]
       },
       {
-        "audience": "Fund and ETF Analyst",
+        "audience": "Equity Analyst",
         "questions": [
-          "Why is this mutual fund or ETF the best implementation vehicle after fees, trading costs, taxes, liquidity, and benchmark/style exposure?",
-          "What did the look-through Issuer Reality Check reveal about the most material relevant holding, overlap, concentration, and actual diversification?",
-          "Which performance or tracking comparison is decision-useful, and how did you make the periods and as-of dates comparable?"
+          "Why does the selected equity fund or ETF deliver the needed exposure better than the strongest alternative after costs, liquidity, overlap, and style or sector concentration?",
+          "If the portfolio includes an individual equity, why is it superior to a fund or ETF for that role, what is its idiosyncratic risk, and why is the position size appropriate?",
+          "Which equity candidate did you reject, and what key trade-off separated it from your recommendation?"
         ]
       },
       {
-        "audience": "Portfolio Manager and Risk Analyst",
+        "audience": "Portfolio Manager",
         "questions": [
-          "Which risk contributes most to the portfolio's bear-case loss, and which client goal is therefore most exposed?",
-          "Show the IPS compliance test. Which metric came closest to a warning or breach, and what action follows?",
+          "Which analyst recommendations did you integrate, resize, or reject, and what explicit portfolio trade-off drove each decision?",
+          "Where did you resolve overlap or concentration, and why are the final 8–10 holdings and weights better than the strongest alternative mix?",
           "If the committee rejects one proposed adjustment, what alternative preserves the client goal and what new trade-off does it create?"
+        ]
+      },
+      {
+        "audience": "Risk and Derivatives Analyst",
+        "questions": [
+          "Which residual risk contributes most to the bear-case loss, and which client goal is therefore most exposed?",
+          "Why is the supported conclusion hedge or no hedge, and what evidence makes that conclusion preferable to changing the underlying holdings or weights?",
+          "If a hedge is proposed, explain the instrument, size, cost, liquidity, trade-offs, residual risk, and adjustment or removal condition."
         ]
       },
       {

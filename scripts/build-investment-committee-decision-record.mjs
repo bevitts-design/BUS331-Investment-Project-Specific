@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { FileBlob, SpreadsheetFile, Workbook } from "@oai/artifact-tool";
+import JSZip from "jszip";
 
 const targetRoot = process.argv[2];
 if (!targetRoot) throw new Error("Usage: node build-decision-record.mjs <target-repository-root>");
@@ -149,7 +150,7 @@ function addDecisionLogFormatting(range) {
 }
 
 function configureDecisionSheet(sheet, { phaseNumber, phaseTitle, scopeLabel, gateLabel }) {
-  titleBand(sheet, `BUS331 Investment Committee — Phase ${phaseNumber} Decision Record`, `${phaseTitle} | All four committee members review, vote, and sign this record.`);
+  titleBand(sheet, `BUS331 Investment Committee — Phase ${phaseNumber} Decision Record`, `${phaseTitle} | All five committee members review, vote, and sign this record.`);
   setColumnWidths(sheet, { A: 20, B: 22, C: 16, D: 24, E: 20, F: 18, G: 18, H: 4 });
 
   sheet.getRange("A4:A6").values = [["Team / Committee Name"], [scopeLabel], ["Meeting Date"]];
@@ -195,15 +196,15 @@ function configureDecisionSheet(sheet, { phaseNumber, phaseTitle, scopeLabel, ga
   sheet.getRange("A24:G24").values = [["Committee seat", "Member name", "Vote", "Reservation / condition", "Evidence cited", "Initials", "Follow-up owner"]];
   styleHeaders(sheet.getRange("A24:G24"));
   const seats = model.roles.map((role) => role.shortTitle);
-  sheet.getRange("A25:G28").values = seats.map((seat) => [seat, "", "", "", "", "", ""]);
-  sheet.getRange("A25:A28").format = { fill: "#F5F8FA", font: { bold: true, color: COLORS.navy }, wrapText: true };
-  styleInputs(sheet.getRange("B25:G28"));
-  sheet.getRange("C25:C28").dataValidation = { rule: { type: "list", values: ["Approve", "Revise", "Reject"] } };
+  sheet.getRange("A25:G29").values = seats.map((seat) => [seat, "", "", "", "", "", ""]);
+  sheet.getRange("A25:A29").format = { fill: "#F5F8FA", font: { bold: true, color: COLORS.navy }, wrapText: true };
+  styleInputs(sheet.getRange("B25:G29"));
+  sheet.getRange("C25:C29").dataValidation = { rule: { type: "list", values: ["Approve", "Revise", "Reject"] } };
 
   sheet.getRange("A30").values = [["Decision status"]];
   sheet.getRange("A30").format.font = { bold: true, color: COLORS.ink };
   sheet.getRange("B30:C30").merge();
-  sheet.getRange("B30").formulas = [["=IF(COUNTIF(C25:C28,\"Revise\")+COUNTIF(C25:C28,\"Reject\")>0,\"REVISION REQUIRED\",IF(COUNTIF(C25:C28,\"Approve\")=4,\"APPROVED\",\"INCOMPLETE\"))"]];
+  sheet.getRange("B30").formulas = [["=IF(COUNTIF(C25:C29,\"Revise\")+COUNTIF(C25:C29,\"Reject\")>0,\"REVISION REQUIRED\",IF(COUNTIF(C25:C29,\"Approve\")=5,\"APPROVED\",\"INCOMPLETE\"))"]];
   sheet.getRange("B30:C30").format = { font: { size: 12, bold: true, color: COLORS.ink }, fill: COLORS.yellow, borders: { preset: "outside", style: "medium", color: COLORS.navy } };
   addStatusFormatting(sheet.getRange("B30:C30"));
 
@@ -221,7 +222,7 @@ function configureDecisionSheet(sheet, { phaseNumber, phaseTitle, scopeLabel, ga
   sheet.getRange("E38:E42").dataValidation = { rule: { type: "list", values: ["Open", "Complete"] } };
 
   sheet.getRange("A44:G44").merge();
-  sheet.getRange("A44").values = [["Approval requires four Approve votes. Any Revise or Reject vote produces REVISION REQUIRED; document the change and reconvene before the next gate."]];
+  sheet.getRange("A44").values = [["Approval requires five Approve votes. Any Revise or Reject vote produces REVISION REQUIRED; document the change and reconvene before the next gate."]];
   sheet.getRange("A44:G44").format = { fill: COLORS.goldLight, font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 32 };
   sheet.freezePanes.freezeRows(8);
 }
@@ -234,7 +235,7 @@ start.getRange("A4:G4").format = { fill: COLORS.goldLight, font: { color: COLORS
 sectionBand(start, 6, "WORKFLOW");
 start.getRange("A7:G11").values = [
   ["Initial judgment", "Before AI use, each role records one provisional judgment for each assigned client and names the fact or assumption driving it.", "", "", "", "", ""],
-  ["AI interview + challenge", "Summarize the bounded client interview and the strongest counterargument; do not paste a transcript as analysis.", "", "", "", "", ""],
+  ["Alternative + trade-off", "Record the strongest realistic alternative rejected and the key trade-off behind the recommendation. Portfolio Manager entries record integration choices; Risk and Derivatives entries record residual risk and hedge/no-hedge evidence.", "", "", "", "", ""],
   ["Human verification", "Check client facts, calculations, and outside claims with an approved source and as-of date.", "", "", "", "", ""],
   ["Final reasoning", "State what changed, the final judgment, and the guardrail later security and portfolio decisions must honor.", "", "", "", "", ""],
   ["Committee gate", "Circulate the evidence, challenge the recommendation, vote, and record dissent, conditions, owners, and actions.", "", "", "", "", ""]
@@ -275,11 +276,11 @@ start.getRange("A25").values = [[model.project.scopeNote]];
 start.getRange("A25:G25").format = { fill: "#F5F8FA", font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 28 };
 start.freezePanes.freezeRows(6);
 
-titleBand(roster, "Committee Roster & Role Charter", "Assign one student to each committee seat. Roles define leadership; all members share the final decision.");
+titleBand(roster, "Committee Roster & Role Charter", "Assign one student to each of five committee seats. Roles define distinct decision rights; all members share the final decision.");
 setColumnWidths(roster, { A: 25, B: 26, C: 34, D: 34, E: 34, F: 34, G: 4, H: 4 });
 roster.getRange("A4:F4").values = [["Committee seat", "Member name", "Standing mandate", "Phase 1 responsibility", "Phase 2 responsibility", "Phase 3 responsibility"]];
 styleHeaders(roster.getRange("A4:F4"));
-roster.getRange("A5:F8").values = model.roles.map((role) => [
+roster.getRange("A5:F9").values = model.roles.map((role) => [
   role.title,
   "",
   role.mandate,
@@ -287,11 +288,11 @@ roster.getRange("A5:F8").values = model.roles.map((role) => [
   role.phaseResponsibilities["phase-2"],
   role.phaseResponsibilities["phase-3"]
 ]);
-roster.getRange("A5:A8").format = { fill: "#E7EEF5", font: { bold: true, color: COLORS.navy }, wrapText: true };
-styleInputs(roster.getRange("B5:B8"));
-roster.getRange("C5:F8").format = { font: { size: 9, color: COLORS.slate }, wrapText: true, verticalAlignment: "top" };
-roster.getRange("A4:F8").format.borders = { preset: "all", style: "thin", color: "#D5DFE7" };
-roster.getRange("A5:F8").format.rowHeight = 72;
+roster.getRange("A5:A9").format = { fill: "#E7EEF5", font: { bold: true, color: COLORS.navy }, wrapText: true };
+styleInputs(roster.getRange("B5:B9"));
+roster.getRange("C5:F9").format = { font: { size: 9, color: COLORS.slate }, wrapText: true, verticalAlignment: "top" };
+roster.getRange("A4:F9").format.borders = { preset: "all", style: "thin", color: "#D5DFE7" };
+roster.getRange("A5:F9").format.rowHeight = 72;
 sectionBand(roster, 10, "COMMITTEE NORMS", "F");
 roster.getRange("A11:F15").values = [
   ["Evidence before opinion", "Every recommendation cites the workbook, source, or client constraint that supports it.", "", "", "", ""],
@@ -305,13 +306,13 @@ roster.getRange("B11:F15").merge(true);
 roster.getRange("B11:F15").format = { font: { color: COLORS.slate }, wrapText: true };
 roster.freezePanes.freezeRows(4);
 
-titleBand(analystLog, "Analyst Decision Log", "Human-first judgment → AI interview and challenge → human verification → final reasoning → downstream guardrail", "T");
+titleBand(analystLog, "Analyst Decision Log", "Recommendation → alternative rejected → key trade-off → verification → final reasoning → downstream guardrail", "T");
 setColumnWidths(analystLog, {
   A: 13, B: 13, C: 20, D: 27, E: 28, F: 34, G: 14, H: 19, I: 32, J: 32,
   K: 27, L: 34, M: 14, N: 19, O: 28, P: 36, Q: 34, R: 16, S: 21, T: 19
 });
 analystLog.getRange("A4:T4").merge();
-analystLog.getRange("A4").values = [[`Before using AI, each of the four roles records at least one initial judgment for each assigned client. Minimum Phase 1 evidence: ${minimumDecisionLogEntries} complete role-by-client entries across the team.`]];
+analystLog.getRange("A4").values = [[`Each of the five roles records at least one recommendation for each assigned client. Every material entry includes an alternative rejected and a key trade-off. Minimum Phase 1 evidence: ${minimumDecisionLogEntries} complete role-by-client entries across the team.`]];
 analystLog.getRange("A4:T4").format = { fill: COLORS.goldLight, font: { bold: true, color: COLORS.ink }, wrapText: true, rowHeight: 30 };
 analystLog.getRange("A5:T5").merge();
 analystLog.getRange("A5").values = [["Summarize AI output; do not paste transcripts. Unknown client information stays unknown. Do not enter real personal information or proprietary FactSet data into an AI tool."]];
@@ -331,7 +332,7 @@ styleInputs(analystLog.getRange("H6:I6"));
 styleInputs(analystLog.getRange("K6:L6"));
 analystLog.getRange("A7:T7").values = [[
   "Decision ID", "Date", "Client", "Owner role", "Decision / question", "Initial judgment", "Confidence",
-  "Claim type", "AI challenge prompt / purpose", "AI output summary", "Claim to verify", "Verification source / link",
+  "Claim type", "Alternative(s) rejected", "Key trade-off", "Claim to verify", "Verification source / link",
   "Source as-of", "Verification result", "Change to reasoning", "Final judgment and rationale", "Downstream investment guardrail",
   "Peer reviewer", "Peer review status", "Entry status"
 ]];
@@ -361,32 +362,32 @@ analystLog.getRange("E40").formulas = [["=COUNTIF(T8:T37,\"REVISE / FLAG\")"]];
 analystLog.getRange("J40").values = [["Log readiness"]];
 analystLog.getRange("J40").format.font = { bold: true, color: COLORS.ink };
 analystLog.getRange("K40:M40").merge();
-analystLog.getRange("K40").formulas = [["=IF(OR(E6=\"\",H6=\"\",K6=\"\"),\"ENTER 3 CLIENTS\",IF(COUNTIF(B47:D50,\"READY\")<H40,\"COVERAGE INCOMPLETE\",IF(COUNTIF(T8:T37,\"INCOMPLETE\")+E40>0,\"REVIEW LOG\",\"READY FOR PHASE 1 GATE\")))"]];
+analystLog.getRange("K40").formulas = [["=IF(OR(E6=\"\",H6=\"\",K6=\"\"),\"ENTER 3 CLIENTS\",IF(COUNTIF(B47:D51,\"READY\")<H40,\"COVERAGE INCOMPLETE\",IF(COUNTIF(T8:T37,\"INCOMPLETE\")+E40>0,\"REVIEW LOG\",\"READY FOR PHASE 1 GATE\")))"]];
 analystLog.getRange("B40:C40").format = { fill: "#E7EEF5", font: { bold: true, color: COLORS.ink } };
 analystLog.getRange("E40:F40").format = { fill: COLORS.red, font: { bold: true, color: COLORS.redText } };
 analystLog.getRange("H40").format = { fill: COLORS.goldLight, font: { bold: true, color: COLORS.ink } };
 analystLog.getRange("K40:M40").format = { fill: COLORS.yellow, font: { bold: true, color: COLORS.ink }, borders: { preset: "outside", style: "medium", color: COLORS.navy } };
 addDecisionLogFormatting(analystLog.getRange("K40:M40"));
 analystLog.getRange("A42:T42").merge();
-analystLog.getRange("A42").values = [["Evidence-ready means the entry shows the initial judgment, the AI challenge, a human-verified source and as-of date, what changed, the final reasoning, a downstream guardrail, and peer review. Contradicted or unverifiable material claims must be revised or carried to the committee as an explicit open issue."]];
+analystLog.getRange("A42").values = [["Evidence-ready means the entry shows the recommendation or initial judgment, an alternative rejected, a key trade-off, a human-verified source and as-of date, what changed, the final reasoning, a downstream guardrail, and peer review. Portfolio Manager entries identify integration decisions; Risk and Derivatives entries identify residual risk and hedge/no-hedge evidence. Contradicted or unverifiable material claims must be revised or carried to the committee as an explicit open issue."]];
 analystLog.getRange("A42:T42").format = { fill: COLORS.goldLight, font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 34 };
 sectionBand(analystLog, 45, "ROLE × CLIENT COVERAGE", "T");
 analystLog.getRange("A46:E46").values = [["Committee role", "Assigned Client 1", "Assigned Client 2", "Assigned Client 3", "Role coverage"]];
 styleHeaders(analystLog.getRange("A46:E46"));
-analystLog.getRange("A47:A50").values = model.roles.map((role) => [role.title]);
-analystLog.getRange("A47:A50").format = { fill: "#E7EEF5", font: { bold: true, color: COLORS.navy }, wrapText: true, borders: { preset: "all", style: "thin", color: "#D5DFE7" } };
+analystLog.getRange("A47:A51").values = model.roles.map((role) => [role.title]);
+analystLog.getRange("A47:A51").format = { fill: "#E7EEF5", font: { bold: true, color: COLORS.navy }, wrapText: true, borders: { preset: "all", style: "thin", color: "#D5DFE7" } };
 analystLog.getRange("B47").formulas = [["=IF(OR($E$6=\"\",COUNTIFS($C$8:$C$37,$E$6,$D$8:$D$37,$A47,$T$8:$T$37,\"EVIDENCE READY\")=0),\"MISSING\",\"READY\")"]];
-analystLog.getRange("B47:B50").fillDown();
+analystLog.getRange("B47:B51").fillDown();
 analystLog.getRange("C47").formulas = [["=IF(OR($H$6=\"\",COUNTIFS($C$8:$C$37,$H$6,$D$8:$D$37,$A47,$T$8:$T$37,\"EVIDENCE READY\")=0),\"MISSING\",\"READY\")"]];
-analystLog.getRange("C47:C50").fillDown();
+analystLog.getRange("C47:C51").fillDown();
 analystLog.getRange("D47").formulas = [["=IF(OR($K$6=\"\",COUNTIFS($C$8:$C$37,$K$6,$D$8:$D$37,$A47,$T$8:$T$37,\"EVIDENCE READY\")=0),\"MISSING\",\"READY\")"]];
-analystLog.getRange("D47:D50").fillDown();
+analystLog.getRange("D47:D51").fillDown();
 analystLog.getRange("E47").formulas = [["=IF(COUNTIF(B47:D47,\"MISSING\")>0,\"MISSING\",\"READY\")"]];
-analystLog.getRange("E47:E50").fillDown();
-analystLog.getRange("B47:E50").format = { fill: "#F5F8FA", font: { bold: true, color: COLORS.ink }, wrapText: true, borders: { preset: "all", style: "thin", color: "#D5DFE7" } };
-addDecisionLogFormatting(analystLog.getRange("B47:E50"));
+analystLog.getRange("E47:E51").fillDown();
+analystLog.getRange("B47:E51").format = { fill: "#F5F8FA", font: { bold: true, color: COLORS.ink }, wrapText: true, borders: { preset: "all", style: "thin", color: "#D5DFE7" } };
+addDecisionLogFormatting(analystLog.getRange("B47:E51"));
 analystLog.getRange("A52:T52").merge();
-analystLog.getRange("A52").values = [["The Phase 1 gate remains closed until every role has at least one evidence-ready entry for each of the three assigned clients. The client names in row 6 must match the Client column exactly."]];
+analystLog.getRange("A52").values = [["The Phase 1 gate remains closed until every one of the five roles has at least one evidence-ready entry for each of the three assigned clients. The client names in row 6 must match the Client column exactly."]];
 analystLog.getRange("A52:T52").format = { fill: COLORS.goldLight, font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 30 };
 analystLog.freezePanes.freezeRows(7);
 analystLog.freezePanes.freezeColumns(4);
@@ -473,5 +474,44 @@ console.log(decisionLogCheck.ndjson);
 
 const output = await SpreadsheetFile.exportXlsx(workbook);
 await output.save(outputPath);
+
+// artifact-tool emits random relationship IDs and current ZIP timestamps.
+// Canonicalize them so repeated builds from the same model are byte-identical.
+const archive = await JSZip.loadAsync(await fs.readFile(outputPath));
+const relationshipParts = Object.keys(archive.files)
+  .filter((name) => name.endsWith(".rels"))
+  .sort();
+for (const relationshipPartName of relationshipParts) {
+  const relationshipPart = archive.file(relationshipPartName);
+  if (!relationshipPart) continue;
+  let relationshipXml = await relationshipPart.async("string");
+  const relationships = [...relationshipXml.matchAll(/<Relationship\b[^>]*\bId="([^"]+)"[^>]*\/>/g)]
+    .map((match) => ({
+      oldId: match[1],
+      target: match[0].match(/\bTarget="([^"]*)"/)?.[1] || "",
+      type: match[0].match(/\bType="([^"]*)"/)?.[1] || "",
+      targetMode: match[0].match(/\bTargetMode="([^"]*)"/)?.[1] || ""
+    }))
+    .sort((a, b) => `${a.type}|${a.target}|${a.targetMode}`.localeCompare(`${b.type}|${b.target}|${b.targetMode}`));
+  const idMap = new Map(relationships.map((relationship, index) => [relationship.oldId, `rId${index + 1}`]));
+  for (const [oldId, newId] of idMap) relationshipXml = relationshipXml.replaceAll(oldId, newId);
+  archive.file(relationshipPartName, relationshipXml);
+
+  const relationshipDirectory = path.posix.dirname(relationshipPartName);
+  if (relationshipDirectory !== "_rels") {
+    const ownerDirectory = path.posix.dirname(relationshipDirectory);
+    const ownerName = path.posix.basename(relationshipPartName, ".rels");
+    const ownerPartName = path.posix.join(ownerDirectory, ownerName);
+    const ownerPart = archive.file(ownerPartName);
+    if (ownerPart) {
+      let ownerXml = await ownerPart.async("string");
+      for (const [oldId, newId] of idMap) ownerXml = ownerXml.replaceAll(oldId, newId);
+      archive.file(ownerPartName, ownerXml);
+    }
+  }
+}
+const stableZipDate = new Date("2000-01-01T00:00:00Z");
+for (const zipEntry of Object.values(archive.files)) zipEntry.date = stableZipDate;
+await fs.writeFile(outputPath, await archive.generateAsync({ type: "nodebuffer", compression: "DEFLATE" }));
 await fs.rm(`${outputPath}.inspect.ndjson`, { force: true });
 console.log(`Saved ${outputPath}`);

@@ -241,11 +241,12 @@ def main() -> None:
         rightMargin=0.62 * inch,
         leftMargin=0.62 * inch,
         topMargin=0.55 * inch,
-        bottomMargin=0.72 * inch,
+        bottomMargin=0.88 * inch,
         title="BUS331 Investment Project Rubrics",
         author="BUS331 Investments",
         subject="Student-facing written and oral assessment criteria",
         pageCompression=1,
+        invariant=1,
     )
 
     story = [
@@ -308,7 +309,7 @@ def main() -> None:
             PageBreak(),
             banner(
                 "Oral Committee Defense",
-                "Every member owns a role and must understand the integrated recommendation",
+                "Compact defense within the final presentation | Every member owns role evidence and the integrated recommendation",
                 styles,
             ),
             Spacer(1, 12),
@@ -316,7 +317,7 @@ def main() -> None:
             Spacer(1, 14),
             Paragraph("Defense standard", styles["Section"]),
             paragraph(
-                "The panel may direct any question to any member. Answer the question asked, use the relevant evidence or calculation, acknowledge uncertainty, and explain whether the challenge changes the decision. A strong answer can defend, qualify, or revise the recommendation; it cannot substitute confidence for evidence.",
+                "The compact investment-committee defense is part of the final presentation. Each member answers targeted role questions, uses the relevant evidence or calculation, explains their Decision Log contribution, alternative rejected, and key trade-off, acknowledges uncertainty, and states whether the challenge changes the decision.",
                 styles["BodyCompact"],
             ),
             PageBreak(),

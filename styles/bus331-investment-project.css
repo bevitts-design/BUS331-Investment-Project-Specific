@@ -8,6 +8,7 @@
   --teal-500: #2f9e9b;
   --terra-500: #c96f4f;
   --steel-500: #6f8fab;
+  --risk-500: #765b9b;
   --ink: #102238;
   --slate: #4b6073;
   --muted: #6d7f8f;
@@ -405,6 +406,10 @@ h2 .accent {
 
 .role-row[data-color="terra"] .role-color {
   background: var(--terra-500);
+}
+
+.role-row[data-color="risk"] .role-color {
+  background: var(--risk-500);
 }
 
 .role-name,
@@ -1250,6 +1255,10 @@ h2 .accent {
   border-top-color: var(--terra-500);
 }
 
+.interview-round[data-color="risk"] {
+  border-top-color: var(--risk-500);
+}
+
 .interview-round h3 {
   margin: 9px 0 12px;
   color: var(--navy-900);
@@ -1820,6 +1829,10 @@ tr:last-child td {
 .role-integration-grid > article[data-color="teal"] { border-top-color: var(--teal-500); }
 .issuer-role-list article[data-color="terra"],
 .role-integration-grid > article[data-color="terra"] { border-top-color: var(--terra-500); }
+.issuer-role-list article[data-color="steel"],
+.role-integration-grid > article[data-color="steel"] { border-top-color: var(--steel-500); }
+.issuer-role-list article[data-color="risk"],
+.role-integration-grid > article[data-color="risk"] { border-top-color: var(--risk-500); }
 
 .issuer-role-list h4 {
   margin-bottom: 4px;

@@ -43,7 +43,7 @@ const extractPdfText = async (pdfPath) => {
 const phasePath = (phase) => `project/${phase.id}-${phase.title.toLowerCase().replaceAll("&", "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.html`;
 const roadmapPath = "project/roadmap.html";
 
-if (model.schemaVersion < 3) fail("Project model schema must include the Phase 2 workflow contract.");
+if (model.schemaVersion < 4) fail("Project model schema must include the five-role focused-selection and derivative-risk contract.");
 
 const roadmap = model.studentRoadmap;
 if (!roadmap) {
@@ -66,16 +66,17 @@ if (!roadmap) {
 }
 
 if (model.phases.length !== 3) fail(`Expected exactly 3 phases; found ${model.phases.length}.`);
-if (model.roles.length !== 4) fail(`Expected exactly 4 committee roles; found ${model.roles.length}.`);
+if (model.roles.length !== 5) fail(`Expected exactly 5 committee roles; found ${model.roles.length}.`);
 
 const requiredRoleTitles = [
   "Client and Macro Strategist",
   "Fixed-Income Analyst",
-  "Fund and ETF Analyst",
-  "Portfolio Manager and Risk Analyst"
+  "Equity Analyst",
+  "Portfolio Manager",
+  "Risk and Derivatives Analyst"
 ];
 if (model.roles.map((role) => role.title).join("|") !== requiredRoleTitles.join("|")) {
-  fail("The four committee roles must match the Client/Macro, Fixed-Income, Fund/ETF, and Portfolio/Risk milestone contract in order.");
+  fail("The five committee roles must match the Client/Macro, Fixed-Income, Equity, Portfolio Manager, and Risk/Derivatives contract in order.");
 }
 
 const phase2Experience = model.phase2Experience;
@@ -86,7 +87,7 @@ if (!phase2Experience) {
   if (phase2Experience.securityWorkflow?.length < 5) fail("Security analysis must define a complete compare, challenge, verify, and decide workflow.");
   if (phase2Experience.portfolioWorkflow?.length < 6) fail("Portfolio management must define allocation, IPS, stress, correction, re-test, and vote steps.");
   const instrumentText = JSON.stringify(phase2Experience.instrumentStandards || []);
-  for (const required of ["Bond", "Mutual fund", "ETF", "duration", "credit", "benchmark", "style", "diversification", "cost", "liquidity", "client suitability"]) {
+  for (const required of ["fixed-income fund", "Equity fund", "individual equity", "duration", "credit", "benchmark", "style", "diversification", "cost", "liquidity", "client fit"]) {
     if (!new RegExp(required, "i").test(instrumentText)) fail(`Phase 2 instrument analysis is missing ${required}.`);
   }
   const issuerCheck = phase2Experience.issuerRealityCheck;
@@ -95,7 +96,7 @@ if (!phase2Experience) {
   for (const required of ["business model", "revenue drivers", "macro sensitivity", "margin", "cash-flow", "liquidity", "leverage", "interest coverage", "debt-maturity", "issuer-specific risk", "client fit"]) {
     if (!new RegExp(required, "i").test(issuerText)) fail(`Issuer Reality Check is missing ${required}.`);
   }
-  if (issuerCheck?.roleResponsibilities?.length !== 4) fail("Issuer Reality Check must assign all four committee roles.");
+  if (issuerCheck?.roleResponsibilities?.length !== 5) fail("Issuer Reality Check must assign all five committee roles.");
   const issuerRoleIds = new Set(issuerCheck?.roleResponsibilities?.map((item) => item.roleId));
   for (const role of model.roles) if (!issuerRoleIds.has(role.id)) fail(`Issuer Reality Check is missing ${role.title}.`);
   const factSetWorkflow = phase2Experience.factSetWorkflow;
@@ -107,7 +108,15 @@ if (!phase2Experience) {
   for (const required of ["Issuer Reality Check", "Credit and fixed income", "Mutual funds and ETFs", "Corporate issuer analysis", "Portfolio risk inputs"]) {
     if (!factSetWorkflow?.connections?.some((item) => item.workstream === required)) fail(`FactSet workflow is missing the ${required} connection.`);
   }
-  if (phase2Experience.roleIntegration?.length !== 4) fail("Phase 2 must define security and portfolio ownership for all four roles.");
+  const selectionContractText = JSON.stringify(phase2Experience.selectionContract || {});
+  for (const required of ["8–10", "never exceed 10", "Funds and ETFs", "two or three", "Individual bonds are not required", "Cost and trading expenses", "overlap", "Diversification contribution", "idiosyncratic risk", "position-size", "Full scorecards are required for final holdings"]) {
+    if (!new RegExp(required, "i").test(selectionContractText)) fail(`Focused selection contract is missing ${required}.`);
+  }
+  const hedgeText = JSON.stringify(phase2Experience.derivativeHedge || {});
+  for (const required of ["at most one", "residual risk", "no-hedge", "instrument", "size", "cost", "liquidity", "trade-offs", "removal"]) {
+    if (!new RegExp(required, "i").test(hedgeText)) fail(`Derivative hedge contract is missing ${required}.`);
+  }
+  if (phase2Experience.roleIntegration?.length !== 5) fail("Phase 2 must define security and portfolio ownership for all five roles.");
   if (!phase2Experience.securityQualityGate?.some((item) => /AI/i.test(item) && /evidence/i.test(item))) fail("Security quality gate must preserve AI challenge and human evidence verification.");
   if (!phase2Experience.portfolioQualityGate?.some((item) => /breach/i.test(item) && /re-test/i.test(item))) fail("Portfolio quality gate must require breach correction and re-testing.");
 }
@@ -127,7 +136,7 @@ if (!experience) {
   if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Prepare|Observe the model|Interview your client|Challenge and verify|Set the mandate") {
     fail("Phase 1 decision cycle must preserve the preparation, classroom model, team interview, verification, and mandate sequence.");
   }
-  if (experience.interviewRounds?.length !== 4) fail("Phase 1 must define one interview round for each of the four roles.");
+  if (experience.interviewRounds?.length !== 5) fail("Phase 1 must define one interview round for each of the five roles.");
   const roundRoleIds = new Set(experience.interviewRounds?.map((round) => round.roleId));
   for (const role of model.roles) {
     if (!roundRoleIds.has(role.id)) fail(`Phase 1 is missing an interview round for ${role.title}.`);
@@ -215,6 +224,7 @@ const supportingHtmlFiles = [
 
 const hrefPattern = /href="([^"]+)"/g;
 const oldPhasePattern = /\bPhase\s+(?:0?[4-6])\b/i;
+const forbiddenPublicPattern = /Fund and ETF Analyst|Portfolio Manager and Risk Analyst|four-person|all four|at least 10 securities|every client needs at least one derivative|mandatory.{0,30}hedge|required.{0,20}compare to at least 1 alternative|complete one thesis block per security|completed exemplar|worked example|Priya Mehta/i;
 
 for (const relative of generatedFiles) {
   const absolute = path.join(rootDir, relative);
@@ -230,6 +240,7 @@ for (const relative of generatedFiles) {
   if (!/<title>[^<]+<\/title>/i.test(html)) fail(`${relative} is missing a non-empty title.`);
   if (oldPhasePattern.test(html)) fail(`${relative} contains retired Phase 4-6 language.`);
   if (/Spring 2026/i.test(html)) fail(`${relative} contains the retired Spring 2026 term.`);
+  if (forbiddenPublicPattern.test(html)) fail(`${relative} contains a retired role, obsolete portfolio rule, or completed-example marker.`);
 
   for (const match of html.matchAll(hrefPattern)) {
     const href = match[1];
@@ -259,6 +270,7 @@ for (const [index, relative] of canvasFragments.entries()) {
   if (model.canvasSubmissions.assignments[index].includePrivateEvidenceBoundary && !/Submit through Canvas/i.test(html)) fail(`${relative} is missing its Canvas submission boundary.`);
   if (!model.canvasSubmissions.assignments[index].includePrivateEvidenceBoundary && /Submit through Canvas/i.test(html)) fail(`${relative} should not include the Canvas submission boundary.`);
   if (/public repository|private repository/i.test(html)) fail(`${relative} should direct students to Canvas without repository terminology.`);
+  if (forbiddenPublicPattern.test(html)) fail(`${relative} contains a retired role, obsolete portfolio rule, or completed-example marker.`);
   if (!/Submission process/i.test(html)) fail(`${relative} is missing its submission process.`);
   for (const file of model.canvasSubmissions.assignments[index].requiredFiles) {
     if (!html.includes(file.name)) fail(`${relative} is missing required filename ${file.name}.`);
@@ -277,6 +289,7 @@ for (const relative of supportingHtmlFiles) {
   if (!/<title>[^<]+<\/title>/i.test(html)) fail(`${relative} is missing a non-empty title.`);
   if (oldPhasePattern.test(html)) fail(`${relative} contains retired phase language.`);
   if (/Spring 2026/i.test(html)) fail(`${relative} contains a retired course term.`);
+  if (forbiddenPublicPattern.test(html)) fail(`${relative} contains a retired role, obsolete portfolio rule, or completed-example marker.`);
 
   for (const match of html.matchAll(hrefPattern)) {
     const href = match[1];
@@ -303,13 +316,19 @@ async function extractOfficeText(relative) {
     encoding: "utf8",
     maxBuffer: 32 * 1024 * 1024
   });
-  return stdout.replace(/<[^>]+>/g, " ");
+  return stdout
+    .replace(/<[^>]+>/g, " ")
+    .replaceAll("&amp;", "&")
+    .replaceAll("&lt;", "<")
+    .replaceAll("&gt;", ">");
 }
 
 const officeArtifacts = [
   ...new Set(
-    model.resources
-      .map((resource) => resource.path)
+    [
+      ...model.resources.map((resource) => resource.path),
+      "source-templates/BUS331_InvProject_SecuritySelection_Layout_Base.xlsx"
+    ]
       .filter((resourcePath) => /\.(?:xlsx|pptx|docx)$/i.test(resourcePath))
   )
 ];
@@ -319,22 +338,42 @@ for (const relative of officeArtifacts) {
     const text = await extractOfficeText(relative);
     if (oldPhasePattern.test(text)) fail(`${relative} contains retired phase language inside the Office package.`);
     if (/Spring 2026/i.test(text)) fail(`${relative} contains a retired course term inside the Office package.`);
+    if (forbiddenPublicPattern.test(text)) fail(`${relative} contains a retired role, obsolete portfolio rule, or completed-example marker inside the Office package.`);
+    if (/SecuritySelection_(?:Template|Layout_Base)/i.test(relative)) {
+      for (const required of ["FINAL SCORECARDS", "RISK & HEDGE", "8–10", "no-hedge", "Cost and trading expenses", "Risk and Derivatives Analyst"]) {
+        if (!text.toLowerCase().includes(required.toLowerCase())) fail(`${relative} is missing current focused-selection workbook content: ${required}.`);
+      }
+    }
+    if (/Decision_Record/i.test(relative)) {
+      for (const required of ["Equity Analyst", "Risk and Derivatives Analyst", "Alternative(s) rejected", "Key trade-off", "15"]) {
+        if (!text.toLowerCase().includes(required.toLowerCase())) fail(`${relative} is missing current five-role decision-log content: ${required}.`);
+      }
+    }
   } catch (error) {
     fail(`Could not inspect public Office artifact ${relative}: ${error.message}`);
   }
 }
 
-const rubricPdfPath = path.join(rootDir, "files", "final-rubric.pdf");
-if (!(await exists(rubricPdfPath))) {
-  fail("Missing public Phase 3 rubric PDF.");
-} else {
+const publicPdfArtifacts = [
+  { relative: "files/final-rubric.pdf", required: ["Investment Project Rubrics", "Role-specific committee", "Decision Log"] },
+  { relative: "files/BUS331_Investment_Committee_Simulation_Project_Guide.pdf", required: ["five committee roles", "8-10 final holdings", "no-hedge"] }
+];
+for (const pdf of publicPdfArtifacts) {
+  const pdfPath = path.join(rootDir, pdf.relative);
+  if (!(await exists(pdfPath))) {
+    fail(`Missing public PDF artifact: ${pdf.relative}.`);
+    continue;
+  }
   try {
-    const rubricPdfText = await extractPdfText(rubricPdfPath);
-    if (oldPhasePattern.test(rubricPdfText)) fail("files/final-rubric.pdf contains retired phase language.");
-    if (/Spring 2026/i.test(rubricPdfText)) fail("files/final-rubric.pdf contains a retired course term.");
-    if (!rubricPdfText.includes("Investment Project Rubrics")) fail("files/final-rubric.pdf was not generated from the current rubric source.");
+    const pdfText = await extractPdfText(pdfPath);
+    if (oldPhasePattern.test(pdfText)) fail(`${pdf.relative} contains retired phase language.`);
+    if (/Spring 2026/i.test(pdfText)) fail(`${pdf.relative} contains a retired course term.`);
+    if (forbiddenPublicPattern.test(pdfText)) fail(`${pdf.relative} contains a retired role, obsolete portfolio rule, or completed-example marker.`);
+    for (const required of pdf.required) {
+      if (!pdfText.toLowerCase().includes(required.toLowerCase())) fail(`${pdf.relative} is missing current generated content: ${required}.`);
+    }
   } catch (error) {
-    fail(`Could not inspect public rubric PDF: ${error.message}`);
+    fail(`Could not inspect public PDF ${pdf.relative}: ${error.message}`);
   }
 }
 
@@ -390,9 +429,14 @@ if (/Start live interview|client-interview-simulator|Bounded role-play|Start wit
 const securityHtml = await fs.readFile(path.join(rootDir, "project", "security-analysis-selection.html"), "utf8");
 for (const requiredText of [
   "Phase 1 is the decision filter",
-  "Bond or fixed-income exposure",
-  "Mutual fund",
-  "ETF",
+  "Build a focused candidate set",
+  "8–10 holdings",
+  "Funds and ETFs are the primary",
+  "Fixed-income fund, ETF, or limited direct exposure",
+  "Equity fund or ETF",
+  "Limited individual equity",
+  "Use one concise scorecard",
+  "Rejected alternatives",
   "Candidate comparison and decision record",
   "Issuer Reality Check",
   "Yield or recent return alone cannot support a recommendation",
@@ -419,6 +463,9 @@ for (const requiredText of [
   "Document the adjustment and re-test",
   "Pass · Warning · Breach",
   "Weights total 100%",
+  "Conclude hedge or no hedge",
+  "One targeted hedge at most",
+  "No hedge is a valid conclusion",
   "AI boundary"
 ]) {
   if (!portfolioHtml.includes(requiredText)) fail(`Portfolio and Stress Testing page is missing required student workflow content: ${requiredText}.`);
@@ -453,10 +500,10 @@ for (const rubric of canvasRubricImports) {
   }
   if (!csv.includes(rubric.name) || !csv.includes("Complete") || !csv.includes("Developing") || !csv.includes("Not demonstrated")) fail(`${rubric.file} is missing Canvas rating data.`);
 }
-for (const requiredText of ["Evidence quality", "Security analysis", "Client suitability", "Portfolio integration", "Role ownership", "Live defense", "Team integration", "Issuer Reality Check"]) {
+for (const requiredText of ["Evidence quality", "Focused security selection", "Client suitability", "Shared portfolio quality", "Individual role evidence", "Role-specific committee defense", "Decision Log contribution", "Issuer Reality Check"]) {
   if (!assessmentHtml.includes(requiredText)) fail(`Assessment page is missing updated rubric or committee-defense content: ${requiredText}.`);
 }
-if (model.assessment.committeeQuestions?.length < 5) fail("Assessment must define role-specific and cross-committee defense questions.");
+if (model.assessment.committeeQuestions?.length < 6) fail("Assessment must define all five role-specific and cross-committee defense questions.");
 
 for (const relative of ["project/security-analysis-selection.html", "project/portfolio-management-stress-testing.html", "project/assessment.html"]) {
   const html = await fs.readFile(path.join(rootDir, relative), "utf8");
@@ -490,7 +537,7 @@ if (!(await exists(workbookBuilderPath))) {
   fail("Missing maintained committee-workbook builder.");
 } else {
   const workbookBuilder = await fs.readFile(workbookBuilderPath, "utf8");
-  for (const marker of ["ROLE × CLIENT COVERAGE", "minimumDecisionLogEntries", "COUNTIFS($C$8:$C$37"]) {
+  for (const marker of ["ROLE × CLIENT COVERAGE", "minimumDecisionLogEntries", "COUNTIFS($C$8:$C$37", "Alternative(s) rejected", "Key trade-off", "Risk and Derivatives entries"]) {
     if (!workbookBuilder.includes(marker)) fail(`Committee-workbook builder is missing the role-by-client readiness control: ${marker}.`);
   }
 }
@@ -500,7 +547,7 @@ if (!(await exists(securityWorkbookUpdaterPath))) {
   fail("Missing maintained security-selection workbook updater.");
 } else {
   const updater = await fs.readFile(securityWorkbookUpdaterPath, "utf8");
-  for (const marker of ["ISSUER CHECK", "EVIDENCE LOG", "Yield or recent return alone cannot support a recommendation", "Business Model", "Interest Coverage / Debt Maturities", "Fund/ETF look-through", "Client-Fit Conclusion", "FactSet Data / Research Retrieved", "Effect on Recommendation", "Canvas Submission Item / Evidence-File Reference"]) {
+  for (const marker of ["source-templates", "BUS331_InvProject_SecuritySelection_Layout_Base.xlsx", "FINAL SCORECARDS", "RISK & HEDGE", "8–10 final holdings", "Cost & Trading Expenses", "Hedge / No-Hedge", "JSZip", "ISSUER CHECK", "EVIDENCE LOG", "Yield or recent return alone cannot support a recommendation", "Business Model", "Interest Coverage / Debt Maturities", "Fund/ETF look-through", "Client-Fit Conclusion", "FactSet Data / Research Retrieved", "Effect on Recommendation", "Canvas Submission Item / Evidence-File Reference"]) {
     if (!updater.includes(marker)) fail(`Security-selection workbook updater is missing Issuer Reality Check control: ${marker}.`);
   }
 }

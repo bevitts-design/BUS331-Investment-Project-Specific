@@ -24,21 +24,22 @@ One critical public/private boundary issue was identified during inventory:
 | Current artifact | Intended audience | Useful content to preserve | Required disposition |
 | --- | --- | --- | --- |
 | `index.html` | Student/public | Navy-gold identity, concise cards, resource access, AI traffic-light rules | Rebuild from the project manifest as a three-phase committee dashboard |
-| `BUS331_InvProject_Requirements_AllPhases.html` | Student/public | Scenario, client mandate, four roles, technical expectations, checklists | Replace with a generated three-phase project guide; retain the path only as a compatibility entry point |
+| `BUS331_InvProject_Requirements_AllPhases.html` | Student/public | Scenario, client mandate, five roles, technical expectations, checklists | Replace with a generated three-phase project guide; retain the path only as a compatibility entry point |
 | `project/macro-analysis.html` | Student/public | Macro objective, indicator list, starter-workbook link | Fold into Phase 1; replace broken PDF dependency with public-safe instructions |
 | `project/ips-client-profiles.html` | Student/public | RRTTLLU framing and links to client resources | Fold into Phase 1 as the client-mandate workstream |
-| `project/client-discovery-ai-protocol.html` | Student/public | Instructor-led demonstration, five team-specific structured role-play launches, four analyst interview rounds, source verification, and guardrail handoff | Generate from `project-model.json`; do not expose sealed role cards, Scenario Reveal packets, or instructor release controls |
+| `project/client-discovery-ai-protocol.html` | Student/public | Instructor-led demonstration, five team-specific structured role-play launches, five analyst interview rounds, source verification, and guardrail handoff | Generate from `project-model.json`; do not expose sealed role cards, Scenario Reveal packets, or instructor release controls |
 | `project/BUS331_InvProject_Bridge_CME_Guide.html` | Student/public | CME logic, scenario translation, Solver workflow | Preserve as Phase 2 Workstream A |
-| `project/BUS331_InvProject_SecuritySelection_Guide.html` | Student/public | Macro filter, security thesis, derivative hedge comparison | Preserve as Phase 2 Workstream B; keep exemplars clearly separate from assigned clients |
-| `project/security-analysis-selection.html` | Student/public | Phase 1 guardrail handoff, bond/fund/ETF due diligence, candidate comparison, Issuer Reality Check, AI challenge and verification | Generated Phase 2 workflow; use with the supporting security-selection technical reference |
+| `project/BUS331_InvProject_SecuritySelection_Guide.html` | Student/public | Focused candidate workflow, funds/ETFs-first selection, final-holding scorecard, concise alternatives, and optional hedge/no-hedge boundary | Preserve as the clean Phase 2 Workstream B technical reference; do not add completed examples |
+| `project/security-analysis-selection.html` | Student/public | Allocation/mandate handoff, 8–10 holding boundary, final-holding scorecards, concise alternatives, fixed-income/equity ownership, and Issuer Reality Check | Generated Phase 2 workflow; use with the supporting security-selection technical reference |
 | `project/BUS331_InvProject_StressTest_Guide.html` | Student/public | Base/bear metrics, tripwire logic, reallocation decision, AI audit | Preserve as Phase 2 Workstream C |
-| `project/BUS331_InvProject_FinalPitch_Guide.html` | Student/public | Two-audience framing, dossier structure, pitch timing, Q&A preparation | Reframe as Phase 3 committee decision and defense |
+| `project/BUS331_InvProject_FinalPitch_Guide.html` | Student/public | Final presentation structure, compact investment-committee defense, role-specific questions, and Q&A preparation | Preserve as the Phase 3 committee decision and defense guide |
 | `files/Macro_Starter_Template_Student.xlsx` | Student/public | Historical data, human-first analysis, consensus comparison, scenarios, sensitivity matrix | Preserve; align visible role and phase language with Phase 1 |
 | `files/Client_Scenarios_Profiles.pptx` | Student/public | Five team sets with three clients each | Preserve; align term and committee framing |
 | `files/Client_Scenarios_Data_File.xlsx` | Student/public | Fifteen client records and formula-based risk classifications | Preserve as the client-data source; no hidden sheets or external links found |
 | `files/Investment_Policy_Statement_Template_Client_Analysis_Framework.docx` | Student/public | Detailed IPS framework, constraints, allocation, monitoring, acknowledgment | Preserve; distinguish its internal implementation timeline from project phases |
 | `files/BUS331_InvProject_CMEMatrix_Template.xlsx` | Student/public | Base/bear cases, correlations, optimization, client constraints | Maintain as Phase 2 Workstream A |
-| `files/BUS331_InvProject_SecuritySelection_Template.xlsx` | Student/public | Three client selection tabs, required Issuer Reality Check, and reusable FactSet Research and Evidence Log | Updated student edition; maintain with `scripts/update-security-selection-workbook.mjs`; never store completed FactSet data in the public repository |
+| `files/BUS331_InvProject_SecuritySelection_Template.xlsx` | Student/public | Three client tabs, 8–10 final-holding scorecards, residual-risk and hedge/no-hedge record, required Issuer Reality Check, and reusable FactSet Evidence Log | Updated student edition; maintain with `scripts/update-security-selection-workbook.mjs`; never store completed FactSet data in the public repository |
+| `source-templates/BUS331_InvProject_SecuritySelection_Layout_Base.xlsx` | Maintained student-safe source | Stable blank layout base for Security Selection workbook regeneration | Keep free of completed work and proprietary data; the builder applies the current `project-model.json` contract on every run |
 | `files/BUS331_InvProject_StressTest_Template.xlsx` | Student/public | Three client stress tests, summary, tripwire status, corrective-action logic | Maintain as Phase 2 Workstream C |
 | `project/portfolio-management-stress-testing.html` | Student/public | Integrated allocation, full IPS scorecard, bear-case test, breach correction, re-test, role handoffs | Generated Phase 2 workflow; use with the supporting stress-test technical reference |
 | `project/canvas-submission-guide.html` | Student/public | One team submission per phase, exact filenames, private licensed-evidence rules, preflight checks, and receipt retention | Generate from `project-model.json`; treat its contract as authoritative |
@@ -64,14 +65,15 @@ One critical public/private boundary issue was identified during inventory:
 | Phase 2 - Build and Challenge | CME matrix, Solver, security selection, risk-mitigation comparison, stress test, reallocation, AI audit | Vote approve/revise/reject for each client after the risk challenge |
 | Phase 3 - Defend the Recommendation | Technical dossier, committee memo, oral pitch, Q&A | Issue the final recommendation, record dissent, and defend the integrated decision |
 
-## Four-person committee roles
+## Five-person committee roles
 
 1. **Client and Macro Strategist** - owns client discovery, the market view, IPS objectives and constraints, and the handoff from client needs to investment criteria.
 2. **Fixed-Income Analyst** - owns income, preservation, maturity, duration, credit, liquidity, and tax questions for the fixed-income sleeve.
-3. **Fund and ETF Analyst** - owns pooled-vehicle due diligence, diversification, benchmark fit, fees, liquidity, taxes, and active/passive implementation.
-4. **Portfolio Manager and Risk Analyst** - owns portfolio integration, risk capacity versus willingness, decision-log quality, stress testing, and mandate-breach escalation.
+3. **Equity Analyst** - owns equity funds and ETFs plus the limited use of individual equities, including overlap, idiosyncratic risk, and position size.
+4. **Portfolio Manager** - owns final selection and weights, resolves overlap and concentration, and records explicit integration trade-offs.
+5. **Risk and Derivatives Analyst** - owns portfolio-level stress tests, residual-risk evidence, and one targeted hedge or a fully supported no-hedge conclusion.
 
-All four members vote in every phase, sign the decision record, and must be able to defend any section. A recommendation is not approved until the committee records the motion, evidence reviewed, vote, dissent or reservation, and action items.
+All five members vote in every phase, sign the decision record, and must be able to defend any section. A recommendation is not approved until the committee records the motion, evidence reviewed, vote, dissent or reservation, and action items.
 
 ## Release readiness
 
@@ -81,16 +83,16 @@ All four members vote in every phase, sign the decision record, and must be able
 
 ## Redesign implementation status
 
-- `project-model.json` now defines the three phases, four committee seats, approval gates, deliverables, resource manifest, AI rules, and public assessment language.
-- `project-model.json` now also defines the Phase 2 bond/fund/ETF comparison, Issuer Reality Check, integrated allocation, IPS compliance, bear-case, breach-correction, and re-test requirements.
+- `project-model.json` now defines the three phases, five committee seats, approval gates, deliverables, resource manifest, AI rules, and public assessment language.
+- `project-model.json` now also defines the Phase 2 8–10 holding contract, funds/ETFs-first implementation, limited individual securities, final-holding scorecards, concise alternatives, optional one-hedge/no-hedge decision, integrated allocation, IPS compliance, bear-case, breach-correction, and re-test requirements.
 - FactSet is required through a tool-neutral retrieval-and-interpretation record that connects issuer, credit, fund/ETF, corporate-financial, and portfolio-risk research without embedding proprietary captures or exports.
 - The Phase 1 public model defines the five fictional-client team sets, the instructor-led demonstration, the human-first decision cycle, team-specific role-play pages, one interview round per analyst role, committee challenge questions, approved-source rules, and CFA Level I foundation links. Sealed client cards, the instructor demonstration card, Scenario Reveal packets, and the release log are maintained only in `BUS331-instructor/Investment_Project/instructor-control-center/`.
 - The shared builder now generates the portal, comprehensive guide, three phase guides, compatibility guide, assessment page, Canvas submission guide, and three Canvas-ready assignment fragments.
 - The shared builder now also generates the student-facing Client Discovery and AI Decision Protocol and integrates it into the portal, project guide, and Phase 1 guide.
 - The generated pages no longer link to either missing retired resource.
 - The validator checks phase and role counts, local links, accessibility landmarks, retired phase language, public resource names, and the known instructor-only PDF.
-- The validator also checks the Phase 1-to-Phase 2 handoff, instrument-specific evidence, all four Issuer Reality Check responsibilities, portfolio/IPS/stress contracts, rubric weight totals, committee questions, and public/private boundaries.
-- The student committee decision-record workbook now provides an Analyst Decision Log with a 12-cell role-by-client coverage gate, plus the role charter, gate-by-gate evidence review, four-person votes, dissent, action items, and AI audit log.
+- The validator also checks the Phase 1-to-Phase 2 handoff, focused-selection and derivative-risk contracts, all five Issuer Reality Check responsibilities, portfolio/IPS/stress contracts, rubric weight totals, committee questions, and public/private boundaries.
+- The student committee decision-record workbook now provides an Analyst Decision Log with a 15-cell role-by-client coverage gate, recommendations, alternatives rejected, key trade-offs, PM integration and residual-risk evidence, plus five-person votes, dissent, action items, and AI audit log.
 - Release-mode validation now passes after the instructor-only PDF was moved to the private workspace.
 - The private instructor workspace now contains a clearly fictional three-phase worked exemplar and a bounded pilot harness. Neither is linked or copied into generated student materials.
 - The paused Eleanor voice pilot is outside the dependency path for the current prompt-free workflow.

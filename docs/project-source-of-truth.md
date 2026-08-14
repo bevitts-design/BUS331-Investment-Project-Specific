@@ -27,9 +27,9 @@ Committee gate: approve or revise the macro view and all client mandates. No por
 
 The committee translates the Phase 1 view into capital-market expectations, constructs client portfolios, selects securities, designs risk mitigation, and subjects each recommendation to a bear-case challenge.
 
-The maintained `phase2Experience` contract in `project-model.json` requires two cumulative student workflows. Security Analysis and Selection compares bonds, mutual funds, and ETFs against Phase 1 client guardrails and records instrument-specific evidence, an AI challenge, human verification, and the select/reject rationale. Portfolio Management and Stress Testing integrates approved securities, checks every relevant IPS objective and constraint, applies the unchanged Phase 1 bear assumptions, and requires specific corrections plus a full re-test before approval.
+The maintained `phase2Experience` contract in `project-model.json` requires two cumulative student workflows. Security Analysis and Selection translates the approved allocation and mandate into a candidate set, then narrows it to 8–10 purposeful holdings, never more than 10, with funds and ETFs as the primary vehicles and no more than two or three individual securities. Fixed Income owns fixed-income funds and ETFs, Equity owns equity funds and ETFs plus limited individual equities, the Portfolio Manager resolves overlap and weights, and Risk and Derivatives owns portfolio stress and the hedge/no-hedge conclusion. Portfolio Management and Stress Testing integrates approved holdings, checks every relevant IPS objective and constraint, applies the unchanged Phase 1 bear assumptions, and requires specific corrections plus a full re-test before approval.
 
-The Issuer Reality Check sits inside security analysis rather than as another course unit. It is required for every direct bond or equity exposure and the most material relevant issuer or holding inside each selected mutual fund or ETF. Yield or recent return alone is never sufficient evidence; the snapshot covers the business and revenue drivers, macro and industry sensitivity, financial trend, liquidity and leverage, coverage and maturities where relevant, issuer-specific risk, client fit, allocation implication, and monitoring trigger.
+The Issuer Reality Check sits inside security analysis rather than as another course unit. It is required for every direct individual security and only for a fund or ETF when a look-through holding is material to the exposure, concentration, or risk conclusion. Individual bonds are not required. Yield or recent return alone is never sufficient evidence; the snapshot covers the business and revenue drivers, macro and industry sensitivity, financial trend, liquidity and leverage, coverage and maturities where relevant, issuer-specific risk, client fit, allocation implication, and monitoring trigger.
 
 FactSet is a required licensed research source in Phase 2, not a public data dependency. Students research and download evidence inside their own licensed access, then record the item retrieved, retrieval date, relevant metrics, entity/security, as-of period, source or document reference as appropriate, interpretation, and effect on the recommendation. Students submit their final work and any required licensed-source supporting evidence privately through Canvas. No student work, FactSet capture, export, credential, or completed proprietary dataset belongs in this public repository, and public guidance must remain tool-neutral because layouts and entitlements can differ.
 
@@ -37,9 +37,11 @@ Required evidence:
 
 - Base and bear CME assumptions with cited rationale
 - Solver output and constraint checks for each client
-- Bond, mutual-fund, and ETF comparison with instrument-specific evidence, client fit, costs, diversification, and sources
+- Concise final-holding scorecards covering role/exposure, cost and trading expenses, liquidity, overlap, diversification, key risks, and client fit
+- Added rationale, idiosyncratic-risk, and position-size analysis for each limited individual security
+- Concise comparison and rejection of plausible alternatives without full analysis of every screened name
 - Required Issuer Reality Checks and role-to-allocation handoffs
-- Derivative or other risk-mitigation comparison with cost and trade-off
+- One targeted derivative hedge only when it addresses an identified residual risk, or a fully supported no-hedge conclusion
 - Stress-test result against the client's approved tripwire
 - Corrective trades when a portfolio breaches its mandate
 - AI audit entries tied to human verification and FactSet retrieval records tied to student interpretation
@@ -72,7 +74,7 @@ BUS331-Investment-Project-Specific/
     build-investment-committee-decision-record.mjs
                                         # generates the student committee record workbook
     update-security-selection-workbook.mjs
-                                        # refreshes the student Issuer Reality Check sheet
+                                        # regenerates the student Security Selection workbook
     validate-investment-project.mjs     # phase, role, link, accessibility, and privacy checks
   styles/
     bus331-investment-project.css       # shared public visual system
@@ -80,6 +82,9 @@ BUS331-Investment-Project-Specific/
     clients/
       eleanor-vance-fictional-portrait.jpg
                                         # rights-safe fictional simulator portrait
+  source-templates/
+    BUS331_InvProject_SecuritySelection_Layout_Base.xlsx
+                                        # stable, student-safe workbook layout base
   index.html                            # generated student portal
   project/
     guide.html                          # generated comprehensive project guide
@@ -110,14 +115,16 @@ BUS331-Investment-Project-Specific/
 - course/project title and term
 - simulation premise and client scope
 - the three stable phase IDs
-- the four stable role IDs
+- the five stable role IDs
 - phase objectives, evidence, committee gates, and deliverables
-- fictional-client team sets, team-specific structured role-play pages, four-role interview rounds, the Phase 1 decision cycle, and the public student-facing activity instructions
-- Phase 2 security-analysis, Issuer Reality Check, FactSet evidence-log, portfolio-integration, IPS-compliance, bear-case, correction, and re-test contracts
-- the Analyst Decision Log contract, including evidence-ready fields and complete four-role-by-three-client coverage before the Phase 1 gate
+- fictional-client team sets, team-specific structured role-play pages, five-role interview rounds, the Phase 1 decision cycle, and the public student-facing activity instructions
+- Phase 2 8–10 holding boundaries, funds/ETFs-first implementation, limited individual securities, final-holding scorecards, concise alternatives, Issuer Reality Check, FactSet evidence-log, portfolio-integration, IPS-compliance, bear-case, residual-risk, one-hedge/no-hedge, correction, and re-test contracts
+- the Analyst Decision Log contract, including recommendations, alternatives rejected, key trade-offs, PM integration and residual-risk evidence, and complete five-role-by-three-client coverage before the Phase 1 gate
 - the three Canvas assignment contracts, including exact filenames, allowed file types, preflight checks, private licensed-evidence handling, and receipt retention
 - resource labels and relative paths
 - AI rules and verification requirements
+
+The workbook layout base is not an alternate content source. `scripts/update-security-selection-workbook.mjs` applies the current `project-model.json` contract and workbook-specific structure to that stable base on every build, so the public workbook can be regenerated without reading its prior generated version.
 - public assessment language
 
 Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
@@ -170,9 +177,9 @@ A file is public only when all of the following are true:
 The validator should fail when it detects:
 
 - a phase count other than three in generated pages;
-- a role count other than four in the committee roster;
-- committee roles that do not match the Client/Macro, Fixed-Income, Fund/ETF, and Portfolio/Risk contract;
-- a Phase 1 protocol that skips the initial-judgment, AI-challenge, verification, or final-reasoning stage;
+- a role count other than five in the committee roster;
+- committee roles that do not match the Client/Macro, Fixed-Income, Equity, Portfolio Manager, and Risk/Derivatives contract;
+- a Phase 1 protocol that skips the recommendation, alternative/trade-off, verification, or final-reasoning stage;
 - phase numbering outside the current three-phase model in generated student pages;
 - missing local resources;
 - filenames or visible text marked `INSTRUCTOR`, `Solution`, `Answer Key`, or similar in the public manifest;
