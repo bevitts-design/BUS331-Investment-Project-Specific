@@ -224,27 +224,27 @@
     ],
     "decisionCycle": [
       {
-        "stage": "Initial judgment",
-        "action": "Before any AI interaction, the team records one tentative, evidence-based interpretation for each assigned client: what the client needs, which constraints matter, and the preliminary investment implications.",
+        "stage": "Prepare",
+        "action": "Read the assigned client profile and record one tentative, evidence-based interpretation: what the client needs, which constraints matter, and what remains unknown.",
         "logEvidence": "The interpretation; supporting case evidence and assumptions; unanswered questions; and the portfolio or security decision it could affect"
       },
       {
-        "stage": "Human client interview",
-        "action": "Use your assigned sealed role card. Ask your own open, neutral questions and mark any answer not established by the card as unknown.",
+        "stage": "Observe the model",
+        "action": "Watch the instructor-led practice interview and notice how neutral questions reveal facts, expose information gaps, and lead to a provisional guardrail.",
+        "logEvidence": "One established fact, one information gap, and one possible guardrail from the classroom model"
+      },
+      {
+        "stage": "Interview your client",
+        "action": "Open your team page. The designated client uses the sealed card; the other members ask their own open, neutral questions and rotate the client role across the three cases.",
         "logEvidence": "Question themes and response summary—not a word-for-word transcript"
       },
       {
-        "stage": "Committee challenge",
-        "action": "Use the interview record to identify the strongest counterinterpretation, hidden assumption, and missing downside—not a final recommendation.",
-        "logEvidence": "Material challenge and the claim that now requires checking"
+        "stage": "Challenge and verify",
+        "action": "As a committee, test the first interpretation, separate facts from assumptions, and verify material claims in the assigned files, team workbook, or approved source.",
+        "logEvidence": "Material challenge; source or file location; source date; and Confirmed / Qualified / Contradicted / Not verifiable"
       },
       {
-        "stage": "Human verification",
-        "action": "Verify client facts in the assigned files, calculations in the team workbook, and external claims in an approved source with an as-of date.",
-        "logEvidence": "Source, link or file location, source date, and Confirmed / Qualified / Contradicted / Not verifiable"
-      },
-      {
-        "stage": "Final reasoning",
+        "stage": "Set the mandate",
         "action": "State what changed, what remains uncertain, the final judgment, and the guardrail that later security selection or portfolio construction must honor.",
         "logEvidence": "Final decision, concise rationale, downstream guardrail, and peer review"
       }

@@ -636,20 +636,18 @@ function clientDiscoveryPage() {
     <div class="page-shell">
       <div class="content-flow">
         <section>
-          <div class="launch-grid">
-            <div>
-              <p class="section-kicker">Outcome</p>
-              <h2>Discover before you prescribe</h2>
-              <p>${escapeHtml(experience.purpose)}</p>
-            </div>
-            <div class="time-card"><strong>Working time</strong><span>${escapeHtml(experience.duration)}</span></div>
+          <p class="section-kicker">Start here</p>
+          <h2>See the process, then do it with your team</h2>
+          <p>${escapeHtml(experience.purpose)}</p>
+          <div class="content-grid compact-grid">
+            <article class="callout"><h3>1 · Classroom model</h3><p>Your instructor and a volunteer will model a short practice interview. Watch for neutral questions, established facts, information gaps, and the guardrail that follows.</p><div class="hero-actions"><a class="button button-primary" href="client-role-play/instructor-demo.html">Open classroom demonstration instructions</a></div></article>
+            <article class="callout"><h3>2 · Team role-play</h3><p>Then open only your team's page. One member receives the sealed client card; the other members interview, record the summary, and rotate roles across the three cases.</p></article>
           </div>
-          <div class="callout"><h3>Non-negotiable sequence</h3><p>Human judgment comes first. AI may interview and challenge. Approved evidence verifies. The team—not the AI—makes and owns the final decision.</p></div>
         </section>
 
         <section>
-          <p class="section-kicker">Decision cycle</p>
-          <h2>Five moves from profile to guardrail</h2>
+          <p class="section-kicker">Your decision cycle</p>
+          <h2>Five moves from profile to mandate</h2>
           ${decisionCycleMarkup()}
         </section>
 
@@ -659,20 +657,6 @@ function clientDiscoveryPage() {
           <p>Open only your assigned team page. The inquiry line identifies tensions to investigate, not a conclusion to copy.</p>
           ${clientSetBoard()}
           <div class="resource-list resource-list-inline">${resourceLinks(["client-profiles", "client-data"], prefix, { includeDescription: true })}</div>
-        </section>
-
-        <section>
-          <p class="section-kicker">Classroom model</p>
-          <h2>See the process once before your team begins</h2>
-          <p>Your instructor will lead a short practice interview with a volunteer playing Sally Hart. Observe how neutral questions become established facts, information gaps, and a provisional guardrail.</p>
-          <div class="hero-actions"><a class="button button-primary" href="client-role-play/instructor-demo.html">Open classroom demonstration instructions</a></div>
-        </section>
-
-        <section>
-          <p class="section-kicker">Structured human role-play</p>
-          <h2>Interview, rotate, and record</h2>
-          <p>No AI prompt or student account is required. The designated client receives a sealed card; the remaining members conduct the interview and document the result.</p>
-          ${rolePlaySequenceMarkup()}
         </section>
 
         <section>

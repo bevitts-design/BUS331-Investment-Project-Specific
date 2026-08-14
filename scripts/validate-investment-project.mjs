@@ -124,8 +124,8 @@ if (!experience) {
   if (!experience.instructorDemo?.name || !experience.instructorDemo?.clientCue) fail("Phase 1 must define an instructor-led client-discovery demonstration.");
   if (experience.rolePlayProfiles?.length !== 15) fail("Phase 1 must define one structured role-play profile for each fictional client.");
   if (experience.rolePlaySequence?.length !== 5) fail("Phase 1 must define the classroom demo and team role-play sequence.");
-  if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Initial judgment|Human client interview|Committee challenge|Human verification|Final reasoning") {
-    fail("Phase 1 decision cycle must preserve the human-first interview, committee challenge, verification, and final-reasoning sequence.");
+  if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Prepare|Observe the model|Interview your client|Challenge and verify|Set the mandate") {
+    fail("Phase 1 decision cycle must preserve the preparation, classroom model, team interview, verification, and mandate sequence.");
   }
   if (experience.interviewRounds?.length !== 4) fail("Phase 1 must define one interview round for each of the four roles.");
   const roundRoleIds = new Set(experience.interviewRounds?.map((round) => round.roleId));
@@ -367,11 +367,11 @@ for (const role of model.roles) {
 
 const discoveryHtml = await fs.readFile(path.join(rootDir, "project", "client-discovery-ai-protocol.html"), "utf8");
 for (const requiredText of [
-  "Initial judgment",
-  "Human client interview",
-  "Committee challenge",
-  "Human verification",
-  "Final reasoning",
+  "Prepare",
+  "Observe the model",
+  "Interview your client",
+  "Challenge and verify",
+  "Set the mandate",
   "Analyst Decision Log"
 ]) {
   if (!discoveryHtml.includes(requiredText)) fail(`Client discovery protocol is missing required stage or artifact: ${requiredText}.`);
@@ -382,7 +382,7 @@ for (const roleTitle of requiredRoleTitles) {
 if (/Committee Chair|Markets &amp; Economic Strategist|Portfolio Construction Lead|Risk, Controls/i.test(discoveryHtml)) {
   fail("Client discovery protocol contains a retired committee-role title.");
 }
-for (const requiredText of ["Structured human role-play", "Open your team role-play instructions", "Classroom model", "No AI prompt or student account is required", "Committee challenge round"]) {
+for (const requiredText of ["Start here", "Open your team role-play instructions", "Classroom model", "See the process, then do it with your team", "Committee challenge round"]) {
   if (!discoveryHtml.includes(requiredText)) fail(`Client discovery protocol is missing role-play content: ${requiredText}.`);
 }
 if (/Start live interview|client-interview-simulator|Bounded role-play|Start with this prompt/.test(discoveryHtml)) fail("Client discovery protocol retains retired AI interview or prompt content.");
