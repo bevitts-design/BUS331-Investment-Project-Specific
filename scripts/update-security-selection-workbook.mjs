@@ -8,7 +8,7 @@ const rootDir = path.resolve(scriptDir, "..");
 const workbookPath = path.join(rootDir, "files", "BUS331_InvProject_SecuritySelection_Template.xlsx");
 const outputRoot = process.env.BUS331_WORKBOOK_OUTPUT || path.join(rootDir, "outputs", "security-selection-update");
 const inspectOnly = process.argv.includes("--inspect");
-const sheetNames = ["START HERE", "SUMMARY", "Client 1", "Client 2", "Client 3"];
+const sheetNames = ["START HERE", "SUMMARY", "Client 1", "Client 2", "Client 3", "RESEARCH GUIDE"];
 
 await fs.mkdir(outputRoot, { recursive: true });
 const workbook = await SpreadsheetFile.importXlsx(await FileBlob.load(workbookPath));
@@ -68,6 +68,53 @@ for (const clientNumber of [1, 2, 3]) {
   clientSheet.getRange("A2").values = [[`Phase 2 — Security Analysis & Selection  |  Client ${clientNumber}`]];
   clientSheet.getRange("A3").values = [["BUS 331 Investments  |  Endicott College  |  Phase 2: Security Analysis & Selection"]];
 }
+
+const researchGuide = workbook.worksheets.getOrAdd("RESEARCH GUIDE");
+researchGuide.getRange("A1:F42").clear({ applyTo: "all" });
+researchGuide.showGridLines = false;
+researchGuide.mergeCells("A1:F1");
+researchGuide.getRange("A1").values = [["BUS331 - How to Research an Investment Candidate"]];
+researchGuide.getRange("A1:F1").format = { fill: "#0B1F35", font: { bold: true, color: "#FFFFFF", size: 18 }, verticalAlignment: "center" };
+researchGuide.getRange("A1:F1").format.rowHeight = 34;
+researchGuide.mergeCells("A2:F2");
+researchGuide.getRange("A2").values = [["Use this guide before completing the client tabs, Issuer Reality Check, and FactSet Research and Evidence Log. It tells you what to investigate; your committee supplies the research, calculations, judgment, and select/reject decision."]];
+researchGuide.getRange("A2:F2").format = { fill: "#E9EFF4", font: { bold: true, color: "#102238" }, wrapText: true, verticalAlignment: "center" };
+researchGuide.getRange("A2:F2").format.rowHeight = 42;
+
+const guideRows = [
+  ["1. Start with the mandate", "Before researching any product, record the client need, Phase 1 guardrail, unresolved question, and portfolio job the candidate would serve. Do not choose a security first and build a rationale afterward."],
+  ["2. Use comparable evidence", "For every serious candidate, record the source, retrieval date, as-of date, metric definition and units, your interpretation, and the effect on the recommendation. Keep periods and units comparable."],
+  ["3. Research the instrument that you actually own", "Use the appropriate section below. A fund or ETF needs product-level due diligence and a look-through review of material holdings; a direct bond or equity needs issuer-level research."],
+  ["4. Make and challenge a provisional judgment", "State Select, Modify, or Reject before asking AI for a counterargument. Verify all material factual or numerical claims with approved evidence. AI is not a source and does not choose the investment."],
+  ["5. Finish the portfolio test", "A candidate is not approved until the committee can explain client fit, diversification or overlap, costs, liquidity, bear-case sensitivity, monitoring trigger, and its effect on the integrated portfolio."]
+];
+researchGuide.getRange("A4:B8").values = guideRows;
+researchGuide.getRange("A4:A8").format = { fill: "#1F7A78", font: { bold: true, color: "#FFFFFF" }, wrapText: true, verticalAlignment: "top" };
+researchGuide.getRange("B4:B8").format = { fill: "#F2F6FA", font: { color: "#102238" }, wrapText: true, verticalAlignment: "top" };
+researchGuide.getRange("A4:B8").format.rowHeight = 58;
+
+const instrumentRows = [
+  ["Direct bond", "Issuer, seniority, coupon, maturity, call or structural features, price and yield measure, duration, credit quality, spread/default/downgrade risk, liquidity, taxes, cash-flow fit, and source/as-of date.", "Complete the client tab, Issuer Reality Check, and Evidence Log. State the income, capital-preservation, rate-risk, and credit-risk trade-off."],
+  ["Direct equity", "Business model, revenue drivers, industry and macro sensitivity, revenue/margin/cash-flow trend, liquidity and leverage, key risks, valuation or return drivers, concentration, and source/as-of date.", "Complete the client tab, Issuer Reality Check, and Evidence Log. State the portfolio role, bear-case sensitivity, diversification effect, and monitoring trigger."],
+  ["Mutual fund", "Objective, benchmark/style, holdings, manager/process where relevant, expense ratio, performance context, distributions/taxes, liquidity, active/passive fit, overlap, and the most material relevant holding.", "Complete the client tab, Fund/ETF candidate comparison, required look-through Issuer Reality Check, and Evidence Log. State why the vehicle improves implementation versus alternatives."],
+  ["ETF", "Objective, benchmark/index methodology, holdings, expense ratio, tracking difference or risk, bid-ask spread/liquidity, tax efficiency, concentration/overlap, and the most material relevant holding.", "Complete the client tab, Fund/ETF candidate comparison, required look-through Issuer Reality Check, and Evidence Log. State why the ETF fits the mandate, cost, liquidity, and diversification needs."]
+];
+researchGuide.getRange("A11:C11").values = [["Instrument", "Research before you decide", "What you must complete in this workbook"]];
+researchGuide.getRange("A11:C11").format = { fill: "#122B49", font: { bold: true, color: "#FFFFFF" }, wrapText: true, horizontalAlignment: "center", verticalAlignment: "center" };
+researchGuide.getRange("A12:C15").values = instrumentRows;
+researchGuide.getRange("A12:C15").format = { fill: "#FFF9D9", font: { color: "#0000FF" }, wrapText: true, verticalAlignment: "top", borders: { preset: "inside", style: "thin", color: "#D9E2EA" } };
+researchGuide.getRange("A12:C15").format.rowHeight = 104;
+researchGuide.getRange("A4:A15").format.columnWidth = 24;
+researchGuide.getRange("B4:B15").format.columnWidth = 62;
+researchGuide.getRange("C4:C15").format.columnWidth = 62;
+researchGuide.mergeCells("A18:C18");
+researchGuide.getRange("A18").values = [["FINAL CANDIDATE CHECK - before the team selects or rejects"]];
+researchGuide.getRange("A18:C18").format = { fill: "#D4A052", font: { bold: true, color: "#071626" }, horizontalAlignment: "center" };
+researchGuide.getRange("A19:A26").values = [["[ ] Client need and Phase 1 guardrail identified"],["[ ] Comparable source, retrieval date, and as-of date recorded"],["[ ] Instrument-specific research complete"],["[ ] Issuer or material holding reviewed where required"],["[ ] Costs, liquidity, taxes, diversification, and overlap considered"],["[ ] Base and bear-case implications explained"],["[ ] AI challenge verified by human evidence"],["[ ] Select, Modify, or Reject conclusion and monitoring trigger entered"]];
+researchGuide.getRange("A19:C26").merge();
+researchGuide.getRange("A19:C26").format = { fill: "#F2F6FA", font: { color: "#102238" }, wrapText: true, verticalAlignment: "top" };
+researchGuide.getRange("A19:A26").format.rowHeight = 24;
+researchGuide.freezePanes.freezeRows(3);
 
 issuerSheet.mergeCells("A1:W1");
 issuerSheet.getRange("A1").values = [["BUS 331 — Issuer Reality Check"]];

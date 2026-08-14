@@ -44,6 +44,17 @@ def main():
         story += [p("Definition of done",s["H3x"])] + [p(f"[ ] {x}",s["Bodyx"]) for x in road["definitionOfDone"][phase["id"]]]
         story += [p("Required evidence",s["H3x"])] + [p(f"- {x}",s["Smallx"]) for x in phase["evidence"]]
         story += [p("Team deliverables",s["H3x"])] + [p(f"- {x}",s["Smallx"]) for x in phase["deliverables"]]
+        if phase["id"] == "phase-2":
+            story += [
+                p("Worksheet research guide",s["H3x"]),
+                p("Before you select or reject a candidate, open the Research Guide tab in the security-selection workbook. The workbook tells you what to investigate for direct bonds, equities, mutual funds, and ETFs; your committee supplies the research, calculations, judgment, and decision.",s["Bodyx"]),
+                p("For each serious candidate, record the client need and Phase 1 guardrail, comparable source and as-of date, instrument-specific research, costs, liquidity, taxes, diversification or overlap, base and bear-case implications, a verified AI challenge if used, the final Select/Modify/Reject conclusion, and a monitoring trigger.",s["Bodyx"]),
+                p("Complete the Issuer Reality Check for every required direct or look-through exposure and the FactSet Research and Evidence Log for every recommendation and material portfolio-risk input.",s["Bodyx"]),
+                p("Scenario Reveal and required remediation",s["H3x"]),
+                p("First submit the baseline allocation, IPS scorecard, and initial stress result at the instructor-designated checkpoint. Keep that baseline record unchanged after the Scenario Reveal is released.",s["Bodyx"]),
+                p("After release, record the packet ID, date, named client condition tested, and exact inputs in the Scenario Reveal workbook tab. Apply the released inputs without changing the client mandate or tripwire; quantify the percentage and dollar impact and identify the exposed client goal or constraint.",s["Bodyx"]),
+                p("For every Breach, make a real security, sleeve, or weight change, explain the trade-off, and re-run the complete scenario and IPS scorecard. If a released case unexpectedly passes, report it to the instructor rather than using the result to skip the checkpoint.",s["Bodyx"]),
+            ]
         assignment=next(a for a in model["canvasSubmissions"]["assignments"] if a["phaseId"]==phase["id"])
         story += [p("Canvas submission check",s["H3x"])] + [p(f"[ ] {x}",s["Smallx"]) for x in assignment["preflight"]]
     story += [PageBreak(),p("Committee roles and operating protocol",s["H"]),p("Roles identify the lead for a workstream. All four members review the full evidence package, vote at every gate, and prepare to defend the complete recommendation.",s["Bodyx"])]

@@ -831,6 +831,17 @@ function portfolioStressPage() {
       </section>
 
       <section>
+        <p class="section-kicker">Required checkpoint</p><h2>${escapeHtml(experience.scenarioReveal.title)}</h2>
+        <div class="field-board">
+          <article><strong>1 · Lock the baseline</strong><span>${escapeHtml(experience.scenarioReveal.baseline)}</span></article>
+          <article><strong>2 · Record the release</strong><span>${escapeHtml(experience.scenarioReveal.release)}</span></article>
+          <article><strong>3 · Run the case</strong><span>${escapeHtml(experience.scenarioReveal.test)}</span></article>
+          <article><strong>4 · Remediate and re-test</strong><span>${escapeHtml(experience.scenarioReveal.remediate)}</span></article>
+        </div>
+        <div class="callout"><h3>Non-negotiable boundary</h3><p>${escapeHtml(experience.scenarioReveal.boundary)}</p></div>
+      </section>
+
+      <section>
         <p class="section-kicker">Student template</p><h2>Integrated allocation record</h2>
         <p>Use one row for every sleeve or holding. The committee must be able to trace each weight backward to a verified selection decision and forward to a client goal, risk exposure, and monitoring action.</p>
         ${studentTemplateTable("Integrated portfolio allocation template. Weights must total 100 percent and dollars must reconcile to the hypothetical AUM.", experience.allocationTemplateColumns)}
