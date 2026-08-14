@@ -350,7 +350,7 @@ if (!(await exists(rubricPdfPath))) {
     const rubricPdfText = await extractPdfText(rubricPdfPath);
     if (oldPhasePattern.test(rubricPdfText)) fail("files/final-rubric.pdf contains retired phase language.");
     if (/Spring 2026/i.test(rubricPdfText)) fail("files/final-rubric.pdf contains a retired course term.");
-    if (!rubricPdfText.includes("Phase 3 Assessment Rubric")) fail("files/final-rubric.pdf was not generated from the current Phase 3 rubric source.");
+    if (!rubricPdfText.includes("Investment Project Rubrics")) fail("files/final-rubric.pdf was not generated from the current rubric source.");
   } catch (error) {
     fail(`Could not inspect public rubric PDF: ${error.message}`);
   }
@@ -454,7 +454,26 @@ for (const roleTitle of requiredRoleTitles) {
 const assessmentHtml = await fs.readFile(path.join(rootDir, "project", "assessment.html"), "utf8");
 const writtenTotal = model.assessment.writtenCriteria.reduce((total, item) => total + item.weight, 0);
 const oralTotal = model.assessment.oralCriteria.reduce((total, item) => total + item.weight, 0);
-if (writtenTotal !== 100 || oralTotal !== 100) fail(`Written and oral rubric weights must each total 100; found ${writtenTotal} and ${oralTotal}.`);
+if (writtenTotal !== model.assessment.submissionPoints || oralTotal !== model.assessment.presentationPoints) fail(`Submission and presentation rubric weights must match their point totals; found ${writtenTotal} and ${oralTotal}.`);
+if (!model.assessment.submissionRubricName || !model.assessment.presentationRubricName) fail("Assessment must define the two Canvas rubric names.");
+const canvasRubricImports = [
+  {file: "canvas/BUS331_Investment_Project_Submission_Rubric.csv", name: model.assessment.submissionRubricName, criteria: model.assessment.writtenCriteria},
+  {file: "canvas/BUS331_Investment_Project_Presentation_Rubric.csv", name: model.assessment.presentationRubricName, criteria: model.assessment.oralCriteria}
+];
+const canvasRubricHeader = "Rubric Name,Criteria Name,Criteria Description,Criteria Enable Range,Rating Name,Rating Description,Rating Points,Rating Name,Rating Description,Rating Points,Rating Name,Rating Description,Rating Points";
+for (const rubric of canvasRubricImports) {
+  const absolute = path.join(rootDir, rubric.file);
+  if (!(await exists(absolute))) {
+    fail(`Missing Canvas rubric import: ${rubric.file}.`);
+    continue;
+  }
+  const csv = await fs.readFile(absolute, "utf8");
+  if (!csv.startsWith(`${canvasRubricHeader}\n`)) fail(`${rubric.file} does not use the Canvas rubric-template header.`);
+  for (const criterion of rubric.criteria) {
+    if (!csv.includes(criterion.criterion) || !csv.includes(criterion.standard)) fail(`${rubric.file} is missing criterion content: ${criterion.criterion}.`);
+  }
+  if (!csv.includes(rubric.name) || !csv.includes("Complete") || !csv.includes("Developing") || !csv.includes("Not demonstrated")) fail(`${rubric.file} is missing Canvas rating data.`);
+}
 for (const requiredText of ["Evidence quality", "Security analysis", "Client suitability", "Portfolio integration", "Role ownership", "Live defense", "Team integration", "Issuer Reality Check"]) {
   if (!assessmentHtml.includes(requiredText)) fail(`Assessment page is missing updated rubric or committee-defense content: ${requiredText}.`);
 }

@@ -1007,10 +1007,10 @@
     },
     {
       "id": "phase-3-rubric-pdf",
-      "label": "Phase 3 assessment rubric",
+      "label": "Phase 3 assessment reference",
       "type": "PDF",
       "path": "files/final-rubric.pdf",
-      "description": "Printable written and oral criteria, committee question bank, and submission-readiness checklist generated from the current assessment model.",
+      "description": "Combined printable reference for the Investment Project Submission and Investment Project Presentation rubrics, committee question bank, and submission-readiness checklist.",
       "audience": "student"
     }
   ],
@@ -1035,9 +1035,11 @@
     }
   ],
   "assessment": {
-    "note": "Canvas remains the authority for due dates, submission mechanics, and the project's course-grade weight. The criteria below preserve the written/oral balance while assessing both individual role ownership and the committee's integrated decision.",
-    "writtenWeight": 50,
-    "oralWeight": 50,
+    "note": "Canvas remains the authority for due dates, submission mechanics, and course-grade weights. Use the Investment Project Submission rubric for the written decision package and the Investment Project Presentation rubric for the live committee presentation and defense.",
+    "submissionRubricName": "BUS331 Investment Project Submission",
+    "presentationRubricName": "BUS331 Investment Project Presentation and Defense",
+    "submissionPoints": 100,
+    "presentationPoints": 100,
     "writtenCriteria": [
       {
         "criterion": "Evidence quality & technical accuracy",

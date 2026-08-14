@@ -242,7 +242,7 @@ def main() -> None:
         leftMargin=0.62 * inch,
         topMargin=0.55 * inch,
         bottomMargin=0.72 * inch,
-        title="BUS331 Phase 3 Assessment Rubric",
+        title="BUS331 Investment Project Rubrics",
         author="BUS331 Investments",
         subject="Student-facing written and oral assessment criteria",
         pageCompression=1,
@@ -250,8 +250,8 @@ def main() -> None:
 
     story = [
         banner(
-            "Phase 3 Assessment Rubric",
-            "BUS331 Investment Committee Simulation | Written decision package and oral defense",
+            "Investment Project Rubrics",
+            "BUS331 Investment Committee Simulation | Written submission and live presentation defense",
             styles,
         ),
         Spacer(1, 12),
@@ -262,13 +262,13 @@ def main() -> None:
     summary = Table(
         [
             [
-                Paragraph("Written package", styles["TableHead"]),
-                Paragraph("Oral defense", styles["TableHead"]),
+                Paragraph("Project submission", styles["TableHead"]),
+                Paragraph("Presentation and defense", styles["TableHead"]),
                 Paragraph("Submission authority", styles["TableHead"]),
             ],
             [
-                Paragraph(f'{assessment["writtenWeight"]}% of the Phase 3 assessment', styles["SmallBold"]),
-                Paragraph(f'{assessment["oralWeight"]}% of the Phase 3 assessment', styles["SmallBold"]),
+                Paragraph(f'{assessment["submissionPoints"]}-point Canvas rubric', styles["SmallBold"]),
+                Paragraph(f'{assessment["presentationPoints"]}-point Canvas rubric', styles["SmallBold"]),
                 Paragraph("Canvas controls due dates, file requirements, and the project course-grade weight.", styles["Small"]),
             ],
         ],

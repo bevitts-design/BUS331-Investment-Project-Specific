@@ -942,13 +942,13 @@ function assessmentPage() {
           <div class="callout"><h2>Canvas is the submission authority</h2><p>${escapeHtml(model.assessment.note)}</p></div>
         </section>
         <section>
-          <p class="section-kicker">Written package · ${model.assessment.writtenWeight}% of Phase 3 assessment</p>
-          <h2>Technical evidence</h2>
+          <p class="section-kicker">Investment Project Submission rubric · ${model.assessment.submissionPoints} points</p>
+          <h2>Written decision package</h2>
           ${assessmentTable(model.assessment.writtenCriteria)}
         </section>
         <section>
-          <p class="section-kicker">Oral defense · ${model.assessment.oralWeight}% of Phase 3 assessment</p>
-          <h2>Investment-committee pitch</h2>
+          <p class="section-kicker">Investment Project Presentation rubric · ${model.assessment.presentationPoints} points</p>
+          <h2>Live committee presentation and defense</h2>
           ${assessmentTable(model.assessment.oralCriteria)}
         </section>
         <section>
