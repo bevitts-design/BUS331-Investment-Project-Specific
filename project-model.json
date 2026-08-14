@@ -681,7 +681,6 @@
         "client-discovery-protocol",
         "decision-record",
         "macro-starter",
-        "client-profiles",
         "client-data",
         "ips-framework"
       ]
@@ -903,11 +902,43 @@
       "audience": "student"
     },
     {
-      "id": "client-profiles",
-      "label": "Assigned client profiles",
+      "id": "team-one-client-profiles",
+      "label": "Team One client profiles",
       "type": "PPTX",
-      "path": "files/Client_Scenarios_Profiles.pptx",
-      "description": "Five team sets with three client mandates per team.",
+      "path": "files/Client_Scenarios_Team_One.pptx",
+      "description": "Baseline case file for Team One's three assigned clients.",
+      "audience": "student"
+    },
+    {
+      "id": "team-two-client-profiles",
+      "label": "Team Two client profiles",
+      "type": "PPTX",
+      "path": "files/Client_Scenarios_Team_Two.pptx",
+      "description": "Baseline case file for Team Two's three assigned clients.",
+      "audience": "student"
+    },
+    {
+      "id": "team-three-client-profiles",
+      "label": "Team Three client profiles",
+      "type": "PPTX",
+      "path": "files/Client_Scenarios_Team_Three.pptx",
+      "description": "Baseline case file for Team Three's three assigned clients.",
+      "audience": "student"
+    },
+    {
+      "id": "team-four-client-profiles",
+      "label": "Team Four client profiles",
+      "type": "PPTX",
+      "path": "files/Client_Scenarios_Team_Four.pptx",
+      "description": "Baseline case file for Team Four's three assigned clients.",
+      "audience": "student"
+    },
+    {
+      "id": "team-five-client-profiles",
+      "label": "Team Five client profiles",
+      "type": "PPTX",
+      "path": "files/Client_Scenarios_Team_Five.pptx",
+      "description": "Baseline case file for Team Five's three assigned clients.",
       "audience": "student"
     },
     {
