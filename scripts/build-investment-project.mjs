@@ -369,18 +369,6 @@ function landingPage() {
         ${roleBoard()}
       </section>
 
-      <section class="section" aria-labelledby="discovery-title">
-        <div class="section-header">
-          <p class="section-kicker">Start here · Phase 1</p>
-          <h2 id="discovery-title">Client needs become investment guardrails</h2>
-          <p>Each analyst commits to a human-first view, uses AI to challenge it, verifies material claims, and records the final reasoning before the team evaluates any security or portfolio weight.</p>
-        </div>
-        ${phaseOneLaunchMarkup("")}
-        <div class="cycle-strip" aria-label="Client discovery decision cycle">
-          ${model.phase1Experience.decisionCycle.map((item) => `<span>${escapeHtml(item.stage)}</span>`).join("\n")}
-        </div>
-      </section>
-
       <section class="section" aria-labelledby="phases-title">
         <div class="section-header">
           <p class="section-kicker">Project phases</p>
