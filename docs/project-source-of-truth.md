@@ -13,7 +13,7 @@ The committee establishes one defensible 12-month market view and converts each 
 Required evidence:
 
 - Human-first client judgment recorded before AI use
-- Bounded AI client interview and adversarial challenge for each assigned client
+- Instructor-led demonstration and structured human client role-play for each assigned client
 - Human verification trail and final reasoning in the Analyst Decision Log
 - Human-first macro read using the historical dataset
 - FactSet/FRED consensus comparison with source dates
@@ -112,7 +112,7 @@ BUS331-Investment-Project-Specific/
 - the three stable phase IDs
 - the four stable role IDs
 - phase objectives, evidence, committee gates, and deliverables
-- fictional-client team sets, four-role interview rounds, bounded AI prompts, the Phase 1 decision cycle, and the public endpoint/privacy contract for the Client Option 1 voice interview
+- fictional-client team sets, team-specific structured role-play pages, four-role interview rounds, the Phase 1 decision cycle, and the public student-facing activity instructions
 - Phase 2 security-analysis, Issuer Reality Check, FactSet evidence-log, portfolio-integration, IPS-compliance, bear-case, correction, and re-test contracts
 - the Analyst Decision Log contract, including evidence-ready fields and complete four-role-by-three-client coverage before the Phase 1 gate
 - the three Canvas assignment contracts, including exact filenames, allowed file types, preflight checks, private licensed-evidence handling, and receipt retention
@@ -124,21 +124,17 @@ Generated HTML must not be edited by hand as the final source. Existing binary t
 
 `canvasSubmissions` is the authoritative team-submission contract. The builder turns it into the public student guide and three inline-styled fragments ready to paste into Canvas. Those generated fragments do not change the live Canvas course. An instructor must separately configure each assignment as a group file-upload assignment, choose the correct group set, preserve the course's approved points and dates, and confirm the contract in Student View.
 
-The Client Option 1 experience is a turn-based, instructor-hosted voice scaffold. Students record their own question or type it, confirm the speech transcript, hear Eleanor's returned text through browser speech when available, and retain a text process record and analyst notes. The public `project-model.json` supplies only the intentionally incomplete intake dossier, fictional voice disclosure, endpoint contract, limits, and optional opening ideas. `scripts/client-interview-simulator.js` records one question at a time, sends it only to the configured instructor service, uses browser speech rather than storing a generated audio file, and keeps the visible transcript in the browser session. It contains no API key, complete scenario facts, hidden prompt, or recommendation logic. The Eleanor voice pilot is paused and is not a dependency for the Sally exemplar, Canvas workflow, or bounded redesign pilot. A continuous realtime conversation upgrade is intentionally deferred; no service has been deployed or configured with a real key.
-
-The private source of truth is `BUS331-instructor/Investment_Project/client-interview/eleanor-vance-scenario.json`. It maintains the approved facts, information gaps, progressive-disclosure rules, required goal-versus-medical-liquidity complication, and recommendation-refusal boundary. `server.mjs` constructs the private prompt, sends microphone audio only for in-memory transcription, generates the bounded text response through Gemini, and intentionally writes neither audio nor transcripts to disk. Deployment credentials, logs, rate controls, and instructor scenario changes remain private.
+Phase 1 uses no AI interview service or copied student prompts. The student site explains the instructor-led Sally Hart demonstration and gives each team a separate activity page. The designated client-role student receives a sealed instructor-controlled card; the other committee members ask their own neutral questions, record a concise summary, mark information gaps, and translate the findings into guardrails. The sealed cards, demonstration materials, Scenario Reveal packets, and release log are maintained only in `BUS331-instructor/Investment_Project/instructor-control-center/`.
 
 ## Instructor-only structure
 
 ```text
 BUS331-instructor/
   Investment_Project/
-    client-interview/
-      eleanor-vance-scenario.json
-      eleanor-vance-controlled-prototype-archive.json
-      server.mjs
-      validate-voice-interview.mjs
-      README.md
+    instructor-control-center/
+      client-role-play/
+      scenario-reveals/
+      release-log.md
     exemplars/
       worked-practice-case.*
     pilot/

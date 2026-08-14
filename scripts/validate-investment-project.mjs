@@ -118,39 +118,21 @@ if (!experience) {
 } else {
   if (experience.clientSets?.length !== 5) fail("Phase 1 must present five fictional-client team sets.");
   if (experience.clientSets?.some((set) => set.clients?.length !== 3)) fail("Every fictional-client team set must contain three clients.");
-  const interviewPrototype = experience.interviewPrototype;
-  if (!interviewPrototype) {
-    fail("Phase 1 must include the instructor-hosted Client Option 1 voice interview.");
-  } else {
-    if (!experience.clientSets?.[0]?.clients?.includes(interviewPrototype.clientName)) fail("The interview prototype client must remain in Team One's existing client set.");
-    if (!interviewPrototype.visibleDossier?.length) fail("The voice interview must define an intentionally incomplete public dossier.");
-    if (interviewPrototype.openingQuestions?.length < 3) fail("The interview prototype must provide suggested opening questions.");
-    const boundaryText = `${interviewPrototype.boundary} ${interviewPrototype.liveMode?.privacyNotice || ""} ${interviewPrototype.liveMode?.availabilityNotice || ""}`;
-    if (!/instructor-hosted/i.test(boundaryText) || !/never recommends/i.test(boundaryText) || !/information gap/i.test(boundaryText)) {
-      fail("The public voice interview must identify the instructor-hosted boundary, information gaps, and recommendation refusal.");
-    }
-    for (const privateKey of ["scenarioFacts", "dialoguePaths", "complication", "recommendationResponses", "unknownResponses", "acknowledgements", "clarificationResponses"]) {
-      if (Object.hasOwn(interviewPrototype, privateKey)) fail(`The public interview model exposes instructor-only scenario control: ${privateKey}.`);
-    }
-    if (!interviewPrototype.liveMode?.transcriptionEndpoint || !interviewPrototype.liveMode?.responseEndpoint || interviewPrototype.liveMode?.maximumTurns < 1) {
-      fail("The public voice interview must define bounded transcription and response endpoint contracts.");
-    }
-    if (!interviewPrototype.voiceCue) fail("The interview prototype must include a student-facing fictional voice cue.");
-    if (!interviewPrototype.portrait?.path || !/fictional/i.test(`${interviewPrototype.portrait.alt} ${interviewPrototype.portrait.caption}`)) fail("The interview prototype portrait must be clearly labeled fictional and have alt text.");
-    if (interviewPrototype.portrait?.path && !(await exists(path.join(rootDir, interviewPrototype.portrait.path)))) fail(`Missing interview prototype portrait: ${interviewPrototype.portrait.path}.`);
+  if (!experience.structuredRolePlay?.clientRule || !experience.structuredRolePlay?.analystRule || !experience.structuredRolePlay?.recordRule) {
+    fail("Phase 1 must define the structured human role-play rules.");
   }
-  if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Initial judgment|AI client interview|AI challenge|Human verification|Final reasoning") {
-    fail("Phase 1 decision cycle must preserve the human-first, AI-challenge, verification, and final-reasoning sequence.");
+  if (!experience.instructorDemo?.name || !experience.instructorDemo?.clientCue) fail("Phase 1 must define an instructor-led client-discovery demonstration.");
+  if (experience.rolePlayProfiles?.length !== 15) fail("Phase 1 must define one structured role-play profile for each fictional client.");
+  if (experience.rolePlaySequence?.length !== 5) fail("Phase 1 must define the classroom demo and team role-play sequence.");
+  if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Initial judgment|Human client interview|Committee challenge|Human verification|Final reasoning") {
+    fail("Phase 1 decision cycle must preserve the human-first interview, committee challenge, verification, and final-reasoning sequence.");
   }
   if (experience.interviewRounds?.length !== 4) fail("Phase 1 must define one interview round for each of the four roles.");
   const roundRoleIds = new Set(experience.interviewRounds?.map((round) => round.roleId));
   for (const role of model.roles) {
     if (!roundRoleIds.has(role.id)) fail(`Phase 1 is missing an interview round for ${role.title}.`);
   }
-  const promptText = (experience.rolePlayPrompt || []).join(" ");
-  if (!/use only the facts/i.test(promptText) || !/do not invent/i.test(promptText) || !/do not recommend/i.test(promptText)) {
-    fail("The public AI role-play prompt must prohibit invented facts and AI-generated recommendations.");
-  }
+  if (!/not established/i.test(experience.structuredRolePlay?.clientRule || "") || !/do not invent/i.test(experience.structuredRolePlay?.clientRule || "") || !/recommend/i.test(experience.structuredRolePlay?.clientRule || "")) fail("The human role-play contract must prohibit invented facts and recommendations.");
   if (!experience.approvedSources?.length) fail("Phase 1 must define approved verification sources.");
   if (!experience.qualityGate?.some((item) => /human-first/i.test(item))) fail("Phase 1 quality gate must require a human-first judgment.");
   if (!experience.qualityGate?.some((item) => /guardrail/i.test(item))) fail("Phase 1 quality gate must connect final reasoning to later investment guardrails.");
@@ -386,8 +368,8 @@ for (const role of model.roles) {
 const discoveryHtml = await fs.readFile(path.join(rootDir, "project", "client-discovery-ai-protocol.html"), "utf8");
 for (const requiredText of [
   "Initial judgment",
-  "AI client interview",
-  "AI challenge",
+  "Human client interview",
+  "Committee challenge",
   "Human verification",
   "Final reasoning",
   "Analyst Decision Log"
@@ -400,13 +382,10 @@ for (const roleTitle of requiredRoleTitles) {
 if (/Committee Chair|Markets &amp; Economic Strategist|Portfolio Construction Lead|Risk, Controls/i.test(discoveryHtml)) {
   fail("Client discovery protocol contains a retired committee-role title.");
 }
-for (const requiredText of ["Client Option 1", "Interview a fictional client in your own voice", "Start live interview", "Record your own question", "Optional opening ideas", "Interview transcript", "Analyst notes for the Decision Record", "Personality and voice cue", "AI-generated fictional portrait"]) {
-  if (!discoveryHtml.includes(requiredText)) fail(`Client discovery protocol is missing interview-prototype content: ${requiredText}.`);
+for (const requiredText of ["Structured human role-play", "Open your team role-play instructions", "Classroom model", "No AI prompt or student account is required", "Committee challenge round"]) {
+  if (!discoveryHtml.includes(requiredText)) fail(`Client discovery protocol is missing role-play content: ${requiredText}.`);
 }
-if (!discoveryHtml.includes('../scripts/client-interview-simulator.js')) fail("Client discovery protocol is missing the local simulator runtime.");
-if (/\$30,000 in annual pension income|\$1\.2 million|riskAversionScore|dialoguePaths|recommendationResponses/.test(discoveryHtml)) {
-  fail("Generated student page exposes instructor-only Eleanor scenario controls.");
-}
+if (/Start live interview|client-interview-simulator|Bounded role-play|Start with this prompt/.test(discoveryHtml)) fail("Client discovery protocol retains retired AI interview or prompt content.");
 
 const securityHtml = await fs.readFile(path.join(rootDir, "project", "security-analysis-selection.html"), "utf8");
 for (const requiredText of [

@@ -44,6 +44,12 @@ def main():
         story += [p("Definition of done",s["H3x"])] + [p(f"[ ] {x}",s["Bodyx"]) for x in road["definitionOfDone"][phase["id"]]]
         story += [p("Required evidence",s["H3x"])] + [p(f"- {x}",s["Smallx"]) for x in phase["evidence"]]
         story += [p("Team deliverables",s["H3x"])] + [p(f"- {x}",s["Smallx"]) for x in phase["deliverables"]]
+        if phase["id"] == "phase-1":
+            story += [
+                p("Client-discovery activity",s["H3x"]),
+                p("First observe the instructor-led practice interview. Then open only your team's role-play page. For each assigned client, one designated member receives a sealed client card while the other members ask their own neutral questions. Rotate the client role across the three cases.",s["Bodyx"]),
+                p("The client reveals only what the sealed card establishes. If a fact is not established, record an information gap. After each interview, write a concise summary, the provisional guardrails, and the downstream decision each guardrail could affect in the Analyst Decision Log. No AI prompt or student AI account is required for this activity.",s["Bodyx"])
+            ]
         if phase["id"] == "phase-2":
             story += [
                 p("Worksheet research guide",s["H3x"]),

@@ -149,7 +149,7 @@
     }
   ],
   "phase1Experience": {
-    "title": "Client Discovery and AI Decision Protocol",
+    "title": "Client Discovery and Decision Protocol",
     "subtitle": "Interview the client. Challenge the first answer. Verify the evidence. Set the guardrails.",
     "purpose": "Turn a fictional client profile into documented investment criteria before the team screens a bond, mutual fund, ETF, or portfolio allocation.",
     "duration": "70–85 minutes plus source verification",
@@ -180,40 +180,48 @@
         "inquiry": "Investigate how philanthropy, debt, uneven cash flow, starting capital, and multigenerational goals change portfolio priorities."
       }
     ],
-    "interviewPrototype": {
-      "label": "Client Option 1 · Live voice interview",
-      "clientName": "Eleanor Vance",
-      "initials": "EV",
-      "caseLabel": "Case #01 · Team One",
-      "identity": "Age 72 · Retired librarian",
-      "portrait": {
-        "path": "assets/clients/eleanor-vance-fictional-portrait.jpg",
-        "alt": "Fictional portrait of Eleanor Vance, an older woman with silver hair and glasses in a softly lit library setting.",
-        "caption": "AI-generated fictional portrait for this classroom simulation; not a real client."
-      },
-      "voiceCue": "Fictional AI voice: thoughtful, measured, and cautious. Eleanor may hesitate, ask for clarification, or acknowledge that the approved case does not establish an answer.",
-      "boundary": "The intake card is intentionally incomplete. The instructor-hosted interview is limited to the approved fictional scenario, discloses a case fact only after a materially relevant question, marks unsupported details as information gaps, and never recommends investments.",
-      "visibleDossier": [
-        {"label": "Known at intake", "value": "Age 72 · Retired librarian"},
-        {"label": "Stated direction", "value": "Preservation and income matter"},
-        {"label": "Still to discover", "value": "Cash needs, timing, resources, risk context, and unique constraints"}
-      ],
-      "liveMode": {
-        "transcriptionEndpoint": "/api/client-interview/transcribe",
-        "responseEndpoint": "/api/client-interview/respond",
-        "maximumMinutes": 12,
-        "maximumTurns": 12,
-        "startLabel": "Start live interview",
-        "privacyNotice": "Do not say or type your name. When you start, microphone audio is sent only long enough for the instructor-hosted AI service to transcribe your question. The service does not intentionally store raw audio, student names, or transcripts. The portal keeps only the visible text transcript in this browser session; download it only if you choose to keep it.",
-        "availabilityNotice": "Live voice requires an instructor-hosted session service, a supported browser, microphone permission, and an internet connection. If microphone access is unavailable, continue with typed questions in the same live interview."
-      },
-      "openingQuestions": [
-        "What matters most to you about this portfolio?",
-        "What cash needs could change the plan?",
-        "How soon might you need access to the money?",
-        "What would make an investment loss difficult for you?"
-      ]
+    "structuredRolePlay": {
+      "durationPerClient": "12 minutes",
+      "clientRule": "The student playing the client uses only the sealed client card. If the card does not establish an answer, say: ‘That is not established in my brief.’ Do not invent a fact or recommend an investment.",
+      "analystRule": "The other committee members ask their own open, neutral questions, take notes, and record evidence, assumptions, and information gaps.",
+      "recordRule": "After each interview, the committee records a concise summary—not a word-for-word transcript—in the Analyst Decision Log."
     },
+    "instructorDemo": {
+      "id": "sally-hart-demo",
+      "slug": "sally-hart-demo",
+      "name": "Sally Hart",
+      "initials": "SH",
+      "caseLabel": "Classroom demonstration · not an assigned client",
+      "identity": "Fictional client for practicing the interview process",
+      "statedDirection": "Practice asking neutral questions and identifying information gaps before teams begin their assigned cases.",
+      "clientCue": "Sally is candid, thoughtful, and occasionally unsure. She answers only what the practice card establishes and never recommends investments.",
+      "openingQuestions": ["What matters most to you about this money?", "What future need should we plan around first?", "What would make a loss difficult for you?"],
+      "team": "Class demonstration"
+    },
+    "rolePlaySequence": [
+      {"stage":"Instructor demonstration","action":"Before teams begin, the instructor gives one volunteer the sealed Sally Hart client card. The class observes a short interview, pauses to identify established facts and information gaps, and records one sample client guardrail."},
+      {"stage":"Prepare the team role-play","action":"After macro analysis, each team receives three sealed client cards. For the first case, the Client and Macro Strategist begins as the client; the other three members act as analysts. Do not open a card assigned to another student."},
+      {"stage":"Interview and rotate","action":"Run a 12-minute interview for each client. Rotate the client role for the second and third cases so different members experience the client perspective. The Portfolio Manager and Risk Analyst keeps the decision-log record consistent across all three cases."},
+      {"stage":"Translate and challenge","action":"After each interview, all four members identify established facts, information gaps, and provisional guardrails. Challenge the first interpretation as a committee before moving to the next client."},
+      {"stage":"Finish the mandate","action":"Use the three interview summaries, the macro outlook, and the assigned case files to complete the IPS analysis and prepare for Gate 1."}
+    ],
+    "rolePlayProfiles": [
+      {"id":"eleanor-vance","slug":"eleanor-vance","team":"Team One","name":"Eleanor Vance","initials":"EV","caseLabel":"Case #01 · Team One","identity":"Age 72 · Retired librarian","statedDirection":"Capital preservation and income matter.","voiceCue":"Fictional AI voice: thoughtful, measured, cautious, and courteous.","openingQuestions":["What matters most to you about this portfolio?","What cash needs could change the plan?","How soon might you need access to the money?"]},
+      {"id":"marcus-chen","slug":"marcus-chen","team":"Team One","name":"Marcus Chen","initials":"MC","caseLabel":"Case #02 · Team One","identity":"Age 29 · Software engineer","statedDirection":"Aggressive growth and early retirement matter.","voiceCue":"Fictional AI voice: ambitious, direct, and optimistic about technology.","openingQuestions":["What does early retirement mean to you?","How important is your current technology-stock exposure?","What loss would change your plans?"]},
+      {"id":"david-sarah-miller","slug":"david-sarah-miller","team":"Team One","name":"David and Sarah Miller","initials":"DM","caseLabel":"Case #03 · Team One","identity":"Ages 48 and 46 · middle management","statedDirection":"College funding and retirement must work together.","voiceCue":"Fictional AI voices: practical, collaborative, and concerned with competing priorities.","openingQuestions":["Which goal has the nearer deadline?","What tuition timing should we understand?","How would a market loss affect each goal?"]},
+      {"id":"javier-rodriguez","slug":"javier-rodriguez","team":"Team Two","name":"Javier Rodriguez","initials":"JR","caseLabel":"Case #05 · Team Two","identity":"Age 55 · business owner","statedDirection":"Diversification and a future business exit matter.","voiceCue":"Fictional AI voice: independent, experienced, and tax-aware.","openingQuestions":["How does your business affect your financial security?","What does a successful exit look like?","Which taxes or liquidity needs concern you?"]},
+      {"id":"linda-sterling","slug":"linda-sterling","team":"Team Two","name":"Linda Sterling","initials":"LS","caseLabel":"Case #07 · Team Two","identity":"Age 51 · marketing director","statedDirection":"Stability matters while planning for a home purchase.","voiceCue":"Fictional AI voice: careful, organized, and focused on a near-term goal.","openingQuestions":["When will you need money for the home purchase?","What amount must remain dependable?","What would make you uncomfortable about market risk?"]},
+      {"id":"robert-halloway","slug":"robert-halloway","team":"Team Two","name":"Robert Halloway","initials":"RH","caseLabel":"Case #08 · Team Two","identity":"Age 58 · retail manager","statedDirection":"Catch-up retirement growth matters.","voiceCue":"Fictional AI voice: determined, anxious about time, and willing to take risk.","openingQuestions":["What retirement date are you working toward?","What resources will support retirement?","How would a loss affect your timeline?"]},
+      {"id":"chloe-dubois","slug":"chloe-dubois","team":"Team Three","name":"Chloe Dubois","initials":"CD","caseLabel":"Case #04 · Team Three","identity":"Age 24 · graduate student","statedDirection":"Long-term wealth building matters.","voiceCue":"Fictional AI voice: curious, new to investing, and future-focused.","openingQuestions":["What is your current financial situation?","What does long-term wealth mean to you?","How familiar are you with investment risk?"]},
+      {"id":"amara-okafor","slug":"amara-okafor","team":"Team Three","name":"Dr. Amara Okafor","initials":"AO","caseLabel":"Case #06 · Team Three","identity":"Age 42 · pediatrician","statedDirection":"Ethical growth matters.","voiceCue":"Fictional AI voice: analytical, values-driven, and decisive.","openingQuestions":["Which values are non-negotiable?","How should those values affect investment choices?","What trade-offs would be hardest to accept?"]},
+      {"id":"zoe-jenkins","slug":"zoe-jenkins","team":"Team Three","name":"Zoe Jenkins","initials":"ZJ","caseLabel":"Case #10 · Team Three","identity":"Age 32 · graphic designer","statedDirection":"Emergency reserves and growth matter.","voiceCue":"Fictional AI voice: creative, candid, and concerned about income variability.","openingQuestions":["How variable is your income?","What emergency reserve would help you feel secure?","What should happen after that reserve is protected?"]},
+      {"id":"thomas-murphy","slug":"thomas-murphy","team":"Team Four","name":"Thomas Murphy","initials":"TM","caseLabel":"Case #11 · Team Four","identity":"Age 45 · police officer","statedDirection":"Supplemental retirement matters, but losses feel difficult.","voiceCue":"Fictional AI voice: steady, cautious, and strongly loss-averse.","openingQuestions":["What role does your pension play?","What would a market loss feel like?","What retirement outcome matters most?"]},
+      {"id":"yuki-tanaka","slug":"yuki-tanaka","team":"Team Four","name":"Yuki Tanaka","initials":"YT","caseLabel":"Case #12 · Team Four","identity":"Age 38 · technology consultant","statedDirection":"Growth and global diversification matter before an international move.","voiceCue":"Fictional AI voice: globally minded, analytical, and planning-oriented.","openingQuestions":["What does the move change financially?","Which currencies affect your plans?","What time horizon should guide this portfolio?"]},
+      {"id":"elena-rossi","slug":"elena-rossi","team":"Team Four","name":"Elena Rossi","initials":"ER","caseLabel":"Case #14 · Team Four","identity":"Age 52 · corporate vice president","statedDirection":"Tax-efficient, sophisticated growth matters.","voiceCue":"Fictional AI voice: sophisticated, efficient, and attentive to restrictions.","openingQuestions":["Which restrictions affect what you can own or sell?","How important is tax efficiency?","What does growth mean within those limits?"]},
+      {"id":"arthur-sterling","slug":"arthur-sterling","team":"Team Five","name":"Arthur Sterling","initials":"AS","caseLabel":"Case #09 · Team Five","identity":"Age 80 · retired executive","statedDirection":"Philanthropy and multigenerational wealth matter.","voiceCue":"Fictional AI voice: reflective, experienced, and legacy-focused.","openingQuestions":["What charitable goals matter most?","How should future generations be considered?","What inflation concern do you have?"]},
+      {"id":"the-petersons","slug":"the-petersons","team":"Team Five","name":"The Petersons","initials":"TP","caseLabel":"Case #13 · Team Five","identity":"Ages 31 and 30 · teacher and nurse","statedDirection":"Debt reduction and child education matter.","voiceCue":"Fictional AI voices: practical, stretched, and family-focused.","openingQuestions":["Which financial obligation feels most urgent?","How does cash flow affect your choices?","What education goal are you planning for?"]},
+      {"id":"tyler-reed","slug":"tyler-reed","team":"Team Five","name":"Tyler Reed","initials":"TR","caseLabel":"Case #15 · Team Five","identity":"Age 27 · gig-economy worker","statedDirection":"Capital accumulation matters despite minimal starting capital.","voiceCue":"Fictional AI voice: energetic, independent, and candid about an uneven income.","openingQuestions":["How predictable is your income?","What comes before investing more?","What long-term goal motivates you?"]}
+    ],
     "decisionCycle": [
       {
         "stage": "Initial judgment",
@@ -221,13 +229,13 @@
         "logEvidence": "The interpretation; supporting case evidence and assumptions; unanswered questions; and the portfolio or security decision it could affect"
       },
       {
-        "stage": "AI client interview",
-        "action": "Ask your own open, neutral questions in the live voice interview or use the bounded text prompt. Confirm the transcript and mark any answer not established by the case as unknown.",
-        "logEvidence": "Prompt purpose and output summary—not a pasted transcript"
+        "stage": "Human client interview",
+        "action": "Use your assigned sealed role card. Ask your own open, neutral questions and mark any answer not established by the card as unknown.",
+        "logEvidence": "Question themes and response summary—not a word-for-word transcript"
       },
       {
-        "stage": "AI challenge",
-        "action": "Ask AI for the strongest counterinterpretation, hidden assumption, and missing downside—not for the final recommendation.",
+        "stage": "Committee challenge",
+        "action": "Use the interview record to identify the strongest counterinterpretation, hidden assumption, and missing downside—not a final recommendation.",
         "logEvidence": "Material challenge and the claim that now requires checking"
       },
       {
@@ -267,14 +275,7 @@
         "handoff": "Reconcile conflicts, propose a drawdown tripwire, and identify which assumptions must be verified before approval."
       }
     ],
-    "rolePlayPrompt": [
-      "You are role-playing [CLIENT NAME], a fictional client in a BUS331 investment-analysis simulation.",
-      "Use only the facts inside the CLIENT BRIEF below. If the brief does not establish an answer, say: Not established—record this as an information gap.",
-      "Stay in the client's first-person voice. Do not recommend securities, mutual funds, ETFs, asset weights, or a risk score. Do not invent preferences, numbers, life events, sources, or certainty.",
-      "Answer one neutral interview question at a time. When the analyst asks about a trade-off, explain the client's stated priorities and the missing fact needed to decide.",
-      "CLIENT BRIEF: [paste only the assigned fictional profile facts from the public course files]"
-    ],
-    "challengerPrompts": [
+    "committeeChallengeQuestions": [
       "What is the strongest reasonable interpretation that contradicts our initial judgment? Separate case facts from assumptions.",
       "Which client answer may reflect willingness to take risk but not financial capacity—or the reverse? What evidence would resolve the conflict?",
       "Which claim, number, or product characteristic cannot be accepted until a human checks an approved source?",
@@ -343,7 +344,7 @@
     "decisionLogFields": [
       "Initial judgment and confidence",
       "Case fact, assumption, or market claim",
-      "AI challenge summary",
+      "Committee challenge summary",
       "Verification source and as-of date",
       "Verification result",
       "Change to reasoning",
@@ -352,11 +353,11 @@
       "Peer reviewer and status"
     ],
     "qualityGate": [
-      "Each role records at least one human-first judgment for each assigned client before using AI.",
-      "Every material AI challenge is summarized in the Analyst Decision Log; raw transcripts are not a substitute for analysis.",
+      "Each role records at least one human-first judgment for each assigned client before the structured role-play.",
+      "Every material committee challenge is summarized in the Analyst Decision Log; a role-play conversation is not a substitute for analysis.",
       "Every factual claim or number used in the final reasoning has an approved source and as-of date.",
-      "Unknown client information remains labeled unknown; it is not filled with invented AI detail.",
-      "The final reasoning states whether AI changed the judgment and why.",
+      "Unknown client information remains labeled unknown; it is not filled with invented detail.",
+      "The final reasoning states what changed the judgment and why.",
       "Each final judgment creates a testable guardrail for later fixed-income, mutual-fund/ETF, allocation, or risk decisions.",
       "A second team member reviews the evidence trail before the Phase 1 gate."
     ]
@@ -648,15 +649,15 @@
       "workstreams": [
         {
           "title": "Market view",
-          "description": "Read the historical data before using AI, compare the committee view with FactSet/FRED consensus, and build bull/base/bear scenarios."
+          "description": "Read the historical data, compare the committee view with FactSet/FRED consensus, and build bull/base/bear scenarios."
         },
         {
           "title": "Client discovery",
-          "description": "Make a human-first judgment, interview the fictional client through the bounded AI protocol, and translate verified needs into RRTTLLU constraints."
+          "description": "Make a human-first judgment, complete the structured client role-play, and translate verified needs into RRTTLLU constraints."
         },
         {
           "title": "Decision log and guardrails",
-          "description": "Use AI to challenge the initial view, verify material claims, record final reasoning, and set criteria for later bonds, mutual funds/ETFs, allocation, and risk."
+          "description": "Use a committee challenge to test the initial view, verify material claims, record final reasoning, and set criteria for later bonds, mutual funds/ETFs, allocation, and risk."
         }
       ],
       "evidence": [
@@ -665,7 +666,7 @@
         "Bull/base/bear scenarios with probabilities totaling 100%",
         "RRTTLLU analysis for all three assigned clients",
         "Return target, maximum volatility, and drawdown tripwire for each client",
-        "Analyst Decision Log showing initial judgment, AI challenge, verification, final reasoning, and downstream guardrail",
+        "Analyst Decision Log showing initial judgment, committee challenge, verification, final reasoning, and downstream guardrail",
         "Phase 1 decision record signed by all four members"
       ],
       "deliverables": [
@@ -819,7 +820,7 @@
         "preflight": [
           "Scenario probabilities total 100% and every macro claim has a source and as-of date.",
           "Each client has an objective, RRTTLLU constraints, return target, volatility limit, drawdown tripwire, and unresolved information gaps.",
-          "The Decision Record shows initial judgment, AI challenge, human verification, final reasoning, downstream guardrail, owner, and peer reviewer.",
+          "The Decision Record shows initial judgment, committee challenge, human verification, final reasoning, downstream guardrail, owner, and peer reviewer.",
           "All four members recorded the Phase 1 vote and any revision action."
         ]
       },
@@ -887,10 +888,10 @@
     },
     {
       "id": "client-discovery-protocol",
-      "label": "Client Discovery and AI Decision Protocol",
+      "label": "Client Discovery and Decision Protocol",
       "type": "HTML",
       "path": "project/client-discovery-ai-protocol.html",
-      "description": "Fictional-client team sets, four-role interview rounds, bounded AI prompts, approved-source rules, and the human-first decision cycle.",
+      "description": "Classroom demonstration, team-specific structured role-play, four-role interview rounds, approved-source rules, and the human-first decision cycle.",
       "audience": "student"
     },
     {

@@ -132,14 +132,50 @@ function decisionCycleMarkup() {
   </div>`;
 }
 
+function teamSlug(team) {
+  return team.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
 function clientSetBoard() {
   return `<div class="client-set-board">
-    ${model.phase1Experience.clientSets.map((set) => `<article class="client-set">
+    ${model.phase1Experience.clientSets.map((set) => `<a class="client-set" href="client-role-play/${teamSlug(set.team)}.html">
       <p class="role-tag">${escapeHtml(set.team)}</p>
       <h3>${set.clients.map(escapeHtml).join(" · ")}</h3>
-      <p>${escapeHtml(set.inquiry)}</p>
-    </article>`).join("\n")}
+      <p>${escapeHtml(set.inquiry)}</p><span class="resource-type">Open your team role-play instructions</span>
+    </a>`).join("\n")}
   </div>`;
+}
+
+function rolePlaySequenceMarkup() {
+  return `<div class="workflow-steps">${model.phase1Experience.rolePlaySequence.map((item, index) => `<article class="workflow-step"><span aria-hidden="true">${index + 1}</span><div><h3>${escapeHtml(item.stage)}</h3><p>${escapeHtml(item.action)}</p></div></article>`).join("\n")}</div>`;
+}
+
+function teamRolePlayPage(set) {
+  const prefix = "../../";
+  const profiles = model.phase1Experience.rolePlayProfiles.filter((profile) => profile.team === set.team);
+  const body = `<main id="main-content">
+    ${pageHero("Phase 1 · ${set.team}", "Your structured client role-play", "Interview each assigned fictional client, record what is established and unknown, then turn those findings into guardrails for the IPS.")}
+    <div class="page-shell"><div class="content-flow">
+      <section><div class="callout"><h2>Before you begin</h2><p>One member receives the sealed role card and becomes the client. The other members ask their own neutral questions. Do not exchange, photograph, or read another student's sealed card.</p></div></section>
+      <section><p class="section-kicker">Your three cases</p><h2>Rotate the client role</h2><div class="client-set-board">${profiles.map((profile) => `<article class="client-set"><p class="role-tag">${escapeHtml(profile.caseLabel)}</p><h3>${escapeHtml(profile.name)}</h3><p>${escapeHtml(profile.identity)}</p><p><strong>Assigned client:</strong> receive the sealed card from your instructor or Canvas. <strong>Analysts:</strong> prepare questions in your role lane and record the summary in the Decision Log.</p></article>`).join("\n")}</div></section>
+      <section><p class="section-kicker">Activity sequence</p><h2>One interview at a time</h2>${rolePlaySequenceMarkup()}</section>
+      <section><p class="section-kicker">End each interview</p><h2>Document, challenge, and hand off</h2><ul class="check-list"><li>Separate established facts from assumptions and information gaps.</li><li>State at least one provisional client guardrail that later security selection or allocation must honor.</li><li>Record a concise summary in the Analyst Decision Log—not a transcript.</li><li>Do not recommend a security, fund, ETF, allocation, or trade during discovery.</li></ul></section>
+      <section><div class="milestone-banner"><div><p class="section-kicker">Return when ready</p><h2>Convert discovery into the client mandate</h2><p>Bring the three interview summaries and your macro outlook into the Phase 1 IPS analysis.</p></div><div class="milestone-actions"><a class="button button-primary" href="../phase-1-frame-the-mandate.html">Return to Phase 1</a><a class="button" href="../client-discovery-ai-protocol.html">Discovery protocol</a></div></div></section>
+    </div></div></main>`;
+  return shell({title: `${set.team} client role-play`, description: `Structured human client role-play instructions for ${set.team}.`, prefix, body, pageClass: "guide-page discovery-page"});
+}
+
+function instructorDemoPage() {
+  const prefix = "../../";
+  const demo = model.phase1Experience.instructorDemo;
+  const body = `<main id="main-content">
+    ${pageHero("Phase 1 · Classroom model", "Observe the client-discovery interview", "Your instructor and a volunteer will model the process before teams begin their assigned client role-play.")}
+    <div class="page-shell"><div class="content-flow">
+      <section><div class="callout"><h2>${escapeHtml(demo.name)} is a practice client</h2><p>${escapeHtml(demo.statedDirection)} Watch for neutral questions, established facts, information gaps, and the guardrail that follows from the conversation.</p></div></section>
+      <section><p class="section-kicker">What to do while you observe</p><h2>Listen like an analyst</h2><ul class="check-list"><li>Write down one fact that is established by the client answer.</li><li>Write down one fact that remains unknown.</li><li>Identify one client need or constraint that should affect the IPS.</li><li>Do not recommend an investment during the demonstration.</li></ul></section>
+      <section><div class="milestone-banner"><div><p class="section-kicker">Then begin your work</p><h2>Open your team role-play instructions</h2><p>Your team will use the same process with its assigned fictional clients.</p></div><div class="milestone-actions"><a class="button button-primary" href="../client-discovery-ai-protocol.html">Choose your team</a></div></div></section>
+    </div></div></main>`;
+  return shell({title: "Classroom client-discovery demonstration", description: "Student observer instructions for the BUS331 classroom client-discovery demonstration.", prefix, body, pageClass: "guide-page discovery-page"});
 }
 
 function interviewSimulatorMarkup(prefix) {
@@ -620,12 +656,24 @@ function clientDiscoveryPage() {
         <section>
           <p class="section-kicker">Fictional client assignments</p>
           <h2>Meet the five committee case sets</h2>
-          <p>Use your assigned three-client set. The inquiry line identifies tensions to investigate, not a conclusion to copy.</p>
+          <p>Open only your assigned team page. The inquiry line identifies tensions to investigate, not a conclusion to copy.</p>
           ${clientSetBoard()}
           <div class="resource-list resource-list-inline">${resourceLinks(["client-profiles", "client-data"], prefix, { includeDescription: true })}</div>
         </section>
 
-        ${interviewSimulatorMarkup(prefix)}
+        <section>
+          <p class="section-kicker">Classroom model</p>
+          <h2>See the process once before your team begins</h2>
+          <p>Your instructor will lead a short practice interview with a volunteer playing Sally Hart. Observe how neutral questions become established facts, information gaps, and a provisional guardrail.</p>
+          <div class="hero-actions"><a class="button button-primary" href="client-role-play/instructor-demo.html">Open classroom demonstration instructions</a></div>
+        </section>
+
+        <section>
+          <p class="section-kicker">Structured human role-play</p>
+          <h2>Interview, rotate, and record</h2>
+          <p>No AI prompt or student account is required. The designated client receives a sealed card; the remaining members conduct the interview and document the result.</p>
+          ${rolePlaySequenceMarkup()}
+        </section>
 
         <section>
           <p class="section-kicker">Four-person interview</p>
@@ -635,17 +683,10 @@ function clientDiscoveryPage() {
         </section>
 
         <section>
-          <p class="section-kicker">Bounded role-play</p>
-          <h2>Start with this prompt</h2>
-          <p>Replace the bracketed text with one assigned fictional client. Do not paste private information, proprietary FactSet content, or any real person's data into an AI tool.</p>
-          <pre class="prompt-block"><code>${escapeHtml(experience.rolePlayPrompt.join("\n\n"))}</code></pre>
-          <div class="callout"><h3>When the brief is silent</h3><p>Record the answer as an information gap. An invented client preference is not discovery and cannot support an investment decision.</p></div>
-        </section>
-
-        <section>
-          <p class="section-kicker">Challenge round</p>
-          <h2>Ask AI to attack the reasoning</h2>
-          <div class="challenge-grid">${experience.challengerPrompts.map((prompt) => `<article><p>${escapeHtml(prompt)}</p></article>`).join("\n")}</div>
+          <p class="section-kicker">Committee challenge round</p>
+          <h2>Challenge the first interpretation</h2>
+          <p>Use these questions as a committee discussion guide. Do not paste them into an AI tool.</p>
+          <div class="challenge-grid">${experience.committeeChallengeQuestions.map((question) => `<article><p>${escapeHtml(question)}</p></article>`).join("\n")}</div>
         </section>
 
         <section>
@@ -699,8 +740,7 @@ function clientDiscoveryPage() {
     description: experience.purpose,
     prefix,
     body,
-    pageClass: "guide-page discovery-page",
-    scripts: ["scripts/client-interview-simulator.js"]
+    pageClass: "guide-page discovery-page"
   });
 }
 
@@ -977,12 +1017,17 @@ function assessmentPage() {
 }
 
 await fs.mkdir(path.join(rootDir, "project"), { recursive: true });
+await fs.mkdir(path.join(rootDir, "project", "client-role-play"), { recursive: true });
 await fs.mkdir(path.join(rootDir, "canvas"), { recursive: true });
 await fs.writeFile(path.join(rootDir, "index.html"), landingPage());
 await fs.writeFile(path.join(rootDir, roadmapPath), roadmapPage());
 await fs.writeFile(path.join(rootDir, "project", "guide.html"), guidePage("../"));
 await fs.writeFile(path.join(rootDir, "BUS331_InvProject_Requirements_AllPhases.html"), guidePage(""));
 await fs.writeFile(path.join(rootDir, clientDiscoveryPath), clientDiscoveryPage());
+await fs.writeFile(path.join(rootDir, "project", "client-role-play", "instructor-demo.html"), instructorDemoPage());
+for (const set of model.phase1Experience.clientSets) {
+  await fs.writeFile(path.join(rootDir, "project", "client-role-play", `${teamSlug(set.team)}.html`), teamRolePlayPage(set));
+}
 await fs.writeFile(path.join(rootDir, securityWorkflowPath), securityAnalysisPage());
 await fs.writeFile(path.join(rootDir, portfolioStressPath), portfolioStressPage());
 await fs.writeFile(path.join(rootDir, canvasSubmissionPath), canvasSubmissionPage());
@@ -995,4 +1040,4 @@ for (const assignment of model.canvasSubmissions.assignments) {
   await fs.writeFile(path.join(rootDir, "canvas", `phase-${phase.number}-assignment.html`), canvasAssignmentFragment(assignment));
 }
 
-console.log(`Built ${model.phases.length + 8} project pages and ${model.canvasSubmissions.assignments.length} Canvas fragments from project-model.json.`);
+console.log(`Built ${model.phases.length + 14} project pages and ${model.canvasSubmissions.assignments.length} Canvas fragments from project-model.json.`);
