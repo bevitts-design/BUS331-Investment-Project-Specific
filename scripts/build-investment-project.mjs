@@ -147,17 +147,18 @@ function clientSetBoard() {
 }
 
 function rolePlaySequenceMarkup() {
-  return `<div class="workflow-steps">${model.phase1Experience.rolePlaySequence.map((item, index) => `<article class="workflow-step"><span aria-hidden="true">${index + 1}</span><div><h3>${escapeHtml(item.stage)}</h3><p>${escapeHtml(item.action)}</p></div></article>`).join("\n")}</div>`;
+  const teamSteps = model.phase1Experience.rolePlaySequence.filter((item) => item.stage !== "Instructor demonstration");
+  return `<div class="workflow-steps">${teamSteps.map((item, index) => `<article class="workflow-step"><span aria-hidden="true">${index + 1}</span><div><h3>${escapeHtml(item.stage)}</h3><p>${escapeHtml(item.action)}</p></div></article>`).join("\n")}</div>`;
 }
 
 function teamRolePlayPage(set) {
   const prefix = "../../";
   const profiles = model.phase1Experience.rolePlayProfiles.filter((profile) => profile.team === set.team);
   const body = `<main id="main-content">
-    ${pageHero("Phase 1 · ${set.team}", "Your structured client role-play", "Interview each assigned fictional client, record what is established and unknown, then turn those findings into guardrails for the IPS.")}
+    ${pageHero(`Phase 1 · ${set.team}`, "Your structured client role-play", "Interview each assigned fictional client, record what is established and unknown, then turn those findings into guardrails for the IPS.")}
     <div class="page-shell"><div class="content-flow">
-      <section><div class="callout"><h2>Before you begin</h2><p>One member receives the sealed role card and becomes the client. The other members ask their own neutral questions. Do not exchange, photograph, or read another student's sealed card.</p></div></section>
-      <section><p class="section-kicker">Your three cases</p><h2>Rotate the client role</h2><div class="client-set-board">${profiles.map((profile) => `<article class="client-set"><p class="role-tag">${escapeHtml(profile.caseLabel)}</p><h3>${escapeHtml(profile.name)}</h3><p>${escapeHtml(profile.identity)}</p><p><strong>Assigned client:</strong> receive the sealed card from your instructor or Canvas. <strong>Analysts:</strong> prepare questions in your role lane and record the summary in the Decision Log.</p></article>`).join("\n")}</div></section>
+      <section><div class="callout"><h2>Before you begin</h2><p>The classroom demonstration is complete. Review the assigned-client slides, then begin your team role-play. One member receives the sealed role card and becomes the client. The other members ask their own neutral questions. Do not exchange, photograph, or read another student's sealed card.</p><div class="hero-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, resourceById.get("client-profiles").path))}">Open assigned-client profiles <span>PPTX</span></a></div></div></section>
+      <section><p class="section-kicker">Your three clients</p><h2>Rotate the client role</h2><div class="client-set-board">${profiles.map((profile) => `<article class="client-set"><p class="role-tag">Assigned client</p><h3>${escapeHtml(profile.name)}</h3><p>${escapeHtml(profile.identity)}</p><p><strong>Client role:</strong> receive the sealed card from your instructor or Canvas. <strong>Analysts:</strong> prepare questions in your role lane and record the summary in the Decision Log.</p></article>`).join("\n")}</div></section>
       <section><p class="section-kicker">Activity sequence</p><h2>One interview at a time</h2>${rolePlaySequenceMarkup()}</section>
       <section><p class="section-kicker">End each interview</p><h2>Document, challenge, and hand off</h2><ul class="check-list"><li>Separate established facts from assumptions and information gaps.</li><li>State at least one provisional client guardrail that later security selection or allocation must honor.</li><li>Record a concise summary in the Analyst Decision Log—not a transcript.</li><li>Do not recommend a security, fund, ETF, allocation, or trade during discovery.</li></ul></section>
       <section><div class="milestone-banner"><div><p class="section-kicker">Return when ready</p><h2>Convert discovery into the client mandate</h2><p>Bring the three interview summaries and your macro outlook into the Phase 1 IPS analysis.</p></div><div class="milestone-actions"><a class="button button-primary" href="../phase-1-frame-the-mandate.html">Return to Phase 1</a><a class="button" href="../client-discovery-ai-protocol.html">Discovery protocol</a></div></div></section>
