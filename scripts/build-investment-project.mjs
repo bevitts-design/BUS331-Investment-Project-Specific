@@ -918,7 +918,7 @@ function canvasAssignmentFragment(assignment) {
     <p style="margin:12px 0 0;color:#ffffff;">${escapeHtml(assignment.decision)}</p>
   </div>
   <div style="background:${palette.paper};padding:20px;border:1px solid ${palette.line};border-top:0;border-radius:0 0 14px 14px;">
-    <div style="${card}border-left:6px solid ${palette.teal};"><h2 style="margin:0 0 8px;color:${palette.navy};font-size:22px;">Submit as one Canvas group</h2><p style="margin:0;">One designated team member uploads the full package. All four members must open the Canvas receipt and confirm every required filename. Canvas controls the due date, points, availability window, and attempt policy.</p></div>
+    <div style="${card}border-left:6px solid ${palette.teal};"><h2 style="margin:0 0 8px;color:${palette.navy};font-size:22px;">Submission process</h2><p style="margin:0;">${escapeHtml(assignment.submissionProcess)}</p><p style="margin:10px 0 0;">Canvas controls the due date, points, availability window, and attempt policy.</p></div>
     <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Required files</h2>
     ${assignment.requiredFiles.map((file) => `<div style="${card}"><p style="margin:0 0 4px;font-weight:bold;color:${palette.navy};overflow-wrap:anywhere;">${escapeHtml(file.name)}</p><p style="margin:0;">${escapeHtml(file.description)}</p></div>`).join("\n")}
     <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Pre-submission check</h2>

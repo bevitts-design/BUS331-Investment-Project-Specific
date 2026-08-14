@@ -167,13 +167,17 @@ if (model.canvasSubmissions?.assignments?.map((item) => item.phaseId).join(",") 
 } else {
   const submissionNames = new Set();
   for (const assignment of model.canvasSubmissions.assignments) {
-    if (!assignment.requiredFiles?.length || !assignment.preflight?.length) fail(`${assignment.phaseId} Canvas submission is incomplete.`);
+    if (!assignment.requiredFiles?.length || !assignment.preflight?.length || !assignment.submissionProcess) fail(`${assignment.phaseId} Canvas submission is incomplete.`);
     for (const file of assignment.requiredFiles || []) {
       if (!/^BUS331_Team##_/i.test(file.name)) fail(`${assignment.phaseId} Canvas filename must use the BUS331_Team##_ convention: ${file.name}.`);
       if (submissionNames.has(file.name)) fail(`Duplicate Canvas submission filename: ${file.name}.`);
       submissionNames.add(file.name);
+      const extension = file.name.split(".").pop().toLowerCase();
+      if (!assignment.allowedExtensions?.includes(extension)) fail(`${assignment.phaseId} allowed extensions must include .${extension} for ${file.name}.`);
     }
   }
+  const phase2Submission = model.canvasSubmissions.assignments.find((assignment) => assignment.phaseId === "phase-2");
+  if (!/two checkpoints/i.test(phase2Submission.submissionProcess) || !/Baseline Snapshot/i.test(phase2Submission.submissionProcess) || !/Scenario Reveal/i.test(phase2Submission.submissionProcess)) fail("Phase 2 Canvas submission must explain the baseline and Scenario Reveal checkpoints.");
   const submissionBoundary = `${model.canvasSubmissions.authority} ${(model.canvasSubmissions.sharedRules || []).join(" ")}`;
   if (!/one designated submitter/i.test(submissionBoundary) || !/Canvas submission receipt/i.test(submissionBoundary)) fail("Canvas workflow must define one submitter and a receipt check.");
   if (!/licensed FactSet evidence/i.test(submissionBoundary) || !/private evidence ZIP/i.test(submissionBoundary)) fail("Canvas workflow must define the private licensed-evidence bundle.");
@@ -270,6 +274,7 @@ for (const [index, relative] of canvasFragments.entries()) {
   if ((html.match(/<h1\b/gi) || []).length !== 1) fail(`${relative} must contain exactly one h1.`);
   if (!/style="/i.test(html)) fail(`${relative} must use inline Canvas-safe styling.`);
   if (!/private Canvas assignment/i.test(html) || !/Canvas receipt/i.test(html)) fail(`${relative} is missing the private-submission or receipt boundary.`);
+  if (!/Submission process/i.test(html)) fail(`${relative} is missing its submission process.`);
   for (const file of model.canvasSubmissions.assignments[index].requiredFiles) {
     if (!html.includes(file.name)) fail(`${relative} is missing required filename ${file.name}.`);
   }
