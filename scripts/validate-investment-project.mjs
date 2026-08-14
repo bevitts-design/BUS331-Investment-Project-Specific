@@ -84,32 +84,35 @@ if (!phase2Experience) {
   fail("Missing phase2Experience in the public model.");
 } else {
   if (!/Phase 1/i.test(phase2Experience.handoffRule || "") || !/guardrail/i.test(phase2Experience.handoffRule || "")) fail("Phase 2 must require a Phase 1 client-guardrail handoff.");
-  if (phase2Experience.securityWorkflow?.length < 5) fail("Security analysis must define a complete compare, challenge, verify, and decide workflow.");
   if (phase2Experience.portfolioWorkflow?.length < 6) fail("Portfolio management must define allocation, IPS, stress, correction, re-test, and vote steps.");
   const instrumentText = JSON.stringify(phase2Experience.instrumentStandards || []);
-  for (const required of ["fixed-income fund", "Equity fund", "individual equity", "duration", "credit", "benchmark", "style", "diversification", "cost", "liquidity", "client fit"]) {
+  for (const required of ["fixed-income fund", "Equity fund", "individual equity", "duration", "credit", "benchmark", "style", "tracking", "turnover", "valuation", "base/bear"]) {
     if (!new RegExp(required, "i").test(instrumentText)) fail(`Phase 2 instrument analysis is missing ${required}.`);
+  }
+  const instrumentAddOnText = JSON.stringify((phase2Experience.instrumentStandards || []).flatMap((item) => item.requiredAnalysis || []));
+  for (const repeated of ["cost and trading expenses", "liquidity", "overlap", "diversification contribution", "client fit", "rejected alternative", "key trade-off"]) {
+    if (new RegExp(repeated, "i").test(instrumentAddOnText)) fail(`Instrument add-ons repeat the universal scorecard requirement: ${repeated}.`);
   }
   const issuerCheck = phase2Experience.issuerRealityCheck;
   if (!issuerCheck || !/yield or recent return alone/i.test(issuerCheck.decisionRule || "")) fail("Issuer Reality Check must prohibit yield or recent return as the sole recommendation basis.");
+  if (!/every direct individual security/i.test(issuerCheck?.directRule || "")) fail("Issuer Reality Check must always apply to direct individual securities.");
+  if (!/only a limited look-through/i.test(issuerCheck?.fundRule || "") || !/material/i.test(issuerCheck?.fundRule || "") || !/scorecard is sufficient/i.test(issuerCheck?.fundRule || "")) fail("Issuer Reality Check must make fund/ETF look-through limited, materiality-based, and conditional.");
   const issuerText = JSON.stringify(issuerCheck || {});
-  for (const required of ["business model", "revenue drivers", "macro sensitivity", "margin", "cash-flow", "liquidity", "leverage", "interest coverage", "debt-maturity", "issuer-specific risk", "client fit"]) {
+  for (const required of ["business model", "revenue drivers", "macro sensitivity", "margin", "cash-flow", "liquidity", "leverage", "interest coverage", "debt-maturity", "issuer-specific risk", "mandate fit"]) {
     if (!new RegExp(required, "i").test(issuerText)) fail(`Issuer Reality Check is missing ${required}.`);
   }
-  if (issuerCheck?.roleResponsibilities?.length !== 5) fail("Issuer Reality Check must assign all five committee roles.");
-  const issuerRoleIds = new Set(issuerCheck?.roleResponsibilities?.map((item) => item.roleId));
-  for (const role of model.roles) if (!issuerRoleIds.has(role.id)) fail(`Issuer Reality Check is missing ${role.title}.`);
+  if (!/shared scorecard/i.test(issuerCheck?.handoff || "") || !/Portfolio Manager/i.test(issuerCheck?.handoff || "") || !/Risk and Derivatives Analyst/i.test(issuerCheck?.handoff || "")) fail("Issuer Reality Check must return one material conclusion to the shared scorecard and named integration owners.");
   const factSetWorkflow = phase2Experience.factSetWorkflow;
   const factSetText = JSON.stringify(factSetWorkflow || {});
   if (!factSetWorkflow || !/licensed FactSet access/i.test(factSetText) || !/public repository/i.test(factSetText)) fail("Phase 2 must define the licensed FactSet workflow and public-repository boundary.");
   for (const required of ["retrieved", "retrieval date", "metric", "source", "document reference", "interpretation", "effect on the recommendation", "canvas submission item"]) {
     if (!new RegExp(required, "i").test(factSetText)) fail(`FactSet evidence contract is missing ${required}.`);
   }
-  for (const required of ["Issuer Reality Check", "Credit and fixed income", "Mutual funds and ETFs", "Corporate issuer analysis", "Portfolio risk inputs"]) {
+  for (const required of ["Conditional issuer review", "Credit and fixed income", "Mutual funds and ETFs", "Portfolio risk inputs"]) {
     if (!factSetWorkflow?.connections?.some((item) => item.workstream === required)) fail(`FactSet workflow is missing the ${required} connection.`);
   }
   const selectionContractText = JSON.stringify(phase2Experience.selectionContract || {});
-  for (const required of ["8–10", "never exceed 10", "Funds and ETFs", "two or three", "Individual bonds are not required", "Cost and trading expenses", "overlap", "Diversification contribution", "idiosyncratic risk", "position-size", "Full scorecards are required for final holdings"]) {
+  for (const required of ["candidate pool", "8–10", "never exceed 10", "Funds and ETFs", "two or three", "Individual bonds are not required", "Cost and trading expenses", "overlap", "Diversification contribution", "idiosyncratic risk", "position-size", "Full scorecards are required for final holdings", "no-hedge", "at most one targeted hedge"]) {
     if (!new RegExp(required, "i").test(selectionContractText)) fail(`Focused selection contract is missing ${required}.`);
   }
   const hedgeText = JSON.stringify(phase2Experience.derivativeHedge || {});
@@ -429,28 +432,37 @@ if (/Start live interview|client-interview-simulator|Bounded role-play|Start wit
 const securityHtml = await fs.readFile(path.join(rootDir, "project", "security-analysis-selection.html"), "utf8");
 for (const requiredText of [
   "Phase 1 is the decision filter",
-  "Build a focused candidate set",
+  "Set the candidate pool and portfolio boundaries",
   "8–10 holdings",
   "Funds and ETFs are the primary",
   "Fixed-income fund, ETF, or limited direct exposure",
   "Equity fund or ETF",
   "Limited individual equity",
-  "Use one concise scorecard",
+  "Complete one scorecard per final holding",
+  "Add only evidence that is unique to the instrument",
+  "Do not restate cost, liquidity, overlap, diversification, client fit, rejected alternatives, or trade-offs",
   "Rejected alternatives",
-  "Candidate comparison and decision record",
+  "One shared final-holding scorecard and decision record",
   "Issuer Reality Check",
+  "only when triggered",
+  "Always required",
+  "Conditional only",
+  "not a second security-analysis assignment",
   "Yield or recent return alone cannot support a recommendation",
-  "Business model and principal revenue drivers",
-  "Interest coverage and debt-maturity considerations",
+  "Business model, principal revenue drivers",
+  "include interest coverage and debt-maturity considerations",
   "FactSet Research and Evidence Record",
   "Public/private data boundary",
   "Data as-of period and retrieval date",
   "licensed-source evidence",
-  "AI challenge-and-verification checkpoint",
+  "AI challenge and human verification",
   "Accept, Modify, or Reject"
 ]) {
   if (!securityHtml.includes(requiredText)) fail(`Security Analysis page is missing required student workflow content: ${requiredText}.`);
 }
+const candidateHeadings = securityHtml.match(/<h[23][^>]*>[^<]*(?:candidate set|candidate pool)[^<]*<\/h[23]>/gi) || [];
+if (candidateHeadings.length !== 1) fail(`Security Analysis page must have exactly one candidate-pool heading; found ${candidateHeadings.length}.`);
+if (/Build a candidate set/i.test(securityHtml)) fail("Security Analysis page repeats the retired 'Build a candidate set' instruction.");
 for (const roleTitle of requiredRoleTitles) {
   if (!securityHtml.includes(roleTitle)) fail(`Security Analysis page is missing role ownership for ${roleTitle}.`);
 }

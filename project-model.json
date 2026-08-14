@@ -395,33 +395,8 @@
       "Committee base and bear macro scenarios with source dates",
       "Phase 1 Analyst Decision Log, including unresolved information gaps and downstream guardrails"
     ],
-    "securityWorkflow": [
-      {
-        "stage": "Translate the mandate",
-        "action": "Turn each Phase 1 guardrail and the approved allocation into a measurable screen before researching products. Separate must-pass constraints from preferences."
-      },
-      {
-        "stage": "Build a candidate set",
-        "action": "Translate the approved allocation and client mandate into a focused candidate set. Funds and ETFs are the primary vehicles; individual securities are limited implementation choices, and individual bonds are not required."
-      },
-      {
-        "stage": "Analyze and compare",
-        "action": "Use a concise, consistent scorecard for each serious finalist. Compare and reject alternatives briefly; do not complete a full scorecard for every screened name."
-      },
-      {
-        "stage": "Challenge the leader",
-        "action": "Make a provisional choice first, then use AI to surface the strongest counterargument, missing risk, or contradictory interpretation."
-      },
-      {
-        "stage": "Verify and decide",
-        "action": "Check every material AI-assisted claim in an approved source, then accept, modify, or reject the provisional choice and record why."
-      },
-      {
-        "stage": "Hand off to the portfolio",
-        "action": "State the finalist's portfolio purpose, proposed weight, scorecard conclusion, key trade-off, client-fit condition, and the event that would trigger review or removal."
-      }
-    ],
     "selectionContract": {
+      "candidateStandard": "Translate each approved allocation sleeve and client mandate into a short candidate pool with plausible alternatives. Separate must-pass constraints from preferences, and do not research only the team's preferred product.",
       "portfolioSize": "Target 8–10 final holdings per client portfolio and never exceed 10. Eight is a valid complete portfolio; do not add a holding merely to fill a slot.",
       "vehicleMix": "Funds and ETFs are the primary implementation vehicles. Individual securities are permitted only when they add a distinct, mandate-aligned benefit and are limited to two or three total per portfolio. Individual bonds are not required.",
       "inclusionBoundaries": [
@@ -444,7 +419,8 @@
         "Idiosyncratic risk",
         "Position-size rationale and concentration limit"
       ],
-      "alternativeStandard": "Compare the strongest realistic alternatives and record why they were rejected in one concise decision record. Full scorecards are required for final holdings, not every screened name."
+      "alternativeStandard": "Compare the strongest realistic alternatives and record why they were rejected in one concise decision record. Full scorecards are required for final holdings, not every screened name.",
+      "riskHandoff": "Security selection identifies the residual exposures to test; it does not manufacture a hedge. In the next workflow, the Risk and Derivatives Analyst stress-tests the integrated portfolio and documents either a fully supported no-hedge conclusion or at most one targeted hedge that addresses an identified residual risk."
     },
     "instrumentStandards": [
       {
@@ -452,12 +428,10 @@
         "ownerRoleId": "fixed-income",
         "decisionQuestion": "Does the exposure fit the client's income, capital-preservation, duration, credit, liquidity, tax, and rate-risk guardrails?",
         "requiredAnalysis": [
-          "Fund or ETF objective, benchmark, holdings, cost, liquidity, and income characteristics; use direct-bond terms only if a direct bond is actually proposed",
-          "Yield or income measure and the return drivers under the base and bear macro cases",
+          "Yield or income measure and its return drivers under the base and bear macro cases",
           "Duration or interest-rate sensitivity and the effect of a rate move",
-          "Credit quality, spread, downgrade/default, and concentration risk",
-          "Overlap, diversification contribution, client fit, proposed portfolio role, and monitoring trigger",
-          "Concise alternative rejected and the key trade-off"
+          "Credit quality, spread, and downgrade or default risk",
+          "Income-distribution and tax characteristics; use direct-bond terms only if a direct bond is actually proposed"
         ]
       },
       {
@@ -466,11 +440,9 @@
         "decisionQuestion": "Does the vehicle deliver the intended equity exposure efficiently without hidden concentration, overlap, trading, liquidity, tax, or style problems?",
         "requiredAnalysis": [
           "Objective, benchmark or index methodology, style, sector, region, and active or passive approach",
-          "Top holdings, concentration, sector/style overlap, and diversification contribution",
-          "Expense ratio, trading expenses, turnover, distributions, and tax considerations",
-          "Liquidity at both the vehicle and underlying-holdings level",
           "Performance or tracking context using comparable periods and current as-of dates",
-          "Client fit, portfolio role, monitoring trigger, concise rejected alternative, and key trade-off"
+          "Turnover, distributions, and tax implications",
+          "Any underlying issuer that is material enough to trigger the limited look-through review below"
         ]
       },
       {
@@ -478,36 +450,25 @@
         "ownerRoleId": "equity",
         "decisionQuestion": "Does this individual security add a mandate-aligned benefit that a fund or ETF cannot provide without creating excessive idiosyncratic or concentration risk?",
         "requiredAnalysis": [
-          "Distinct portfolio purpose and evidence that a fund or ETF is not the better implementation",
           "Business and return drivers, valuation context where relevant, and base/bear sensitivity",
-          "Liquidity, trading expenses, tax considerations, and client fit",
-          "Idiosyncratic risks and the evidence that makes them material",
-          "Position-size rationale, concentration limit, diversification effect, and monitoring or exit trigger",
-          "Concise alternative rejected and the key trade-off"
+          "The three individual-security additions in the shared scorecard above",
+          "The concise Issuer Reality Check below"
         ]
       }
     ],
     "issuerRealityCheck": {
       "title": "Issuer Reality Check",
       "decisionRule": "Yield or recent return alone cannot support a recommendation. The committee must evidence the issuer's financial health, operating outlook, and relevance to the client's mandate.",
-      "applicability": "Complete one concise snapshot for every direct individual security. For a selected fund or ETF, use look-through issuer analysis only when one holding or issuer is material to the exposure, concentration, or risk conclusion; do not create issuer work that duplicates the holding scorecard.",
+      "directRule": "Required for every direct individual security.",
+      "fundRule": "For a fund or ETF, complete only a limited look-through review when one holding or issuer is material to the exposure, concentration, or risk conclusion. If no issuer is material to that conclusion, the shared holding scorecard is sufficient.",
       "requiredFields": [
         "Security, issuer, exposure type, portfolio weight, source, and as-of date",
-        "Business model and principal revenue drivers",
-        "Industry and macro sensitivity under the committee's base and bear cases",
-        "Revenue, margin, and cash-flow trend using consistent periods",
-        "Liquidity and leverage",
-        "Interest coverage and debt-maturity considerations where relevant",
+        "Business model, principal revenue drivers, and industry or macro sensitivity under the base and bear cases",
+        "Revenue, margin, cash-flow, liquidity, and leverage trend using consistent periods; include interest coverage and debt-maturity considerations where relevant",
         "One issuer-specific risk and the evidence that makes it material",
-        "Conclusion about client fit, allocation implication, and monitoring trigger"
+        "Conclusion about mandate fit and the effect on selection, weight, or monitoring"
       ],
-      "roleResponsibilities": [
-        {"roleId": "fixed-income", "responsibility": "Own credit, duration, income, liquidity, and rate-risk evidence for fixed-income funds, ETFs, and any limited direct exposure."},
-        {"roleId": "equity", "responsibility": "Own equity-fund and ETF look-through review and the issuer analysis, idiosyncratic risk, and position-size rationale for any limited individual equity."},
-        {"roleId": "client-macro", "responsibility": "Explain how the committee's macro scenarios and the issuer's industry sensitivity affect the client-facing thesis and mandate fit."},
-        {"roleId": "portfolio-manager", "responsibility": "Apply exposure, overlap, issuer-health, and concentration conclusions to final selection, weight, portfolio trade-offs, and monitoring or exit triggers."},
-        {"roleId": "risk-derivatives", "responsibility": "Use material issuer and concentration evidence in portfolio-level stress tests and the residual-risk and hedge/no-hedge conclusion."}
-      ]
+      "handoff": "The analyst adds only the material issuer conclusion to the shared scorecard. The Portfolio Manager applies it to selection and weight; the Risk and Derivatives Analyst carries any residual issuer or concentration risk into portfolio stress testing and the hedge/no-hedge conclusion."
     },
     "factSetWorkflow": {
       "title": "FactSet Research and Evidence Record",
@@ -521,10 +482,9 @@
         {"stage": "Apply and retain", "action": "State how the evidence confirmed, qualified, contradicted, or changed the recommendation, then retain and submit the required licensed-source evidence privately through Canvas under course policy."}
       ],
       "connections": [
-        {"workstream": "Issuer Reality Check", "application": "Use current issuer, financial-statement, estimates, industry, ownership, or research evidence as appropriate to evaluate revenue and margin drivers, cash flow, liquidity, leverage, coverage, maturities, outlook, and issuer-specific risk."},
+        {"workstream": "Conditional issuer review", "application": "For a direct individual security, or a fund/ETF holding that is material to the exposure, concentration, or risk conclusion, use current issuer evidence to complete only the concise Issuer Reality Check."},
         {"workstream": "Credit and fixed income", "application": "Use relevant issue and issuer evidence for price/yield context, maturity and structure, duration or rate sensitivity, credit quality, spreads, liquidity, coverage, debt maturities, and downside risk."},
         {"workstream": "Mutual funds and ETFs", "application": "Use relevant product, holdings, benchmark, style, performance, flow, risk, cost, liquidity, and overlap evidence while verifying official product facts in sponsor or filed documents when appropriate."},
-        {"workstream": "Corporate issuer analysis", "application": "Use consistent financial periods and appropriate issuer evidence to interpret revenue, margins, cash flow, liquidity, leverage, and operating or industry sensitivity."},
         {"workstream": "Portfolio risk inputs", "application": "Use appropriately dated risk, return, exposure, correlation, or benchmark inputs and document their definitions, units, limitations, and role in the team calculation."}
       ],
       "evidenceLogFields": [
@@ -559,18 +519,14 @@
       "Final select/reject decision, concise alternative rejected, and key trade-off"
     ],
     "securityQualityGate": [
-      "The candidate set translates the approved allocation and client mandate into plausible implementations; the team does not research only its preferred product.",
-      "Each client portfolio targets 8–10 final holdings and never exceeds 10; eight is complete and no slot is filled without a distinct portfolio purpose.",
-      "Funds and ETFs are the primary vehicles. Individual securities are limited to two or three total, individual bonds are not required, and any individual security has added rationale, idiosyncratic-risk, and position-size evidence.",
-      "Every selection names the Phase 1 client guardrail it satisfies and the unresolved fact that could change it.",
-      "Every final holding has the consistent concise scorecard; alternatives rejected are compared concisely without full analysis of every screened name.",
-      "The team excludes candidates that duplicate exposure, create unnecessary concentration, lack appropriate liquidity, or fail the client mandate.",
-      "Return, yield, duration, credit, fee, trading-expense, benchmark, holdings, liquidity, overlap, and performance claims use appropriate approved sources and as-of dates.",
-      "Every direct individual security has an Issuer Reality Check; fund/ETF look-through is required only when an issuer is material to the exposure, concentration, or risk conclusion.",
-      "Each recommendation includes a FactSet retrieval record identifying the research retrieved, retrieval date, relevant metrics, source/document reference as appropriate, interpretation, and effect on the decision; licensed evidence is retained according to course policy.",
-      "The team distinguishes issuer risk, market risk, product risk, and client-suitability risk.",
-      "Each analyst records recommendations, alternatives rejected, and a key trade-off; a second member reviews the evidence trail.",
-      "The selected mix is evaluated for overlap and diversification as a portfolio, not only one instrument at a time."
+      "Each portfolio has 8–10 purposeful final holdings, never more than 10; funds and ETFs are primary, individual securities total no more than two or three, and individual bonds are not required.",
+      "Every final holding completes the one shared scorecard; only applicable instrument-specific and individual-security add-ons are attached, and the strongest realistic alternative is rejected concisely.",
+      "The team excludes candidates that duplicate exposure, create unnecessary concentration, lack appropriate liquidity, or fail the client mandate, and uses approved sources and current as-of dates for material claims.",
+      "Every direct individual security has a concise Issuer Reality Check; a fund or ETF receives limited look-through only when an issuer is material to the exposure, concentration, or risk conclusion.",
+      "Each recommendation has a FactSet retrieval and interpretation record, while licensed evidence, proprietary exports, credentials, and student work remain private and are submitted through Canvas under course policy.",
+      "The AI challenge tests the provisional leader, material claims are verified with approved evidence, and the team records Accept, Modify, or Reject.",
+      "Each analyst records the recommendation, alternative rejected, and key trade-off; the Portfolio Manager records integration decisions, and a second member reviews the evidence trail.",
+      "The selected mix is evaluated for portfolio-level overlap, diversification, and residual risk before the Risk and Derivatives Analyst documents a supported no-hedge conclusion or at most one targeted hedge in the next workflow."
     ],
     "portfolioWorkflow": [
       {
@@ -672,27 +628,27 @@
     "roleIntegration": [
       {
         "roleId": "client-macro",
-        "securityResponsibility": "Audit every candidate against the approved client mandate and macro scenarios; reject any security whose rationale depends on an unapproved client fact.",
+        "securityResponsibility": "Own the mandate screen: approve or reject candidate fit against the client's ranked goals, constraints, and base/bear macro scenarios.",
         "portfolioResponsibility": "Confirm that the integrated allocation still serves the client's ranked goals and all RRTTLLU constraints."
       },
       {
         "roleId": "fixed-income",
-        "securityResponsibility": "Own fixed-income funds and ETFs and any limited direct exposure, including income, yield, duration, credit quality, liquidity, costs, taxes, overlap, and rate-risk fit.",
+        "securityResponsibility": "Recommend fixed-income finalists and add the income, duration, credit, tax, and rate-risk evidence that is unique to that sleeve.",
         "portfolioResponsibility": "Explain how the fixed-income sleeve changes income reliability, rate sensitivity, credit risk, liquidity, and bear-case protection."
       },
       {
         "roleId": "equity",
-        "securityResponsibility": "Own equity funds and ETFs and the limited use of individual equities, including benchmark/style mapping, holdings overlap, fees, trading, liquidity, taxes, idiosyncratic risk, and position size.",
+        "securityResponsibility": "Recommend equity finalists and add benchmark or index, tracking, turnover, tax, and limited individual-equity evidence where applicable.",
         "portfolioResponsibility": "Explain how the equity sleeve delivers the intended growth exposure and diversification without hidden duplication, unnecessary concentration, or avoidable cost."
       },
       {
         "roleId": "portfolio-manager",
-        "securityResponsibility": "Integrate analyst finalists, resolve overlap and concentration, set the final 8–10 holdings and weights, and record recommendations rejected and explicit portfolio trade-offs.",
+        "securityResponsibility": "Integrate the finalists, resolve overlap and concentration, set the final 8–10 holdings and weights, and record rejected recommendations and portfolio trade-offs.",
         "portfolioResponsibility": "Own integration, weight and calculation checks, IPS scorecard coordination, implementation decisions, corrective trades, and the committee vote record."
       },
       {
         "roleId": "risk-derivatives",
-        "securityResponsibility": "Challenge risk estimates and data comparability, identify residual portfolio risk, and own the evidence for one targeted hedge or a fully supported no-hedge conclusion.",
+        "securityResponsibility": "Challenge risk estimates and data comparability, identify the residual risk to stress next, and own one targeted hedge or a fully supported no-hedge conclusion only after portfolio testing.",
         "portfolioResponsibility": "Own portfolio-level stress tests, breach escalation, residual-risk evidence, hedge sizing and trade-offs when proposed, and the full post-adjustment re-test."
       }
     ],

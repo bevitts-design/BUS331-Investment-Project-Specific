@@ -1723,6 +1723,19 @@ tr:last-child td {
   grid-column: 1 / -1;
 }
 
+.issuer-trigger-grid {
+  margin: 24px 0;
+}
+
+.issuer-trigger-grid > article:first-child {
+  grid-column: auto;
+  border-top: 5px solid var(--terra-500);
+}
+
+.issuer-trigger-grid > article:last-child {
+  border-top: 5px solid var(--teal-500);
+}
+
 .instrument-grid h3,
 .role-integration-grid h3,
 .question-bank h3 {

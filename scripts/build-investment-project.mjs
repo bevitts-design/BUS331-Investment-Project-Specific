@@ -751,43 +751,41 @@ function securityAnalysisPage() {
       </section>
 
       <section>
-        <p class="section-kicker">Committee workflow</p><h2>From guardrail to select/reject decision</h2>
-        ${workflowSteps(experience.securityWorkflow)}
-      </section>
-
-      <section>
-        <p class="section-kicker">Portfolio boundaries</p><h2>Build a focused candidate set</h2>
+        <p class="section-kicker">Step 1 · Candidate pool and boundaries</p><h2>Set the candidate pool and portfolio boundaries</h2>
+        <p>${escapeHtml(experience.selectionContract.candidateStandard)}</p>
         <div class="callout"><h3>Holding count and vehicle mix</h3><p>${escapeHtml(experience.selectionContract.portfolioSize)}</p><p>${escapeHtml(experience.selectionContract.vehicleMix)}</p></div>
         <ul class="check-list">${experience.selectionContract.inclusionBoundaries.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
       </section>
 
       <section>
-        <p class="section-kicker">Consistent final-holding analysis</p><h2>Use one concise scorecard</h2>
-        ${studentTemplateTable("Complete this scorecard for each final holding. Do not complete a full scorecard for every screened name.", experience.selectionContract.scorecardFields)}
-        <h3>Added analysis for an individual security</h3>
+        <p class="section-kicker">Step 2 · Shared final-holding analysis</p><h2>Complete one scorecard per final holding</h2>
+        <p>Every fund, ETF, and individual security uses the same seven core tests. The instrument add-ons in Step 3 supply only evidence that is not already captured here.</p>
+        ${studentTemplateTable("One shared final-holding scorecard and decision record. Complete one row for each final holding, not every screened name.", experience.candidateTemplateColumns)}
+        <h3>Individual-security add-on</h3>
         <ul class="clean-list">${experience.selectionContract.individualSecurityAdditions.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
         <div class="callout"><h3>Rejected alternatives</h3><p>${escapeHtml(experience.selectionContract.alternativeStandard)}</p></div>
+        <div class="callout"><h3>AI challenge and human verification</h3><p>Record the provisional leader before asking AI for the strongest counterargument or missing risk. Verify every material claim with an approved source, then record Accept, Modify, or Reject and explain what changed. AI is not a source and may not choose the product for the team.</p></div>
       </section>
 
       <section>
-        <p class="section-kicker">Instrument-specific analysis</p><h2>Ask the questions that fit the instrument</h2>
+        <p class="section-kicker">Step 3 · Instrument add-ons and role handoff</p><h2>Add only evidence that is unique to the instrument</h2>
+        <p>Do not restate cost, liquidity, overlap, diversification, client fit, rejected alternatives, or trade-offs here—the shared scorecard already captures them.</p>
         <div class="instrument-grid">${experience.instrumentStandards.map((standard) => {
           const role = roleById.get(standard.ownerRoleId);
-          return `<article><p class="role-tag">Lead: ${escapeHtml(role.title)}</p><h3>${escapeHtml(standard.instrument)}</h3><p class="decision-question">${escapeHtml(standard.decisionQuestion)}</p><h4>Document</h4><ul class="clean-list">${standard.requiredAnalysis.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></article>`;
+          return `<article><p class="role-tag">Lead: ${escapeHtml(role.title)}</p><h3>${escapeHtml(standard.instrument)}</h3><p class="decision-question">${escapeHtml(standard.decisionQuestion)}</p><h4>Add only</h4><ul class="clean-list">${standard.requiredAnalysis.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></article>`;
         }).join("\n")}</div>
+        <h3>Role decision rights and handoff</h3>
+        ${roleIntegrationBoard("securityResponsibility")}
+        <div class="callout"><h3>Residual-risk handoff</h3><p>${escapeHtml(experience.selectionContract.riskHandoff)}</p></div>
       </section>
 
       <section class="issuer-check-section">
-        <p class="section-kicker">Required inside security analysis</p><h2>${escapeHtml(experience.issuerRealityCheck.title)}</h2>
-        <div class="issuer-rule"><strong>Decision rule</strong><p>${escapeHtml(experience.issuerRealityCheck.decisionRule)}</p><p>${escapeHtml(experience.issuerRealityCheck.applicability)}</p></div>
-        <div class="issuer-check-layout">
-          <div><h3>Concise issuer snapshot</h3><ol class="numbered-fields">${experience.issuerRealityCheck.requiredFields.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ol></div>
-          <div><h3>Role handoff</h3><div class="issuer-role-list">${experience.issuerRealityCheck.roleResponsibilities.map((item) => {
-            const role = roleById.get(item.roleId);
-            return `<article data-color="${escapeHtml(role.color)}"><h4>${escapeHtml(role.title)}</h4><p>${escapeHtml(item.responsibility)}</p></article>`;
-          }).join("\n")}</div></div>
-        </div>
-        <p class="fine-print">This is part of the candidate's analysis and selection record, not a separate accounting unit. Keep it concise, cited, and decision-focused.</p>
+        <p class="section-kicker">Step 4 · Conditional issuer review</p><h2>${escapeHtml(experience.issuerRealityCheck.title)}—only when triggered</h2>
+        <div class="issuer-rule"><strong>Decision rule</strong><p>${escapeHtml(experience.issuerRealityCheck.decisionRule)}</p></div>
+        <div class="instrument-grid issuer-trigger-grid"><article><p class="role-tag">Always required</p><h3>Direct individual security</h3><p>${escapeHtml(experience.issuerRealityCheck.directRule)}</p></article><article><p class="role-tag">Conditional only</p><h3>Fund or ETF look-through</h3><p>${escapeHtml(experience.issuerRealityCheck.fundRule)}</p></article></div>
+        <h3>Five-field issuer snapshot</h3><ol class="numbered-fields">${experience.issuerRealityCheck.requiredFields.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ol>
+        <div class="callout"><h3>Return the conclusion to the shared scorecard</h3><p>${escapeHtml(experience.issuerRealityCheck.handoff)}</p></div>
+        <p class="fine-print">This conditional review is part of the holding's scorecard—not a second security-analysis assignment. Keep it concise, cited, and decision-focused.</p>
       </section>
 
       <section class="factset-section">
@@ -797,18 +795,6 @@ function securityAnalysisPage() {
         ${workflowSteps(experience.factSetWorkflow.steps)}
         <div class="factset-connections">${experience.factSetWorkflow.connections.map((item) => `<article><h3>${escapeHtml(item.workstream)}</h3><p>${escapeHtml(item.application)}</p></article>`).join("\n")}</div>
         ${studentTemplateTable("FactSet Research and Evidence Log. Record the retrieval and interpretation; submit required licensed-source evidence privately through Canvas, never the public repository.", experience.factSetWorkflow.evidenceLogFields)}
-      </section>
-
-      <section>
-        <p class="section-kicker">Student template</p><h2>Candidate comparison and decision record</h2>
-        <p>Complete one row for each final holding and a concise record for the strongest realistic alternative rejected. The comparison should show judgment without creating duplicate analysis for every screened name.</p>
-        ${studentTemplateTable("Final-holding scorecard and concise alternative-decision template.", experience.candidateTemplateColumns)}
-        <div class="callout"><h3>AI challenge-and-verification checkpoint</h3><p>Record the provisional choice before asking AI for the strongest counterargument or missing risk. Verify each material claim with an approved source, then mark the final choice Accept, Modify, or Reject and explain the change. AI is not a source and may not choose the product for the team.</p></div>
-      </section>
-
-      <section>
-        <p class="section-kicker">Five-person ownership</p><h2>Distinct analysis, integrated selection</h2>
-        ${roleIntegrationBoard("securityResponsibility")}
       </section>
 
       <section>
