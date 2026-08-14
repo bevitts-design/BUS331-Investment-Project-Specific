@@ -167,7 +167,7 @@ if (model.canvasSubmissions?.assignments?.map((item) => item.phaseId).join(",") 
 } else {
   const submissionNames = new Set();
   for (const assignment of model.canvasSubmissions.assignments) {
-    if (!assignment.requiredFiles?.length || !assignment.preflight?.length || !assignment.submissionProcess) fail(`${assignment.phaseId} Canvas submission is incomplete.`);
+    if (!assignment.requiredFiles?.length || !assignment.preflight?.length || !assignment.submissionProcess || typeof assignment.includePrivateEvidenceBoundary !== "boolean") fail(`${assignment.phaseId} Canvas submission is incomplete.`);
     for (const file of assignment.requiredFiles || []) {
       if (!/^BUS331_Team##_/i.test(file.name)) fail(`${assignment.phaseId} Canvas filename must use the BUS331_Team##_ convention: ${file.name}.`);
       if (submissionNames.has(file.name)) fail(`Duplicate Canvas submission filename: ${file.name}.`);
@@ -273,7 +273,10 @@ for (const [index, relative] of canvasFragments.entries()) {
   if (/<(?:html|head|body|script|style)\b/i.test(html)) fail(`${relative} contains markup that is unsafe or unnecessary for a Canvas fragment.`);
   if ((html.match(/<h1\b/gi) || []).length !== 1) fail(`${relative} must contain exactly one h1.`);
   if (!/style="/i.test(html)) fail(`${relative} must use inline Canvas-safe styling.`);
-  if (!/private Canvas assignment/i.test(html) || !/Canvas receipt/i.test(html)) fail(`${relative} is missing the private-submission or receipt boundary.`);
+  if (!/Canvas receipt/i.test(html)) fail(`${relative} is missing the Canvas receipt check.`);
+  if (model.canvasSubmissions.assignments[index].includePrivateEvidenceBoundary && !/Submit through Canvas/i.test(html)) fail(`${relative} is missing its Canvas submission boundary.`);
+  if (!model.canvasSubmissions.assignments[index].includePrivateEvidenceBoundary && /Submit through Canvas/i.test(html)) fail(`${relative} should not include the Canvas submission boundary.`);
+  if (/public repository|private repository/i.test(html)) fail(`${relative} should direct students to Canvas without repository terminology.`);
   if (!/Submission process/i.test(html)) fail(`${relative} is missing its submission process.`);
   for (const file of model.canvasSubmissions.assignments[index].requiredFiles) {
     if (!html.includes(file.name)) fail(`${relative} is missing required filename ${file.name}.`);

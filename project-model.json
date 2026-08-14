@@ -808,6 +808,7 @@
         "canvasTitle": "BUS331 Investment Committee · Phase 1 Gate · Frame the Mandate",
         "decision": "Approve or revise the common market view and all three client mandates before portfolio construction begins.",
         "submissionProcess": "Submit the complete Phase 1 package after the committee has completed its Gate 1 vote. One designated team member submits for the group; all four members verify the Canvas receipt.",
+        "includePrivateEvidenceBoundary": false,
         "requiredFiles": [
           {"name": "BUS331_Team##_Phase1_MandateMemo.pdf", "description": "One-page committee mandate memo covering the common market view and three client mandates."},
           {"name": "BUS331_Team##_Phase1_Macro.xlsx", "description": "Completed macro starter workbook with human-first read, consensus comparison, and bull/base/bear scenarios."},
@@ -827,6 +828,7 @@
         "canvasTitle": "BUS331 Investment Committee · Phase 2 Gate · Build and Challenge",
         "decision": "Approve, revise, or reject each client portfolio after the locked baseline, instructor-issued Scenario Reveal, full IPS review, corrective trade, and re-test.",
         "submissionProcess": "Phase 2 has two checkpoints. At the instructor-designated baseline checkpoint, submit the Baseline Snapshot before the Scenario Reveal. After the reveal, complete the corrective trade and re-test, then submit the complete Gate 2 package. One designated team member submits for the group; all four members verify the Canvas receipt.",
+        "includePrivateEvidenceBoundary": true,
         "requiredFiles": [
           {"name": "BUS331_Team##_Phase2_CME.xlsx", "description": "Completed capital-market-expectations and optimization workbook."},
           {"name": "BUS331_Team##_Phase2_SecuritySelection.xlsx", "description": "Completed bond, mutual-fund, and ETF comparisons, Issuer Reality Checks, AI decisions, and FactSet Evidence Log."},
@@ -848,6 +850,7 @@
         "canvasTitle": "BUS331 Investment Committee · Phase 3 Gate · Defend the Recommendation",
         "decision": "Issue one integrated recommendation for all three clients, preserve the audit trail, and arrive ready for the scheduled committee defense.",
         "submissionProcess": "Submit the complete Phase 3 package before the scheduled committee defense. One designated team member submits for the group; all four members verify the Canvas receipt.",
+        "includePrivateEvidenceBoundary": true,
         "requiredFiles": [
           {"name": "BUS331_Team##_Phase3_DecisionMemo.pdf", "description": "Final committee decision memo with recommendation first, client-specific actions, reservations, and monitoring triggers."},
           {"name": "BUS331_Team##_Phase3_TechnicalDossier.pdf", "description": "Auditable exhibit book linking macro, mandates, allocations, security evidence, stress results, corrections, and sources."},
