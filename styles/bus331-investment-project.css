@@ -164,6 +164,17 @@ a {
   align-items: end;
 }
 
+.hero.hero-compact .hero-shell {
+  display: block;
+  padding: 58px 28px 54px;
+}
+
+.hero.hero-compact h1 {
+  max-width: 760px;
+  margin-bottom: 16px;
+  font-size: clamp(2.7rem, 5vw, 4.3rem);
+}
+
 .eyebrow,
 .section-kicker,
 .phase-number,

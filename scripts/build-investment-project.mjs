@@ -21,7 +21,7 @@ const securityWorkflowPath = "project/security-analysis-selection.html";
 const portfolioStressPath = "project/portfolio-management-stress-testing.html";
 const canvasSubmissionPath = "project/canvas-submission-guide.html";
 const roadmapPath = "project/roadmap.html";
-const assetVersion = "20260730-canvas-workflow-2";
+const assetVersion = "20260814-compact-home-hero-1";
 const prefixPath = (prefix, target) => `${prefix}${target}`;
 
 function siteHeader(prefix) {
@@ -309,23 +309,12 @@ function phasePanel(phase) {
 function landingPage() {
   const body = `
   <main id="main-content">
-    <section class="hero">
+    <section class="hero hero-compact">
       <div class="hero-shell">
         <div>
           <p class="eyebrow">${escapeHtml(model.course.term)} · Institutional portfolio management</p>
           <h1>Think as a committee.<br><span class="accent">Decide with evidence.</span></h1>
           <p class="hero-copy">${escapeHtml(model.project.premise)}</p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="project/guide.html">Open the Project Guide</a>
-            <a class="button button-secondary" href="${roadmapPath}">Then open your roadmap</a>
-            <a class="button button-secondary" href="${escapeHtml(phasePath(model.phases[0]))}">Frame the mandate</a>
-          </div>
-        </div>
-        <div class="hero-scoreboard" aria-label="Project structure">
-          <div class="score-row"><span class="score-value">3</span><span class="score-label">approval-gate phases</span></div>
-          <div class="score-row"><span class="score-value">4</span><span class="score-label">committee seats</span></div>
-          <div class="score-row"><span class="score-value">3</span><span class="score-label">client mandates per team</span></div>
-          <div class="score-row"><span class="score-value">1</span><span class="score-label">integrated recommendation</span></div>
         </div>
       </div>
     </section>
