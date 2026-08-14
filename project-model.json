@@ -19,6 +19,10 @@
   "studentRoadmap": {
     "title": "Your Project Roadmap",
     "subtitle": "Follow the decision path. Build the analysis. Defend your recommendation.",
+    "visual": {
+      "path": "assets/roadmap/investment-committee-roadmap.png",
+      "alt": "Investment Committee Simulation roadmap showing Phase 1 client and macro analysis, Phase 2 portfolio construction and stress testing, Phase 3 decision package and defense, approval gates, shared committee responsibility, and AI verification rules."
+    },
     "boundary": "BUS331 provides structured Excel workbooks and client data. Your committee completes the analysis, reaches its own conclusions, and creates its own final PowerPoint presentation.",
     "beforeYouBegin": [
       "Confirm the four committee roles and your three assigned clients.",
@@ -849,6 +853,14 @@
     ]
   },
   "resources": [
+    {
+      "id": "project-guide-pdf",
+      "label": "Download project roadmap and checklists",
+      "type": "PDF",
+      "path": "files/BUS331_Investment_Committee_Simulation_Project_Guide.pdf",
+      "description": "Printable student reference with the full roadmap, phase requirements, approval-gate checklists, roles, and AI rules.",
+      "audience": "student"
+    },
     {
       "id": "canvas-submission-guide",
       "label": "Canvas submission workflow",

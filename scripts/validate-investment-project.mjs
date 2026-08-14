@@ -52,6 +52,9 @@ if (!roadmap) {
   if (!/structured Excel workbooks/i.test(roadmap.boundary || "") || !/PowerPoint presentation/i.test(roadmap.boundary || "")) {
     fail("Student roadmap must preserve the provided-Excel and student-created-PowerPoint boundary.");
   }
+  if (!roadmap.visual?.path || !roadmap.visual?.alt || !(await exists(path.join(rootDir, roadmap.visual.path)))) {
+    fail("Student roadmap must include its public visual asset and alt text.");
+  }
   for (const phaseId of ["phase-1", "phase-2", "phase-3"]) {
     if (roadmap.phaseSequences?.[phaseId]?.length < 4) fail(`Student roadmap needs a complete sequence for ${phaseId}.`);
     if (roadmap.definitionOfDone?.[phaseId]?.length < 3) fail(`Student roadmap needs a definition of done for ${phaseId}.`);
@@ -352,7 +355,7 @@ if (!(await exists(path.join(rootDir, "styles", "bus331-investment-project.css")
 const indexHtml = await fs.readFile(path.join(rootDir, "index.html"), "utf8");
 if (!indexHtml.includes("Open your roadmap")) fail("Portal is missing the student roadmap entry point.");
 const roadmapHtml = await fs.readFile(path.join(rootDir, roadmapPath), "utf8");
-for (const requiredText of ["What BUS331 provides—and what your committee creates", "structured Excel workbooks", "PowerPoint presentation", "Complete the detailed macro analysis", "Definition of done"]) {
+for (const requiredText of ["What BUS331 provides—and what your committee creates", "structured Excel workbooks", "PowerPoint presentation", "Complete the detailed macro analysis", "Definition of done", "This visual is an orientation tool"]) {
   if (!roadmapHtml.includes(requiredText)) fail(`Student roadmap is missing required student-navigation content: ${requiredText}.`);
 }
 for (const phase of model.phases) {

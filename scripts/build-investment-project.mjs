@@ -527,6 +527,12 @@ function roadmapPage() {
         <div class="callout"><h2>What BUS331 provides—and what your committee creates</h2><p>${escapeHtml(roadmap.boundary)}</p></div>
       </section>
       <section>
+        <p class="section-kicker">See the whole path</p>
+        <h2>From mandate to defense</h2>
+        <p>Use this visual to orient your committee before you begin the detailed phase checklists below.</p>
+        <figure class="roadmap-visual"><img src="${escapeHtml(prefixPath(prefix, roadmap.visual.path))}" alt="${escapeHtml(roadmap.visual.alt)}" width="2800" height="1600" loading="eager" decoding="async"><figcaption>This visual is an orientation tool. The phase checklists below remain the complete guide to required work and approval readiness.</figcaption></figure>
+      </section>
+      <section>
         <p class="section-kicker">Before you begin</p>
         <h2>Set up your committee for the full project</h2>
         <ul class="check-list">${roadmap.beforeYouBegin.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
@@ -540,7 +546,7 @@ function roadmapPage() {
         <p class="section-kicker">Submission check</p>
         <h2>Canvas records the submitted work</h2>
         <p>${escapeHtml(model.project.scopeNote)} Use this roadmap and the phase checklists to organize your work; use Canvas to confirm the date, group-submission rules, and exact files required at each gate.</p>
-        <div class="hero-actions"><a class="button button-primary" href="${escapeHtml(path.basename(canvasSubmissionPath))}">Open Canvas submission workflow</a><a class="button" href="${escapeHtml(path.basename(phasePath(model.phases[0])))}">Begin Phase 1</a></div>
+        <div class="hero-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, resourceById.get("project-guide-pdf").path))}">Download roadmap and checklists <span>PDF</span></a><a class="button" href="${escapeHtml(path.basename(canvasSubmissionPath))}">Open Canvas submission workflow</a><a class="button" href="${escapeHtml(path.basename(phasePath(model.phases[0]))) }">Begin Phase 1</a></div>
       </section>
     </div></div>
   </main>`;
