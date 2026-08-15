@@ -1723,16 +1723,16 @@ tr:last-child td {
   grid-column: 1 / -1;
 }
 
-.issuer-trigger-grid {
+.exposure-trigger-grid {
   margin: 24px 0;
 }
 
-.issuer-trigger-grid > article:first-child {
+.exposure-trigger-grid > article:first-child {
   grid-column: auto;
   border-top: 5px solid var(--terra-500);
 }
 
-.issuer-trigger-grid > article:last-child {
+.exposure-trigger-grid > article:last-child {
   border-top: 5px solid var(--teal-500);
 }
 
@@ -1772,42 +1772,42 @@ tr:last-child td {
   border-bottom: 2px dotted #aebdcc;
 }
 
-.issuer-check-section {
+.exposure-check-section {
   padding: 34px;
   border-radius: var(--radius-lg);
   background: #eef7f6;
   border: 1px solid #bcdedb;
 }
 
-.issuer-check-section > h2 {
+.exposure-check-section > h2 {
   margin: 8px 0 18px;
   color: var(--navy-900);
 }
 
-.issuer-rule {
+.exposure-rule {
   padding: 22px 24px;
   border-left: 6px solid var(--terra-500);
   background: var(--white);
 }
 
-.issuer-rule strong {
+.exposure-rule strong {
   color: #7b2f22;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
-.issuer-rule p {
+.exposure-rule p {
   margin: 6px 0 0;
 }
 
-.issuer-check-layout {
+.exposure-check-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   gap: 28px;
   margin-top: 28px;
 }
 
-.issuer-check-layout h3 {
+.exposure-check-layout h3 {
   color: var(--navy-900);
 }
 
@@ -1957,7 +1957,7 @@ tr:last-child td {
   .launch-grid,
   .compact-grid,
   .handoff-contract,
-  .issuer-check-layout {
+  .exposure-check-layout {
     grid-template-columns: 1fr;
   }
 

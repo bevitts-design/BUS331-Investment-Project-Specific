@@ -38,6 +38,13 @@ def main():
     doc=SimpleDocTemplate(str(out),pagesize=letter,leftMargin=.62*inch,rightMargin=.62*inch,topMargin=.55*inch,bottomMargin=.72*inch,title="BUS331 Investment Committee Simulation Project Guide",invariant=1)
     story=[box([Paragraph("Investment Committee Simulation",s["TitleWhite"]),Paragraph("Student roadmap, requirements, and approval-gate checklists",s["SubWhite"])],background=NAVY),Spacer(1,12),p("Use this PDF to organize your committee's work without scrolling through the website. Canvas remains the authority for due dates, points, and submission mechanics.",s["Bodyx"]),p("What BUS331 provides - and what your committee creates",s["H"]),box([p(road["boundary"],s["Bodyx"])],background=ICE),p("Before you begin",s["H"])]
     story += [p(f"[ ] {x}",s["Bodyx"]) for x in road["beforeYouBegin"]]
+    decision_log = road["decisionLogGuidance"]
+    story += [p(decision_log["title"],s["H"]),box([
+        p(decision_log["usage"],s["Bodyx"]),
+        p(f"Formal approvals: {decision_log['gates']}",s["Bodyx"]),
+        p(f"Save as you go: {decision_log['saveReminder']}",s["Smallx"]),
+        p("Access the project-wide Analyst Decision Log from the online Project Roadmap or Project Guide.",s["Smallx"])
+    ],background=ICE)]
     for phase in model["phases"]:
         story += [PageBreak(),p(f"Phase {phase['number']} - {phase['title']}",s["H"]),p(phase["objective"],s["Bodyx"]),p("Do this in order",s["H3x"])]
         story += [p(f"{i}. {x}",s["Bodyx"]) for i,x in enumerate(road["phaseSequences"][phase["id"]],1)]

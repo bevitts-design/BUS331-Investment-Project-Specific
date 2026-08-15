@@ -353,7 +353,7 @@ def main() -> None:
         "The recommendation is stated clearly for all assigned clients.",
         "Every material claim, input, calculation, and as-of date is traceable.",
         "Bond, mutual-fund, and ETF decisions show real comparison and instrument-specific evidence.",
-        "Required Issuer Reality Checks and FactSet retrieval records are complete.",
+        "Holding & Exposure Reality Checks, any conditional direct-security add-ons, and FactSet retrieval records are complete.",
         "Each holding traces to a Phase 1 client guardrail and has a portfolio job and monitoring trigger.",
         "The full IPS scorecard and bear-case test are complete; every breach is corrected and re-tested.",
         "The Analyst Decision Log records initial judgment, AI challenge, verification, and final reasoning.",

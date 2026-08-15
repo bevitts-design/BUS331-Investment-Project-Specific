@@ -93,22 +93,22 @@ if (!phase2Experience) {
   for (const repeated of ["cost and trading expenses", "liquidity", "overlap", "diversification contribution", "client fit", "rejected alternative", "key trade-off"]) {
     if (new RegExp(repeated, "i").test(instrumentAddOnText)) fail(`Instrument add-ons repeat the universal scorecard requirement: ${repeated}.`);
   }
-  const issuerCheck = phase2Experience.issuerRealityCheck;
-  if (!issuerCheck || !/yield or recent return alone/i.test(issuerCheck.decisionRule || "")) fail("Issuer Reality Check must prohibit yield or recent return as the sole recommendation basis.");
-  if (!/every direct individual security/i.test(issuerCheck?.directRule || "")) fail("Issuer Reality Check must always apply to direct individual securities.");
-  if (!/only a limited look-through/i.test(issuerCheck?.fundRule || "") || !/material/i.test(issuerCheck?.fundRule || "") || !/scorecard is sufficient/i.test(issuerCheck?.fundRule || "")) fail("Issuer Reality Check must make fund/ETF look-through limited, materiality-based, and conditional.");
-  const issuerText = JSON.stringify(issuerCheck || {});
-  for (const required of ["business model", "revenue drivers", "macro sensitivity", "margin", "cash-flow", "liquidity", "leverage", "interest coverage", "debt-maturity", "issuer-specific risk", "mandate fit"]) {
-    if (!new RegExp(required, "i").test(issuerText)) fail(`Issuer Reality Check is missing ${required}.`);
+  const exposureCheck = phase2Experience.holdingExposureRealityCheck;
+  const exposureText = JSON.stringify(exposureCheck || {});
+  if (!exposureCheck || !/recent return or headline yield/i.test(exposureCheck.decisionRule || "")) fail("Holding & Exposure Reality Check must prohibit recent return or headline yield as a substitute for exposure, fit, and risk analysis.");
+  for (const required of ["every proposed final holding", "funds and ETFs", "exposure", "strategy", "holdings", "sector", "style", "overlap", "concentration", "cost", "liquidity", "key risk", "client-mandate fit", "allocation implication", "source", "as-of date", "peer reviewer", "status"]) {
+    if (!new RegExp(required, "i").test(exposureText)) fail(`Holding & Exposure Reality Check is missing ${required}.`);
   }
-  if (!/shared scorecard/i.test(issuerCheck?.handoff || "") || !/Portfolio Manager/i.test(issuerCheck?.handoff || "") || !/Risk and Derivatives Analyst/i.test(issuerCheck?.handoff || "")) fail("Issuer Reality Check must return one material conclusion to the shared scorecard and named integration owners.");
+  if (!/only when/i.test(exposureCheck?.directSecurityRule || "") || !/direct individual securities/i.test(exposureCheck?.directSecurityRule || "") || !/business or issuer-specific risk/i.test(exposureCheck?.directSecurityRule || "") || !/position-size rationale/i.test(exposureCheck?.directSecurityRule || "")) fail("Holding & Exposure Reality Check must make the direct-security business-risk and position-size add-on conditional.");
+  if (!/Do not perform company-style financial-health analysis for funds or ETFs/i.test(exposureCheck?.directSecurityRule || "")) fail("Holding & Exposure Reality Check must exclude company-style financial-health analysis for funds and ETFs.");
+  if (!/authoritative Final Scorecards/i.test(exposureCheck?.handoff || "") || !/Portfolio Manager/i.test(exposureCheck?.handoff || "") || !/Risk and Derivatives Analyst/i.test(exposureCheck?.handoff || "")) fail("Holding & Exposure Reality Check must return the conclusion to the authoritative Final Scorecards and named integration owners.");
   const factSetWorkflow = phase2Experience.factSetWorkflow;
   const factSetText = JSON.stringify(factSetWorkflow || {});
   if (!factSetWorkflow || !/licensed FactSet access/i.test(factSetText) || !/public repository/i.test(factSetText)) fail("Phase 2 must define the licensed FactSet workflow and public-repository boundary.");
   for (const required of ["retrieved", "retrieval date", "metric", "source", "document reference", "interpretation", "effect on the recommendation", "canvas submission item"]) {
     if (!new RegExp(required, "i").test(factSetText)) fail(`FactSet evidence contract is missing ${required}.`);
   }
-  for (const required of ["Conditional issuer review", "Credit and fixed income", "Mutual funds and ETFs", "Portfolio risk inputs"]) {
+  for (const required of ["Holding and exposure review", "Credit and fixed income", "Mutual funds and ETFs", "Portfolio risk inputs"]) {
     if (!factSetWorkflow?.connections?.some((item) => item.workstream === required)) fail(`FactSet workflow is missing the ${required} connection.`);
   }
   const selectionContractText = JSON.stringify(phase2Experience.selectionContract || {});
@@ -347,6 +347,14 @@ for (const relative of officeArtifacts) {
         if (!text.toLowerCase().includes(required.toLowerCase())) fail(`${relative} is missing current focused-selection workbook content: ${required}.`);
       }
     }
+    if (relative === "files/BUS331_InvProject_SecuritySelection_Template.xlsx") {
+      for (const required of ["REALITY CHECK", "Proposed Final Portfolio", "Optional Decision Notes", "Holding & Exposure Reality Check", "Direct-Security Position-Size Rationale", "project-wide decision and audit trail"]) {
+        if (!text.toLowerCase().includes(required.toLowerCase())) fail(`${relative} is missing current holding/exposure or client-tab content: ${required}.`);
+      }
+      for (const retired of ["ISSUER CHECK", "Focused Candidate Research Table", "Candidate Notes (Not Final Scorecards)", "Interest Coverage / Debt Maturities"]) {
+        if (text.toLowerCase().includes(retired.toLowerCase())) fail(`${relative} retains superseded security-selection content: ${retired}.`);
+      }
+    }
     if (/Decision_Record/i.test(relative)) {
       for (const required of ["Equity Analyst", "Risk and Derivatives Analyst", "Alternative(s) rejected", "Key trade-off", "15"]) {
         if (!text.toLowerCase().includes(required.toLowerCase())) fail(`${relative} is missing current five-role decision-log content: ${required}.`);
@@ -359,7 +367,7 @@ for (const relative of officeArtifacts) {
 
 const publicPdfArtifacts = [
   { relative: "files/final-rubric.pdf", required: ["Investment Project Rubrics", "Role-specific committee", "Decision Log"] },
-  { relative: "files/BUS331_Investment_Committee_Simulation_Project_Guide.pdf", required: ["five committee roles", "8-10 final holdings", "no-hedge"] }
+  { relative: "files/BUS331_Investment_Committee_Simulation_Project_Guide.pdf", required: ["five committee roles", "8-10 final holdings", "no-hedge", "project-wide Analyst Decision Log", "Save as you go"] }
 ];
 for (const pdf of publicPdfArtifacts) {
   const pdfPath = path.join(rootDir, pdf.relative);
@@ -443,14 +451,14 @@ for (const requiredText of [
   "Do not restate cost, liquidity, overlap, diversification, client fit, rejected alternatives, or trade-offs",
   "Rejected alternatives",
   "One shared final-holding scorecard and decision record",
-  "Issuer Reality Check",
-  "only when triggered",
-  "Always required",
-  "Conditional only",
-  "not a second security-analysis assignment",
-  "Yield or recent return alone cannot support a recommendation",
-  "Business model, principal revenue drivers",
-  "include interest coverage and debt-maturity considerations",
+  "Holding &amp; Exposure Reality Check",
+  "Required for each proposed final holding",
+  "Conditional add-on",
+  "not a second candidate list",
+  "Recent return or headline yield cannot substitute",
+  "Holdings, sector, and style overlap or concentration",
+  "Do not perform company-style financial-health analysis for funds or ETFs",
+  "Return the conclusion to the Final Scorecards",
   "FactSet Research and Evidence Record",
   "Public/private data boundary",
   "Data as-of period and retrieval date",
@@ -461,6 +469,8 @@ for (const requiredText of [
   if (!securityHtml.includes(requiredText)) fail(`Security Analysis page is missing required student workflow content: ${requiredText}.`);
 }
 if (/Required handoff|Phase 1 is the decision filter/i.test(securityHtml)) fail("Security Analysis page retains the superseded required-handoff card.");
+if (/Analyst Decision Log|BUS331_Investment_Committee_Decision_Record_Student\.xlsx/i.test(securityHtml)) fail("Security Analysis page must not contain Decision Log access or project-wide log guidance.");
+if (/Issuer Reality Check|Business model, principal revenue drivers|interest coverage and debt-maturity/i.test(securityHtml)) fail("Security Analysis page retains superseded issuer-style requirements.");
 const candidateHeadings = securityHtml.match(/<h[23][^>]*>[^<]*(?:candidate set|candidate pool)[^<]*<\/h[23]>/gi) || [];
 if (candidateHeadings.length !== 1) fail(`Security Analysis page must have exactly one candidate-pool heading; found ${candidateHeadings.length}.`);
 if (/Build a candidate set/i.test(securityHtml)) fail("Security Analysis page repeats the retired 'Build a candidate set' instruction.");
@@ -513,7 +523,7 @@ for (const rubric of canvasRubricImports) {
   }
   if (!csv.includes(rubric.name) || !csv.includes("Complete") || !csv.includes("Developing") || !csv.includes("Not demonstrated")) fail(`${rubric.file} is missing Canvas rating data.`);
 }
-for (const requiredText of ["Evidence quality", "Focused security selection", "Client suitability", "Shared portfolio quality", "Individual role evidence", "Role-specific committee defense", "Decision Log contribution", "Issuer Reality Check"]) {
+for (const requiredText of ["Evidence quality", "Focused security selection", "Client suitability", "Shared portfolio quality", "Individual role evidence", "Role-specific committee defense", "Decision Log contribution", "Holding &amp; Exposure Reality Check"]) {
   if (!assessmentHtml.includes(requiredText)) fail(`Assessment page is missing updated rubric or committee-defense content: ${requiredText}.`);
 }
 if (model.assessment.committeeQuestions?.length < 6) fail("Assessment must define all five role-specific and cross-committee defense questions.");
@@ -545,6 +555,16 @@ if (!decisionRecordResource || !/Analyst Decision Log/i.test(`${decisionRecordRe
   fail("The public committee workbook resource must identify the Analyst Decision Log.");
 }
 
+const guideHtml = await fs.readFile(path.join(rootDir, "project", "guide.html"), "utf8");
+for (const [relative, html] of [["project/roadmap.html", roadmapHtml], ["project/guide.html", guideHtml]]) {
+  for (const required of ["Use one project-wide Analyst Decision Log", "Begin in Phase 1 with the required human-first judgments", "consequential recommendation", "rejects an alternative", "trade-off or verification", "all three phases", "separate gate sheets", "each client&#039;s Phase 2 approval", "Open the project-wide Analyst Decision Log", "BUS331_Investment_Committee_Decision_Record_Student.xlsx"]) {
+    if (!html.includes(required)) fail(`${relative} is missing project-wide Decision Log guidance or access: ${required}.`);
+  }
+}
+for (const required of ["Save as you go", "Save your working project files regularly", "consequential Decision Log entries", "approval-gate work"]) {
+  if (!roadmapHtml.includes(required)) fail(`project/roadmap.html is missing the save-as-you-go reminder: ${required}.`);
+}
+
 const workbookBuilderPath = path.join(rootDir, "scripts", "build-investment-committee-decision-record.mjs");
 if (!(await exists(workbookBuilderPath))) {
   fail("Missing maintained committee-workbook builder.");
@@ -560,8 +580,11 @@ if (!(await exists(securityWorkbookUpdaterPath))) {
   fail("Missing maintained security-selection workbook updater.");
 } else {
   const updater = await fs.readFile(securityWorkbookUpdaterPath, "utf8");
-  for (const marker of ["source-templates", "BUS331_InvProject_SecuritySelection_Layout_Base.xlsx", "FINAL SCORECARDS", "RISK & HEDGE", "8–10 final holdings", "Cost & Trading Expenses", "Hedge / No-Hedge", "JSZip", "ISSUER CHECK", "EVIDENCE LOG", "Yield or recent return alone cannot support a recommendation", "Business Model", "Interest Coverage / Debt Maturities", "Fund/ETF look-through", "Client-Fit Conclusion", "FactSet Data / Research Retrieved", "Effect on Recommendation", "Canvas Submission Item / Evidence-File Reference"]) {
-    if (!updater.includes(marker)) fail(`Security-selection workbook updater is missing Issuer Reality Check control: ${marker}.`);
+  for (const marker of ["source-templates", "BUS331_InvProject_SecuritySelection_Layout_Base.xlsx", "FINAL SCORECARDS", "RISK & HEDGE", "8–10 final holdings", "Cost & Trading Expenses", "Hedge / No-Hedge", "JSZip", "REALITY CHECK", "EVIDENCE LOG", "Holding & Exposure Reality Check", "OPTIONAL DECISION NOTES", "Direct-Security Business / Issuer-Specific Risk", "Direct-Security Position-Size Rationale", "project-wide decision and audit trail", "FactSet Data / Research Retrieved", "Effect on Recommendation", "Canvas Submission Item / Evidence-File Reference"]) {
+    if (!updater.includes(marker)) fail(`Security-selection workbook updater is missing current holding/exposure or client-tab control: ${marker}.`);
+  }
+  for (const retired of ["Focused Candidate Research Table", "Candidate Notes (Not Final Scorecards)", "Interest Coverage / Debt Maturities"]) {
+    if (updater.includes(retired)) fail(`Security-selection workbook updater retains superseded content: ${retired}.`);
   }
 }
 

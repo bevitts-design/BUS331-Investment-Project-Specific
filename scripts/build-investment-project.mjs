@@ -319,6 +319,21 @@ function phaseOneLaunchMarkup(prefix) {
   </div>`;
 }
 
+function projectDecisionLogMarkup(prefix, { includeSaveReminder = false } = {}) {
+  const guidance = model.studentRoadmap.decisionLogGuidance;
+  const decisionRecord = resourceById.get("decision-record");
+  return `<div class="milestone-banner project-decision-log">
+    <div>
+      <p class="section-kicker">Project-wide decision and audit trail</p>
+      <h2>${escapeHtml(guidance.title)}</h2>
+      <p>${escapeHtml(guidance.usage)}</p>
+      <p><strong>Formal approvals:</strong> ${escapeHtml(guidance.gates)}</p>
+      ${includeSaveReminder ? `<p class="fine-print"><strong>Save as you go:</strong> ${escapeHtml(guidance.saveReminder)}</p>` : ""}
+    </div>
+    <div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open the project-wide Analyst Decision Log <span>XLSX</span></a></div>
+  </div>`;
+}
+
 function phasePanel(phase) {
   const nextPath = phasePath(phase);
   return `<article class="phase-panel">
@@ -551,6 +566,9 @@ function roadmapPage() {
         <h2>Set up your committee for the full project</h2>
         <ul class="check-list">${roadmap.beforeYouBegin.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
       </section>
+      <section aria-labelledby="roadmap-decision-log-title">
+        ${projectDecisionLogMarkup(prefix, { includeSaveReminder: true }).replace("<h2>", '<h2 id="roadmap-decision-log-title">')}
+      </section>
       <section>
         <p class="section-kicker">Your path</p>
         <h2>Complete one decision before moving to the next</h2>
@@ -599,6 +617,10 @@ function guidePage(prefix = "../") {
           <div class="phase-runway">
             ${model.phases.map((phase) => `<article class="phase-panel"><div class="phase-panel-top"><div><p class="phase-number">Phase ${phase.number}</p><h3>${escapeHtml(phase.title)}</h3><p class="phase-question">${escapeHtml(phase.objective)}</p></div><div class="gate"><strong>Approval gate</strong>${escapeHtml(phase.gate)}</div></div><div class="phase-panel-bottom"><div><h4>Required outputs</h4><ul class="clean-list">${phase.deliverables.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></div><div class="phase-links"><a class="button" href="${escapeHtml(`${localProjectPrefix}${path.basename(phasePath(phase))}`)}">Open Phase ${phase.number} guide <span aria-hidden="true">→</span></a></div></div></article>`).join("\n")}
           </div>
+        </section>
+
+        <section aria-labelledby="guide-decision-log-title">
+          ${projectDecisionLogMarkup(prefix).replace("<h2>", '<h2 id="guide-decision-log-title">')}
         </section>
 
         <section>${protocolMarkup()}</section>
@@ -735,7 +757,6 @@ function securityAnalysisPage() {
   const prefix = "../";
   const experience = model.phase2Experience;
   const securityWorkbook = resourceById.get("security-template");
-  const decisionRecord = resourceById.get("decision-record");
   return shell({
     title: "Security Analysis & Selection",
     description: "Student workflow for focused, evidence-backed fund, ETF, and limited individual-security selection in the BUS331 Investment Committee Simulation.",
@@ -778,13 +799,13 @@ function securityAnalysisPage() {
         <div class="callout"><h3>Residual-risk handoff</h3><p>${escapeHtml(experience.selectionContract.riskHandoff)}</p></div>
       </section>
 
-      <section class="issuer-check-section">
-        <p class="section-kicker">Step 4 · Conditional issuer review</p><h2>${escapeHtml(experience.issuerRealityCheck.title)}—only when triggered</h2>
-        <div class="issuer-rule"><strong>Decision rule</strong><p>${escapeHtml(experience.issuerRealityCheck.decisionRule)}</p></div>
-        <div class="instrument-grid issuer-trigger-grid"><article><p class="role-tag">Always required</p><h3>Direct individual security</h3><p>${escapeHtml(experience.issuerRealityCheck.directRule)}</p></article><article><p class="role-tag">Conditional only</p><h3>Fund or ETF look-through</h3><p>${escapeHtml(experience.issuerRealityCheck.fundRule)}</p></article></div>
-        <h3>Five-field issuer snapshot</h3><ol class="numbered-fields">${experience.issuerRealityCheck.requiredFields.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ol>
-        <div class="callout"><h3>Return the conclusion to the shared scorecard</h3><p>${escapeHtml(experience.issuerRealityCheck.handoff)}</p></div>
-        <p class="fine-print">This conditional review is part of the holding's scorecard—not a second security-analysis assignment. Keep it concise, cited, and decision-focused.</p>
+      <section class="exposure-check-section">
+        <p class="section-kicker">Step 4 · Holding and exposure review</p><h2>${escapeHtml(experience.holdingExposureRealityCheck.title)}</h2>
+        <div class="exposure-rule"><strong>Decision rule</strong><p>${escapeHtml(experience.holdingExposureRealityCheck.decisionRule)}</p></div>
+        <div class="instrument-grid exposure-trigger-grid"><article><p class="role-tag">Required for each proposed final holding</p><h3>Fund or security reality check</h3><p>${escapeHtml(experience.holdingExposureRealityCheck.appliesRule)}</p></article><article><p class="role-tag">Conditional add-on</p><h3>Direct individual security only</h3><p>${escapeHtml(experience.holdingExposureRealityCheck.directSecurityRule)}</p></article></div>
+        <h3>Six-field reality check</h3><ol class="numbered-fields">${experience.holdingExposureRealityCheck.requiredFields.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ol>
+        <div class="callout"><h3>Return the conclusion to the Final Scorecards</h3><p>${escapeHtml(experience.holdingExposureRealityCheck.handoff)}</p></div>
+        <p class="fine-print">This concise check validates the proposed final holdings; it is not a second candidate list. The Final Scorecards remain the authoritative Phase 2 final-holding record.</p>
       </section>
 
       <section class="factset-section">
@@ -799,7 +820,7 @@ function securityAnalysisPage() {
       <section>
         <p class="section-kicker">Selection gate</p><h2>Ready to enter the portfolio?</h2>
         <ul class="check-list">${experience.securityQualityGate.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
-        <div class="milestone-banner"><div><h3>Record the handoff</h3><p>For every selected candidate, state its portfolio job, proposed weight range, risk contribution, client-fit condition, and monitoring or removal trigger.</p></div><div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, securityWorkbook.path))}">Open selection workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open Decision Log <span>XLSX</span></a><a class="button" href="${escapeHtml(path.basename(portfolioStressPath))}">Continue to portfolio & stress testing</a></div></div>
+        <div class="milestone-banner"><div><h3>Finish the Phase 2 selection records</h3><p>For every selected holding, state its portfolio job, proposed weight, risk contribution, client-fit condition, and monitoring or removal trigger in the Phase 2 records. Keep the Final Scorecards as the authoritative Phase 2 final-holding record.</p></div><div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, securityWorkbook.path))}">Open selection workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(path.basename(portfolioStressPath))}">Continue to portfolio & stress testing</a></div></div>
       </section>
     </div></div>
   </main>`
