@@ -48,24 +48,28 @@ if (inspectOnly) {
   process.exit(0);
 }
 
-const issuerSheet = workbook.worksheets.getOrAdd("ISSUER CHECK");
-issuerSheet.getRange("A1:W30").clear({ applyTo: "all" });
-issuerSheet.showGridLines = false;
+for (const retiredSheetName of ["ISSUER CHECK", "REALITY CHECK"]) {
+  const retiredSheet = workbook.worksheets.items.find((sheet) => sheet.name === retiredSheetName);
+  if (retiredSheet) retiredSheet.delete();
+}
+const realityCheckSheet = workbook.worksheets.add("REALITY CHECK");
+realityCheckSheet.index = 5;
+realityCheckSheet.showGridLines = false;
 
 const startSheet = workbook.worksheets.getItem("START HERE");
 startSheet.getRange("A2").values = [["BUS 331 — Phase 2: Security Analysis & Selection"]];
-startSheet.getRange("B6").values = [["Use the client tabs for candidate work, FINAL SCORECARDS for the 8–10 final holdings per client, RISK & HEDGE for the residual-risk conclusion, ISSUER CHECK only where required, and EVIDENCE LOG for licensed-source research. Never exceed 10 holdings; do not fill a slot without a purpose."]];
+startSheet.getRange("B6").values = [["Use the client tabs for the 8–10 holdings currently proposed for each client, FINAL SCORECARDS for the authoritative Phase 2 final-holding record, REALITY CHECK to validate each proposed final holding and any conditional direct-security add-on, RISK & HEDGE for the residual-risk conclusion, and EVIDENCE LOG for licensed-source research. Never exceed 10 holdings; do not fill a slot without a purpose."]];
 startSheet.getRange("B8").values = [["  Before You Start — Complete Phase 1 First"]];
-startSheet.getRange("B9").values = [["Your Phase 1 market view, client IPS, unresolved information gaps, and downstream guardrails must be approved before security research begins. Every candidate and Issuer Reality Check must trace to that mandate; the macro filter on each client tab must pass before selection."]];
-startSheet.getRange("B11").values = [["  Section 1 — Candidate Research and Final Scorecards"]];
+startSheet.getRange("B9").values = [["Your Phase 1 market view, client IPS, unresolved information gaps, and downstream guardrails must be approved before security research begins. Every proposed holding and Holding & Exposure Reality Check must trace to that mandate; the macro filter on each client tab must pass before selection."]];
+startSheet.getRange("B11").values = [["  Section 1 — Proposed Final Portfolios and Final Scorecards"]];
 startSheet.getRange("B11").format.rowHeight = 34;
-startSheet.getRange("B12").values = [["Use the client tabs for focused candidate research. Compare realistic alternatives concisely, then record only the 8–10 final holdings per client in FINAL SCORECARDS. Never exceed 10, do not fill an unused slot, keep funds and ETFs primary, and limit individual securities to two or three total."]];
+startSheet.getRange("B12").values = [["Use each client tab for the 8–10 final holdings the team currently intends to recommend and any selective decision notes that matter. Record the authoritative Phase 2 final holdings in FINAL SCORECARDS. Never exceed 10, do not fill an unused slot, keep funds and ETFs primary, and limit direct individual securities to two or three total."]];
 startSheet.getRange("B14").values = [["  Section 2 — Residual Risk and Hedge / No-Hedge Decision"]];
 startSheet.getRange("B14").format.rowHeight = 34;
 startSheet.getRange("B15").values = [["Use RISK & HEDGE after portfolio-level stress testing. At most one targeted derivative hedge may be proposed when it solves an identified residual risk. A supported no-hedge conclusion is fully valid; do not add a derivative merely to fill a requirement."]];
-startSheet.getRange("B17").values = [["  Section 3 — Final-Holding Evidence and Decision Log"]];
+startSheet.getRange("B17").values = [["  Section 3 — Final-Holding Evidence and Project Decision Trail"]];
 startSheet.getRange("B17").format.rowHeight = 34;
-startSheet.getRange("B18").values = [["Complete one concise scorecard for every final holding and record the recommendation, strongest alternative rejected, and key trade-off in the Analyst Decision Log. Full analysis is not required for every screened candidate."]];
+startSheet.getRange("B18").values = [["Complete one concise Holding & Exposure Reality Check row for every proposed final holding. Use FINAL SCORECARDS as the authoritative Phase 2 final-holding record; continue consequential recommendations, alternatives rejected, trade-offs, verifications, and approvals in the project-wide Analyst Decision Log."]];
 startSheet.getRange("B24").values = [["Reviewers will check: (1) each client has 8–10 final holdings and never more than 10, (2) funds and ETFs are primary and individual securities total no more than two or three, (3) every final holding has a concise scorecard and a purpose, (4) rejected alternatives are concise, (5) overlap and concentration are resolved, (6) sources and as-of dates are complete, and (7) residual risk supports one targeted hedge or a fully valid no-hedge conclusion."]];
 startSheet.getRange("B27:B36").values = [["☐  Weights sum to 100% for each client"],["☐  Approved allocation and Phase 1 guardrails are visible"],["☐  8–10 final holdings per client; never more than 10; no unused slot filled"],["☐  Funds/ETFs are primary; individual securities total no more than two or three; individual bonds are not required"],["☐  Final scorecard complete for every final holding"],["☐  Individual-security rationale, idiosyncratic risk, and position size complete where applicable"],["☐  Realistic alternatives rejected concisely; key trade-off recorded"],["☐  Portfolio Manager resolved overlap, concentration, final selection, and weights"],["☐  Risk and Derivatives Analyst recorded residual risk and hedge/no-hedge evidence"],["☐  Sources/as-of dates complete; licensed evidence prepared for private Canvas submission"]];
 startSheet.getRange("B27:B36").format.rowHeight = 58;
@@ -78,20 +82,24 @@ for (const clientNumber of [1, 2, 3]) {
   const clientSheet = workbook.worksheets.getItem(`Client ${clientNumber}`);
   clientSheet.getRange("A2").values = [[`Phase 2 — Security Analysis & Selection  |  Client ${clientNumber}`]];
   clientSheet.getRange("A3").values = [["BUS 331 Investments  |  Endicott College  |  Phase 2: Security Analysis & Selection"]];
-  clientSheet.getRange("A9").values = [["  SECTION 1 — FOCUSED CANDIDATE RESEARCH TABLE"]];
-  clientSheet.getRange("A10").values = [["Use this tab for candidate research and calculations. Record the 8–10 final holdings in FINAL SCORECARDS; never exceed 10, do not fill every slot, keep funds/ETFs primary, and limit individual securities to two or three total."]];
-  clientSheet.getRange("K11").values = [["Candidate Note\nRef #"]];
+  clientSheet.getRange("A9").values = [["  SECTION 1 — PROPOSED FINAL PORTFOLIO — RESEARCH & ALLOCATION"]];
+  clientSheet.getRange("A10").values = [["Enter the 8–10 final holdings the team currently intends to recommend for this client. Never exceed 10, do not fill an unused slot, keep funds and ETFs primary, and limit direct individual securities to two or three total. Record the authoritative Phase 2 final holdings in FINAL SCORECARDS."]];
+  clientSheet.getRange("A10").format.rowHeight = 44;
+  clientSheet.getRange("K11").values = [["Decision Note\nRef #"]];
   clientSheet.getRange("A25").values = [["  SECTION 2 — OPTIONAL PRELIMINARY HEDGE RESEARCH"]];
   clientSheet.getRange("A26").values = [["A derivative is optional. Use these fields only to support the RISK & HEDGE tab. At most one targeted hedge may be proposed when it solves an identified residual risk; a supported no-hedge conclusion is fully valid."]];
   clientSheet.getRange("B27:B35").values = [["Identified Residual Risk"], ["Preliminary Conclusion"], ["Candidate Instrument (if any)"], ["Preliminary Size"], ["Cost / Liquidity / Trade-Offs"], ["Residual / Basis / Execution Risk"], ["Adjustment / Removal Condition"], ["Owner / Peer Review"], ["Source & As-of Date"]];
   clientSheet.getRange("J27:J35").values = Array.from({ length: 9 }, () => [null]);
   clientSheet.getRange("B37").values = [["    Optional Alternative Considered (concise; complete only if it informed the hedge / no-hedge conclusion)"]];
-  clientSheet.getRange("A42").values = [["  SECTION 3 — CANDIDATE NOTES (NOT FINAL SCORECARDS)"]];
-  clientSheet.getRange("A43").values = [["Use a brief candidate note only when it materially supports a final Select or Reject decision. Do not complete one block for every screened name. FINAL SCORECARDS and the Analyst Decision Log are the authoritative final records."]];
+  clientSheet.getRange("A42").values = [["  SECTION 3 — OPTIONAL DECISION NOTES — SELECTED HOLDINGS OR REJECTED ALTERNATIVES"]];
+  clientSheet.getRange("A42").format.rowHeight = 30;
+  clientSheet.getRange("A43").values = [["Use these selective, optional notes only when they support a consequential Select or Reject decision. They are not a second candidate list and are not required for every screened name. FINAL SCORECARDS are the authoritative Phase 2 final-holding record; the Analyst Decision Log is the continuing, project-wide decision and audit trail."]];
+  clientSheet.getRange("A43").format.rowHeight = 48;
   for (const [row, noteNumber] of [[44, 1], [53, 2], [62, 3], [71, 4], [80, 5]]) {
-    clientSheet.getRange(`A${row}`).values = [[`  Candidate Note #${noteNumber}`]];
+    clientSheet.getRange(`A${row}`).values = [[`  Optional Decision Note #${noteNumber}`]];
   }
-  clientSheet.getRange("A89").values = [["  ▲ Do not add a note block unless it materially supports a final Select or Reject decision. Full analysis is not required for every screened candidate."]];
+  clientSheet.getRange("A89").values = [["  ▲ Use a note only for a consequential Select or Reject decision. These notes are optional support—not a second candidate list or a required record for every screened name."]];
+  clientSheet.getRange("A89").format.rowHeight = 32;
 }
 
 const researchGuide = workbook.worksheets.getOrAdd("RESEARCH GUIDE");
@@ -102,7 +110,7 @@ researchGuide.getRange("A1").values = [["BUS331 - How to Research an Investment 
 researchGuide.getRange("A1:F1").format = { fill: "#0B1F35", font: { bold: true, color: "#FFFFFF", size: 18 }, verticalAlignment: "center" };
 researchGuide.getRange("A1:F1").format.rowHeight = 34;
 researchGuide.mergeCells("A2:F2");
-researchGuide.getRange("A2").values = [["Use this guide before completing the client tabs, Issuer Reality Check, and FactSet Research and Evidence Log. It tells you what to investigate; your committee supplies the research, calculations, judgment, and select/reject decision."]];
+researchGuide.getRange("A2").values = [["Use this guide before completing the client tabs, Final Scorecards, Holding & Exposure Reality Check, and FactSet Research and Evidence Log. It tells you what to investigate; your committee supplies the research, calculations, judgment, and select/reject decision."]];
 researchGuide.getRange("A2:F2").format = { fill: "#E9EFF4", font: { bold: true, color: "#102238" }, wrapText: true, verticalAlignment: "center" };
 researchGuide.getRange("A2:F2").format.rowHeight = 42;
 
@@ -121,7 +129,7 @@ researchGuide.getRange("A4:B8").format.rowHeight = 58;
 const instrumentRows = [
   ["Fixed-income fund/ETF", "Income, yield, duration, credit quality, rate and spread risk, holdings, costs, liquidity, overlap, taxes, client fit, and source/as-of date.", "Fixed-Income Analyst owns the recommendation, alternative rejected, and trade-off. A direct bond may be used but is not required."],
   ["Equity fund/ETF", "Exposure, benchmark/style/sector, holdings, concentration and overlap, costs and trading expenses, liquidity, diversification, taxes, client fit, and source/as-of date.", "Equity Analyst owns the recommendation, alternative rejected, and trade-off."],
-  ["Limited individual equity", "Distinct purpose versus a fund/ETF, business and return drivers, liquidity, key risks, client fit, idiosyncratic risk, position-size rationale, concentration limit, and source/as-of date.", "Complete the scorecard, Issuer Reality Check, and Evidence Log. Individual securities total no more than two or three per portfolio."],
+  ["Limited individual equity", "Distinct purpose versus a fund/ETF, business and return drivers, liquidity, key risks, client fit, idiosyncratic risk, position-size rationale, concentration limit, and source/as-of date.", "Complete the scorecard, Holding & Exposure Reality Check with its conditional direct-security add-on, and Evidence Log. Direct individual securities total no more than two or three per portfolio."],
   ["Derivative hedge (optional)", "Identified residual risk, instrument, size, cost, liquidity, trade-offs, basis/execution risk, residual risk, and adjustment/removal condition.", "Risk and Derivatives Analyst may propose at most one targeted hedge. A supported no-hedge conclusion is equally complete."]
 ];
 researchGuide.getRange("A11:C11").values = [["Instrument", "Research before you decide", "What you must complete in this workbook"]];
@@ -200,62 +208,62 @@ const riskWidths = [14, 18, 30, 30, 24, 30, 30, 28, 24];
 riskWidths.forEach((width, index) => riskSheet.getRangeByIndexes(0, index, 9, 1).format.columnWidth = width);
 riskSheet.freezePanes.freezeRows(6);
 
-issuerSheet.mergeCells("A1:W1");
-issuerSheet.getRange("A1").values = [["BUS 331 — Issuer Reality Check"]];
-issuerSheet.getRange("A1:W1").format = {
+realityCheckSheet.mergeCells("A1:U1");
+realityCheckSheet.getRange("A1").values = [["BUS 331 — Holding & Exposure Reality Check"]];
+realityCheckSheet.getRange("A1:U1").format = {
   fill: "#0B1F35",
   font: { bold: true, color: "#FFFFFF", size: 18 },
   verticalAlignment: "center"
 };
-issuerSheet.getRange("A1:W1").format.rowHeight = 34;
+realityCheckSheet.getRange("A1:U1").format.rowHeight = 34;
 
-issuerSheet.mergeCells("A2:W2");
-issuerSheet.getRange("A2").values = [["Required inside Security Analysis and Selection — not a separate accounting unit"]];
-issuerSheet.getRange("A2:W2").format = {
+realityCheckSheet.mergeCells("A2:U2");
+realityCheckSheet.getRange("A2").values = [["Required for every proposed final holding — concise validation linked to the authoritative Final Scorecards"]];
+realityCheckSheet.getRange("A2:U2").format = {
   fill: "#D4A052",
   font: { bold: true, color: "#071626" },
   verticalAlignment: "center"
 };
 
-issuerSheet.mergeCells("A4:W4");
-issuerSheet.getRange("A4").values = [["DECISION RULE — Yield or recent return alone cannot support a recommendation. Evidence the issuer's financial health, operating outlook, and relevance to the client's mandate."]];
-issuerSheet.getRange("A4:W4").format = {
+realityCheckSheet.mergeCells("A4:U4");
+realityCheckSheet.getRange("A4").values = [["DECISION RULE — Validate what each proposed holding owns or represents, how it changes the portfolio, and whether current evidence supports its allocation. Recent return or headline yield cannot substitute for exposure, fit, and risk analysis."]];
+realityCheckSheet.getRange("A4:U4").format = {
   fill: "#F8E8E2",
   font: { bold: true, color: "#7B2F22" },
   wrapText: true,
   verticalAlignment: "center"
 };
-issuerSheet.getRange("A4:W4").format.rowHeight = 40;
+realityCheckSheet.getRange("A4:U4").format.rowHeight = 42;
 
-issuerSheet.mergeCells("A5:W5");
-issuerSheet.getRange("A5").values = [["APPLIES TO — Every direct individual security. For a selected fund or ETF, complete look-through issuer analysis only when one holding is material to the exposure, concentration, or risk conclusion; do not duplicate the final-holding scorecard."]];
-issuerSheet.getRange("A5:W5").format = {
+realityCheckSheet.mergeCells("A5:U5");
+realityCheckSheet.getRange("A5").values = [["FUNDS / ETFs FIRST — Review fund or security exposure and strategy; holdings, sector, and style overlap or concentration; costs and liquidity where relevant; key risk; client fit; allocation implication; and current sources. Do not perform company-style financial-health analysis for funds or ETFs."]];
+realityCheckSheet.getRange("A5:U5").format = {
   fill: "#EEF7F6",
   font: { bold: true, color: "#143B45" },
   wrapText: true,
   verticalAlignment: "center"
 };
-issuerSheet.getRange("A5:W5").format.rowHeight = 34;
+realityCheckSheet.getRange("A5:U5").format.rowHeight = 42;
 
-issuerSheet.mergeCells("A7:W7");
-issuerSheet.getRange("A7").values = [["ROLE HANDOFF — Fixed-Income: duration/credit/income  |  Equity: equity funds/ETFs and limited individual equities  |  Client & Macro: mandate/scenario fit  |  Portfolio Manager: final selection/weights/trade-offs  |  Risk & Derivatives: stress and residual risk"]];
-issuerSheet.getRange("A7:W7").format = {
+realityCheckSheet.mergeCells("A7:U7");
+realityCheckSheet.getRange("A7").values = [["CONDITIONAL DIRECT-SECURITY ADD-ON — Only when the team selects one of the limited direct individual securities, add its material business or issuer-specific risk and the rationale supporting its position size."]];
+realityCheckSheet.getRange("A7:U7").format = {
   fill: "#E9EFF4",
   font: { bold: true, color: "#102238" },
   wrapText: true,
   verticalAlignment: "center"
 };
-issuerSheet.getRange("A7:W7").format.rowHeight = 38;
+realityCheckSheet.getRange("A7:U7").format.rowHeight = 38;
 
 for (const [range, label, fill] of [
-  ["A9:H9", "EXPOSURE & EVIDENCE", "#1B3B60"],
-  ["I9:Q9", "ISSUER HEALTH & OUTLOOK", "#2F7E7B"],
-  ["R9:U9", "RISK, CLIENT FIT & ALLOCATION", "#A4523A"],
-  ["V9:W9", "REVIEW", "#566F86"]
+  ["A9:H9", "HOLDING & EXPOSURE", "#1B3B60"],
+  ["I9:N9", "PORTFOLIO FIT & IMPLEMENTATION", "#2F7E7B"],
+  ["O9:S9", "EVIDENCE & CONDITIONAL DIRECT-SECURITY ADD-ON", "#A4523A"],
+  ["T9:U9", "REVIEW", "#566F86"]
 ]) {
-  issuerSheet.mergeCells(range);
-  issuerSheet.getRange(range.split(":")[0]).values = [[label]];
-  issuerSheet.getRange(range).format = {
+  realityCheckSheet.mergeCells(range);
+  realityCheckSheet.getRange(range.split(":")[0]).values = [[label]];
+  realityCheckSheet.getRange(range).format = {
     fill,
     font: { bold: true, color: "#FFFFFF", size: 10 },
     horizontalAlignment: "center",
@@ -265,31 +273,29 @@ for (const [range, label, fill] of [
 
 const headers = [[
   "Client",
-  "Exposure Type",
-  "Security / Fund",
-  "Issuer / Look-Through Holding",
+  "Slot",
+  "Proposed Final Holding",
+  "Holding Type",
   "Portfolio Weight",
   "Primary Owner",
+  "Fund / Security Exposure & Strategy",
+  "Holdings / Sector / Style",
+  "Overlap / Concentration Conclusion",
+  "Cost & Trading Expenses",
+  "Liquidity",
+  "Key Risk",
+  "Client-Mandate Fit",
+  "Allocation Implication",
   "Source / URL",
   "As-of Date",
-  "Business Model",
-  "Revenue Drivers",
-  "Industry / Macro Sensitivity",
-  "Revenue Trend",
-  "Margin Trend",
-  "Cash-Flow Trend",
-  "Liquidity",
-  "Leverage",
-  "Interest Coverage / Debt Maturities (if relevant)",
-  "Issuer-Specific Risk",
-  "Client-Fit Conclusion",
-  "Allocation Implication",
+  "Direct-Security Business / Issuer-Specific Risk (if selected)",
+  "Direct-Security Position-Size Rationale (if selected)",
   "Monitoring Trigger",
   "Peer Reviewer",
   "Status"
 ]];
-issuerSheet.getRange("A10:W10").values = headers;
-issuerSheet.getRange("A10:W10").format = {
+realityCheckSheet.getRange("A10:U10").values = headers;
+realityCheckSheet.getRange("A10:U10").format = {
   fill: "#122B49",
   font: { bold: true, color: "#FFFFFF", size: 10 },
   wrapText: true,
@@ -297,11 +303,15 @@ issuerSheet.getRange("A10:W10").format = {
   verticalAlignment: "center",
   borders: { preset: "inside", style: "thin", color: "#6F8FAB" }
 };
-issuerSheet.getRange("A10:W10").format.rowHeight = 58;
+realityCheckSheet.getRange("A10:U10").format.rowHeight = 66;
 
-const blankRows = Array.from({ length: 12 }, () => Array(23).fill(null));
-issuerSheet.getRange("A11:W22").values = blankRows;
-issuerSheet.getRange("A11:W22").format = {
+const realityCheckRows = [];
+for (let row = 6; row <= 35; row += 1) {
+  realityCheckRows.push(["A", "B", "C", "D", "G", "E"].map((column) => `=IF('FINAL SCORECARDS'!${column}${row}="","",'FINAL SCORECARDS'!${column}${row})`));
+}
+realityCheckSheet.getRange("A11:F40").formulas = realityCheckRows;
+realityCheckSheet.getRange("G11:U40").values = Array.from({ length: 30 }, () => Array(15).fill(null));
+realityCheckSheet.getRange("A11:U40").format = {
   fill: "#FFF9D9",
   font: { color: "#0000FF", size: 10 },
   wrapText: true,
@@ -312,31 +322,29 @@ issuerSheet.getRange("A11:W22").format = {
     bottom: { style: "thin", color: "#9BAFC0" }
   }
 };
-issuerSheet.getRange("A11:H22").format.fill = "#F2F6FA";
-issuerSheet.getRange("V11:W22").format.fill = "#EEF1F4";
-issuerSheet.getRange("A11:W22").format.rowHeight = 64;
-issuerSheet.getRange("E11:E22").format.numberFormat = "0.0%";
-issuerSheet.getRange("H11:H22").format.numberFormat = "yyyy-mm-dd";
-issuerSheet.getRange("B11:B22").dataValidation = { rule: { type: "list", values: ["Direct bond", "Direct equity", "Fund/ETF look-through"] } };
-issuerSheet.getRange("F11:F22").dataValidation = { rule: { type: "list", values: model.roles.map((role) => role.title) } };
-issuerSheet.getRange("W11:W22").dataValidation = { rule: { type: "list", values: ["Not started", "Ready for peer review", "Complete", "Revise"] } };
+realityCheckSheet.getRange("A11:F40").format = { fill: "#F2F6FA", font: { color: "#008000", size: 10 }, wrapText: true, verticalAlignment: "top", borders: { preset: "inside", style: "thin", color: "#D9E2EA" } };
+realityCheckSheet.getRange("T11:U40").format.fill = "#EEF1F4";
+realityCheckSheet.getRange("A11:U40").format.rowHeight = 68;
+realityCheckSheet.getRange("E11:E40").format.numberFormat = "0.0%";
+realityCheckSheet.getRange("P11:P40").format.numberFormat = "yyyy-mm-dd";
+realityCheckSheet.getRange("U11:U40").dataValidation = { rule: { type: "list", values: ["Not started", "Ready for peer review", "Complete", "Revise"] } };
 
-issuerSheet.mergeCells("A24:W24");
-issuerSheet.getRange("A24").values = [["COMPLETION STANDARD — Concise and cited. Show consistent financial periods, label missing information, and end with a client-fit and allocation conclusion. A second team member reviews each row before committee approval."]];
-issuerSheet.getRange("A24:W24").format = {
+realityCheckSheet.mergeCells("A42:U42");
+realityCheckSheet.getRange("A42").values = [["COMPLETION STANDARD — One concise row per proposed final holding, linked to FINAL SCORECARDS. Funds and ETFs require exposure, overlap/concentration, implementation, risk, fit, allocation, and source evidence—not company-style issuer financials. Complete the two direct-security fields only when applicable. A second team member reviews each row before committee approval."]];
+realityCheckSheet.getRange("A42:U42").format = {
   fill: "#FFF5DE",
   font: { bold: true, color: "#5B4314" },
   wrapText: true,
   verticalAlignment: "center"
 };
-issuerSheet.getRange("A24:W24").format.rowHeight = 40;
+realityCheckSheet.getRange("A42:U42").format.rowHeight = 48;
 
-const widths = [16, 18, 18, 24, 14, 24, 28, 13, 24, 24, 26, 18, 18, 20, 18, 18, 28, 24, 26, 22, 22, 20, 17];
+const widths = [15, 8, 20, 19, 14, 22, 28, 27, 28, 22, 18, 25, 24, 23, 27, 14, 30, 29, 22, 20, 17];
 widths.forEach((width, index) => {
-  issuerSheet.getRangeByIndexes(0, index, 24, 1).format.columnWidth = width;
+  realityCheckSheet.getRangeByIndexes(0, index, 42, 1).format.columnWidth = width;
 });
-issuerSheet.freezePanes.freezeRows(10);
-issuerSheet.freezePanes.freezeColumns(4);
+realityCheckSheet.freezePanes.freezeRows(10);
+realityCheckSheet.freezePanes.freezeColumns(6);
 
 const evidenceSheet = workbook.worksheets.getOrAdd("EVIDENCE LOG");
 evidenceSheet.getRange("A1:Q30").clear({ applyTo: "all" });
@@ -420,7 +428,7 @@ evidenceSheet.getRange("A9:Q24").format.rowHeight = 64;
 evidenceSheet.getRange("A9:D24").format.fill = "#F2F6FA";
 evidenceSheet.getRange("O9:Q24").format.fill = "#EEF1F4";
 evidenceSheet.getRange("I9:J24").format.numberFormat = "yyyy-mm-dd";
-evidenceSheet.getRange("B9:B24").dataValidation = { rule: { type: "list", values: ["Issuer Reality Check", "Credit / fixed income", "Equity fund / ETF", "Individual equity", "Portfolio integration", "Portfolio risk / hedge input"] } };
+evidenceSheet.getRange("B9:B24").dataValidation = { rule: { type: "list", values: ["Holding & exposure reality check", "Credit / fixed income", "Equity fund / ETF", "Individual equity", "Portfolio integration", "Portfolio risk / hedge input"] } };
 evidenceSheet.getRange("L9:L24").dataValidation = { rule: { type: "list", values: ["Confirmed", "Qualified", "Contradicted", "Changed", "Not verifiable"] } };
 evidenceSheet.getRange("Q9:Q24").dataValidation = { rule: { type: "list", values: ["Not started", "Ready for peer review", "Complete", "Revise"] } };
 const evidenceWidths = [16, 20, 26, 28, 28, 22, 20, 27, 16, 15, 30, 16, 30, 28, 22, 20, 17];
@@ -434,13 +442,13 @@ const formulaErrors = await workbook.inspect({
   kind: "match",
   searchTerm: "#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A",
   options: { useRegex: true, maxResults: 300 },
-  summary: "formula error scan after Issuer Reality Check update"
+  summary: "formula error scan after Holding & Exposure Reality Check update"
 });
 console.log(formulaErrors.ndjson);
 
-await renderSheets("after", [...sheetNames, "ISSUER CHECK", "EVIDENCE LOG"]);
-const issuerInspection = await workbook.inspect({ kind: "table", range: "ISSUER CHECK!A1:W24", include: "values,formulas", tableMaxRows: 24, tableMaxCols: 23 });
-console.log(issuerInspection.ndjson);
+await renderSheets("after", [...sheetNames, "REALITY CHECK", "EVIDENCE LOG"]);
+const realityCheckInspection = await workbook.inspect({ kind: "table", range: "REALITY CHECK!A1:U42", include: "values,formulas", tableMaxRows: 42, tableMaxCols: 21 });
+console.log(realityCheckInspection.ndjson);
 const evidenceInspection = await workbook.inspect({ kind: "table", range: "EVIDENCE LOG!A1:Q24", include: "values,formulas", tableMaxRows: 24, tableMaxCols: 17 });
 console.log(evidenceInspection.ndjson);
 

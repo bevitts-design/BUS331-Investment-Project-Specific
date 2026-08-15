@@ -30,6 +30,12 @@
       "Read the current phase checklist together before beginning work.",
       "Schedule a short committee meeting before each approval gate."
     ],
+    "decisionLogGuidance": {
+      "title": "Use one project-wide Analyst Decision Log",
+      "usage": "Begin in Phase 1 with the required human-first judgments. Add a concise entry whenever the team makes a consequential recommendation, rejects an alternative, records a trade-off or verification, or reaches an approval gate. Continue the same decision and audit trail through all three phases.",
+      "gates": "Use the separate gate sheets for formal Phase 1 approval, each client's Phase 2 approval, and Phase 3 approval.",
+      "saveReminder": "Save your working project files regularly as the team proceeds, especially after consequential Decision Log entries and approval-gate work."
+    },
     "phaseSequences": {
       "phase-1": [
         "Set roles, client assignments, and the team workspace.",
@@ -441,8 +447,7 @@
         "requiredAnalysis": [
           "Objective, benchmark or index methodology, style, sector, region, and active or passive approach",
           "Performance or tracking context using comparable periods and current as-of dates",
-          "Turnover, distributions, and tax implications",
-          "Any underlying issuer that is material enough to trigger the limited look-through review below"
+          "Turnover, distributions, and tax implications"
         ]
       },
       {
@@ -452,37 +457,38 @@
         "requiredAnalysis": [
           "Business and return drivers, valuation context where relevant, and base/bear sensitivity",
           "The three individual-security additions in the shared scorecard above",
-          "The concise Issuer Reality Check below"
+          "The concise direct-security add-on in the Holding & Exposure Reality Check below"
         ]
       }
     ],
-    "issuerRealityCheck": {
-      "title": "Issuer Reality Check",
-      "decisionRule": "Yield or recent return alone cannot support a recommendation. The committee must evidence the issuer's financial health, operating outlook, and relevance to the client's mandate.",
-      "directRule": "Required for every direct individual security.",
-      "fundRule": "For a fund or ETF, complete only a limited look-through review when one holding or issuer is material to the exposure, concentration, or risk conclusion. If no issuer is material to that conclusion, the shared holding scorecard is sufficient.",
+    "holdingExposureRealityCheck": {
+      "title": "Holding & Exposure Reality Check",
+      "decisionRule": "Validate what the proposed holding actually owns or represents, how it affects the portfolio, and whether current evidence supports its allocation. Recent return or headline yield cannot substitute for exposure, fit, and risk analysis.",
+      "appliesRule": "Complete one concise row for every proposed final holding. For funds and ETFs, focus on exposure and strategy; holdings, sector, and style overlap or concentration; costs and liquidity where relevant; key risk; client-mandate fit; allocation implication; and current sources.",
+      "directSecurityRule": "Only when the team selects one of the limited direct individual securities, add a concise business or issuer-specific risk and position-size rationale. Do not perform company-style financial-health analysis for funds or ETFs.",
       "requiredFields": [
-        "Security, issuer, exposure type, portfolio weight, source, and as-of date",
-        "Business model, principal revenue drivers, and industry or macro sensitivity under the base and bear cases",
-        "Revenue, margin, cash-flow, liquidity, and leverage trend using consistent periods; include interest coverage and debt-maturity considerations where relevant",
-        "One issuer-specific risk and the evidence that makes it material",
-        "Conclusion about mandate fit and the effect on selection, weight, or monitoring"
+        "Holding, instrument type, portfolio weight, owner, fund or security exposure, and strategy",
+        "Holdings, sector, and style overlap or concentration, including the portfolio implication",
+        "Costs, trading expenses, liquidity where relevant, and the key risk",
+        "Client-mandate fit, allocation implication, and monitoring trigger",
+        "Source, as-of date, peer reviewer, and status",
+        "Conditional direct-security add-on only when applicable: business or issuer-specific risk and the rationale supporting its position size"
       ],
-      "handoff": "The analyst adds only the material issuer conclusion to the shared scorecard. The Portfolio Manager applies it to selection and weight; the Risk and Derivatives Analyst carries any residual issuer or concentration risk into portfolio stress testing and the hedge/no-hedge conclusion."
+      "handoff": "The analyst returns the material exposure, fit, and allocation conclusion to the authoritative Final Scorecards. The Portfolio Manager applies it to final selection and weight; the Risk and Derivatives Analyst carries any residual overlap, concentration, or holding risk into portfolio stress testing and the hedge/no-hedge conclusion."
     },
     "factSetWorkflow": {
       "title": "FactSet Research and Evidence Record",
       "licenseBoundary": "Use your licensed FactSet access to research and download data for your own course work. Submit the final project package and any required licensed-source supporting evidence privately through Canvas. Do not place FactSet captures, exports, credentials, completed proprietary data files, or student work in the public repository.",
       "navigationBoundary": "FactSet layouts, entitlements, and labels can differ. Use course demonstrations and current FactSet support for navigation; this public guide defines the evidence standard, not a click path.",
       "steps": [
-        {"stage": "Frame the research question", "action": "Name the client guardrail, issuer claim, product comparison, or portfolio-risk input the FactSet research must test."},
-        {"stage": "Retrieve licensed evidence", "action": "Research the relevant security, issuer, credit, financial-statement, fund/ETF, benchmark, holdings, or portfolio-risk data available in your licensed workspace."},
+        {"stage": "Frame the research question", "action": "Name the client guardrail, holding or exposure claim, product comparison, direct-security risk, or portfolio-risk input the FactSet research must test."},
+        {"stage": "Retrieve licensed evidence", "action": "Research the relevant security, credit, fund/ETF, benchmark, holdings, exposure, cost, liquidity, or portfolio-risk data available in your licensed workspace; use issuer evidence only for a selected direct security when it is relevant."},
         {"stage": "Record the retrieval", "action": "Log what was retrieved, retrieval date, relevant metric or research item, entity/security, as-of period, and source or document reference as appropriate."},
-        {"stage": "Interpret", "action": "Explain what the evidence means for return drivers, risk, issuer health, product exposure, diversification, or client fit. Do not substitute copied output for analysis."},
+        {"stage": "Interpret", "action": "Explain what the evidence means for exposure, overlap, concentration, costs, liquidity, risk, diversification, or client fit; for a selected direct security, include the material business or issuer-specific risk. Do not substitute copied output for analysis."},
         {"stage": "Apply and retain", "action": "State how the evidence confirmed, qualified, contradicted, or changed the recommendation, then retain and submit the required licensed-source evidence privately through Canvas under course policy."}
       ],
       "connections": [
-        {"workstream": "Conditional issuer review", "application": "For a direct individual security, or a fund/ETF holding that is material to the exposure, concentration, or risk conclusion, use current issuer evidence to complete only the concise Issuer Reality Check."},
+        {"workstream": "Holding and exposure review", "application": "For every proposed final holding, use current product, holdings, exposure, cost, liquidity, and risk evidence to complete the concise Holding & Exposure Reality Check; add business or issuer-specific evidence only for a selected direct individual security."},
         {"workstream": "Credit and fixed income", "application": "Use relevant issue and issuer evidence for price/yield context, maturity and structure, duration or rate sensitivity, credit quality, spreads, liquidity, coverage, debt maturities, and downside risk."},
         {"workstream": "Mutual funds and ETFs", "application": "Use relevant product, holdings, benchmark, style, performance, flow, risk, cost, liquidity, and overlap evidence while verifying official product facts in sponsor or filed documents when appropriate."},
         {"workstream": "Portfolio risk inputs", "application": "Use appropriately dated risk, return, exposure, correlation, or benchmark inputs and document their definitions, units, limitations, and role in the team calculation."}
@@ -522,7 +528,7 @@
       "Each portfolio has 8–10 purposeful final holdings, never more than 10; funds and ETFs are primary, individual securities total no more than two or three, and individual bonds are not required.",
       "Every final holding completes the one shared scorecard; only applicable instrument-specific and individual-security add-ons are attached, and the strongest realistic alternative is rejected concisely.",
       "The team excludes candidates that duplicate exposure, create unnecessary concentration, lack appropriate liquidity, or fail the client mandate, and uses approved sources and current as-of dates for material claims.",
-      "Every direct individual security has a concise Issuer Reality Check; a fund or ETF receives limited look-through only when an issuer is material to the exposure, concentration, or risk conclusion.",
+      "Every proposed final holding has a concise Holding & Exposure Reality Check; only a selected direct individual security receives the conditional business or issuer-specific risk and position-size add-on.",
       "Each recommendation has a FactSet retrieval and interpretation record, while licensed evidence, proprietary exports, credentials, and student work remain private and are submitted through Canvas under course policy.",
       "The AI challenge tests the provisional leader, material claims are verified with approved evidence, and the team records Accept, Modify, or Reject.",
       "Each analyst records the recommendation, alternative rejected, and key trade-off; the Portfolio Manager records integration decisions, and a second member reviews the evidence trail.",
@@ -747,7 +753,7 @@
         "Concise final-holding scorecards covering exposure/role, cost and trading expenses, liquidity, holdings/sector/style overlap, diversification contribution, key risks, and client-mandate fit",
         "Added rationale, idiosyncratic-risk, and position-size evidence for every individual security; individual bonds are not required",
         "Concise comparisons and rejection reasons for realistic alternatives without full analysis of every screened name",
-        "Issuer Reality Check for every direct individual security and only material look-through issuer exposures within selected funds or ETFs",
+        "Holding & Exposure Reality Check for every proposed final holding, with no company-style financial-health analysis for funds or ETFs and a concise direct-security add-on only when one of the limited individual securities is selected",
         "FactSet Research and Evidence Log for every recommended security and material portfolio-risk input",
         "Integrated allocation with a purpose, owner, Phase 1 guardrail, risk contribution, and monitoring trigger for every holding, plus the Portfolio Manager's overlap, concentration, final-weight, and trade-off decisions",
         "Portfolio-level stress tests and the Risk and Derivatives Analyst's residual-risk evidence",
@@ -865,7 +871,7 @@
         "includePrivateEvidenceBoundary": true,
         "requiredFiles": [
           {"name": "BUS331_Team##_Phase2_CME.xlsx", "description": "Completed capital-market-expectations and optimization workbook."},
-          {"name": "BUS331_Team##_Phase2_SecuritySelection.xlsx", "description": "Completed final-holding scorecards, concise rejected alternatives, required individual-security evidence, Issuer Reality Checks, and FactSet Evidence Log."},
+          {"name": "BUS331_Team##_Phase2_SecuritySelection.xlsx", "description": "Completed final-holding scorecards, selective decision notes, Holding & Exposure Reality Checks, conditional direct-security evidence, and FactSet Evidence Log."},
           {"name": "BUS331_Team##_Phase2_BaselineSnapshot.pdf", "description": "Submitted baseline allocation, IPS scorecard, and initial stress result retained before the Scenario Reveal."},
           {"name": "BUS331_Team##_Phase2_StressTest.xlsx", "description": "Scenario Release Log, integrated allocation, full IPS scorecard, revealed-scenario results, corrective trades, and re-test."},
           {"name": "BUS331_Team##_Phase2_DecisionRecord.xlsx", "description": "Current committee record with client-by-client votes, dissent, actions, owners, and deadlines."},
@@ -1018,10 +1024,10 @@
     },
     {
       "id": "security-template",
-      "label": "Security selection & Issuer Reality Check workbook",
+      "label": "Security selection & Holding and Exposure Reality Check workbook",
       "type": "XLSX",
       "path": "files/BUS331_InvProject_SecuritySelection_Template.xlsx",
-      "description": "Final-holding scorecards for 8–10 holdings per client, concise alternatives, individual-security evidence, residual-risk and hedge/no-hedge record, Issuer Reality Check, and FactSet Evidence Log.",
+      "description": "Final-holding scorecards for 8–10 holdings per client, selective decision notes, conditional direct-security evidence, residual-risk and hedge/no-hedge record, Holding & Exposure Reality Check, and FactSet Evidence Log.",
       "audience": "student"
     },
     {
@@ -1175,7 +1181,7 @@
         "questions": [
           "Why does the selected fixed-income exposure fit the client's cash-flow horizon better than the strongest alternative?",
           "What happens to price and income if rates or credit spreads move against the position, and which duration or credit evidence supports that answer?",
-          "What did the Issuer Reality Check reveal about cash flow, leverage, interest coverage, maturities, and the largest issuer-specific risk?"
+          "What did the Holding & Exposure Reality Check reveal about concentration, liquidity, costs, key risk, and the allocation implication for the selected fixed-income exposure?"
         ]
       },
       {

@@ -14,7 +14,7 @@ Required evidence:
 
 - Human-first client judgment recorded before AI use
 - Instructor-led demonstration and structured human client role-play for each assigned client
-- Human verification trail and final reasoning in the Analyst Decision Log
+- Continuing project-wide decision and audit trail in the Analyst Decision Log, with student access on the Project Roadmap and Project Guide
 - Human-first macro read using the historical dataset
 - FactSet/FRED consensus comparison with source dates
 - Bull/base/bear scenarios and probabilities totaling 100%
@@ -29,7 +29,7 @@ The committee translates the Phase 1 view into capital-market expectations, cons
 
 The maintained `phase2Experience` contract in `project-model.json` requires two cumulative student workflows. Security Analysis and Selection translates the approved allocation and mandate into a candidate set, then narrows it to 8–10 purposeful holdings, never more than 10, with funds and ETFs as the primary vehicles and no more than two or three individual securities. Fixed Income owns fixed-income funds and ETFs, Equity owns equity funds and ETFs plus limited individual equities, the Portfolio Manager resolves overlap and weights, and Risk and Derivatives owns portfolio stress and the hedge/no-hedge conclusion. Portfolio Management and Stress Testing integrates approved holdings, checks every relevant IPS objective and constraint, applies the unchanged Phase 1 bear assumptions, and requires specific corrections plus a full re-test before approval.
 
-The Issuer Reality Check sits inside security analysis rather than as another course unit. It is required for every direct individual security and only for a fund or ETF when a look-through holding is material to the exposure, concentration, or risk conclusion. Individual bonds are not required. Yield or recent return alone is never sufficient evidence; the snapshot covers the business and revenue drivers, macro and industry sensitivity, financial trend, liquidity and leverage, coverage and maturities where relevant, issuer-specific risk, client fit, allocation implication, and monitoring trigger.
+The Holding & Exposure Reality Check sits inside security analysis rather than as another course unit. Students complete one concise row for every proposed final holding. For funds and ETFs, it focuses on exposure and strategy; holdings, sector, and style overlap or concentration; costs and liquidity where relevant; key risk; client-mandate fit; allocation implication; current sources and dates; peer review; and status. It does not require company-style issuer financial-health analysis for funds or ETFs. Only when the team selects one of the limited direct individual securities does it add concise business or issuer-specific risk and a position-size rationale. Individual bonds are not required, and recent return or headline yield never substitutes for exposure, fit, and risk analysis.
 
 FactSet is a required licensed research source in Phase 2, not a public data dependency. Students research and download evidence inside their own licensed access, then record the item retrieved, retrieval date, relevant metrics, entity/security, as-of period, source or document reference as appropriate, interpretation, and effect on the recommendation. Students submit their final work and any required licensed-source supporting evidence privately through Canvas. No student work, FactSet capture, export, credential, or completed proprietary dataset belongs in this public repository, and public guidance must remain tool-neutral because layouts and entitlements can differ.
 
@@ -40,7 +40,7 @@ Required evidence:
 - Concise final-holding scorecards covering role/exposure, cost and trading expenses, liquidity, overlap, diversification, key risks, and client fit
 - Added rationale, idiosyncratic-risk, and position-size analysis for each limited individual security
 - Concise comparison and rejection of plausible alternatives without full analysis of every screened name
-- Required Issuer Reality Checks and role-to-allocation handoffs
+- Required Holding & Exposure Reality Checks, conditional direct-security add-ons, and role-to-allocation handoffs
 - One targeted derivative hedge only when it addresses an identified residual risk, or a fully supported no-hedge conclusion
 - Stress-test result against the client's approved tripwire
 - Corrective trades when a portfolio breaches its mandate
@@ -118,7 +118,7 @@ BUS331-Investment-Project-Specific/
 - the five stable role IDs
 - phase objectives, evidence, committee gates, and deliverables
 - fictional-client team sets, team-specific structured role-play pages, five-role interview rounds, the Phase 1 decision cycle, and the public student-facing activity instructions
-- Phase 2 8–10 holding boundaries, funds/ETFs-first implementation, limited individual securities, final-holding scorecards, concise alternatives, Issuer Reality Check, FactSet evidence-log, portfolio-integration, IPS-compliance, bear-case, residual-risk, one-hedge/no-hedge, correction, and re-test contracts
+- Phase 2 8–10 holding boundaries, funds/ETFs-first implementation, limited individual securities, final-holding scorecards, optional consequential decision notes, Holding & Exposure Reality Check, conditional direct-security add-on, FactSet evidence-log, portfolio-integration, IPS-compliance, bear-case, residual-risk, one-hedge/no-hedge, correction, and re-test contracts
 - the Analyst Decision Log contract, including recommendations, alternatives rejected, key trade-offs, PM integration and residual-risk evidence, and complete five-role-by-three-client coverage before the Phase 1 gate
 - the three Canvas assignment contracts, including exact filenames, allowed file types, preflight checks, private licensed-evidence handling, and receipt retention
 - resource labels and relative paths
