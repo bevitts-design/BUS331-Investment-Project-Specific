@@ -843,13 +843,9 @@ function portfolioStressPage() {
     ${pageHero("Phase 2 · Portfolio management and stress testing", "Build the portfolio, then try to break it", "Integrate approved securities, test the whole IPS, apply the committee's bear case, and revise any portfolio that cannot meet the client mandate.")}
     <div class="page-shell"><div class="content-flow">
       <section>
-        <div class="handoff-contract"><div><p class="section-kicker">Inputs, not suggestions</p><h2>Carry forward the approved mandate and security decisions</h2><p>${escapeHtml(experience.handoffRule)}</p></div><ol>${experience.requiredInputs.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ol></div>
-        <div class="callout"><h3>Scenario integrity rule</h3><p>The bear case must use the Phase 1 assumptions the committee approved. Do not soften a return, volatility, rate, spread, or correlation assumption merely to make the portfolio pass.</p></div>
-      </section>
-
-      <section>
-        <p class="section-kicker">Portfolio workflow</p><h2>Allocate, test, correct, and vote</h2>
+        <p class="section-kicker">Start here</p><h2>Allocate, test, correct, and vote</h2>
         ${workflowSteps(experience.portfolioWorkflow)}
+        <div class="callout"><h3>Scenario integrity rule</h3><p>Use the Phase 1 bear assumptions the committee approved. Do not soften a return, volatility, rate, spread, or correlation assumption merely to make the portfolio pass.</p></div>
       </section>
 
       <section>

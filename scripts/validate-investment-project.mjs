@@ -479,6 +479,10 @@ for (const roleTitle of requiredRoleTitles) {
 }
 
 const portfolioHtml = await fs.readFile(path.join(rootDir, "project", "portfolio-management-stress-testing.html"), "utf8");
+const portfolioContentFlow = portfolioHtml.match(/<div class="content-flow">([\s\S]*?)<\/div><\/div>\s*<\/main>/)?.[1] || "";
+const firstPortfolioSection = portfolioContentFlow.match(/<section[^>]*>([\s\S]*?)<\/section>/)?.[1] || "";
+if (!/class="section-kicker">Start here<\/p>/.test(firstPortfolioSection)) fail("Portfolio and Stress Testing page must begin with the Start here section after the hero.");
+if (/Inputs, not suggestions|Carry forward the approved mandate and security decisions/i.test(portfolioHtml)) fail("Portfolio and Stress Testing page retains the superseded prior-units handoff block.");
 for (const requiredText of [
   "Integrated allocation record",
   "Test the whole mandate",

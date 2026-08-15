@@ -394,13 +394,6 @@
     "subtitle": "Translate the mandate. Compare serious alternatives. Select a focused portfolio. Test the residual risk.",
     "handoffTitle": "Phase 1 is the decision filter",
     "handoffRule": "No candidate security or portfolio weight may be approved unless the team identifies the Phase 1 client need, constraint, unresolved question, or downstream guardrail it addresses.",
-    "requiredInputs": [
-      "Approved client objective and RRTTLLU constraints",
-      "Required and desired return, maximum volatility, and drawdown tripwire",
-      "Liquidity dates, cash-flow needs, tax considerations, values, and unique constraints",
-      "Committee base and bear macro scenarios with source dates",
-      "Phase 1 Analyst Decision Log, including unresolved information gaps and downstream guardrails"
-    ],
     "selectionContract": {
       "candidateStandard": "Translate each approved allocation sleeve and client mandate into a short candidate pool with plausible alternatives. Separate must-pass constraints from preferences, and do not research only the team's preferred product.",
       "portfolioSize": "Target 8–10 final holdings per client portfolio and never exceed 10. Eight is a valid complete portfolio; do not add a holding merely to fill a slot.",
