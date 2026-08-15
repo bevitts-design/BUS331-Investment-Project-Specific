@@ -431,7 +431,7 @@ if (/Start live interview|client-interview-simulator|Bounded role-play|Start wit
 
 const securityHtml = await fs.readFile(path.join(rootDir, "project", "security-analysis-selection.html"), "utf8");
 for (const requiredText of [
-  "Phase 1 is the decision filter",
+  "Stop before research",
   "Set the candidate pool and portfolio boundaries",
   "8–10 holdings",
   "Funds and ETFs are the primary",
@@ -460,6 +460,7 @@ for (const requiredText of [
 ]) {
   if (!securityHtml.includes(requiredText)) fail(`Security Analysis page is missing required student workflow content: ${requiredText}.`);
 }
+if (/Required handoff|Phase 1 is the decision filter/i.test(securityHtml)) fail("Security Analysis page retains the superseded required-handoff card.");
 const candidateHeadings = securityHtml.match(/<h[23][^>]*>[^<]*(?:candidate set|candidate pool)[^<]*<\/h[23]>/gi) || [];
 if (candidateHeadings.length !== 1) fail(`Security Analysis page must have exactly one candidate-pool heading; found ${candidateHeadings.length}.`);
 if (/Build a candidate set/i.test(securityHtml)) fail("Security Analysis page repeats the retired 'Build a candidate set' instruction.");

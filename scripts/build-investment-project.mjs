@@ -746,7 +746,6 @@ function securityAnalysisPage() {
     ${pageHero("Phase 2 · Security analysis and selection", "Select investments the client can actually own", "Translate the approved allocation into a focused candidate set, use funds and ETFs as the primary vehicles, and build an intentional portfolio of 8–10 holdings—never more than 10.")}
     <div class="page-shell"><div class="content-flow">
       <section>
-        <div class="handoff-contract"><div><p class="section-kicker">Required handoff</p><h2>${escapeHtml(experience.handoffTitle)}</h2><p>${escapeHtml(experience.handoffRule)}</p></div><ol>${experience.requiredInputs.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ol></div>
         <div class="callout"><h3>Stop before research</h3><p>If a client guardrail or information gap is missing, return to the Phase 1 decision record. A product search cannot repair an incomplete mandate.</p></div>
       </section>
 
