@@ -56,7 +56,7 @@
         "doneRange": [1, 4],
         "evidenceRange": [3, 7],
         "deliverableRange": [1, 5],
-        "resources": ["client-discovery-protocol", "client-data", "ips-framework", "decision-record", "canvas-submission-guide"]
+        "resources": ["client-step-guide", "client-discovery-protocol", "client-data", "ips-framework", "decision-record", "canvas-submission-guide"]
       }
     ],
     "phaseSequences": {
@@ -64,7 +64,7 @@
         "Open the Macro Starter workbook, assign all five roles, and save a team-named Part 1 copy.",
         "Complete the detailed macro analysis in the provided workbook: review historical evidence, form a human-first interpretation, and document sources.",
         "Compare the committee view with FRED historical observations and a source-dated FactSet or other external forecast or consensus where a comparable measure exists; then create bull, base, and bear scenarios with probabilities totaling 100%.",
-        "Open the separate Decision Record, identify assigned clients, and analyze each client's goals, constraints, risk, and unresolved information gaps.",
+        "Open the separate Decision Record, identify assigned clients, and analyze their scenario profiles and data. Separate supplied facts, reasoned assumptions, and information gaps.",
         "Translate the macro outlook into a client-specific mandate, including return target, risk limit, and drawdown tripwire.",
         "Hold Gate 1: challenge the evidence, vote, and record required revisions before any portfolio construction begins."
       ],
@@ -114,9 +114,9 @@
       "title": "Client and Macro Strategist",
       "shortTitle": "Client & Macro",
       "color": "gold",
-      "mandate": "Own client discovery, the 12-month market view, IPS objectives and constraints, and the handoff from client needs to investment criteria.",
+      "mandate": "Own client scenario analysis, the 12-month market view, IPS objectives and constraints, and the handoff from client needs to investment criteria.",
       "phaseResponsibilities": {
-        "phase-1": "Lead the client interview, document goals and RRTTLLU constraints, establish the macro context, and name unresolved information gaps.",
+        "phase-1": "Lead analysis of the assigned client scenarios, document goals and RRTTLLU constraints, establish the macro context, and label reasoned assumptions and information gaps.",
         "phase-2": "Test whether proposed allocations and securities fit the approved client mandate and the committee's market view.",
         "phase-3": "Defend client suitability, the macro assumptions, and the line from discovered need to recommendation."
       }
@@ -193,10 +193,9 @@
     }
   ],
   "phase1Experience": {
-    "title": "Client Discovery and Decision Protocol",
-    "subtitle": "Interview the client. Challenge the first answer. Verify the evidence. Set the guardrails.",
-    "purpose": "Turn a fictional client profile into documented investment criteria before the team screens a bond, mutual fund, ETF, or portfolio allocation.",
-    "duration": "70–85 minutes plus source verification",
+    "title": "Client Scenario Analysis and Decision Protocol",
+    "subtitle": "Read the scenario. Make a reasoned judgment. Label assumptions. Set the guardrails.",
+    "purpose": "Use the assigned fictional client profile and data to create documented investment criteria before the team screens a bond, mutual fund, ETF, or portfolio allocation.",
     "clientSets": [
       {
         "team": "Team One",
@@ -224,47 +223,34 @@
         "inquiry": "Investigate how philanthropy, debt, uneven cash flow, starting capital, and multigenerational goals change portfolio priorities."
       }
     ],
-    "structuredRolePlay": {
-      "durationPerClient": "12 minutes",
-      "clientRule": "The student playing the client uses only the sealed client card. If the card does not establish an answer, say: ‘That is not established in my brief.’ Do not invent a fact or recommend an investment.",
-      "analystRule": "The other committee members ask their own open, neutral questions, take notes, and record evidence, assumptions, and information gaps.",
-      "recordRule": "After each interview, the committee records a concise summary—not a word-for-word transcript—in the Analyst Decision Log."
+    "scenarioAnalysisRules": {
+      "factRule": "Use the assigned team client slides and client-data workbook as the source for stated facts. Record the file and location for material claims.",
+      "assumptionRule": "For an IPS field the scenario does not answer, enter a plausible scenario-based assumption when useful, label it as an assumption, explain the clue and reasoning, and state what later confirmation could change.",
+      "gapRule": "If the scenario gives no defensible basis for a specific value, write 'Not provided; confirm before implementation' rather than presenting an invented number as a fact."
     },
-    "instructorDemo": {
-      "id": "sally-hart-demo",
-      "slug": "sally-hart-demo",
-      "name": "Sally Hart",
-      "initials": "SH",
-      "caseLabel": "Classroom demonstration · not an assigned client",
-      "identity": "Fictional client for practicing the interview process",
-      "statedDirection": "Practice asking neutral questions and identifying information gaps before teams begin their assigned cases.",
-      "clientCue": "Sally is candid, thoughtful, and occasionally unsure. She answers only what the practice card establishes and never recommends investments.",
-      "openingQuestions": ["What matters most to you about this money?", "What future need should we plan around first?", "What would make a loss difficult for you?"],
-      "team": "Class demonstration"
-    },
-    "rolePlaySequence": [
-      {"stage":"Instructor demonstration","action":"Before teams begin, the instructor gives one volunteer the sealed Sally Hart client card. The class observes a short interview, pauses to identify established facts and information gaps, and records one sample client guardrail."},
-      {"stage":"Prepare the team role-play","action":"After macro analysis, each team receives three sealed client cards. For the first case, the Client and Macro Strategist begins as the client; the remaining members act as analysts. Do not open a card assigned to another student."},
-      {"stage":"Interview and rotate","action":"Run a 12-minute interview for each client. Rotate the client role for the second and third cases so different members experience the client perspective. The Portfolio Manager keeps the decision-log record consistent across all three cases."},
-      {"stage":"Translate and challenge","action":"After each interview, every member identifies established facts, information gaps, and provisional guardrails. Challenge the first interpretation as a committee before moving to the next client."},
-      {"stage":"Finish the mandate","action":"Use the three interview summaries, the macro outlook, and the assigned case files to complete the IPS analysis and prepare for Gate 1."}
+    "scenarioSequence": [
+      {"stage":"Read the assigned files","action":"Use only your team's three client profiles and the matching client-data rows. Record stated goals, numerical case inputs, constraints, and source locations."},
+      {"stage":"Draft a human-first view","action":"Each of the five roles records a provisional judgment for each client before AI use, naming the supplied fact or clearly labeled assumption behind it."},
+      {"stage":"Resolve missing fields","action":"For each IPS field not specified, make a plausible case-based assumption with a reason or mark the information as not provided. Never present an assumption as a client statement."},
+      {"stage":"Challenge and verify","action":"Test the first interpretation as a committee, verify material claims against the case files or approved sources, and record alternatives and trade-offs."},
+      {"stage":"Finish the mandate","action":"Use the submitted macro outlook, three scenario analyses, and documented assumptions to complete the IPS mandates and prepare for Gate 1."}
     ],
-    "rolePlayProfiles": [
-      {"id":"eleanor-vance","slug":"eleanor-vance","team":"Team One","name":"Eleanor Vance","initials":"EV","caseLabel":"Case #01 · Team One","identity":"Age 72 · Retired librarian","statedDirection":"Capital preservation and income matter.","voiceCue":"Fictional AI voice: thoughtful, measured, cautious, and courteous.","openingQuestions":["What matters most to you about this portfolio?","What cash needs could change the plan?","How soon might you need access to the money?"]},
-      {"id":"marcus-chen","slug":"marcus-chen","team":"Team One","name":"Marcus Chen","initials":"MC","caseLabel":"Case #02 · Team One","identity":"Age 29 · Software engineer","statedDirection":"Aggressive growth and early retirement matter.","voiceCue":"Fictional AI voice: ambitious, direct, and optimistic about technology.","openingQuestions":["What does early retirement mean to you?","How important is your current technology-stock exposure?","What loss would change your plans?"]},
-      {"id":"david-sarah-miller","slug":"david-sarah-miller","team":"Team One","name":"David and Sarah Miller","initials":"DM","caseLabel":"Case #03 · Team One","identity":"Ages 48 and 46 · middle management","statedDirection":"College funding and retirement must work together.","voiceCue":"Fictional AI voices: practical, collaborative, and concerned with competing priorities.","openingQuestions":["Which goal has the nearer deadline?","What tuition timing should we understand?","How would a market loss affect each goal?"]},
-      {"id":"javier-rodriguez","slug":"javier-rodriguez","team":"Team Two","name":"Javier Rodriguez","initials":"JR","caseLabel":"Case #05 · Team Two","identity":"Age 55 · business owner","statedDirection":"Diversification and a future business exit matter.","voiceCue":"Fictional AI voice: independent, experienced, and tax-aware.","openingQuestions":["How does your business affect your financial security?","What does a successful exit look like?","Which taxes or liquidity needs concern you?"]},
-      {"id":"linda-sterling","slug":"linda-sterling","team":"Team Two","name":"Linda Sterling","initials":"LS","caseLabel":"Case #07 · Team Two","identity":"Age 51 · marketing director","statedDirection":"Stability matters while planning for a home purchase.","voiceCue":"Fictional AI voice: careful, organized, and focused on a near-term goal.","openingQuestions":["When will you need money for the home purchase?","What amount must remain dependable?","What would make you uncomfortable about market risk?"]},
-      {"id":"robert-halloway","slug":"robert-halloway","team":"Team Two","name":"Robert Halloway","initials":"RH","caseLabel":"Case #08 · Team Two","identity":"Age 58 · retail manager","statedDirection":"Catch-up retirement growth matters.","voiceCue":"Fictional AI voice: determined, anxious about time, and willing to take risk.","openingQuestions":["What retirement date are you working toward?","What resources will support retirement?","How would a loss affect your timeline?"]},
-      {"id":"chloe-dubois","slug":"chloe-dubois","team":"Team Three","name":"Chloe Dubois","initials":"CD","caseLabel":"Case #04 · Team Three","identity":"Age 24 · graduate student","statedDirection":"Long-term wealth building matters.","voiceCue":"Fictional AI voice: curious, new to investing, and future-focused.","openingQuestions":["What is your current financial situation?","What does long-term wealth mean to you?","How familiar are you with investment risk?"]},
-      {"id":"amara-okafor","slug":"amara-okafor","team":"Team Three","name":"Dr. Amara Okafor","initials":"AO","caseLabel":"Case #06 · Team Three","identity":"Age 42 · pediatrician","statedDirection":"Ethical growth matters.","voiceCue":"Fictional AI voice: analytical, values-driven, and decisive.","openingQuestions":["Which values are non-negotiable?","How should those values affect investment choices?","What trade-offs would be hardest to accept?"]},
-      {"id":"zoe-jenkins","slug":"zoe-jenkins","team":"Team Three","name":"Zoe Jenkins","initials":"ZJ","caseLabel":"Case #10 · Team Three","identity":"Age 32 · graphic designer","statedDirection":"Emergency reserves and growth matter.","voiceCue":"Fictional AI voice: creative, candid, and concerned about income variability.","openingQuestions":["How variable is your income?","What emergency reserve would help you feel secure?","What should happen after that reserve is protected?"]},
-      {"id":"thomas-murphy","slug":"thomas-murphy","team":"Team Four","name":"Thomas Murphy","initials":"TM","caseLabel":"Case #11 · Team Four","identity":"Age 45 · police officer","statedDirection":"Supplemental retirement matters, but losses feel difficult.","voiceCue":"Fictional AI voice: steady, cautious, and strongly loss-averse.","openingQuestions":["What role does your pension play?","What would a market loss feel like?","What retirement outcome matters most?"]},
-      {"id":"yuki-tanaka","slug":"yuki-tanaka","team":"Team Four","name":"Yuki Tanaka","initials":"YT","caseLabel":"Case #12 · Team Four","identity":"Age 38 · technology consultant","statedDirection":"Growth and global diversification matter before an international move.","voiceCue":"Fictional AI voice: globally minded, analytical, and planning-oriented.","openingQuestions":["What does the move change financially?","Which currencies affect your plans?","What time horizon should guide this portfolio?"]},
-      {"id":"elena-rossi","slug":"elena-rossi","team":"Team Four","name":"Elena Rossi","initials":"ER","caseLabel":"Case #14 · Team Four","identity":"Age 52 · corporate vice president","statedDirection":"Tax-efficient, sophisticated growth matters.","voiceCue":"Fictional AI voice: sophisticated, efficient, and attentive to restrictions.","openingQuestions":["Which restrictions affect what you can own or sell?","How important is tax efficiency?","What does growth mean within those limits?"]},
-      {"id":"arthur-sterling","slug":"arthur-sterling","team":"Team Five","name":"Arthur Sterling","initials":"AS","caseLabel":"Case #09 · Team Five","identity":"Age 80 · retired executive","statedDirection":"Philanthropy and multigenerational wealth matter.","voiceCue":"Fictional AI voice: reflective, experienced, and legacy-focused.","openingQuestions":["What charitable goals matter most?","How should future generations be considered?","What inflation concern do you have?"]},
-      {"id":"the-petersons","slug":"the-petersons","team":"Team Five","name":"The Petersons","initials":"TP","caseLabel":"Case #13 · Team Five","identity":"Ages 31 and 30 · teacher and nurse","statedDirection":"Debt reduction and child education matter.","voiceCue":"Fictional AI voices: practical, stretched, and family-focused.","openingQuestions":["Which financial obligation feels most urgent?","How does cash flow affect your choices?","What education goal are you planning for?"]},
-      {"id":"tyler-reed","slug":"tyler-reed","team":"Team Five","name":"Tyler Reed","initials":"TR","caseLabel":"Case #15 · Team Five","identity":"Age 27 · gig-economy worker","statedDirection":"Capital accumulation matters despite minimal starting capital.","voiceCue":"Fictional AI voice: energetic, independent, and candid about an uneven income.","openingQuestions":["How predictable is your income?","What comes before investing more?","What long-term goal motivates you?"]}
+    "clientProfiles": [
+      {"id":"eleanor-vance","slug":"eleanor-vance","team":"Team One","name":"Eleanor Vance","initials":"EV","caseLabel":"Case #01 · Team One","identity":"Age 72 · Retired librarian","statedDirection":"Capital preservation and income matter."},
+      {"id":"marcus-chen","slug":"marcus-chen","team":"Team One","name":"Marcus Chen","initials":"MC","caseLabel":"Case #02 · Team One","identity":"Age 29 · Software engineer","statedDirection":"Aggressive growth and early retirement matter."},
+      {"id":"david-sarah-miller","slug":"david-sarah-miller","team":"Team One","name":"David and Sarah Miller","initials":"DM","caseLabel":"Case #03 · Team One","identity":"Ages 48 and 46 · middle management","statedDirection":"College funding and retirement must work together."},
+      {"id":"javier-rodriguez","slug":"javier-rodriguez","team":"Team Two","name":"Javier Rodriguez","initials":"JR","caseLabel":"Case #05 · Team Two","identity":"Age 55 · business owner","statedDirection":"Diversification and a future business exit matter."},
+      {"id":"linda-sterling","slug":"linda-sterling","team":"Team Two","name":"Linda Sterling","initials":"LS","caseLabel":"Case #07 · Team Two","identity":"Age 51 · marketing director","statedDirection":"Stability matters while planning for a home purchase."},
+      {"id":"robert-halloway","slug":"robert-halloway","team":"Team Two","name":"Robert Halloway","initials":"RH","caseLabel":"Case #08 · Team Two","identity":"Age 58 · retail manager","statedDirection":"Catch-up retirement growth matters."},
+      {"id":"chloe-dubois","slug":"chloe-dubois","team":"Team Three","name":"Chloe Dubois","initials":"CD","caseLabel":"Case #04 · Team Three","identity":"Age 24 · graduate student","statedDirection":"Long-term wealth building matters."},
+      {"id":"amara-okafor","slug":"amara-okafor","team":"Team Three","name":"Dr. Amara Okafor","initials":"AO","caseLabel":"Case #06 · Team Three","identity":"Age 42 · pediatrician","statedDirection":"Ethical growth matters."},
+      {"id":"zoe-jenkins","slug":"zoe-jenkins","team":"Team Three","name":"Zoe Jenkins","initials":"ZJ","caseLabel":"Case #10 · Team Three","identity":"Age 32 · graphic designer","statedDirection":"Emergency reserves and growth matter."},
+      {"id":"thomas-murphy","slug":"thomas-murphy","team":"Team Four","name":"Thomas Murphy","initials":"TM","caseLabel":"Case #11 · Team Four","identity":"Age 45 · police officer","statedDirection":"Supplemental retirement matters, but losses feel difficult."},
+      {"id":"yuki-tanaka","slug":"yuki-tanaka","team":"Team Four","name":"Yuki Tanaka","initials":"YT","caseLabel":"Case #12 · Team Four","identity":"Age 38 · technology consultant","statedDirection":"Growth and global diversification matter before an international move."},
+      {"id":"elena-rossi","slug":"elena-rossi","team":"Team Four","name":"Elena Rossi","initials":"ER","caseLabel":"Case #14 · Team Four","identity":"Age 52 · corporate vice president","statedDirection":"Tax-efficient, sophisticated growth matters."},
+      {"id":"arthur-sterling","slug":"arthur-sterling","team":"Team Five","name":"Arthur Sterling","initials":"AS","caseLabel":"Case #09 · Team Five","identity":"Age 80 · retired executive","statedDirection":"Philanthropy and multigenerational wealth matter."},
+      {"id":"the-petersons","slug":"the-petersons","team":"Team Five","name":"The Petersons","initials":"TP","caseLabel":"Case #13 · Team Five","identity":"Ages 31 and 30 · teacher and nurse","statedDirection":"Debt reduction and child education matter."},
+      {"id":"tyler-reed","slug":"tyler-reed","team":"Team Five","name":"Tyler Reed","initials":"TR","caseLabel":"Case #15 · Team Five","identity":"Age 27 · gig-economy worker","statedDirection":"Capital accumulation matters despite minimal starting capital."}
     ],
     "decisionCycle": [
       {
@@ -273,14 +259,14 @@
         "logEvidence": "The interpretation; supporting case evidence and assumptions; unanswered questions; and the portfolio or security decision it could affect"
       },
       {
-        "stage": "Observe the model",
-        "action": "Watch the instructor-led practice interview and notice how neutral questions reveal facts, expose information gaps, and lead to a provisional guardrail.",
-        "logEvidence": "One established fact, one information gap, and one possible guardrail from the classroom model"
+        "stage": "Separate facts and assumptions",
+        "action": "For IPS fields the scenario does not specify, write a plausible, labeled assumption with its case-based rationale, or mark the information as not provided when no defensible inference is possible.",
+        "logEvidence": "The case location for supplied facts; the reasoning and confirmation condition for each material assumption"
       },
       {
-        "stage": "Interview your client",
-        "action": "Open your team page. The designated client uses the sealed card; the other members ask their own open, neutral questions and rotate the client role across the three cases.",
-        "logEvidence": "Question themes and response summary—not a word-for-word transcript"
+        "stage": "Compare your three clients",
+        "action": "Use your team's profile slides and matching data rows to identify how goals, capacity for loss, time horizon, and constraints differ across the three mandates.",
+        "logEvidence": "Client-by-client facts, assumption labels, conflicts, and a provisional guardrail for each case"
       },
       {
         "stage": "Challenge and verify",
@@ -293,41 +279,41 @@
         "logEvidence": "Final decision, concise rationale, downstream guardrail, and peer review"
       }
     ],
-    "interviewRounds": [
+    "analystLenses": [
       {
         "roleId": "client-macro",
-        "round": "Goals and context",
-        "questionThemes": ["Primary and secondary goals", "Time horizons and decision dates", "Income, spending, and liquidity events", "Tax, legal, values, and other unique constraints", "Macro conditions that could change the plan"],
+        "focus": "Goals and context",
+        "evidenceToConsider": ["Primary and secondary goals", "Time horizons and decision dates", "Income, spending, and liquidity events", "Tax, legal, values, and other unique constraints", "Macro conditions that could change the plan"],
         "handoff": "Draft the client objective, the RRTTLLU facts, and a list of facts still missing."
       },
       {
         "roleId": "fixed-income",
-        "round": "Income and capital protection",
-        "questionThemes": ["Required cash-flow floor", "Known liability dates", "Tolerance for price changes when rates move", "Credit-loss capacity", "Liquidity and tax treatment"],
+        "focus": "Income and capital protection",
+        "evidenceToConsider": ["Required cash-flow floor", "Known liability dates", "Tolerance for price changes when rates move", "Credit-loss capacity", "Liquidity and tax treatment"],
         "handoff": "Draft the provisional maturity, duration, credit-quality, liquidity, and income guardrails."
       },
       {
         "roleId": "equity",
-        "round": "Growth exposure and equity fit",
-        "questionThemes": ["Long-term growth need and equity-loss capacity", "Diversification and concentration limits", "Sector, style, values, and benchmark restrictions", "Fee, tax, trading, and liquidity sensitivity", "Conditions for any limited individual-security exposure"],
+        "focus": "Growth exposure and equity fit",
+        "evidenceToConsider": ["Long-term growth need and equity-loss capacity", "Diversification and concentration limits", "Sector, style, values, and benchmark restrictions", "Fee, tax, trading, and liquidity sensitivity", "Conditions for any limited individual-security exposure"],
         "handoff": "Draft the screen for equity funds and ETFs and any limited individual equity; do not name a winning product yet."
       },
       {
         "roleId": "portfolio-manager",
-        "round": "Integration and trade-offs",
-        "questionThemes": ["Required return versus desired return", "Ability and willingness to bear loss", "Concentration and correlation risks", "Priority among competing goals", "Weight, liquidity, and implementation trade-offs"],
+        "focus": "Integration and trade-offs",
+        "evidenceToConsider": ["Required return versus desired return", "Ability and willingness to bear loss", "Concentration and correlation risks", "Priority among competing goals", "Weight, liquidity, and implementation trade-offs"],
         "handoff": "Reconcile conflicts, identify portfolio-level trade-offs, and specify which selection or weighting decisions require committee approval."
       },
       {
         "roleId": "risk-derivatives",
-        "round": "Downside, residual risk, and hedge conditions",
-        "questionThemes": ["Reaction to a one-year drawdown", "Client goal most exposed in a bear case", "Drawdown tripwire and monitoring trigger", "Residual risks the client can or cannot accept", "Conditions under which a targeted hedge could be justified or removed"],
+        "focus": "Downside, residual risk, and hedge conditions",
+        "evidenceToConsider": ["Reaction to a one-year drawdown", "Client goal most exposed in a bear case", "Drawdown tripwire and monitoring trigger", "Residual risks the client can or cannot accept", "Conditions under which a targeted hedge could be justified or removed"],
         "handoff": "Propose the drawdown tripwire, name the residual risks to stress, and identify which facts must be verified before any hedge or no-hedge conclusion."
       }
     ],
     "committeeChallengeQuestions": [
       "What is the strongest reasonable interpretation that contradicts our initial judgment? Separate case facts from assumptions.",
-      "Which client answer may reflect willingness to take risk but not financial capacity—or the reverse? What evidence would resolve the conflict?",
+      "Which scenario detail suggests willingness to take risk but not financial capacity—or the reverse? What assumption would resolve the conflict?",
       "Which claim, number, or product characteristic cannot be accepted until a human checks an approved source?",
       "How could this proposed guardrail fail to protect the client's most important goal in a bear case?",
       "What later bond, mutual-fund/ETF, or allocation decision would change if this assumption is wrong?"
@@ -336,7 +322,7 @@
       {
         "label": "Assigned fictional client files",
         "use": "Client facts, goals, constraints, and case-specific values",
-        "source": "Client_Scenarios_Profiles.pptx and Client_Scenarios_Data_File.xlsx"
+        "source": "Assigned team profile slides and Client_Scenarios_Data_File.xlsx"
       },
       {
         "label": "Team workbooks",
@@ -403,10 +389,10 @@
       "Peer reviewer and status"
     ],
     "qualityGate": [
-      "Each role records at least one human-first judgment for each assigned client before the structured role-play.",
-      "Every material committee challenge is summarized in the Analyst Decision Log; a role-play conversation is not a substitute for analysis.",
+      "Each role records at least one human-first judgment for each assigned client before AI use.",
+      "Every material scenario-based assumption is labeled, tied to a case clue, and kept distinct from a supplied fact or client statement.",
       "Every factual claim or number used in the final reasoning has an approved source and as-of date.",
-      "Unknown client information remains labeled unknown; it is not filled with invented detail.",
+      "A missing IPS field receives a reasoned, labeled assumption when the scenario supports one; otherwise it is marked not provided with a confirmation condition.",
       "The final reasoning states what changed the judgment and why.",
       "Each final judgment creates a testable guardrail for later fixed-income, equity, allocation, stress-test, or hedge/no-hedge decisions.",
       "A second team member reviews the evidence trail before the Phase 1 gate."
@@ -704,8 +690,8 @@
           "description": "Read the historical data, compare the committee view with FactSet/FRED consensus, and build bull/base/bear scenarios."
         },
         {
-          "title": "Client discovery",
-          "description": "Make a human-first judgment, complete the structured client role-play, and translate verified needs into RRTTLLU constraints."
+          "title": "Client scenario analysis",
+          "description": "Make a human-first judgment from assigned scenario facts, label reasoned assumptions, and translate objectives and constraints into RRTTLLU guardrails."
         },
         {
           "title": "Decision log and guardrails",
@@ -731,6 +717,7 @@
       "resources": [
         "macro-step-guide",
         "macro-starter",
+        "client-step-guide",
         "client-discovery-protocol",
         "client-data",
         "ips-framework",
@@ -967,10 +954,18 @@
     },
     {
       "id": "client-discovery-protocol",
-      "label": "Client Discovery and Decision Protocol",
+      "label": "Client Scenario Analysis and Decision Protocol",
       "type": "HTML",
       "path": "project/client-discovery-ai-protocol.html",
-      "description": "Classroom demonstration, team-specific structured role-play, five-role interview rounds, approved-source rules, and the human-first decision cycle.",
+      "description": "Team-specific scenario files, five analyst lenses, fact-versus-assumption rules, evidence checks, and the human-first decision cycle.",
+      "audience": "student"
+    },
+    {
+      "id": "client-step-guide",
+      "label": "Client Analysis step-by-step guide",
+      "type": "HTML",
+      "path": "project/client-analysis.html",
+      "description": "Decision Record, scenario analysis, three IPS documents, mandate memo, Gate 1 vote, and Part 2 submission in working order.",
       "audience": "student"
     },
     {
@@ -1201,7 +1196,7 @@
       {
         "criterion": "Shared portfolio quality & integration",
         "weight": 25,
-        "standard": "The committee presents one coherent chain from client discovery through the focused 8–10 holding selection, final weights, overlap/concentration decisions, stress results, hedge or no-hedge conclusion, correction, and final recommendation."
+        "standard": "The committee presents one coherent chain from client scenario analysis through the focused 8–10 holding selection, final weights, overlap/concentration decisions, stress results, hedge or no-hedge conclusion, correction, and final recommendation."
       },
       {
         "criterion": "Client suitability & risk compliance",

@@ -71,6 +71,8 @@ BUS331-Investment-Project-Specific/
   project-model.json                    # canonical public content and resource manifest
   scripts/
     build-investment-project.mjs        # generates overview, phase pages, submission guidance, and compatibility entry pages
+    build-macro-guide-canvas.py          # derives a Canvas page fragment from the maintained macro guide
+    build-client-guide-canvas.py         # derives a Canvas page fragment from the maintained client guide
     build-project-guide-pdf.py          # generates printable phase checklists and the legacy PDF alias
     build-final-rubric-pdf.py           # generates the public Phase 3 rubric from project-model.json
     client-interview-simulator.js       # voice recording, typed fallback, transcript, and notes client
@@ -94,6 +96,7 @@ BUS331-Investment-Project-Specific/
     roadmap.html                        # generated compatibility entry for older Roadmap links
     canvas-submission-guide.html        # generated student submission contract
     macro-analysis.html                  # maintained workbook-mapped Part 1 student guide
+    client-analysis.html                 # maintained Decision Record and IPS-mapped Part 2 student guide
     client-discovery-ai-protocol.html   # generated Phase 1 Part 2 workflow
     security-analysis-selection.html    # generated Phase 2 security workflow and templates
     portfolio-management-stress-testing.html
@@ -106,6 +109,8 @@ BUS331-Investment-Project-Specific/
     supporting references              # static technical guides aligned to the current phase model
   canvas/
     phase-1-macro-assignment.html       # generated Part 1 Canvas assignment fragment
+    phase-1-macro-step-by-step-page.html # generated Canvas page body for the maintained macro guide
+    phase-1-client-step-by-step-page.html # generated Canvas page body for the maintained client guide
     phase-1-client-assignment.html      # generated Part 2 Canvas assignment fragment
     phase-2-assignment.html             # generated inline-styled Canvas assignment fragment
     phase-3-assignment.html             # generated inline-styled Canvas assignment fragment
@@ -137,7 +142,11 @@ BUS331-Investment-Project-Specific/
 
 The workbook layout base is not an alternate content source. `scripts/update-security-selection-workbook.mjs` applies the current `project-model.json` contract and workbook-specific structure to that stable base on every build, so the public workbook can be regenerated without reading its prior generated version.
 
-The overview is the project orientation and phase selector. Each phase page owns its ordered steps, definition of done, evidence, and resource links. `project/macro-analysis.html` is a maintained supporting guide for Phase 1 Part 1, mapped to the current macro workbook tabs; its navigation entry and resource label live in `project-model.json`. The Canvas Submission Workflow lists exact files and filenames; the Canvas assignment controls dates, points, and the actual upload. The Guide and Roadmap URLs remain short compatibility entry pages for existing links. Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
+The overview is the project orientation and phase selector. Each phase page owns its ordered steps, definition of done, evidence, and resource links. `project/macro-analysis.html` is the maintained supporting guide for Phase 1 Part 1, mapped to the current macro workbook tabs. `project/client-analysis.html` is the maintained Part 2 guide, mapped to the Decision Record and IPS framework. Their navigation entries and resource labels live in `project-model.json`. The Canvas Submission Workflow lists exact files and filenames; the Canvas assignment controls dates, points, and the actual upload. The Guide and Roadmap URLs remain short compatibility entry pages for existing links. Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
+
+`canvas/phase-1-macro-step-by-step-page.html` is a body-only, inline-styled Canvas page fragment derived from `project/macro-analysis.html` by `python3 scripts/build-macro-guide-canvas.py`. It uses absolute public resource links and omits the later client-analysis and Decision Record handoffs so the Canvas page covers only the Macro Starter assignment. Update the maintained guide first, then rebuild this fragment; the assignment fragment remains a separate file. Generating the fragment does not install or publish a Canvas page.
+
+`canvas/phase-1-client-step-by-step-page.html` is the corresponding body-only, inline-styled Part 2 Canvas page fragment, derived from `project/client-analysis.html` by `python3 scripts/build-client-guide-canvas.py`. It covers the Decision Record, human client role-play, three IPS mandates, memo, Gate 1, and the three-file Part 2 submission. It uses absolute public resource links and does not reassign the Part 1 macro workbook for upload. Update the maintained guide before rebuilding this fragment; installation in Canvas is separate.
 
 `canvasSubmissions` is the authoritative team-submission contract. The builder turns it into the public student guide and four inline-styled fragments ready to paste into Canvas. Those generated fragments do not change the live Canvas course. An instructor must separately configure each assignment as a group file-upload assignment, choose the correct group set, set approved points and dates, and confirm the contract in Student View.
 
