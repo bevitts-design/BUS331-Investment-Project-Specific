@@ -54,6 +54,9 @@ if (!roadmap) {
   }
   if (!roadmap.visual?.path || !roadmap.visual?.alt || !(await exists(path.join(rootDir, roadmap.visual.path)))) {
     fail("Student roadmap must include its public visual asset and alt text.");
+  } else {
+    const visual = await fs.readFile(path.join(rootDir, roadmap.visual.path), "utf8");
+    if (!visual.includes("Part 1 · Macroeconomic analysis") || !visual.includes("Part 2 · Client submissions")) fail("Roadmap visual must show both Phase 1 parts.");
   }
   for (const phaseId of ["phase-1", "phase-2", "phase-3"]) {
     if (roadmap.phaseSequences?.[phaseId]?.length < 4) fail(`Student roadmap needs a complete sequence for ${phaseId}.`);
@@ -63,6 +66,20 @@ if (!roadmap) {
   for (const required of ["historical", "human-first", "FactSet", "FRED", "bull", "base", "bear", "100%", "macro", "mandate"]) {
     if (!new RegExp(required, "i").test(phaseOneText)) fail(`Phase 1 roadmap sequence is missing its detailed macro-analysis requirement: ${required}.`);
   }
+  const phaseOne = model.phases.find((phase) => phase.id === "phase-1");
+  const parts = roadmap.phase1Parts || [];
+  if (parts.map((part) => part.id).join("|") !== "macro-analysis|client-submissions") fail("Phase 1 must have macroeconomic analysis followed by client submissions.");
+  for (const [rangeKey, count] of [
+    ["stepRange", roadmap.phaseSequences?.["phase-1"]?.length],
+    ["doneRange", roadmap.definitionOfDone?.["phase-1"]?.length],
+    ["evidenceRange", phaseOne?.evidence?.length],
+    ["deliverableRange", phaseOne?.deliverables?.length]
+  ]) {
+    if (count === undefined || parts[0]?.[rangeKey]?.[0] !== 0 || parts[0]?.[rangeKey]?.[1] !== parts[1]?.[rangeKey]?.[0] || parts[1]?.[rangeKey]?.[1] !== count) {
+      fail(`Phase 1 ${rangeKey} must divide the complete material into two non-overlapping parts.`);
+    }
+  }
+  if (parts.flatMap((part) => part.resources || []).join("|") !== (phaseOne?.resources || []).join("|")) fail("Phase 1 part resources must cover the Phase 1 resources in working order.");
 }
 
 if (model.phases.length !== 3) fail(`Expected exactly 3 phases; found ${model.phases.length}.`);
@@ -241,6 +258,10 @@ for (const relative of generatedFiles) {
   if (!html.includes('href="#main-content"')) fail(`${relative} is missing a skip link.`);
   if (!html.includes('id="main-content"')) fail(`${relative} is missing the main-content target.`);
   if (!/<title>[^<]+<\/title>/i.test(html)) fail(`${relative} is missing a non-empty title.`);
+  const mainNav = html.match(/<nav class="site-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
+  if ((mainNav.match(/<a\b/g) || []).length !== 6 || /(?:^|\/)(?:guide|roadmap)\.html/.test(mainNav)) {
+    fail(`${relative} must use the six-link overview, phase, submission, and assessment navigation.`);
+  }
   if (oldPhasePattern.test(html)) fail(`${relative} contains retired Phase 4-6 language.`);
   if (/Spring 2026/i.test(html)) fail(`${relative} contains the retired Spring 2026 term.`);
   if (forbiddenPublicPattern.test(html)) fail(`${relative} contains a retired role, obsolete portfolio rule, or completed-example marker.`);
@@ -367,7 +388,8 @@ for (const relative of officeArtifacts) {
 
 const publicPdfArtifacts = [
   { relative: "files/final-rubric.pdf", required: ["Investment Project Rubrics", "Role-specific committee", "Decision Log"] },
-  { relative: "files/BUS331_Investment_Committee_Simulation_Project_Guide.pdf", required: ["five committee roles", "8-10 final holdings", "no-hedge", "project-wide Analyst Decision Log", "Save as you go"] }
+  { relative: "files/BUS331_Investment_Committee_Phase_Checklists.pdf", required: ["Investment Committee Phase Checklists", "Part 1: Macroeconomic Analysis", "Part 2: Client Submissions", "five committee roles", "8-10 final holdings", "no-hedge", "project-wide Analyst Decision Log", "Save as you go"] },
+  { relative: "files/BUS331_Investment_Committee_Simulation_Project_Guide.pdf", required: ["Investment Committee Phase Checklists", "Part 1: Macroeconomic Analysis", "Part 2: Client Submissions", "project-wide Analyst Decision Log"] }
 ];
 for (const pdf of publicPdfArtifacts) {
   const pdfPath = path.join(rootDir, pdf.relative);
@@ -393,10 +415,17 @@ if (!(await exists(path.join(rootDir, "styles", "bus331-investment-project.css")
 }
 
 const indexHtml = await fs.readFile(path.join(rootDir, "index.html"), "utf8");
-if (!indexHtml.includes("Open your roadmap")) fail("Portal is missing the student roadmap entry point.");
+for (const requiredText of ["Open the phase you're working on", "Use one page for each decision", roadmap.visual.path, "Start Phase 1", "Printable phase checklists"]) {
+  if (!indexHtml.includes(requiredText)) fail(`Portal overview is missing current student-navigation content: ${requiredText}.`);
+}
 const roadmapHtml = await fs.readFile(path.join(rootDir, roadmapPath), "utf8");
-for (const requiredText of ["What BUS331 provides—and what your committee creates", "structured Excel workbooks", "PowerPoint presentation", "Complete the detailed macro analysis", "Definition of done", "This visual is an orientation tool"]) {
-  if (!roadmapHtml.includes(requiredText)) fail(`Student roadmap is missing required student-navigation content: ${requiredText}.`);
+const phaseOneHtml = await fs.readFile(path.join(rootDir, phasePath(model.phases[0])), "utf8");
+for (const required of ["Macroeconomic Analysis", "Client Submissions", 'id="macro-analysis"', 'id="client-submissions"', "Submit one Phase 1 package after Gate 1", "Client discovery comes first"]) {
+  if (!phaseOneHtml.includes(required)) fail(`Phase 1 page is missing its two-part working path: ${required}.`);
+}
+if (phaseOneHtml.indexOf('id="macro-analysis"') > phaseOneHtml.indexOf('id="client-submissions"')) fail("Phase 1 page places client submissions before macroeconomic analysis.");
+for (const file of model.canvasSubmissions.assignments.find((assignment) => assignment.phaseId === "phase-1").requiredFiles) {
+  if (!phaseOneHtml.includes(file.name)) fail(`Phase 1 page is missing required Canvas filename: ${file.name}.`);
 }
 for (const phase of model.phases) {
   if (!indexHtml.includes(phase.title.replaceAll("&", "&amp;")) && !indexHtml.includes(phase.title)) {
@@ -406,7 +435,9 @@ for (const phase of model.phases) {
 
 for (const phase of model.phases) {
   const html = await fs.readFile(path.join(rootDir, phasePath(phase)), "utf8");
-  if (!html.includes(`Your Phase ${phase.number} sequence`) || !html.includes("Definition of done")) {
+  if (phase.id === "phase-1") {
+    if ((html.match(/<h3>Do this in order<\/h3>/g) || []).length !== 2 || (html.match(/<h3>Ready when<\/h3>/g) || []).length !== 2) fail("Phase 1 page needs a separate ordered checklist and readiness test for each part.");
+  } else if (!html.includes(`Your Phase ${phase.number} sequence`) || !html.includes("Definition of done")) {
     fail(`Phase ${phase.number} page is missing its ordered sequence or definition of done.`);
   }
 }
@@ -432,7 +463,7 @@ for (const roleTitle of requiredRoleTitles) {
 if (/Committee Chair|Markets &amp; Economic Strategist|Portfolio Construction Lead|Risk, Controls/i.test(discoveryHtml)) {
   fail("Client discovery protocol contains a retired committee-role title.");
 }
-for (const requiredText of ["Start here", "Open your team role-play instructions", "Classroom model", "See the process, then do it with your team", "Committee challenge round"]) {
+for (const requiredText of ["For client-discovery steps", "Open your team role-play instructions", "Classroom model", "See the process, then do it with your team", "Committee challenge round"]) {
   if (!discoveryHtml.includes(requiredText)) fail(`Client discovery protocol is missing role-play content: ${requiredText}.`);
 }
 if (/Start live interview|client-interview-simulator|Bounded role-play|Start with this prompt/.test(discoveryHtml)) fail("Client discovery protocol retains retired AI interview or prompt content.");
@@ -561,12 +592,16 @@ if (!decisionRecordResource || !/Analyst Decision Log/i.test(`${decisionRecordRe
 
 const guideHtml = await fs.readFile(path.join(rootDir, "project", "guide.html"), "utf8");
 for (const [relative, html] of [["project/roadmap.html", roadmapHtml], ["project/guide.html", guideHtml]]) {
-  for (const required of ["Use one project-wide Analyst Decision Log", "Begin in Phase 1 with the required human-first judgments", "consequential recommendation", "rejects an alternative", "trade-off or verification", "all three phases", "separate gate sheets", "each client&#039;s Phase 2 approval", "Open the project-wide Analyst Decision Log", "BUS331_Investment_Committee_Decision_Record_Student.xlsx"]) {
-    if (!html.includes(required)) fail(`${relative} is missing project-wide Decision Log guidance or access: ${required}.`);
+  for (const required of ["Open project overview", "Open Phase 1 checklist", "Open Phase 2 checklist", "Open Phase 3 checklist", "Printable phase checklists", "Canvas Submission Workflow"]) {
+    if (!html.includes(required)) fail(`${relative} is missing its compatibility entry point: ${required}.`);
   }
+  if (/<ol class="workflow-steps">|<div class="role-board">/.test(html)) fail(`${relative} still duplicates the current overview or phase checklists.`);
+}
+for (const required of ["Use one project-wide Analyst Decision Log", "Begin in Phase 1 with the required human-first judgments", "consequential recommendation", "rejects an alternative", "trade-off or verification", "all three phases", "separate gate sheets", "each client&#039;s Phase 2 approval", "Open the project-wide Analyst Decision Log", "BUS331_Investment_Committee_Decision_Record_Student.xlsx"]) {
+  if (!indexHtml.includes(required)) fail(`index.html is missing project-wide Decision Log guidance or access: ${required}.`);
 }
 for (const required of ["Save as you go", "Save your working project files regularly", "consequential Decision Log entries", "approval-gate work"]) {
-  if (!roadmapHtml.includes(required)) fail(`project/roadmap.html is missing the save-as-you-go reminder: ${required}.`);
+  if (!indexHtml.includes(required)) fail(`index.html is missing the save-as-you-go reminder: ${required}.`);
 }
 
 const workbookBuilderPath = path.join(rootDir, "scripts", "build-investment-committee-decision-record.mjs");

@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Build the student-downloadable BUS331 project roadmap and checklist PDF."""
+"""Build the student-downloadable BUS331 phase checklist PDF and legacy alias."""
 from __future__ import annotations
 import json
+import shutil
 from pathlib import Path
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import inch
-from reportlab.platypus import CondPageBreak, PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 ROOT = Path(__file__).resolve().parents[1]
 NAVY, GOLD, TEAL, ICE, LINE = map(colors.HexColor, ["#0B1F35", "#D4A052", "#1F7A78", "#F2F6FA", "#D9E1E8"])
@@ -33,30 +34,50 @@ def footer(c, d):
 
 def main():
     model=json.loads((ROOT/"project-model.json").read_text())
-    out=ROOT/"files"/"BUS331_Investment_Committee_Simulation_Project_Guide.pdf"; out.parent.mkdir(exist_ok=True)
+    out=ROOT/"files"/"BUS331_Investment_Committee_Phase_Checklists.pdf"; out.parent.mkdir(exist_ok=True)
+    legacy_out=ROOT/"files"/"BUS331_Investment_Committee_Simulation_Project_Guide.pdf"
     s=styles(); road=model["studentRoadmap"]
-    doc=SimpleDocTemplate(str(out),pagesize=letter,leftMargin=.62*inch,rightMargin=.62*inch,topMargin=.55*inch,bottomMargin=.72*inch,title="BUS331 Investment Committee Simulation Project Guide",invariant=1)
-    story=[box([Paragraph("Investment Committee Simulation",s["TitleWhite"]),Paragraph("Student roadmap, requirements, and approval-gate checklists",s["SubWhite"])],background=NAVY),Spacer(1,12),p("Use this PDF to organize your committee's work without scrolling through the website. Canvas remains the authority for due dates, points, and submission mechanics.",s["Bodyx"]),p("What BUS331 provides - and what your committee creates",s["H"]),box([p(road["boundary"],s["Bodyx"])],background=ICE),p("Before you begin",s["H"])]
+    doc=SimpleDocTemplate(str(out),pagesize=letter,leftMargin=.62*inch,rightMargin=.62*inch,topMargin=.55*inch,bottomMargin=.72*inch,title="BUS331 Investment Committee Phase Checklists",invariant=1)
+    story=[box([Paragraph("Investment Committee Phase Checklists",s["TitleWhite"]),Paragraph("Printable steps, evidence, and approval gates",s["SubWhite"])],background=NAVY),Spacer(1,12),p("Use the online project overview to find your current phase page, resources, and submission workflow. This PDF is a printable reference; Canvas controls due dates, points, and the actual upload.",s["Bodyx"]),p("What BUS331 provides - and what your committee creates",s["H"]),box([p(road["boundary"],s["Bodyx"])],background=ICE),p("Before you begin",s["H"])]
     story += [p(f"[ ] {x}",s["Bodyx"]) for x in road["beforeYouBegin"]]
     decision_log = road["decisionLogGuidance"]
     story += [p(decision_log["title"],s["H"]),box([
         p(decision_log["usage"],s["Bodyx"]),
         p(f"Formal approvals: {decision_log['gates']}",s["Bodyx"]),
         p(f"Save as you go: {decision_log['saveReminder']}",s["Smallx"]),
-        p("Access the project-wide Analyst Decision Log from the online Project Roadmap or Project Guide.",s["Smallx"])
+        p("Access the project-wide Analyst Decision Log from the online project overview or current phase page.",s["Smallx"])
     ],background=ICE)]
     for phase in model["phases"]:
+        if phase["id"] == "phase-1":
+            assignment=next(a for a in model["canvasSubmissions"]["assignments"] if a["phaseId"]==phase["id"])
+            for number,part in enumerate(road["phase1Parts"],1):
+                story += [PageBreak(),p(f"Phase 1 - Part {number}: {part['title']}",s["H"]),p(part["purpose"],s["Bodyx"]),p("Do this in order",s["H3x"])]
+                start,end=part["stepRange"]
+                story += [p(f"{i}. {step}",s["Bodyx"]) for i,step in enumerate(road["phaseSequences"][phase["id"]][start:end],1)]
+                story += [p("Ready when",s["H3x"])]
+                start,end=part["doneRange"]
+                story += [p(f"[ ] {item}",s["Bodyx"]) for item in road["definitionOfDone"][phase["id"]][start:end]]
+                story += [p("Required evidence",s["H3x"])]
+                start,end=part["evidenceRange"]
+                story += [p(f"- {item}",s["Smallx"]) for item in phase["evidence"][start:end]]
+                story += [p("Team deliverables",s["H3x"])]
+                start,end=part["deliverableRange"]
+                story += [p(f"- {item}",s["Smallx"]) for item in phase["deliverables"][start:end]]
+                if part["id"] == "client-submissions":
+                    story += [
+                        p("Client-discovery activity",s["H3x"]),
+                        p("First observe the instructor-led practice interview. Then open only your team's role-play page. For each assigned client, one designated member receives a sealed client card while the other members ask their own neutral questions. Rotate the client role across the three cases.",s["Bodyx"]),
+                        p("The client reveals only what the sealed card establishes. If a fact is not established, record an information gap. After each interview, write a concise summary, the provisional guardrails, and the downstream decision each guardrail could affect in the Analyst Decision Log. No AI prompt or student AI account is required for this activity.",s["Bodyx"]),
+                        p("Canvas submission check",s["H3x"]),
+                        p("Submit the macro workbook from Part 1 together with the client IPS documents, mandate memo, and decision record as one Phase 1 package after Gate 1.",s["Smallx"])
+                    ]
+                    story += [p(f"[ ] {item}",s["Smallx"]) for item in assignment["preflight"]]
+            continue
         story += [PageBreak(),p(f"Phase {phase['number']} - {phase['title']}",s["H"]),p(phase["objective"],s["Bodyx"]),p("Do this in order",s["H3x"])]
         story += [p(f"{i}. {x}",s["Bodyx"]) for i,x in enumerate(road["phaseSequences"][phase["id"]],1)]
         story += [p("Definition of done",s["H3x"])] + [p(f"[ ] {x}",s["Bodyx"]) for x in road["definitionOfDone"][phase["id"]]]
         story += [p("Required evidence",s["H3x"])] + [p(f"- {x}",s["Smallx"]) for x in phase["evidence"]]
         story += [p("Team deliverables",s["H3x"])] + [p(f"- {x}",s["Smallx"]) for x in phase["deliverables"]]
-        if phase["id"] == "phase-1":
-            story += [
-                p("Client-discovery activity",s["H3x"]),
-                p("First observe the instructor-led practice interview. Then open only your team's role-play page. For each assigned client, one designated member receives a sealed client card while the other members ask their own neutral questions. Rotate the client role across the three cases.",s["Bodyx"]),
-                p("The client reveals only what the sealed card establishes. If a fact is not established, record an information gap. After each interview, write a concise summary, the provisional guardrails, and the downstream decision each guardrail could affect in the Analyst Decision Log. No AI prompt or student AI account is required for this activity.",s["Bodyx"])
-            ]
         if phase["id"] == "phase-2":
             story += [
                 p("Worksheet research guide",s["H3x"]),
@@ -70,12 +91,11 @@ def main():
                 p("For every Breach, make a real security, sleeve, or weight change, explain the trade-off, and re-run the complete scenario and IPS scorecard. If a released case unexpectedly passes, report it to the instructor rather than using the result to skip the checkpoint.",s["Bodyx"]),
             ]
         assignment=next(a for a in model["canvasSubmissions"]["assignments"] if a["phaseId"]==phase["id"])
-        if phase["id"] == "phase-1":
-            story += [CondPageBreak(1.15*inch)]
         story += [p("Canvas submission check",s["H3x"])] + [p(f"[ ] {x}",s["Smallx"]) for x in assignment["preflight"]]
     story += [PageBreak(),p("Committee roles and operating protocol",s["H"]),p(f"Roles identify distinct decision rights. All {model['project']['committeeSize']} members review the full evidence package, vote at every gate, and prepare to defend the complete recommendation.",s["Bodyx"])]
     for role in model["roles"]: story += [p(role["title"],s["H3x"]),p(role["mandate"],s["Bodyx"])]
     story += [p("AI rules of engagement",s["H"])]
     for rule in model["aiRules"]: story += [p(f"{rule['status']}: {rule['title']} - {rule['description']}",s["Bodyx"])]
     doc.build(story,onFirstPage=footer,onLaterPages=footer)
+    shutil.copyfile(out, legacy_out)
 if __name__=="__main__": main()

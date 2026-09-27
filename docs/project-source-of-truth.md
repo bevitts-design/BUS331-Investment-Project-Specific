@@ -2,7 +2,7 @@
 
 ## Design goal
 
-Maintain one public project model that generates the student portal and project guide, while keeping instructor-only evaluation content in the separate `BUS331-instructor` repository. The public model describes the simulation, roles, phases, deliverables, committee gates, resources, and AI rules. It must not contain answers, completed assigned-client work, grading keys, instructor diagnostics, or proprietary captures.
+Maintain one public project model that generates the student overview, phase working pages, submission guidance, and compatibility entry pages, while keeping instructor-only evaluation content in the separate `BUS331-instructor` repository. The public model describes the simulation, roles, phases, deliverables, committee gates, resources, and AI rules. It must not contain answers, completed assigned-client work, grading keys, instructor diagnostics, or proprietary captures.
 
 ## Three-phase simulation
 
@@ -10,11 +10,13 @@ Maintain one public project model that generates the student portal and project 
 
 The committee establishes one defensible 12-month market view and converts each assigned client profile into an approved investment mandate.
 
+The student Phase 1 page presents this as two ordered parts: **Macroeconomic Analysis** produces the common market view and macro workbook; **Client Submissions** turns that view and the assigned client profiles into IPS documents, a mandate memo, and the decision record. Both parts feed one Gate 1 vote and one four-file Phase 1 Canvas package. `studentRoadmap.phase1Parts` groups the maintained sequence, readiness, evidence, deliverables, and resources without changing the three-phase approval model.
+
 Required evidence:
 
 - Human-first client judgment recorded before AI use
 - Instructor-led demonstration and structured human client role-play for each assigned client
-- Continuing project-wide decision and audit trail in the Analyst Decision Log, with student access on the Project Roadmap and Project Guide
+- Continuing project-wide decision and audit trail in the Analyst Decision Log, with student access on the overview and current phase pages
 - Human-first macro read using the historical dataset
 - FactSet/FRED consensus comparison with source dates
 - Bull/base/bear scenarios and probabilities totaling 100%
@@ -68,7 +70,8 @@ Committee gate: issue the final recommendation and defend the evidence. Every me
 BUS331-Investment-Project-Specific/
   project-model.json                    # canonical public content and resource manifest
   scripts/
-    build-investment-project.mjs        # generates portal and public guide pages
+    build-investment-project.mjs        # generates overview, phase pages, submission guidance, and compatibility entry pages
+    build-project-guide-pdf.py          # generates printable phase checklists and the legacy PDF alias
     build-final-rubric-pdf.py           # generates the public Phase 3 rubric from project-model.json
     client-interview-simulator.js       # voice recording, typed fallback, transcript, and notes client
     build-investment-committee-decision-record.mjs
@@ -85,15 +88,16 @@ BUS331-Investment-Project-Specific/
   source-templates/
     BUS331_InvProject_SecuritySelection_Layout_Base.xlsx
                                         # stable, student-safe workbook layout base
-  index.html                            # generated student portal
+  index.html                            # generated student overview and roadmap visual
   project/
-    guide.html                          # generated comprehensive project guide
+    guide.html                          # generated compatibility entry for older Project Guide links
+    roadmap.html                        # generated compatibility entry for older Roadmap links
     canvas-submission-guide.html        # generated student submission contract
-    client-discovery-ai-protocol.html   # generated Phase 1 launch experience
+    client-discovery-ai-protocol.html   # generated Phase 1 Part 2 workflow
     security-analysis-selection.html    # generated Phase 2 security workflow and templates
     portfolio-management-stress-testing.html
                                         # generated Phase 2 allocation, IPS, and stress workflow
-    phase-1-frame-the-mandate.html      # generated Phase 1 guide
+    phase-1-frame-the-mandate.html      # generated two-part Phase 1 working page
     phase-2-build-and-challenge.html    # generated Phase 2 guide
     phase-3-defend-the-recommendation.html
                                         # generated Phase 3 guide
@@ -104,9 +108,13 @@ BUS331-Investment-Project-Specific/
     phase-2-assignment.html             # generated inline-styled Canvas assignment fragment
     phase-3-assignment.html             # generated inline-styled Canvas assignment fragment
   files/
+    BUS331_Investment_Committee_Phase_Checklists.pdf
+                                        # generated printable phase checklist reference
+    BUS331_Investment_Committee_Simulation_Project_Guide.pdf
+                                        # current-content alias for older PDF links
     ...Student...                       # blank student templates and public scenario data only
   docs/
-    project-materials-inventory.md      # current material inventory
+    project-materials-inventory.md      # historical inventory with current navigation update
     project-source-of-truth.md          # architecture and boundary decisions
 ```
 
@@ -123,11 +131,11 @@ BUS331-Investment-Project-Specific/
 - the three Canvas assignment contracts, including exact filenames, allowed file types, preflight checks, private licensed-evidence handling, and receipt retention
 - resource labels and relative paths
 - AI rules and verification requirements
-
-The workbook layout base is not an alternate content source. `scripts/update-security-selection-workbook.mjs` applies the current `project-model.json` contract and workbook-specific structure to that stable base on every build, so the public workbook can be regenerated without reading its prior generated version.
 - public assessment language
 
-Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
+The workbook layout base is not an alternate content source. `scripts/update-security-selection-workbook.mjs` applies the current `project-model.json` contract and workbook-specific structure to that stable base on every build, so the public workbook can be regenerated without reading its prior generated version.
+
+The overview is the project orientation and phase selector. Each phase page owns its ordered steps, definition of done, evidence, and resource links. The Canvas Submission Workflow lists exact files and filenames; the Canvas assignment controls dates, points, and the actual upload. The Guide and Roadmap URLs remain short compatibility entry pages for existing links. Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
 
 `canvasSubmissions` is the authoritative team-submission contract. The builder turns it into the public student guide and three inline-styled fragments ready to paste into Canvas. Those generated fragments do not change the live Canvas course. An instructor must separately configure each assignment as a group file-upload assignment, choose the correct group set, preserve the course's approved points and dates, and confirm the contract in Student View.
 

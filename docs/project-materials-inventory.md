@@ -4,6 +4,10 @@ Inventory date: 2026-07-29
 Repository: `BUS331-Investment-Project-Specific`  
 Working status at inventory: clean `main`; no changes committed or published
 
+## Navigation update · 2026-09-27
+
+The current student path uses `index.html` as the project overview and phase selector. Phase 1 has two ordered parts—Macroeconomic Analysis and Client Submissions—that feed one Gate 1 Canvas package. The three phase pages hold the working sequences, definitions of done, evidence, and resource links. `project/guide.html`, `project/roadmap.html`, and `BUS331_InvProject_Requirements_AllPhases.html` are short generated entry pages retained for existing links. The current printable reference is `files/BUS331_Investment_Committee_Phase_Checklists.pdf`; the older Project Guide PDF path is a current-content alias. The legacy `project/macro-analysis.html` page now links to the Phase 1 checklist instead of a missing PDF. The July inventory and disposition notes below document the earlier redesign state.
+
 ## Executive findings
 
 The repository contains a visually coherent, three-phase investment-committee simulation with a maintained content model, shared builder, and validator. Public materials are organized around Phase 1 client and macro framing, Phase 2 portfolio construction and challenge, and Phase 3 committee defense.
@@ -19,9 +23,9 @@ One critical public/private boundary issue was identified during inventory:
 
 - `files/MACROE~2.PDF` identifies itself as an instructor master guide and contains instructor scorecards, grading red flags, formula anchors, and a worked high-quality submission. It is not a student resource. On 2026-07-29, after explicit approval, it was moved to `BUS331-instructor/Investment_Project/source/Macroeconomic_Forecast_Instructor_Master_Guide.pdf`. It is not linked from the redesigned portal.
 
-## Current artifact inventory
+## July 2026 artifact inventory and original disposition plan
 
-| Current artifact | Intended audience | Useful content to preserve | Required disposition |
+| Artifact at inventory | Intended audience | Useful content to preserve | Original disposition |
 | --- | --- | --- | --- |
 | `index.html` | Student/public | Navy-gold identity, concise cards, resource access, AI traffic-light rules | Rebuild from the project manifest as a three-phase committee dashboard |
 | `BUS331_InvProject_Requirements_AllPhases.html` | Student/public | Scenario, client mandate, five roles, technical expectations, checklists | Replace with a generated three-phase project guide; retain the path only as a compatibility entry point |

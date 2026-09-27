@@ -14,20 +14,20 @@
     "clientCount": 3,
     "committeeSize": 5,
     "hypotheticalAum": "$500,000",
-    "scopeNote": "Canvas remains the authority for due dates, submission links, and course-grade weights."
+    "scopeNote": "Use the current phase page for work steps and approval readiness. Use the Canvas Submission Workflow for exact files and filenames; Canvas controls due dates, points, and the actual upload."
   },
   "studentRoadmap": {
     "title": "Your Project Roadmap",
     "subtitle": "Follow the decision path. Build the analysis. Defend your recommendation.",
     "visual": {
       "path": "assets/roadmap/investment-committee-roadmap-5-role.svg",
-      "alt": "Investment Committee Simulation roadmap showing Phase 1 mandate approval, Phase 2 focused 8–10 holding selection, portfolio integration, stress testing and hedge or no-hedge conclusion, Phase 3 presentation and compact defense, and five distinct committee roles."
+      "alt": "Investment Committee Simulation roadmap showing Phase 1 Part 1 macroeconomic analysis and Part 2 client submissions before one Gate 1 vote, Phase 2 focused 8–10 holding selection and stress testing, Phase 3 presentation and defense, and five distinct committee roles."
     },
     "boundary": "BUS331 provides structured Excel workbooks and client data. Your committee completes the analysis, reaches its own conclusions, and creates its own final PowerPoint presentation.",
     "beforeYouBegin": [
       "Confirm the five committee roles and your three assigned clients.",
       "Create a shared team workspace and agree on a file-naming system.",
-      "Read the current phase checklist together before beginning work.",
+      "Open the current phase page and read its working checklist together before beginning work.",
       "Schedule a short committee meeting before each approval gate."
     ],
     "decisionLogGuidance": {
@@ -36,6 +36,28 @@
       "gates": "Use the separate gate sheets for formal Phase 1 approval, each client's Phase 2 approval, and Phase 3 approval.",
       "saveReminder": "Save your working project files regularly as the team proceeds, especially after consequential Decision Log entries and approval-gate work."
     },
+    "phase1Parts": [
+      {
+        "id": "macro-analysis",
+        "title": "Macroeconomic Analysis",
+        "purpose": "Build one documented 12-month market view and three probability-weighted scenarios before applying them to the clients.",
+        "stepRange": [0, 3],
+        "doneRange": [0, 1],
+        "evidenceRange": [0, 3],
+        "deliverableRange": [0, 1],
+        "resources": ["macro-starter"]
+      },
+      {
+        "id": "client-submissions",
+        "title": "Client Submissions",
+        "purpose": "Turn the market view and each assigned client profile into an IPS, committee mandate, and recorded Gate 1 decision; submit one complete Phase 1 package.",
+        "stepRange": [3, 6],
+        "doneRange": [1, 4],
+        "evidenceRange": [3, 7],
+        "deliverableRange": [1, 5],
+        "resources": ["client-discovery-protocol", "client-data", "ips-framework", "decision-record", "canvas-submission-guide"]
+      }
+    ],
     "phaseSequences": {
       "phase-1": [
         "Set roles, client assignments, and the team workspace.",
@@ -670,7 +692,7 @@
       "number": 1,
       "title": "Frame the Mandate",
       "shortTitle": "Mandate",
-      "tagline": "Agree on the world you are investing in and the rules you cannot break.",
+      "tagline": "Two parts: macroeconomic analysis, then client submissions.",
       "keyQuestion": "What must be true about markets and each client before we are willing to invest?",
       "objective": "Establish one defensible 12-month market view and convert each assigned client profile into an approved investment mandate.",
       "gate": "Approve or revise the common market view and all three client mandates. Portfolio construction cannot begin until the vote and action items are recorded.",
@@ -706,12 +728,12 @@
         "Phase 1 decision record"
       ],
       "resources": [
-        "canvas-submission-guide",
-        "client-discovery-protocol",
-        "decision-record",
         "macro-starter",
+        "client-discovery-protocol",
         "client-data",
-        "ips-framework"
+        "ips-framework",
+        "decision-record",
+        "canvas-submission-guide"
       ]
     },
     {
@@ -764,16 +786,16 @@
         "Phase 2 decision record with client-by-client votes"
       ],
       "resources": [
-        "canvas-submission-guide",
-        "security-analysis-workflow",
-        "portfolio-stress-workflow",
-        "cme-template",
-        "security-template",
-        "stress-template",
         "cme-technical-guide",
+        "cme-template",
+        "security-analysis-workflow",
+        "security-template",
         "security-technical-guide",
+        "portfolio-stress-workflow",
+        "stress-template",
         "stress-technical-guide",
-        "decision-record"
+        "decision-record",
+        "canvas-submission-guide"
       ]
     },
     {
@@ -840,7 +862,7 @@
         "phaseId": "phase-1",
         "canvasTitle": "BUS331 Investment Committee · Phase 1 Gate · Frame the Mandate",
         "decision": "Approve or revise the common market view and all three client mandates before portfolio construction begins.",
-        "submissionProcess": "Submit the complete Phase 1 package after the committee has completed its Gate 1 vote. One designated team member submits for the group; all five members verify the Canvas receipt.",
+        "submissionProcess": "Part 1 produces the macro workbook. Part 2 produces the client IPS documents, mandate memo, and decision record. After the Gate 1 vote, submit the four required files as one Phase 1 package. One designated team member submits for the group; all five members verify the Canvas receipt.",
         "includePrivateEvidenceBoundary": false,
         "requiredFiles": [
           {"name": "BUS331_Team##_Phase1_MandateMemo.pdf", "description": "One-page committee mandate memo covering the common market view and three client mandates."},
@@ -904,11 +926,11 @@
   },
   "resources": [
     {
-      "id": "project-guide-pdf",
-      "label": "Download project roadmap and checklists",
+      "id": "phase-checklists-pdf",
+      "label": "Printable phase checklists",
       "type": "PDF",
-      "path": "files/BUS331_Investment_Committee_Simulation_Project_Guide.pdf",
-      "description": "Printable student reference with the full roadmap, phase requirements, approval-gate checklists, roles, and AI rules.",
+      "path": "files/BUS331_Investment_Committee_Phase_Checklists.pdf",
+      "description": "Printable student reference with ordered phase steps, required evidence, approval-gate checklists, roles, and AI rules.",
       "audience": "student"
     },
     {
