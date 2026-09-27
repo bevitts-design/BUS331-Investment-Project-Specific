@@ -149,21 +149,20 @@ if (!experience) {
 } else {
   if (experience.clientSets?.length !== 5) fail("Phase 1 must present five fictional-client team sets.");
   if (experience.clientSets?.some((set) => set.clients?.length !== 3)) fail("Every fictional-client team set must contain three clients.");
-  if (!experience.structuredRolePlay?.clientRule || !experience.structuredRolePlay?.analystRule || !experience.structuredRolePlay?.recordRule) {
-    fail("Phase 1 must define the structured human role-play rules.");
+  if (!experience.scenarioAnalysisRules?.factRule || !experience.scenarioAnalysisRules?.assumptionRule || !experience.scenarioAnalysisRules?.gapRule) {
+    fail("Phase 1 must distinguish scenario facts, labeled assumptions, and unsupported gaps.");
   }
-  if (!experience.instructorDemo?.name || !experience.instructorDemo?.clientCue) fail("Phase 1 must define an instructor-led client-discovery demonstration.");
-  if (experience.rolePlayProfiles?.length !== 15) fail("Phase 1 must define one structured role-play profile for each fictional client.");
-  if (experience.rolePlaySequence?.length !== 5) fail("Phase 1 must define the classroom demo and team role-play sequence.");
-  if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Prepare|Observe the model|Interview your client|Challenge and verify|Set the mandate") {
-    fail("Phase 1 decision cycle must preserve the preparation, classroom model, team interview, verification, and mandate sequence.");
+  if (experience.clientProfiles?.length !== 15) fail("Phase 1 must define one public scenario profile for each fictional client.");
+  if (experience.scenarioSequence?.length !== 5) fail("Phase 1 must define the scenario-analysis sequence.");
+  if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Prepare|Separate facts and assumptions|Compare your three clients|Challenge and verify|Set the mandate") {
+    fail("Phase 1 decision cycle must preserve fact and assumption labeling, challenge, verification, and mandate steps.");
   }
-  if (experience.interviewRounds?.length !== 5) fail("Phase 1 must define one interview round for each of the five roles.");
-  const roundRoleIds = new Set(experience.interviewRounds?.map((round) => round.roleId));
+  if (experience.analystLenses?.length !== 5) fail("Phase 1 must define one scenario-analysis lens for each of the five roles.");
+  const roundRoleIds = new Set(experience.analystLenses?.map((lens) => lens.roleId));
   for (const role of model.roles) {
-    if (!roundRoleIds.has(role.id)) fail(`Phase 1 is missing an interview round for ${role.title}.`);
+    if (!roundRoleIds.has(role.id)) fail(`Phase 1 is missing an analysis lens for ${role.title}.`);
   }
-  if (!/not established/i.test(experience.structuredRolePlay?.clientRule || "") || !/do not invent/i.test(experience.structuredRolePlay?.clientRule || "") || !/recommend/i.test(experience.structuredRolePlay?.clientRule || "")) fail("The human role-play contract must prohibit invented facts and recommendations.");
+  if (!/label/i.test(experience.scenarioAnalysisRules.assumptionRule) || !/not provided/i.test(experience.scenarioAnalysisRules.gapRule)) fail("Scenario analysis must allow reasoned, labeled assumptions and identify unsupported values.");
   if (!experience.approvedSources?.length) fail("Phase 1 must define approved verification sources.");
   if (!experience.qualityGate?.some((item) => /human-first/i.test(item))) fail("Phase 1 quality gate must require a human-first judgment.");
   if (!experience.qualityGate?.some((item) => /guardrail/i.test(item))) fail("Phase 1 quality gate must connect final reasoning to later investment guardrails.");
@@ -229,6 +228,8 @@ const generatedFiles = [
   roadmapPath,
   "project/guide.html",
   "project/client-discovery-ai-protocol.html",
+  "project/client-role-play/instructor-demo.html",
+  ...["one", "two", "three", "four", "five"].map((team) => `project/client-role-play/team-${team}.html`),
   "project/security-analysis-selection.html",
   "project/portfolio-management-stress-testing.html",
   "project/canvas-submission-guide.html",
@@ -243,6 +244,7 @@ const canvasFragments = model.canvasSubmissions.assignments.map((assignment) => 
 
 const supportingHtmlFiles = [
   "project/macro-analysis.html",
+  "project/client-analysis.html",
   "project/BUS331_InvProject_Bridge_CME_Guide.html",
   "project/BUS331_InvProject_SecuritySelection_Guide.html",
   "project/BUS331_InvProject_StressTest_Guide.html",
@@ -449,7 +451,7 @@ for (const requiredText of ["Open the phase you're working on", "Use one page fo
 const roadmapHtml = await fs.readFile(path.join(rootDir, roadmapPath), "utf8");
 const phaseOneHtml = await fs.readFile(path.join(rootDir, phasePath(model.phases[0])), "utf8");
 if (await exists(path.join(rootDir, "canvas", "phase-1-assignment.html"))) fail("Retired combined Phase 1 Canvas fragment remains in the build output.");
-for (const required of ["Macroeconomic Analysis", "Client Submissions", 'id="macro-analysis"', 'id="client-submissions"', "Assignment 1: submit the macro forecast", "Assignment 2: submit client analysis after Gate 1", "Client discovery comes first"]) {
+for (const required of ["Macroeconomic Analysis", "Client Submissions", 'id="macro-analysis"', 'id="client-submissions"', "Assignment 1: submit the macro forecast", "Assignment 2: submit client analysis after Gate 1", "Work from the assigned scenarios"]) {
   if (!phaseOneHtml.includes(required)) fail(`Phase 1 page is missing its two-part working path: ${required}.`);
 }
 for (const required of ["Open the Macro Starter workbook", "Open the separate Decision Record"]) {
@@ -479,27 +481,26 @@ for (const role of model.roles) {
   if (!indexHtml.includes(encoded) && !indexHtml.includes(role.title)) fail(`Portal does not show role: ${role.title}.`);
 }
 
-const discoveryHtml = await fs.readFile(path.join(rootDir, "project", "client-discovery-ai-protocol.html"), "utf8");
-for (const requiredText of [
-  "Prepare",
-  "Observe the model",
-  "Interview your client",
-  "Challenge and verify",
-  "Set the mandate",
-  "Analyst Decision Log"
-]) {
-  if (!discoveryHtml.includes(requiredText)) fail(`Client discovery protocol is missing required stage or artifact: ${requiredText}.`);
+const scenarioHtml = await fs.readFile(path.join(rootDir, "project", "client-discovery-ai-protocol.html"), "utf8");
+for (const requiredText of ["Prepare", "Separate facts and assumptions", "Compare your three clients", "Challenge and verify", "Set the mandate", "Analyst Decision Log"]) {
+  if (!scenarioHtml.includes(requiredText)) fail(`Client scenario protocol is missing required stage or artifact: ${requiredText}.`);
 }
 for (const roleTitle of requiredRoleTitles) {
-  if (!discoveryHtml.includes(roleTitle)) fail(`Client discovery protocol is missing role: ${roleTitle}.`);
+  if (!scenarioHtml.includes(roleTitle)) fail(`Client scenario protocol is missing role: ${roleTitle}.`);
 }
-if (/Committee Chair|Markets &amp; Economic Strategist|Portfolio Construction Lead|Risk, Controls/i.test(discoveryHtml)) {
-  fail("Client discovery protocol contains a retired committee-role title.");
+if (/Committee Chair|Markets &amp; Economic Strategist|Portfolio Construction Lead|Risk, Controls/i.test(scenarioHtml)) {
+  fail("Client scenario protocol contains a retired committee-role title.");
 }
-for (const requiredText of ["For client-discovery steps", "Open your team role-play instructions", "Classroom model", "See the process, then do it with your team", "Committee challenge round"]) {
-  if (!discoveryHtml.includes(requiredText)) fail(`Client discovery protocol is missing role-play content: ${requiredText}.`);
+for (const requiredText of ["For client-analysis steps", "Open your team scenario files", "Reasoned assumptions", "Use the provided case materials", "Committee challenge round"]) {
+  if (!scenarioHtml.includes(requiredText)) fail(`Client scenario protocol is missing required content: ${requiredText}.`);
 }
-if (/Start live interview|client-interview-simulator|Bounded role-play|Start with this prompt/.test(discoveryHtml)) fail("Client discovery protocol retains retired AI interview or prompt content.");
+for (const relative of ["project/client-discovery-ai-protocol.html", "project/client-analysis.html", "project/phase-1-frame-the-mandate.html", ...["one", "two", "three", "four", "five"].map((team) => `project/client-role-play/team-${team}.html`), "project/client-role-play/instructor-demo.html", "canvas/phase-1-client-step-by-step-page.html", "canvas/phase-1-client-assignment.html"]) {
+  const html = await fs.readFile(path.join(rootDir, relative), "utf8");
+  const visibleText = html.replace(/<[^>]*>/g, " ");
+  const positiveInstructionText = visibleText.replace(/\bno (?:fictional )?client interviews?\b/gi, "");
+  if (/\binterview\b|\brole-play\b|sealed card/i.test(positiveInstructionText)) fail(`${relative} still instructs students to perform interviews.`);
+  if (["project/client-discovery-ai-protocol.html", "project/client-analysis.html", "project/phase-1-frame-the-mandate.html", "canvas/phase-1-client-step-by-step-page.html", "canvas/phase-1-client-assignment.html"].includes(relative) && !/no client interviews/i.test(visibleText)) fail(`${relative} does not explicitly rule out client interviews.`);
+}
 
 const securityHtml = await fs.readFile(path.join(rootDir, "project", "security-analysis-selection.html"), "utf8");
 for (const requiredText of [
@@ -601,21 +602,6 @@ for (const relative of ["project/security-analysis-selection.html", "project/por
   if (/OPENAI_API_KEY|eleanor-vance-scenario|approvedFacts|progressiveDisclosure|grading key|completed exemplar/i.test(html)) {
     fail(`${relative} exposes private configuration, a key, or completed-answer language.`);
   }
-}
-
-const simulatorRuntimePath = path.join(rootDir, "scripts", "client-interview-simulator.js");
-if (!(await exists(simulatorRuntimePath))) {
-  fail("Missing maintained client interview simulator runtime.");
-} else {
-  const simulatorRuntime = await fs.readFile(simulatorRuntimePath, "utf8");
-  for (const marker of ["MediaRecorder", "getUserMedia", "transcriptionEndpoint", "responseEndpoint", "data-start-interview", "data-record-question", "data-interview-transcript", "data-download-session"]) {
-    if (!simulatorRuntime.includes(marker)) fail(`Client interview simulator runtime is missing required control: ${marker}.`);
-  }
-  if (!/audioBase64|SpeechSynthesisUtterance/.test(simulatorRuntime)) fail("Client interview simulator runtime must expose an accessible spoken-response path when supported.");
-  if (/OPENAI_API_KEY|api\.openai\.com|scenarioFacts|dialoguePaths|riskAversionScore/.test(simulatorRuntime)) {
-    fail("Public client interview runtime exposes an API credential surface or instructor-only scenario control.");
-  }
-  if (!/fetch\s*\(url/.test(simulatorRuntime)) fail("Public voice runtime must call only the instructor-hosted endpoint supplied by the public model.");
 }
 
 const decisionRecordResource = model.resources.find((resource) => resource.id === "decision-record");

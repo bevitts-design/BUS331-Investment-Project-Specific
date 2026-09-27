@@ -332,7 +332,7 @@ analystLog.getRange("A4:T4").merge();
 analystLog.getRange("A4").values = [[`Each of the five roles records at least one recommendation for each assigned client. Every material entry includes an alternative rejected and a key trade-off. Minimum Phase 1 evidence: ${minimumDecisionLogEntries} complete role-by-client entries across the team.`]];
 analystLog.getRange("A4:T4").format = { fill: COLORS.goldLight, font: { bold: true, color: COLORS.ink }, wrapText: true, rowHeight: 30 };
 analystLog.getRange("A5:T5").merge();
-analystLog.getRange("A5").values = [["Summarize AI output; do not paste transcripts. Unknown client information stays unknown. Do not enter real personal information or proprietary FactSet data into an AI tool."]];
+analystLog.getRange("A5").values = [["Separate supplied case facts from labeled, reasoned assumptions. Mark unsupported exact values for confirmation. Summarize AI challenges; do not enter real personal information or proprietary FactSet data into an AI tool."]];
 analystLog.getRange("A5:T5").format = { fill: "#F5F8FA", font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 30 };
 analystLog.getRange("A6:L6").values = [["Team / committee", "", "", "Assigned Client 1", "", "", "Assigned Client 2", "", "", "Assigned Client 3", "", ""]];
 analystLog.getRange("A6").format.font = { bold: true, color: COLORS.ink };

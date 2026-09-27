@@ -22,6 +22,7 @@
     "subtitle": "Follow the decision path. Build the analysis. Defend your recommendation.",
     "visual": {
       "path": "assets/roadmap/investment-committee-roadmap-5-role.svg",
+      "version": "20260927-client-scenarios",
       "alt": "Investment Committee Simulation roadmap showing separate Phase 1 Part 1 macro forecast and Part 2 client analysis submissions before one Gate 1 vote, Phase 2 focused 8–10 holding selection and stress testing, Phase 3 presentation and defense, and five roles covered by four or five members."
     },
     "boundary": "BUS331 provides structured Excel workbooks and client data. Your committee completes the analysis, reaches its own conclusions, and creates its own final PowerPoint presentation.",
@@ -54,7 +55,7 @@
         "purpose": "Use the submitted macro forecast and each assigned client profile to produce IPS documents, a committee mandate, and a recorded Gate 1 decision in a separate client-analysis submission.",
         "stepRange": [3, 6],
         "doneRange": [1, 4],
-        "evidenceRange": [3, 7],
+        "evidenceRange": [3, 8],
         "deliverableRange": [1, 5],
         "resources": ["client-step-guide", "client-discovery-protocol", "client-data", "ips-framework", "decision-record", "canvas-submission-guide"]
       }
@@ -65,7 +66,7 @@
         "Complete the detailed macro analysis in the provided workbook: review historical evidence, form a human-first interpretation, and document sources.",
         "Compare the committee view with FRED historical observations and a source-dated FactSet or other external forecast or consensus where a comparable measure exists; then create bull, base, and bear scenarios with probabilities totaling 100%.",
         "Open the separate Decision Record, identify assigned clients, and analyze their scenario profiles and data. Separate supplied facts, reasoned assumptions, and information gaps.",
-        "Translate the macro outlook into a client-specific mandate, including return target, risk limit, and drawdown tripwire.",
+        "Translate the macro outlook into a client-specific IPS mandate, including return target, risk limit, drawdown tripwire, and provisional strategic allocation.",
         "Hold Gate 1: challenge the evidence, vote, and record required revisions before any portfolio construction begins."
       ],
       "phase-2": [
@@ -88,7 +89,7 @@
     "definitionOfDone": {
       "phase-1": [
         "The macro workbook documents historical analysis, source-dated external comparisons, inflation expectations, and weighted bull, base, and bear scenarios.",
-        "Each client has objectives, RRTTLLU constraints, a return target, risk limit, drawdown tripwire, and identified information gaps.",
+        "Each client has objectives, RRTTLLU constraints, a return target, risk limit, drawdown tripwire, provisional strategic allocation, and identified information gaps.",
         "The committee can explain how its macro outlook changes each client mandate.",
         "Each team member has recorded one Gate 1 vote and any revision actions; all five role responsibilities are covered."
       ],
@@ -118,7 +119,7 @@
       "phaseResponsibilities": {
         "phase-1": "Lead analysis of the assigned client scenarios, document goals and RRTTLLU constraints, establish the macro context, and label reasoned assumptions and information gaps.",
         "phase-2": "Test whether proposed allocations and securities fit the approved client mandate and the committee's market view.",
-        "phase-3": "Defend client suitability, the macro assumptions, and the line from discovered need to recommendation."
+        "phase-3": "Defend client suitability, the macro assumptions, and the line from scenario-based need to recommendation."
       }
     },
     {
@@ -195,7 +196,7 @@
   "phase1Experience": {
     "title": "Client Scenario Analysis and Decision Protocol",
     "subtitle": "Read the scenario. Make a reasoned judgment. Label assumptions. Set the guardrails.",
-    "purpose": "Use the assigned fictional client profile and data to create documented investment criteria before the team screens a bond, mutual fund, ETF, or portfolio allocation.",
+    "purpose": "Use the assigned fictional client profile and data to create documented investment criteria before the team screens a bond, mutual fund, ETF, or portfolio allocation. No client interviews are part of this assignment.",
     "clientSets": [
       {
         "team": "Team One",
@@ -704,8 +705,9 @@
         "Bull/base/bear scenarios with probabilities totaling 100%",
         "RRTTLLU analysis for all three assigned clients",
         "Return target, maximum volatility, and drawdown tripwire for each client",
+        "Provisional strategic allocation totaling 100% and a policy-level implementation plan for each client",
         "Analyst Decision Log showing initial judgment, committee challenge, verification, final reasoning, and downstream guardrail",
-        "Phase 1 decision record signed by every team member, with all five roles covered"
+        "Phase 1 decision record showing every team member's vote, with all five roles covered"
       ],
       "deliverables": [
         "Completed macro starter workbook",
@@ -874,7 +876,7 @@
         "canvasTitle": "BUS331 Investment Committee · Phase 1 Part 2 · Client Analysis and Gate 1",
         "outputFile": "phase-1-client-assignment.html",
         "decision": "Approve or revise the three client mandates using the submitted macro forecast before portfolio construction begins.",
-        "submissionProcess": "Use the macro forecast already submitted in Part 1; do not upload it again. After the Gate 1 vote, submit the three client-analysis files as the Part 2 group assignment. One designated team member submits for the group; every team member verifies the Canvas receipt.",
+        "submissionProcess": "Complete each IPS from the assigned fictional scenario, using labeled and justified assumptions for missing details; no client interviews are required. Use the macro forecast already submitted in Part 1; do not upload it again. After the Gate 1 vote, submit the three client-analysis files as the Part 2 group assignment. One designated team member submits for the group; every team member verifies the Canvas receipt.",
         "includePrivateEvidenceBoundary": false,
         "requiredFiles": [
           {"name": "BUS331_[TeamName]_Phase1_MandateMemo.pdf", "description": "One-page committee mandate memo covering the submitted market view and three client mandates."},
@@ -885,6 +887,8 @@
         "preflight": [
           "The mandate memo identifies the submitted macro forecast and explains any revision since Part 1.",
           "Each client has an objective, RRTTLLU constraints, return target, volatility limit, drawdown tripwire, and unresolved information gaps.",
+          "Each IPS distinguishes supplied scenario facts from labeled, reasoned assumptions; unsupported exact values are marked for confirmation.",
+          "Each IPS includes a provisional strategic allocation totaling 100% and policy-level implementation; specific securities, trades, and final optimized weights belong to Phase 2.",
           "The Decision Record shows initial judgment, committee challenge, human verification, final reasoning, downstream guardrail, owner, and peer reviewer.",
           "Every team member recorded one Phase 1 vote and any revision action; all five role responsibilities are covered."
         ]

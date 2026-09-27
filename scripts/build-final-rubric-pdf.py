@@ -296,7 +296,7 @@ def main() -> None:
             Spacer(1, 14),
             Paragraph("Evidence chain the committee must defend", styles["Section"]),
             paragraph(
-                "Phase 1 client discovery and macro evidence must visibly control Phase 2 security selection, allocation, IPS compliance, stress results, corrections, and the Phase 3 recommendation. Role ownership is individual; the final decision is collective.",
+                "Phase 1 client scenario analysis and macro evidence must visibly control Phase 2 security selection, allocation, IPS compliance, stress results, corrections, and the Phase 3 recommendation. Role ownership is individual; the final decision is collective.",
                 styles["BodyCompact"],
             ),
             paragraph(

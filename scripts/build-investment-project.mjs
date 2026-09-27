@@ -145,130 +145,52 @@ function clientSetBoard() {
     ${model.phase1Experience.clientSets.map((set) => `<a class="client-set" href="client-role-play/${teamSlug(set.team)}.html">
       <p class="role-tag">${escapeHtml(set.team)}</p>
       <h3>${set.clients.map(escapeHtml).join(" · ")}</h3>
-      <p>${escapeHtml(set.inquiry)}</p><span class="resource-type">Open your team role-play instructions</span>
+      <p>${escapeHtml(set.inquiry)}</p><span class="resource-type">Open your team scenario files</span>
     </a>`).join("\n")}
   </div>`;
 }
 
-function rolePlaySequenceMarkup() {
-  const teamSteps = model.phase1Experience.rolePlaySequence.filter((item) => item.stage !== "Instructor demonstration");
-  return `<div class="workflow-steps">${teamSteps.map((item, index) => `<article class="workflow-step"><span aria-hidden="true">${index + 1}</span><div><h3>${escapeHtml(item.stage)}</h3><p>${escapeHtml(item.action)}</p></div></article>`).join("\n")}</div>`;
+function scenarioSequenceMarkup() {
+  return `<div class="workflow-steps">${model.phase1Experience.scenarioSequence.map((item, index) => `<article class="workflow-step"><span aria-hidden="true">${index + 1}</span><div><h3>${escapeHtml(item.stage)}</h3><p>${escapeHtml(item.action)}</p></div></article>`).join("\n")}</div>`;
 }
 
-function teamRolePlayPage(set) {
+function teamScenarioPage(set) {
   const prefix = "../../";
-  const profiles = model.phase1Experience.rolePlayProfiles.filter((profile) => profile.team === set.team);
+  const profiles = model.phase1Experience.clientProfiles.filter((profile) => profile.team === set.team);
   const teamProfiles = resourceById.get(`${teamSlug(set.team)}-client-profiles`);
   const decisionRecord = resourceById.get("decision-record");
   const body = `<main id="main-content">
-    ${pageHero(`Phase 1 · ${set.team}`, "Your structured client role-play", "Interview each assigned fictional client, record what is established and unknown, then turn those findings into guardrails for the IPS.")}
+    ${pageHero(`Phase 1 · ${set.team}`, "Analyze your three assigned clients", "Use the provided scenario facts and clearly labeled assumptions to build each IPS mandate.")}
     <div class="page-shell"><div class="content-flow">
-      <section><div class="callout"><h2>Use the two sources together</h2><p><strong>Start with the assigned-client slides.</strong> They are your baseline case file: age, occupation, income, net worth, stated goal, target return, volatility/risk classification, and the stated constraint. Then use the role-play to learn what those numbers do not settle: which goal comes first, the timing and urgency of cash needs, risk willingness versus capacity for loss, taxes or restrictions, and what remains unknown.</p><p>One member receives the sealed role card and becomes the client. The other members ask their own neutral questions. Do not exchange, photograph, or read another student's sealed card.</p><div class="hero-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, teamProfiles.path))}">Open ${escapeHtml(set.team)} client profiles <span>PPTX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open the Analyst Decision Log <span>XLSX</span></a></div></div></section>
-      <section><p class="section-kicker">Your three clients</p><h2>Rotate the client role</h2><div class="client-set-board">${profiles.map((profile) => `<article class="client-set"><p class="role-tag">Assigned client</p><h3>${escapeHtml(profile.name)}</h3><p>${escapeHtml(profile.identity)}</p><p><strong>Client role:</strong> receive the sealed card from your instructor or Canvas. <strong>Analysts:</strong> prepare questions in your role lane and record the summary in the Decision Log.</p></article>`).join("\n")}</div></section>
-      <section><p class="section-kicker">Activity sequence</p><h2>One interview at a time</h2>${rolePlaySequenceMarkup()}</section>
-      <section><p class="section-kicker">End each interview</p><h2>Document, challenge, and hand off</h2><ul class="check-list"><li>Separate established facts from assumptions and information gaps.</li><li>State at least one provisional client guardrail that later security selection or allocation must honor.</li><li>Record a concise summary in the Analyst Decision Log—not a transcript.</li><li>Do not recommend a security, fund, ETF, allocation, or trade during discovery.</li></ul></section>
-      <section><div class="milestone-banner"><div><p class="section-kicker">Return when ready</p><h2>Convert discovery into the client mandate</h2><p>Bring the three interview summaries and your macro outlook into the Phase 1 IPS analysis.</p></div><div class="milestone-actions"><a class="button button-primary" href="../phase-1-frame-the-mandate.html">Return to Phase 1</a><a class="button" href="../client-discovery-ai-protocol.html">Discovery protocol</a></div></div></section>
+      <section><div class="callout"><h2>Use the slides and data together</h2><p><strong>Start with your team's client slides.</strong> They state the case background, goal, and main constraint. Match each client to the row in the scenario-data workbook for the provided target return, standard deviation, and risk classification. Treat these as case inputs to evaluate, not automatic promises or approved limits.</p><p>When an IPS field is missing, use a reasonable assumption supported by a scenario clue and label it <strong>Assumption</strong>. If no defensible basis exists for a specific value, write <strong>Not provided; confirm before implementation</strong>. Do not turn an inference into a supplied client fact.</p><div class="hero-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, teamProfiles.path))}">Open ${escapeHtml(set.team)} client profiles <span>PPTX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, "files/Client_Scenarios_Data_File.xlsx"))}">Open client data <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open the Analyst Decision Log <span>XLSX</span></a></div></div></section>
+      <section><p class="section-kicker">Your three clients</p><h2>Compare the assigned scenarios</h2><div class="client-set-board">${profiles.map((profile) => `<article class="client-set"><p class="role-tag">Assigned client</p><h3>${escapeHtml(profile.name)}</h3><p>${escapeHtml(profile.identity)}</p><p>${escapeHtml(profile.statedDirection)}</p></article>`).join("\n")}</div></section>
+      <section><p class="section-kicker">Activity sequence</p><h2>Work from the case evidence</h2>${scenarioSequenceMarkup()}</section>
+      <section><p class="section-kicker">Before writing the IPS</p><h2>Document, challenge, and hand off</h2><ul class="check-list"><li>Mark every material statement as a supplied fact, a reasoned assumption, or an information gap.</li><li>Explain the scenario clue behind each assumption and what later confirmation could change.</li><li>Set a provisional client guardrail that later security selection or allocation must honor.</li><li>Record the reasoning and an independent peer review in the Analyst Decision Log.</li></ul></section>
+      <section><div class="milestone-banner"><div><p class="section-kicker">Return when ready</p><h2>Convert scenario analysis into the client mandate</h2><p>Use the three case analyses and your submitted macro outlook to complete the Phase 1 IPS mandates.</p></div><div class="milestone-actions"><a class="button button-primary" href="../phase-1-frame-the-mandate.html">Return to Phase 1</a><a class="button" href="../client-discovery-ai-protocol.html">Analysis protocol</a></div></div></section>
     </div></div></main>`;
-  return shell({title: `${set.team} client role-play`, description: `Structured human client role-play instructions for ${set.team}.`, prefix, body, pageClass: "guide-page discovery-page"});
+  return shell({title: `${set.team} client scenarios`, description: `Scenario-based client-analysis instructions for ${set.team}.`, prefix, body, pageClass: "guide-page discovery-page"});
 }
 
-function instructorDemoPage() {
+function formerDemoPage() {
   const prefix = "../../";
-  const demo = model.phase1Experience.instructorDemo;
   const body = `<main id="main-content">
-    ${pageHero("Phase 1 · Classroom model", "Observe the client-discovery interview", "Your instructor and a volunteer will model the process before teams begin their assigned client role-play.")}
+    ${pageHero("Phase 1 · Part 2", "Use the assigned client scenarios", "The current assignment uses the provided profile slides and client-data workbook.")}
     <div class="page-shell"><div class="content-flow">
-      <section><div class="callout"><h2>${escapeHtml(demo.name)} is a practice client</h2><p>${escapeHtml(demo.statedDirection)} Watch for neutral questions, established facts, information gaps, and the guardrail that follows from the conversation.</p></div></section>
-      <section><p class="section-kicker">What to do while you observe</p><h2>Listen like an analyst</h2><ul class="check-list"><li>Write down one fact that is established by the client answer.</li><li>Write down one fact that remains unknown.</li><li>Identify one client need or constraint that should affect the IPS.</li><li>Do not recommend an investment during the demonstration.</li></ul></section>
-      <section><div class="milestone-banner"><div><p class="section-kicker">Then begin your work</p><h2>Open your team role-play instructions</h2><p>Your team will use the same process with its assigned fictional clients.</p></div><div class="milestone-actions"><a class="button button-primary" href="../client-discovery-ai-protocol.html">Choose your team</a></div></div></section>
+      <section><div class="callout"><h2>Start with the current analysis protocol</h2><p>Read your assigned team files, separate scenario facts from labeled assumptions, and use the Decision Record to explain how each IPS mandate follows from the evidence.</p><div class="hero-actions"><a class="button button-primary" href="../client-discovery-ai-protocol.html">Open client scenario analysis</a></div></div></section>
     </div></div></main>`;
-  return shell({title: "Classroom client-discovery demonstration", description: "Student observer instructions for the BUS331 classroom client-discovery demonstration.", prefix, body, pageClass: "guide-page discovery-page"});
+  return shell({title: "Client scenario analysis", description: "Current Phase 1 Part 2 client scenario instructions.", prefix, body, pageClass: "guide-page discovery-page"});
 }
 
-function interviewSimulatorMarkup(prefix) {
-  const prototype = model.phase1Experience.interviewPrototype;
-  if (!prototype) return "";
-  const data = JSON.stringify(prototype).replaceAll("<", "\\u003c");
-  return `<section class="interview-simulator" id="client-interview-simulator" aria-labelledby="simulator-title" data-client-interview-simulator>
-    <div class="simulator-heading">
-      <div>
-        <p class="section-kicker">${escapeHtml(prototype.label)}</p>
-        <h2 id="simulator-title">Interview a fictional client in your own voice</h2>
-        <p>Speak or type your own neutral questions. Confirm the transcript, listen to Eleanor's in-character reply, and preserve the exchange for your Decision Record.</p>
-      </div>
-      <p class="prototype-status"><span aria-hidden="true"></span>Instructor-hosted voice AI · Typed fallback · Local transcript</p>
-    </div>
-    <div class="simulator-layout">
-      <article class="simulator-client-card" aria-labelledby="prototype-client-name">
-        <figure class="client-portrait">
-          <img src="${escapeHtml(prefixPath(prefix, prototype.portrait.path))}" alt="${escapeHtml(prototype.portrait.alt)}" width="720" height="720" loading="lazy" decoding="async">
-          <figcaption>${escapeHtml(prototype.portrait.caption)}</figcaption>
-        </figure>
-        <div class="client-identity">
-          <div class="client-avatar" aria-hidden="true">${escapeHtml(prototype.initials)}</div>
-          <div><p>${escapeHtml(prototype.caseLabel)}</p><h3 id="prototype-client-name">${escapeHtml(prototype.clientName)}</h3><span>${escapeHtml(prototype.identity)}</span></div>
-        </div>
-        <p class="voice-cue"><strong>Personality and voice cue</strong>${escapeHtml(prototype.voiceCue)}</p>
-        <dl class="client-facts">${prototype.visibleDossier.map((fact) => `<div><dt>${escapeHtml(fact.label)}</dt><dd>${escapeHtml(fact.value)}</dd></div>`).join("\n")}</dl>
-        <div class="simulator-boundary"><strong>Prototype boundary</strong><p>${escapeHtml(prototype.boundary)}</p></div>
-      </article>
-      <div class="simulator-workspace">
-        <div class="live-interview-disclosure">
-          <h3>Before you start</h3>
-          <p>${escapeHtml(prototype.liveMode.privacyNotice)}</p>
-          <p>${escapeHtml(prototype.liveMode.availabilityNotice)}</p>
-        </div>
-        <div class="live-session-controls">
-          <button class="button button-primary" type="button" data-start-interview>${escapeHtml(prototype.liveMode.startLabel)}</button>
-          <button class="button simulator-secondary" type="button" data-end-interview disabled>End interview</button>
-          <span class="connection-state" data-connection-state role="status" aria-live="polite">Not started</span>
-        </div>
-        <p class="voice-playback-note">Eleanor's reply is spoken by your browser when available and always appears in the text transcript. No generated audio file is saved.</p>
-        <div class="record-question-card">
-          <div><h3>Record your own question</h3><p>Start recording, ask one question naturally, then stop. Review and edit the transcript before sending it to Eleanor.</p></div>
-          <div class="record-controls"><button class="button simulator-secondary" type="button" data-record-question disabled>Start recording</button><span data-record-status role="status" aria-live="polite">Start the interview first.</span></div>
-        </div>
-        <div class="suggested-questions" aria-labelledby="suggested-title">
-          <h3 id="suggested-title">Optional opening ideas</h3>
-          <p>These are prompts to help you begin, not a question menu. You may ask any relevant question in your own words.</p>
-          <div>${prototype.openingQuestions.map((question) => `<button class="question-chip" type="button" data-suggested-question>${escapeHtml(question)}</button>`).join("\n")}</div>
-        </div>
-        <form class="interview-form" data-interview-form>
-          <label for="client-question">Confirmed transcript or typed question</label>
-          <textarea id="client-question" name="client-question" rows="3" maxlength="500" placeholder="Record a question above or type one here." required disabled></textarea>
-          <div class="form-actions"><button class="button button-primary" type="submit" data-send-question disabled>Ask ${escapeHtml(prototype.clientName.split(" ")[0])}</button><span data-form-status role="status" aria-live="polite"></span></div>
-        </form>
-        <div class="transcript-panel">
-          <div class="panel-heading"><h3>Interview transcript</h3><span>Process record—not a verification source</span></div>
-          <p class="empty-transcript" data-empty-transcript>Start the live interview to hear Eleanor's greeting. The text record will appear here.</p>
-          <ol class="interview-transcript" data-interview-transcript aria-live="polite" aria-label="Client interview transcript"></ol>
-        </div>
-        <div class="analyst-notes">
-          <label for="interview-notes">Analyst notes for the Decision Record</label>
-          <textarea id="interview-notes" rows="4" maxlength="2000" placeholder="Capture evidence, assumptions, unanswered questions, and the portfolio or security decision each point could affect."></textarea>
-        </div>
-        <div class="transcript-actions">
-          <button class="button simulator-secondary" type="button" data-copy-session>Copy transcript + notes</button>
-          <button class="button simulator-secondary" type="button" data-download-session>Download .txt</button>
-          <button class="button simulator-clear" type="button" data-clear-session>Clear local session</button>
-        </div>
-        <p class="session-status" data-session-status role="status" aria-live="polite"></p>
-      </div>
-    </div>
-    <script type="application/json" data-simulator-config>${data}</script>
-  </section>`;
-}
-
-function interviewRoundBoard() {
+function analystLensBoard() {
   return `<div class="interview-rounds">
-    ${model.phase1Experience.interviewRounds.map((round) => {
-      const role = roleById.get(round.roleId);
-      if (!role) throw new Error(`Unknown role id in interview round: ${round.roleId}`);
+    ${model.phase1Experience.analystLenses.map((lens) => {
+      const role = roleById.get(lens.roleId);
+      if (!role) throw new Error(`Unknown role id in analyst lens: ${lens.roleId}`);
       return `<article class="interview-round" data-color="${escapeHtml(role.color)}">
-        <p class="role-tag">${escapeHtml(round.round)}</p>
+        <p class="role-tag">${escapeHtml(lens.focus)}</p>
         <h3>${escapeHtml(role.title)}</h3>
-        <ul class="clean-list">${round.questionThemes.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
-        <div class="handoff"><strong>Handoff</strong>${escapeHtml(round.handoff)}</div>
+        <ul class="clean-list">${lens.evidenceToConsider.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+        <div class="handoff"><strong>Handoff</strong>${escapeHtml(lens.handoff)}</div>
       </article>`;
     }).join("\n")}
   </div>`;
@@ -358,7 +280,7 @@ function landingPage() {
           <h2 id="map-title">From mandate to defense</h2>
           <p>Use this visual to see how one committee decision sets the conditions for the next. Use your current phase page for the working checklist.</p>
         </div>
-        <figure class="roadmap-visual"><img src="${escapeHtml(`${model.studentRoadmap.visual.path}?v=${assetVersion}`)}" alt="${escapeHtml(model.studentRoadmap.visual.alt)}" width="1600" height="900" loading="lazy" decoding="async"><figcaption>Three phases and three committee gates. <a href="${escapeHtml(`${model.studentRoadmap.visual.path}?v=${assetVersion}`)}" target="_blank" rel="noopener">Open the roadmap graphic full size</a>.</figcaption></figure>
+        <figure class="roadmap-visual"><img src="${escapeHtml(`${model.studentRoadmap.visual.path}?v=${model.studentRoadmap.visual.version || assetVersion}`)}" alt="${escapeHtml(model.studentRoadmap.visual.alt)}" width="1600" height="900" loading="lazy" decoding="async"><figcaption>Three phases and three committee gates. <a href="${escapeHtml(`${model.studentRoadmap.visual.path}?v=${model.studentRoadmap.visual.version || assetVersion}`)}" target="_blank" rel="noopener">Open the roadmap graphic full size</a>.</figcaption></figure>
       </section>
 
       <section class="section" aria-labelledby="site-use-title">
@@ -455,7 +377,7 @@ function phaseOnePage(phase) {
       <div class="phase-one-part-head"><p class="section-kicker">Part ${index + 1} of ${parts.length}</p><h2 id="${escapeHtml(part.id)}-title">${escapeHtml(part.title)}</h2><p>${escapeHtml(part.purpose)}</p></div>
       <h3>Do this in order</h3>
       <ol class="workflow-steps">${partSteps.map((step, stepIndex) => `<li class="workflow-step"><span aria-hidden="true">${stepIndex + 1}</span><div><p>${escapeHtml(step)}</p></div></li>`).join("\n")}</ol>
-      ${part.id === "client-submissions" ? `<div class="callout"><h3>Client discovery comes first</h3><p>Use the <a href="${escapeHtml(prefixPath(prefix, clientDiscoveryPath))}">Client Discovery and Decision Protocol</a> to test needs and information gaps before finalizing each IPS.</p></div>` : ""}
+      ${part.id === "client-submissions" ? `<div class="callout"><h3>Work from the assigned scenarios</h3><p>Use the <a href="${escapeHtml(prefixPath(prefix, clientDiscoveryPath))}">Client Scenario Analysis and Decision Protocol</a> to separate stated facts, reasoned assumptions, and information gaps before finalizing each IPS.</p></div>` : ""}
       <div class="phase-one-check-grid"><div><h3>Ready when</h3><ul class="check-list">${partDone.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></div><div><h3>Evidence to keep</h3><ul class="check-list">${partEvidence.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></div></div>
       <h3>${index === 0 ? "Macro forecast deliverable" : "Client and committee deliverables"}</h3>
       <ul class="clean-list">${partDeliverables.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
@@ -602,12 +524,12 @@ function clientDiscoveryPage() {
     <div class="page-shell">
       <div class="content-flow">
         <section>
-          <p class="section-kicker">For client-discovery steps</p>
-          <h2>See the process, then do it with your team</h2>
+          <p class="section-kicker">For client-analysis steps</p>
+          <h2>Use the provided case materials</h2>
           <p>${escapeHtml(experience.purpose)}</p>
           <div class="content-grid compact-grid">
-            <article class="callout"><h3>1 · Classroom model</h3><p>Your instructor and a volunteer will model a short practice interview. Watch for neutral questions, established facts, information gaps, and the guardrail that follows.</p><div class="hero-actions"><a class="button button-primary" href="client-role-play/instructor-demo.html">Open classroom demonstration instructions</a></div></article>
-            <article class="callout"><h3>2 · Team role-play</h3><p>Then open only your team's page. One member receives the sealed client card; the other members interview, record the summary, and rotate roles across the three cases.</p></article>
+            <article class="callout"><h3>1 · Supplied facts</h3><p>Read your team's three profile slides and the matching client-data rows. Record where each material fact came from.</p></article>
+            <article class="callout"><h3>2 · Reasoned assumptions</h3><p>For an unanswered IPS field, add a plausible answer based on the scenario and label it as an assumption with its rationale. Mark unsupported exact values as not provided.</p></article>
           </div>
         </section>
 
@@ -619,17 +541,17 @@ function clientDiscoveryPage() {
 
         <section>
           <p class="section-kicker">Fictional client assignments</p>
-          <h2>Meet the five committee case sets</h2>
-          <p>Open only your assigned team page. The inquiry line identifies tensions to investigate, not a conclusion to copy.</p>
+          <h2>Find your committee's three clients</h2>
+          <p>Open your assigned team page for the baseline slides and scenario-analysis sequence. The inquiry line identifies tensions to investigate, not a conclusion to copy.</p>
           ${clientSetBoard()}
           <div class="resource-list resource-list-inline">${resourceLinks(["client-data"], prefix, { includeDescription: true })}</div>
         </section>
 
         <section>
-          <p class="section-kicker">Five-person interview</p>
-          <h2>One round per analyst role</h2>
-          <p>Each analyst asks questions in their lane, then hands a usable constraint or information gap to the next analyst. All five roles enter a human-first judgment for all three clients before AI use.</p>
-          ${interviewRoundBoard()}
+          <p class="section-kicker">Five analyst lenses</p>
+          <h2>Read each scenario through every role</h2>
+          <p>Each role examines the same provided case from its area of responsibility and hands a usable constraint, assumption, or information gap to the committee. All five roles enter a human-first judgment for all three clients before AI use.</p>
+          ${analystLensBoard()}
         </section>
 
         <section>
@@ -677,7 +599,7 @@ function clientDiscoveryPage() {
 
         <section>
           <div class="milestone-banner">
-            <div><p class="section-kicker">Next decision</p><h2>Convert discovery into the client mandate</h2><p>Carry each approved guardrail into the IPS, then use it as a pass/fail screen when the team evaluates bonds, mutual funds, ETFs, portfolio weights, and stress results.</p></div>
+            <div><p class="section-kicker">Next decision</p><h2>Convert scenario analysis into the client mandate</h2><p>Carry each approved guardrail into the IPS, then use it as a pass/fail screen when the team evaluates bonds, mutual funds, ETFs, portfolio weights, and stress results.</p></div>
             <div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(path.basename(phasePath(model.phases[0])))}">Return to Phase 1</a><a class="button" href="${escapeHtml(prefixPath(prefix, "index.html"))}">Project overview</a></div>
           </div>
         </section>
@@ -980,9 +902,9 @@ await fs.writeFile(path.join(rootDir, roadmapPath), roadmapPage());
 await fs.writeFile(path.join(rootDir, "project", "guide.html"), guidePage("../"));
 await fs.writeFile(path.join(rootDir, "BUS331_InvProject_Requirements_AllPhases.html"), guidePage(""));
 await fs.writeFile(path.join(rootDir, clientDiscoveryPath), clientDiscoveryPage());
-await fs.writeFile(path.join(rootDir, "project", "client-role-play", "instructor-demo.html"), instructorDemoPage());
+await fs.writeFile(path.join(rootDir, "project", "client-role-play", "instructor-demo.html"), formerDemoPage());
 for (const set of model.phase1Experience.clientSets) {
-  await fs.writeFile(path.join(rootDir, "project", "client-role-play", `${teamSlug(set.team)}.html`), teamRolePlayPage(set));
+  await fs.writeFile(path.join(rootDir, "project", "client-role-play", `${teamSlug(set.team)}.html`), teamScenarioPage(set));
 }
 await fs.writeFile(path.join(rootDir, securityWorkflowPath), securityAnalysisPage());
 await fs.writeFile(path.join(rootDir, portfolioStressPath), portfolioStressPage());

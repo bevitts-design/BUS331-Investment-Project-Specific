@@ -15,7 +15,7 @@ The student Phase 1 page presents two ordered assignments: **Macroeconomic Analy
 Required evidence:
 
 - Human-first client judgment recorded before AI use
-- Instructor-led demonstration and structured human client role-play for each assigned client
+- Assigned team profile slides and client-data rows for each of three fictional clients, with supplied facts separated from reasoned, labeled assumptions
 - Continuing project-wide decision and audit trail in the Analyst Decision Log, with student access on the overview and current phase pages
 - Human-first macro read using the historical dataset
 - FRED historical observations plus comparable source-dated external forecasts or consensus where available
@@ -75,7 +75,7 @@ BUS331-Investment-Project-Specific/
     build-client-guide-canvas.py         # derives a Canvas page fragment from the maintained client guide
     build-project-guide-pdf.py          # generates printable phase checklists and the legacy PDF alias
     build-final-rubric-pdf.py           # generates the public Phase 3 rubric from project-model.json
-    client-interview-simulator.js       # voice recording, typed fallback, transcript, and notes client
+    client-interview-simulator.js       # unlinked prototype; not part of the current student assignment
     build-investment-committee-decision-record.mjs
                                         # generates the student committee record workbook
     update-security-selection-workbook.mjs
@@ -97,7 +97,7 @@ BUS331-Investment-Project-Specific/
     canvas-submission-guide.html        # generated student submission contract
     macro-analysis.html                  # maintained workbook-mapped Part 1 student guide
     client-analysis.html                 # maintained Decision Record and IPS-mapped Part 2 student guide
-    client-discovery-ai-protocol.html   # generated Phase 1 Part 2 workflow
+    client-discovery-ai-protocol.html   # generated scenario-analysis workflow at a retained URL
     security-analysis-selection.html    # generated Phase 2 security workflow and templates
     portfolio-management-stress-testing.html
                                         # generated Phase 2 allocation, IPS, and stress workflow
@@ -132,7 +132,7 @@ BUS331-Investment-Project-Specific/
 - the three stable phase IDs
 - the five stable role IDs
 - phase objectives, evidence, committee gates, and deliverables
-- fictional-client team sets, team-specific structured role-play pages, five-role interview rounds, the Phase 1 decision cycle, and the public student-facing activity instructions
+- fictional-client team sets, team-specific scenario pages, five analyst lenses, the Phase 1 decision cycle, and fact-versus-assumption rules
 - Phase 2 8–10 holding boundaries, funds/ETFs-first implementation, limited individual securities, final-holding scorecards, optional consequential decision notes, Holding & Exposure Reality Check, conditional direct-security add-on, FactSet evidence-log, portfolio-integration, IPS-compliance, bear-case, residual-risk, one-hedge/no-hedge, correction, and re-test contracts
 - the Analyst Decision Log contract, including recommendations, alternatives rejected, key trade-offs, PM integration and residual-risk evidence, and complete five-role-by-three-client coverage before the Phase 1 gate
 - the four Canvas assignment contracts, including separate Phase 1 packages, exact filenames, allowed file types, preflight checks, private licensed-evidence handling, and receipt retention
@@ -146,7 +146,7 @@ The overview is the project orientation and phase selector. Each phase page owns
 
 `canvas/phase-1-macro-step-by-step-page.html` is a body-only, inline-styled Canvas page fragment derived from `project/macro-analysis.html` by `python3 scripts/build-macro-guide-canvas.py`. It uses absolute public resource links and omits the later client-analysis and Decision Record handoffs so the Canvas page covers only the Macro Starter assignment. Update the maintained guide first, then rebuild this fragment; the assignment fragment remains a separate file. Generating the fragment does not install or publish a Canvas page.
 
-`canvas/phase-1-client-step-by-step-page.html` is the corresponding body-only, inline-styled Part 2 Canvas page fragment, derived from `project/client-analysis.html` by `python3 scripts/build-client-guide-canvas.py`. It covers the Decision Record, human client role-play, three IPS mandates, memo, Gate 1, and the three-file Part 2 submission. It uses absolute public resource links and does not reassign the Part 1 macro workbook for upload. Update the maintained guide before rebuilding this fragment; installation in Canvas is separate.
+`canvas/phase-1-client-step-by-step-page.html` is the corresponding body-only, inline-styled Part 2 Canvas page fragment, derived from `project/client-analysis.html` by `python3 scripts/build-client-guide-canvas.py`. It covers the Decision Record, scenario-based IPS assumptions, three IPS mandates, memo, Gate 1, and the three-file Part 2 submission. It uses absolute public resource links and does not reassign the Part 1 macro workbook for upload. Update the maintained guide before rebuilding this fragment; installation in Canvas is separate.
 
 `canvasSubmissions` is the authoritative team-submission contract. The builder turns it into the public student guide and four inline-styled fragments ready to paste into Canvas. Those generated fragments do not change the live Canvas course. An instructor must separately configure each assignment as a group file-upload assignment, choose the correct group set, set approved points and dates, and confirm the contract in Student View.
 
@@ -154,7 +154,7 @@ The submission contract uses `BUS331_[TeamName]_` for every required filename. `
 
 `files/Macro_Starter_Template_Student.xlsx` is the maintained native student workbook for Phase 1 Part 1 in this repository. The copy in Downloads is not a source. Its Historical Data tab contains a dated FRED snapshot with GDP quarterly observations and monthly CPI, yield spread, sentiment, and effective fed funds observations; do not silently extend or interpolate missing observations. The separate private instructor repository does not currently provide a matching macro answer key. The separate `files/BUS331_Investment_Committee_Decision_Record_Student.xlsx` begins with client analysis in Part 2: its Analyst Decision Log records the client-by-client role judgments, its Phase 1 sheet records the Gate 1 vote, and the team continues the same record in later phases. Only the Macro Starter workbook is submitted in Part 1; the Decision Record is submitted with the Part 2 client package.
 
-Phase 1 uses no AI interview service or copied student prompts. The student site explains the instructor-led Sally Hart demonstration and gives each team a separate activity page. The designated client-role student receives a sealed instructor-controlled card; the other committee members ask their own neutral questions, record a concise summary, mark information gaps, and translate the findings into guardrails. The sealed cards, demonstration materials, Scenario Reveal packets, and release log are maintained only in `BUS331-instructor/Investment_Project/instructor-control-center/`.
+Phase 1 Part 2 uses the supplied fictional client profiles and client-data workbook. Students make human-first judgments, complete the IPS fields from provided facts, and fill unanswered fields with plausible scenario-based assumptions that are explicitly labeled and explained. An unsupported exact value remains marked for later confirmation. The maintained native IPS DOCX prompts for scenario evidence, a provisional strategic allocation totaling 100%, and a simulation review instead of invented client quotations or signatures. The generated team pages retain their existing URLs but now point to the assigned scenario files. The older interview prototype and private role cards are outside the current student workflow. Scenario Reveal packets and release controls remain in `BUS331-instructor/Investment_Project/instructor-control-center/`.
 
 ## Instructor-only structure
 

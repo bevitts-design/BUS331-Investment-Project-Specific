@@ -65,10 +65,8 @@ def main():
                 story += [p(f"- {item}",s["Smallx"]) for item in phase["deliverables"][start:end]]
                 if part["id"] == "client-submissions":
                     story += [
-                        p("Client-discovery activity",s["H3x"]),
-                        p("First observe the instructor-led practice interview. Then open only your team's role-play page. For each assigned client, one designated member receives a sealed client card while the other members ask their own neutral questions. Rotate the client role across the three cases.",s["Bodyx"]),
-                        p("The client reveals only what the sealed card establishes. If a fact is not established, record an information gap. After each interview, write a concise summary, the provisional guardrails, and the downstream decision each guardrail could affect in the Analyst Decision Log. No AI prompt or student AI account is required for this activity.",s["Bodyx"]),
-                        p("Submit the client-analysis package after Gate 1. Reference the already submitted macro forecast; do not upload it again.",s["Smallx"])
+                        p("Client scenario analysis",s["H3x"]),
+                        p("Use only the assigned profile slides and matching data rows. Complete each IPS from supplied facts and labeled, justified assumptions; cite scenario evidence rather than inventing client statements. Propose an allocation totaling 100%. Mark unsupported exact values for later confirmation. No interview is assigned.",s["Smallx"])
                     ]
                 story += [p(f"Canvas assignment {number}: {assignment['canvasTitle']}",s["H3x"]),p(assignment["submissionProcess"],s["Smallx"])]
                 story += [p(f"[ ] {item}",s["Smallx"]) for item in assignment["preflight"]]
