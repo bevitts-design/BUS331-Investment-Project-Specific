@@ -1,41 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Phase 01 · Macro Foundations · BUS331</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root { --navy: #0a1628; --navy-mid: #112240; --gold: #c9a84c; --ice: #d6e4f0; --white: #ffffff; --text-muted: #a8b8cc; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); line-height: 1.6; }
-  .container { max-width: 900px; margin: 0 auto; padding: 4rem 1.5rem; }
-  .back-link { font-family: 'DM Mono', monospace; color: var(--gold); text-decoration: none; font-size: 0.8rem; display: block; margin-bottom: 2rem; }
-  header { border-bottom: 1px solid var(--gold); padding-bottom: 2rem; margin-bottom: 3rem; }
-  .label { font-family: 'DM Mono', monospace; color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; }
-  h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-top: 0.5rem; }
-  .role-badge { display: inline-block; background: rgba(201,168,76,0.1); color: var(--gold); padding: 4px 12px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 0.7rem; margin-top: 1rem; }
-  .content-block { background: var(--navy-mid); padding: 2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 2rem; }
-  h2 { font-family: 'Playfair Display', serif; margin-bottom: 1rem; color: var(--gold); font-size: 1.4rem; }
-  ul { margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--text-muted); }
-  li { margin-bottom: 0.5rem; }
-  .resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
-  .file-btn { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.2); padding: 1rem; border-radius: 6px; color: var(--ice); text-decoration: none; transition: 0.2s; font-size: 0.85rem; }
-  .file-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A step-by-step guide to the BUS331 Phase 1 macro forecast: interpret the evidence yourself, use AI to challenge the view, verify claims, and submit the workbook.">
+  <title>Macro Forecast: Step-by-Step Guide · BUS331</title>
+  <link rel="stylesheet" href="../styles/bus331-investment-project.css?v=20260927-macro-guide-1">
 </head>
-<body>
-<div class="container">
-  <a href="../index.html" class="back-link">← BACK TO PORTAL</a>
-  <header><span class="label">Project Phase 01</span><h1>Macro Foundations</h1><div class="role-badge">Lead: Macro Analyst</div></header>
-  <div class="content-block"><h2>Objective</h2><p>Build a shared macroeconomic view that drives every portfolio decision for the rest of the semester.</p></div>
-  <div class="content-block"><h2>Required Analysis</h2><ul><li>Evaluate Real GDP, CPI Inflation, and Federal Funds Rate.</li><li>Analyze the 10Y-2Y yield curve spread and Consumer Sentiment.</li><li>Establish <strong>Bull, Base, and Bear</strong> scenarios with assigned probabilities.</li></ul></div>
-  <div class="content-block"><h2>Resources & Templates</h2>
-    <div class="resource-grid">
-      <a href="phase-1-frame-the-mandate.html#macro-analysis" class="btn file-btn">Phase 1 Part 1: Macroeconomic Analysis</a>
-      <a href="../files/Macro_Starter_Template_Student.xlsx" class="btn file-btn">📊 Macro Starter Template (XLSX)</a>
+<body class="guide-page macro-guide">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark">331</span>
+        <span>BUS331 · Investments<small>Investment Committee Simulation</small></span>
+      </a>
+      <nav class="site-nav" aria-label="Project navigation">
+        <a href="../index.html">Overview</a>
+        <a href="phase-1-frame-the-mandate.html#macro-analysis" aria-current="page">Phase 1</a>
+        <a href="phase-2-build-and-challenge.html">Phase 2</a>
+        <a href="phase-3-defend-the-recommendation.html">Phase 3</a>
+        <a href="canvas-submission-guide.html">Canvas submissions</a>
+        <a href="assessment.html">Assessment</a>
+      </nav>
+      <details class="mobile-nav">
+        <summary>Menu</summary>
+        <nav aria-label="Mobile project navigation">
+          <a href="../index.html">Overview</a>
+          <a href="phase-1-frame-the-mandate.html#macro-analysis" aria-current="page">Phase 1</a>
+          <a href="phase-2-build-and-challenge.html">Phase 2</a>
+          <a href="phase-3-defend-the-recommendation.html">Phase 3</a>
+          <a href="canvas-submission-guide.html">Canvas submissions</a>
+          <a href="assessment.html">Assessment</a>
+        </nav>
+      </details>
     </div>
-  </div>
-</div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="page-intro">
+        <p class="eyebrow">Phase 1 · Part 1 · Student working guide</p>
+        <h1>Build your macro forecast, step by step</h1>
+        <p>Read the evidence and write your own interpretation first. Then ask AI to challenge your assumptions. Verify useful challenges against independent sources before the team decides what to change.</p>
+        <div class="macro-guide-actions">
+          <a class="button button-primary" href="../files/Macro_Starter_Template_Student.xlsx">Download the macro workbook</a>
+          <a class="button button-secondary" href="phase-1-frame-the-mandate.html#macro-analysis">See the Part 1 assignment</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-shell">
+      <div class="macro-guide-intro">
+        <div>
+          <p class="section-kicker">Your sequence</p>
+          <h2>Human view → AI challenge → independent check → team decision</h2>
+          <p>Work in the <a href="../files/Macro_Starter_Template_Student.xlsx">project macro starter workbook</a>. Keep your original view visible even when you revise it. This assignment produces one shared 12-month forecast; the separate client-analysis assignment uses that submitted forecast later.</p>
+        </div>
+        <aside class="macro-guide-deliverable" aria-label="Part 1 deliverable">
+          <strong>Submit for Part 1</strong>
+          <code>BUS331_[TeamName]_Phase1_Macro.xlsx</code>
+          <span>One completed workbook per team. Replace [TeamName] with the name on Team Information, omitting spaces and punctuation; for example, Harbor Analysts becomes HarborAnalysts.</span>
+        </aside>
+      </div>
+
+      <div class="callout">
+        <h2>Two workbooks, two jobs</h2>
+        <ul>
+          <li><strong>Part 1 — Macro Starter:</strong> Use <a href="../files/Macro_Starter_Template_Student.xlsx">Macro_Starter_Template_Student.xlsx</a> for the historical read, human interpretation, AI challenge, numerical forecast, and scenarios. Submit the completed macro workbook for Assignment 1.</li>
+          <li><strong>Part 2 — Decision Record:</strong> Open the separate <a href="../files/BUS331_Investment_Committee_Decision_Record_Student.xlsx">committee Decision Record</a> when client analysis begins. Use its Analyst Decision Log for each role's client judgments and its Phase 1 sheet for the Gate 1 vote. Submit that workbook with the client-analysis package, then continue the same record in later phases.</li>
+        </ul>
+      </div>
+
+      <nav class="macro-guide-jump" aria-label="Guide sections">
+        <a href="#human-first">1 · Form the human view</a>
+        <a href="#ai-challenge">2 · Challenge and verify</a>
+        <a href="#scenarios-submit">3 · Decide and submit</a>
+      </nav>
+
+      <section class="macro-guide-section" id="human-first" aria-labelledby="human-first-title">
+        <p class="section-kicker">Before using AI</p>
+        <h2 id="human-first-title">Form and preserve your own interpretation</h2>
+        <ol class="macro-steps">
+          <li class="macro-step">
+            <div class="macro-step-head"><span class="macro-step-number" aria-hidden="true">1</span><div><h3>Start the Macro Starter workbook</h3><p class="macro-step-tab">Macro Starter: Team Information · Economic Outlook Roles</p></div></div>
+            <p>Open <a href="../files/Macro_Starter_Template_Student.xlsx">Macro_Starter_Template_Student.xlsx</a>. On Team Information, enter the team name and four or five distinct members. Assign all five official committee roles, then save a team copy as <code>BUS331_[TeamName]_Phase1_Macro.xlsx</code>. On a four-person team, one member holds two roles; that person still counts as one member and later casts one vote. Use Economic Outlook Roles to divide the macro research and peer review.</p>
+            <p class="macro-step-output"><strong>Check:</strong> Each role has an owner, and every member knows which evidence they will bring to the team.</p>
+          </li>
+          <li class="macro-step">
+            <div class="macro-step-head"><span class="macro-step-number" aria-hidden="true">2</span><div><h3>Read the historical record before forecasting</h3><p class="macro-step-tab">Workbook: Historical Data · 10-2 Spread Explanation</p></div></div>
+            <p>Review the five-year window and the latest observations for real GDP, CPI inflation, the 10-year minus 2-year Treasury spread, consumer sentiment, and the effective fed funds rate. Note each source, observation period, unit, and retrieval date. GDP is quarterly; the other series are monthly. GDP quarter-over-quarter annualized growth differs from four-quarter year-over-year growth. The yield spread is in percentage points, not a percentage return.</p>
+            <p>Keep historical observations separate from forecasts. Leave missing observations blank rather than estimating them. A negative yield spread is a signal to investigate, not a dated recession prediction.</p>
+            <p class="macro-step-output"><strong>Check:</strong> You can explain what each measure says, what period it describes, and one important limit.</p>
+          </li>
+          <li class="macro-step">
+            <div class="macro-step-head"><span class="macro-step-number" aria-hidden="true">3</span><div><h3>Write the human evidence read</h3><p class="macro-step-tab">Workbook: Phase 1 Worksheet, columns B–E</p></div></div>
+            <p>Answer the worksheet questions yourselves before opening an AI tool. For each response, name the exact series and period, give the source link or publication and retrieval date, and explain why the observation matters or where it is uncertain. Compare signals that disagree; do not turn a correlation into a causal claim.</p>
+            <div class="macro-guide-example"><strong>Useful writing pattern</strong><p>“We observed [measure and period]. We interpret it as [possible meaning] because [supporting evidence]. An alternative reading is [other explanation]. We would reconsider if [observable signal].”</p></div>
+            <p class="macro-step-output"><strong>Check:</strong> Someone outside your team can tell which sentences are observations and which are your interpretations.</p>
+          </li>
+          <li class="macro-step">
+            <div class="macro-step-head"><span class="macro-step-number" aria-hidden="true">4</span><div><h3>Record an initial committee view</h3><p class="macro-step-tab">Workbook: Initial Estimate vs AI, column B</p></div></div>
+            <p>Discuss the evidence as a team. Enter your initial view for the economic regime, GDP growth, inflation expectations, fed funds path, sentiment, and primary risk or yield curve. State a 12-month direction or estimate when you can defend one, plus a reason and a key uncertainty. Preserve column B as the pre-AI view, even if later evidence changes your conclusion.</p>
+            <p class="macro-step-output"><strong>Check:</strong> Every topic has a human-authored view before any AI challenge is recorded.</p>
+          </li>
+          <li class="macro-step">
+            <div class="macro-step-head"><span class="macro-step-number" aria-hidden="true">5</span><div><h3>Put numbers and comparisons on the same basis</h3><p class="macro-step-tab">Workbook: Numerical Expectations</p></div></div>
+            <p>Read the latest observed value and period in columns B–C. Where available, enter a source-dated, genuinely comparable external forecast or consensus in D–G. Enter the team's initial 12-month base estimate in H, with rationale and reviewer or uncertainty in I–J. Copy the initial estimate, measure, and horizon into the matching human-view entry on Initial Estimate vs AI before using AI; a later change to H must not erase the starting number. Include a CPI inflation expectation. If no comparable external forecast exists for a measure, leave its comparison cell blank and explain that in the rationale.</p>
+            <p>Check each comparison's definition, units, and horizon. A historical FRED observation is not a forecast or consensus, and a different inflation measure or date is not automatically comparable.</p>
+            <p class="macro-step-output"><strong>Check:</strong> Your initial numerical view is recorded before AI, and every external number has a publication or as-of date.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="macro-guide-section" id="ai-challenge" aria-labelledby="ai-challenge-title">
+        <p class="section-kicker">After the initial view is saved</p>
+        <h2 id="ai-challenge-title">Use AI to challenge; verify the result yourselves</h2>
+        <ol class="macro-steps" start="6">
+          <li class="macro-step">
+            <div class="macro-step-head"><span class="macro-step-number" aria-hidden="true">6</span><div><h3>Ask for the strongest challenge to your thesis</h3><p class="macro-step-tab">Workbook: Initial Estimate vs AI, column C</p></div></div>
+            <p>Give the tool a short summary of your human view, the public observations you used, their periods, and your stated uncertainties. Ask it to find competing interpretations, weak assumptions, missing indicators, unit or horizon mismatches, and observations that would disconfirm your base case. Ask for questions to investigate, not a finished forecast.</p>
+            <div class="macro-guide-prompt" aria-label="Example AI challenge prompt"><strong>Prompt you can adapt</strong><blockquote>Our team’s human-written 12-month macro view is: [paste your own summary]. We based it on these public, dated observations: [series, value, unit, period]. Our main uncertainty is [uncertainty]. Act as a skeptical committee member. Give the strongest plausible alternative interpretation, identify assumptions or measure mismatches we may have missed, and name observable evidence that would change our view. Distinguish facts from hypotheses. Do not invent data, citations, or a final answer for us.</blockquote></div>
+            <p>Use only public or otherwise approved, shareable information in an AI tool. Do not paste client profiles, student information, credentials, proprietary FactSet captures, or licensed exports into it.</p>
+            <p class="macro-step-output"><strong>Check:</strong> The AI output is framed as a challenge, not as a source or an answer to copy.</p>
+          </li>
+          <li class="macro-step">
+            <div class="macro-step-head"><span class="macro-step-number" aria-hidden="true">7</span><div><h3>Investigate each material challenge and decide</h3><p class="macro-step-tab">Workbook: Initial Estimate vs AI, columns C–H</p></div></div>
+            <p>Summarize the useful AI challenge in C and isolate any claim or number that needs checking in D. Verify it in FRED, the original release, an approved licensed source, or another credible primary source; record the source and as-of period or date in E. In F, mark the claim accepted, rejected, or uncertain. In G, explain the team's final view and why it changed or stayed the same. Have another member review it in H.</p>
+            <p>If the challenge improves your forecast, update the final estimate and rationale on Numerical Expectations while keeping the original column B view intact. If a claim cannot be verified, leave it out of the final reasoning or label the uncertainty clearly. AI output and AI-suggested citations are never independent evidence.</p>
+            <p class="macro-step-output"><strong>Check:</strong> A reader can trace each material revision from the human starting point through the challenge, source check, and final decision.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="macro-guide-section" id="scenarios-submit" aria-labelledby="scenarios-submit-title">
+        <p class="section-kicker">Committee conclusion</p>
+        <h2 id="scenarios-submit-title">Translate the final view into scenarios and submit</h2>
+        <ol class="macro-steps" start="8">
+          <li class="macro-step">
+            <div class="macro-step-head"><span class="macro-step-number" aria-hidden="true">8</span><div><h3>Build distinct bull, base, and bear cases</h3><p class="macro-step-tab">Workbook: Bull Base Bear Cases · Risk Matrix</p></div></div>
+            <p>Use the same 12-month horizon and metric definitions in all three cases. The Base case links to the final team forecasts in Numerical Expectations H5–H8. Enter the bull and bear estimates, a probability for every case, distinct drivers, dated evidence, client or asset implications, and a signal that would challenge each case. Probabilities must total 100%; the weighted result is meaningful only when all case inputs are complete.</p>
+            <p>In Risk Matrix, explain how each current signal could fit each case. Add a watch threshold, a possible client or asset response, and an owner or review date. A threshold tells the team when to reconsider; it is not proof that one case will occur.</p>
+            <p class="macro-step-output"><strong>Check:</strong> Inflation appears in all cases, the probability check passes, and the risk responses follow from the evidence rather than an AI assertion.</p>
+          </li>
+          <li class="macro-step">
+            <div class="macro-step-head"><span class="macro-step-number" aria-hidden="true">9</span><div><h3>Peer-review the workbook and submit Part 1</h3><p class="macro-step-tab">Workbook: all tabs · Canvas: Phase 1 Part 1</p></div></div>
+            <p>Ask a teammate who did not write each section to check source periods, formulas, units, the initial-versus-final reasoning trail, and scenario completeness. Confirm the team information covers all five roles, with four or five actual members. Save the completed workbook using the team name: <code>BUS331_[TeamName]_Phase1_Macro.xlsx</code>. One designated member uploads it to the separate Macro Forecast group assignment; every member checks the Canvas receipt.</p>
+            <p>Carry this submitted forecast into Part 2. Open the separate <a href="../files/BUS331_Investment_Committee_Decision_Record_Student.xlsx">Decision Record workbook</a> for the client-by-client Analyst Decision Log and Gate 1 vote; submit that file with the Part 2 client-analysis package. If the macro view later changes, record the reason there rather than silently replacing the original macro submission.</p>
+            <p class="macro-step-output"><strong>Check:</strong> The saved file opens, required fields are complete, and the team has a Canvas receipt for Assignment 1.</p>
+          </li>
+        </ol>
+      </section>
+
+      <div class="callout macro-guide-next">
+        <h2>Ready to hand in the macro forecast?</h2>
+        <p>Check the <a href="canvas-submission-guide.html#phase-1-macro-canvas">Part 1 submission instructions</a> for the exact upload contract. Use <a href="phase-1-frame-the-mandate.html#client-submissions">Phase 1 Part 2</a> after the macro workbook is submitted.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-shell">
+      <div><strong>BUS331 · Investments</strong><br>Gerrish School of Business · Endicott College</div>
+      <div>Fall 2026 · Investment Committee Simulation</div>
+    </div>
+  </footer>
 </body>
 </html>

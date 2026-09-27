@@ -66,6 +66,7 @@ if (!roadmap) {
   for (const required of ["historical", "human-first", "FactSet", "FRED", "bull", "base", "bear", "100%", "macro", "mandate"]) {
     if (!new RegExp(required, "i").test(phaseOneText)) fail(`Phase 1 roadmap sequence is missing its detailed macro-analysis requirement: ${required}.`);
   }
+  if (!/Part 1 macro reasoning stays in the Macro Starter workbook/.test(roadmap.decisionLogGuidance?.usage || "") || !/In Part 2, open the separate committee Decision Record/.test(roadmap.decisionLogGuidance?.usage || "")) fail("Project-wide Decision Log guidance must distinguish the Part 1 macro workbook from the Part 2 Decision Record.");
   const phaseOne = model.phases.find((phase) => phase.id === "phase-1");
   const parts = roadmap.phase1Parts || [];
   if (parts.map((part) => part.id).join("|") !== "macro-analysis|client-submissions") fail("Phase 1 must have macroeconomic analysis followed by client submissions.");
@@ -84,6 +85,7 @@ if (!roadmap) {
 
 if (model.phases.length !== 3) fail(`Expected exactly 3 phases; found ${model.phases.length}.`);
 if (model.roles.length !== 5) fail(`Expected exactly 5 committee roles; found ${model.roles.length}.`);
+if (model.project?.teamSizeOptions?.join(",") !== "4,5" || model.project.roleCount !== 5) fail("Four or five students must cover the five official committee roles.");
 
 const requiredRoleTitles = [
   "Client and Macro Strategist",
@@ -173,14 +175,18 @@ if (phaseIds.size !== model.phases.length) fail("Phase IDs must be unique.");
 if (roleIds.size !== model.roles.length) fail("Role IDs must be unique.");
 if (model.phases.map((phase) => phase.number).join(",") !== "1,2,3") fail("Phase numbers must be 1, 2, and 3 in order.");
 
-if (model.canvasSubmissions?.assignments?.map((item) => item.phaseId).join(",") !== "phase-1,phase-2,phase-3") {
-  fail("Canvas submission workflow must define one assignment for each phase in order.");
+if (model.canvasSubmissions?.assignments?.map((item) => item.id || item.phaseId).join(",") !== "phase-1-macro,phase-1-client,phase-2,phase-3") {
+  fail("Canvas submission workflow must define separate Phase 1 macro and client assignments, then Phase 2 and 3.");
 } else {
+  const [macro, client] = model.canvasSubmissions.assignments;
+  if (macro.partId !== "macro-analysis" || client.partId !== "client-submissions" || macro.phaseId !== "phase-1" || client.phaseId !== "phase-1") fail("Phase 1 assignment parts are misaligned with the roadmap.");
+  if (macro.requiredFiles.length !== 1 || macro.requiredFiles[0].name !== "BUS331_[TeamName]_Phase1_Macro.xlsx" || client.requiredFiles.some((file) => file.name === macro.requiredFiles[0].name)) fail("The macro workbook must be submitted only in the Part 1 assignment.");
+  if (!/Team Information/i.test(model.canvasSubmissions.fileNamingRule || "") || !/\[TeamName\]/.test(model.canvasSubmissions.fileNamingRule || "") || !/omitting spaces and punctuation/i.test(model.canvasSubmissions.fileNamingRule || "")) fail("The submission workflow must explain how to use the workbook team name in filenames.");
   const submissionNames = new Set();
   for (const assignment of model.canvasSubmissions.assignments) {
     if (!assignment.requiredFiles?.length || !assignment.preflight?.length || !assignment.submissionProcess || typeof assignment.includePrivateEvidenceBoundary !== "boolean") fail(`${assignment.phaseId} Canvas submission is incomplete.`);
     for (const file of assignment.requiredFiles || []) {
-      if (!/^BUS331_Team##_/i.test(file.name)) fail(`${assignment.phaseId} Canvas filename must use the BUS331_Team##_ convention: ${file.name}.`);
+      if (!file.name.startsWith("BUS331_[TeamName]_")) fail(`${assignment.phaseId} Canvas filename must use the BUS331_[TeamName]_ convention: ${file.name}.`);
       if (submissionNames.has(file.name)) fail(`Duplicate Canvas submission filename: ${file.name}.`);
       submissionNames.add(file.name);
       const extension = file.name.split(".").pop().toLowerCase();
@@ -232,10 +238,11 @@ const generatedFiles = [
 
 const canvasFragments = model.canvasSubmissions.assignments.map((assignment) => {
   const phase = model.phases.find((item) => item.id === assignment.phaseId);
-  return `canvas/phase-${phase.number}-assignment.html`;
+  return `canvas/${assignment.outputFile || `phase-${phase.number}-assignment.html`}`;
 });
 
 const supportingHtmlFiles = [
+  "project/macro-analysis.html",
   "project/BUS331_InvProject_Bridge_CME_Guide.html",
   "project/BUS331_InvProject_SecuritySelection_Guide.html",
   "project/BUS331_InvProject_StressTest_Guide.html",
@@ -244,7 +251,7 @@ const supportingHtmlFiles = [
 
 const hrefPattern = /href="([^"]+)"/g;
 const oldPhasePattern = /\bPhase\s+(?:0?[4-6])\b/i;
-const forbiddenPublicPattern = /Fund and ETF Analyst|Portfolio Manager and Risk Analyst|four-person|all four|at least 10 securities|every client needs at least one derivative|mandatory.{0,30}hedge|required.{0,20}compare to at least 1 alternative|complete one thesis block per security|completed exemplar|worked example|Priya Mehta/i;
+const forbiddenPublicPattern = /Fund and ETF Analyst|Portfolio Manager and Risk Analyst|all four (?:committee )?roles|at least 10 securities|every client needs at least one derivative|mandatory.{0,30}hedge|required.{0,20}compare to at least 1 alternative|complete one thesis block per security|completed exemplar|worked example|Priya Mehta/i;
 
 for (const relative of generatedFiles) {
   const absolute = path.join(rootDir, relative);
@@ -296,6 +303,7 @@ for (const [index, relative] of canvasFragments.entries()) {
   if (/public repository|private repository/i.test(html)) fail(`${relative} should direct students to Canvas without repository terminology.`);
   if (forbiddenPublicPattern.test(html)) fail(`${relative} contains a retired role, obsolete portfolio rule, or completed-example marker.`);
   if (!/Submission process/i.test(html)) fail(`${relative} is missing its submission process.`);
+  if (!html.includes("[TeamName]") || !html.includes("Harbor Analysts")) fail(`${relative} is missing the team-name filename instruction.`);
   for (const file of model.canvasSubmissions.assignments[index].requiredFiles) {
     if (!html.includes(file.name)) fail(`${relative} is missing required filename ${file.name}.`);
   }
@@ -327,6 +335,21 @@ for (const relative of supportingHtmlFiles) {
     }
     if (!(await exists(target))) fail(`${relative} has a broken local link: ${href}.`);
   }
+}
+
+const macroGuide = await fs.readFile(path.join(rootDir, "project/macro-analysis.html"), "utf8");
+for (const required of [
+  "Human view → AI challenge → independent check → team decision",
+  "Two workbooks, two jobs",
+  "Macro_Starter_Template_Student.xlsx",
+  "BUS331_Investment_Committee_Decision_Record_Student.xlsx",
+  "Phase 1 Worksheet, columns B–E",
+  "Initial Estimate vs AI, column B",
+  "Numerical Expectations H5–H8",
+  "Do not invent data, citations, or a final answer",
+  "BUS331_[TeamName]_Phase1_Macro.xlsx"
+]) {
+  if (!macroGuide.includes(required)) fail(`Macro step-by-step guide is missing a required workflow element: ${required}.`);
 }
 
 async function extractOfficeText(relative) {
@@ -377,8 +400,13 @@ for (const relative of officeArtifacts) {
       }
     }
     if (/Decision_Record/i.test(relative)) {
-      for (const required of ["Equity Analyst", "Risk and Derivatives Analyst", "Alternative(s) rejected", "Key trade-off", "15"]) {
+      for (const required of ["Equity Analyst", "Risk and Derivatives Analyst", "Alternative(s) rejected", "Key trade-off", "15", "VOTING MEMBERS", "Member 5 (optional)", "one vote"]) {
         if (!text.toLowerCase().includes(required.toLowerCase())) fail(`${relative} is missing current five-role decision-log content: ${required}.`);
+      }
+    }
+    if (relative === "files/Macro_Starter_Template_Student.xlsx") {
+      for (const required of ["Risk and Derivatives Analyst", "CPIAUCNS", "T10Y2Y", "Inflation expectations", "Bull Base Bear Cases", "Probability check", "Independent source", "2026-09-27"]) {
+        if (!text.toLowerCase().includes(required.toLowerCase())) fail(`${relative} is missing current macro-workbook content: ${required}.`);
       }
     }
   } catch (error) {
@@ -420,11 +448,16 @@ for (const requiredText of ["Open the phase you're working on", "Use one page fo
 }
 const roadmapHtml = await fs.readFile(path.join(rootDir, roadmapPath), "utf8");
 const phaseOneHtml = await fs.readFile(path.join(rootDir, phasePath(model.phases[0])), "utf8");
-for (const required of ["Macroeconomic Analysis", "Client Submissions", 'id="macro-analysis"', 'id="client-submissions"', "Submit one Phase 1 package after Gate 1", "Client discovery comes first"]) {
+if (await exists(path.join(rootDir, "canvas", "phase-1-assignment.html"))) fail("Retired combined Phase 1 Canvas fragment remains in the build output.");
+for (const required of ["Macroeconomic Analysis", "Client Submissions", 'id="macro-analysis"', 'id="client-submissions"', "Assignment 1: submit the macro forecast", "Assignment 2: submit client analysis after Gate 1", "Client discovery comes first"]) {
   if (!phaseOneHtml.includes(required)) fail(`Phase 1 page is missing its two-part working path: ${required}.`);
 }
+for (const required of ["Open the Macro Starter workbook", "Open the separate Decision Record"]) {
+  if (!phaseOneHtml.includes(required)) fail(`Phase 1 page is missing its workbook handoff: ${required}.`);
+}
+if (!phaseOneHtml.includes('href="../project/macro-analysis.html"')) fail("Phase 1 Part 1 must link to the macro step-by-step guide.");
 if (phaseOneHtml.indexOf('id="macro-analysis"') > phaseOneHtml.indexOf('id="client-submissions"')) fail("Phase 1 page places client submissions before macroeconomic analysis.");
-for (const file of model.canvasSubmissions.assignments.find((assignment) => assignment.phaseId === "phase-1").requiredFiles) {
+for (const file of model.canvasSubmissions.assignments.filter((assignment) => assignment.phaseId === "phase-1").flatMap((assignment) => assignment.requiredFiles)) {
   if (!phaseOneHtml.includes(file.name)) fail(`Phase 1 page is missing required Canvas filename: ${file.name}.`);
 }
 for (const phase of model.phases) {
@@ -597,7 +630,7 @@ for (const [relative, html] of [["project/roadmap.html", roadmapHtml], ["project
   }
   if (/<ol class="workflow-steps">|<div class="role-board">/.test(html)) fail(`${relative} still duplicates the current overview or phase checklists.`);
 }
-for (const required of ["Use one project-wide Analyst Decision Log", "Begin in Phase 1 with the required human-first judgments", "consequential recommendation", "rejects an alternative", "trade-off or verification", "all three phases", "separate gate sheets", "each client&#039;s Phase 2 approval", "Open the project-wide Analyst Decision Log", "BUS331_Investment_Committee_Decision_Record_Student.xlsx"]) {
+for (const required of ["Use one project-wide Analyst Decision Log", "Part 1 macro reasoning stays in the Macro Starter workbook", "In Part 2, open the separate committee Decision Record", "consequential recommendations", "rejected alternatives", "trade-offs, and verification", "all three phases", "separate gate sheets", "each client&#039;s Phase 2 approval", "Open the project-wide Analyst Decision Log", "BUS331_Investment_Committee_Decision_Record_Student.xlsx"]) {
   if (!indexHtml.includes(required)) fail(`index.html is missing project-wide Decision Log guidance or access: ${required}.`);
 }
 for (const required of ["Save as you go", "Save your working project files regularly", "consequential Decision Log entries", "approval-gate work"]) {

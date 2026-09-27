@@ -9,10 +9,11 @@
   },
   "project": {
     "title": "Investment Committee Simulation",
-    "subtitle": "Three approval gates. Five committee members. One integrated recommendation.",
-    "premise": "Your five-person investment committee advises three client mandates and manages $500,000 in hypothetical assets. The committee must establish a market view, build and challenge each portfolio, and defend one evidence-linked recommendation.",
+    "subtitle": "Three approval gates. Four or five members. Five roles. One integrated recommendation.",
+    "premise": "Your four- or five-person investment committee advises three client mandates and manages $500,000 in hypothetical assets. Cover all five committee roles; on a four-person team, one member owns two roles but casts one vote. The committee must establish a market view, build and challenge each portfolio, and defend one evidence-linked recommendation.",
     "clientCount": 3,
-    "committeeSize": 5,
+    "roleCount": 5,
+    "teamSizeOptions": [4, 5],
     "hypotheticalAum": "$500,000",
     "scopeNote": "Use the current phase page for work steps and approval readiness. Use the Canvas Submission Workflow for exact files and filenames; Canvas controls due dates, points, and the actual upload."
   },
@@ -21,18 +22,18 @@
     "subtitle": "Follow the decision path. Build the analysis. Defend your recommendation.",
     "visual": {
       "path": "assets/roadmap/investment-committee-roadmap-5-role.svg",
-      "alt": "Investment Committee Simulation roadmap showing Phase 1 Part 1 macroeconomic analysis and Part 2 client submissions before one Gate 1 vote, Phase 2 focused 8–10 holding selection and stress testing, Phase 3 presentation and defense, and five distinct committee roles."
+      "alt": "Investment Committee Simulation roadmap showing separate Phase 1 Part 1 macro forecast and Part 2 client analysis submissions before one Gate 1 vote, Phase 2 focused 8–10 holding selection and stress testing, Phase 3 presentation and defense, and five roles covered by four or five members."
     },
     "boundary": "BUS331 provides structured Excel workbooks and client data. Your committee completes the analysis, reaches its own conclusions, and creates its own final PowerPoint presentation.",
     "beforeYouBegin": [
-      "Confirm the five committee roles and your three assigned clients.",
+      "Confirm your four or five team members, assign all five committee roles, and identify your three assigned clients. A four-person team assigns two roles to one member, who still casts one vote.",
       "Create a shared team workspace and agree on a file-naming system.",
       "Open the current phase page and read its working checklist together before beginning work.",
       "Schedule a short committee meeting before each approval gate."
     ],
     "decisionLogGuidance": {
       "title": "Use one project-wide Analyst Decision Log",
-      "usage": "Begin in Phase 1 with the required human-first judgments. Add a concise entry whenever the team makes a consequential recommendation, rejects an alternative, records a trade-off or verification, or reaches an approval gate. Continue the same decision and audit trail through all three phases.",
+      "usage": "Part 1 macro reasoning stays in the Macro Starter workbook. In Part 2, open the separate committee Decision Record and begin the Analyst Decision Log with each role's human-first judgments for every assigned client. Continue recording consequential recommendations, rejected alternatives, trade-offs, and verification through all three phases.",
       "gates": "Use the separate gate sheets for formal Phase 1 approval, each client's Phase 2 approval, and Phase 3 approval.",
       "saveReminder": "Save your working project files regularly as the team proceeds, especially after consequential Decision Log entries and approval-gate work."
     },
@@ -40,17 +41,17 @@
       {
         "id": "macro-analysis",
         "title": "Macroeconomic Analysis",
-        "purpose": "Build one documented 12-month market view and three probability-weighted scenarios before applying them to the clients.",
+        "purpose": "Build and submit one documented 12-month macro forecast with three probability-weighted scenarios before applying it to the clients.",
         "stepRange": [0, 3],
         "doneRange": [0, 1],
         "evidenceRange": [0, 3],
         "deliverableRange": [0, 1],
-        "resources": ["macro-starter"]
+        "resources": ["macro-step-guide", "macro-starter"]
       },
       {
         "id": "client-submissions",
         "title": "Client Submissions",
-        "purpose": "Turn the market view and each assigned client profile into an IPS, committee mandate, and recorded Gate 1 decision; submit one complete Phase 1 package.",
+        "purpose": "Use the submitted macro forecast and each assigned client profile to produce IPS documents, a committee mandate, and a recorded Gate 1 decision in a separate client-analysis submission.",
         "stepRange": [3, 6],
         "doneRange": [1, 4],
         "evidenceRange": [3, 7],
@@ -60,10 +61,10 @@
     ],
     "phaseSequences": {
       "phase-1": [
-        "Set roles, client assignments, and the team workspace.",
+        "Open the Macro Starter workbook, assign all five roles, and save a team-named Part 1 copy.",
         "Complete the detailed macro analysis in the provided workbook: review historical evidence, form a human-first interpretation, and document sources.",
-        "Compare the committee view with FactSet and/or FRED evidence, then create bull, base, and bear scenarios with probabilities totaling 100%.",
-        "Analyze each client's goals, constraints, risk, and unresolved information gaps.",
+        "Compare the committee view with FRED historical observations and a source-dated FactSet or other external forecast or consensus where a comparable measure exists; then create bull, base, and bear scenarios with probabilities totaling 100%.",
+        "Open the separate Decision Record, identify assigned clients, and analyze each client's goals, constraints, risk, and unresolved information gaps.",
         "Translate the macro outlook into a client-specific mandate, including return target, risk limit, and drawdown tripwire.",
         "Hold Gate 1: challenge the evidence, vote, and record required revisions before any portfolio construction begins."
       ],
@@ -86,10 +87,10 @@
     },
     "definitionOfDone": {
       "phase-1": [
-        "The macro workbook documents historical analysis, consensus comparison, and weighted bull, base, and bear scenarios.",
+        "The macro workbook documents historical analysis, source-dated external comparisons, inflation expectations, and weighted bull, base, and bear scenarios.",
         "Each client has objectives, RRTTLLU constraints, a return target, risk limit, drawdown tripwire, and identified information gaps.",
         "The committee can explain how its macro outlook changes each client mandate.",
-        "All five members have recorded the Gate 1 vote and any revision actions."
+        "Each team member has recorded one Gate 1 vote and any revision actions; all five role responsibilities are covered."
       ],
       "phase-2": [
         "Each client portfolio traces back to an approved mandate and has a stated purpose for every holding.",
@@ -97,7 +98,7 @@
         "Every final holding has a concise scorecard, rejected alternatives have a concise comparison, and the team has resolved unnecessary overlap or concentration.",
         "Any derivative hedge is limited to one targeted residual risk and documents instrument, size, cost, liquidity, trade-offs, residual risk, and adjustment or removal condition; a supported no-hedge conclusion is equally complete.",
         "The baseline snapshot was submitted before the Scenario Reveal; each revealed-scenario breach has a documented corrective trade, trade-off, and full re-test.",
-        "All five members have recorded the Gate 2 vote and any revision actions."
+        "Each team member has recorded one Gate 2 vote and any revision actions; all five role responsibilities are covered."
       ],
       "phase-3": [
         "The memo, evidence package, and presentation tell one consistent recommendation story.",
@@ -184,7 +185,7 @@
     },
     {
       "step": "Motion and vote",
-      "description": "The phase lead states the motion. The Portfolio Manager records approve, revise, or reject; all five members vote and any non-approval vote requires revision."
+      "description": "The phase lead states the motion. The Portfolio Manager records approve, revise, or reject; each member casts one vote, even if that member holds two roles, and any non-approval vote requires revision."
     },
     {
       "step": "Decision record",
@@ -243,9 +244,9 @@
     },
     "rolePlaySequence": [
       {"stage":"Instructor demonstration","action":"Before teams begin, the instructor gives one volunteer the sealed Sally Hart client card. The class observes a short interview, pauses to identify established facts and information gaps, and records one sample client guardrail."},
-      {"stage":"Prepare the team role-play","action":"After macro analysis, each team receives three sealed client cards. For the first case, the Client and Macro Strategist begins as the client; the other four members act as analysts. Do not open a card assigned to another student."},
+      {"stage":"Prepare the team role-play","action":"After macro analysis, each team receives three sealed client cards. For the first case, the Client and Macro Strategist begins as the client; the remaining members act as analysts. Do not open a card assigned to another student."},
       {"stage":"Interview and rotate","action":"Run a 12-minute interview for each client. Rotate the client role for the second and third cases so different members experience the client perspective. The Portfolio Manager keeps the decision-log record consistent across all three cases."},
-      {"stage":"Translate and challenge","action":"After each interview, all five members identify established facts, information gaps, and provisional guardrails. Challenge the first interpretation as a committee before moving to the next client."},
+      {"stage":"Translate and challenge","action":"After each interview, every member identifies established facts, information gaps, and provisional guardrails. Challenge the first interpretation as a committee before moving to the next client."},
       {"stage":"Finish the mandate","action":"Use the three interview summaries, the macro outlook, and the assigned case files to complete the IPS analysis and prepare for Gate 1."}
     ],
     "rolePlayProfiles": [
@@ -713,12 +714,12 @@
       ],
       "evidence": [
         "Human-first five-year macro read with source dates",
-        "FactSet/FRED consensus comparison and team forecast",
+        "Source-dated external forecast comparison, FRED historical evidence, and team growth, inflation, rate, and sentiment forecasts",
         "Bull/base/bear scenarios with probabilities totaling 100%",
         "RRTTLLU analysis for all three assigned clients",
         "Return target, maximum volatility, and drawdown tripwire for each client",
         "Analyst Decision Log showing initial judgment, committee challenge, verification, final reasoning, and downstream guardrail",
-        "Phase 1 decision record signed by all five members"
+        "Phase 1 decision record signed by every team member, with all five roles covered"
       ],
       "deliverables": [
         "Completed macro starter workbook",
@@ -728,6 +729,7 @@
         "Phase 1 decision record"
       ],
       "resources": [
+        "macro-step-guide",
         "macro-starter",
         "client-discovery-protocol",
         "client-data",
@@ -777,7 +779,7 @@
         "Full IPS compliance scorecard and Scenario Reveal result against each approved tripwire and relevant constraint",
         "Before/after record, trade-off, and full re-test for every corrective trade",
         "AI audit entries linked to human verification",
-        "Phase 2 decision record signed by all five members"
+        "Phase 2 decision record signed by every team member"
       ],
       "deliverables": [
         "Completed CME workbook",
@@ -847,50 +849,72 @@
   ],
   "canvasSubmissions": {
     "title": "Canvas Submission Workflow",
-    "purpose": "Use one clearly named team submission at each approval gate so the committee's decision trail, owned work, and licensed evidence remain private and reviewable.",
+    "purpose": "Submit the macro forecast first, then the client analysis at Gate 1. Later gates retain their own team submissions so the decision trail and evidence remain private and reviewable.",
     "authority": "The Canvas assignment controls the due date, points, availability window, and attempt policy. This guide controls the required package, filenames, and public/private boundary.",
+    "fileNamingRule": "Use the team name entered on Team Information in every filename. Replace [TeamName] with that name, omitting spaces and punctuation (for example, Harbor Analysts becomes HarborAnalysts); use the same spelling in every submission. Do not add individual student names to filenames.",
     "sharedRules": [
-      "One designated submitter uploads the complete package for the Canvas group; all five members confirm the receipt before the deadline.",
-      "Use Team01, Team02, and so on in filenames. Replace the two-digit placeholder; do not add student names to filenames.",
+      "One designated submitter uploads each required package for the Canvas group; every team member confirms the receipt before the deadline.",
       "Keep formulas live in required XLSX files. Export narrative and exhibit deliverables to PDF unless PPTX or XLSX is explicitly required.",
       "Put only licensed FactSet evidence in the private evidence ZIP. Do not place credentials, raw student data, or unrelated downloads in the bundle.",
-      "Before submitting, open every file, confirm the three assigned clients and five analyst owners are visible, and verify that all cited as-of dates match the analysis.",
+      "Before submitting, open every file, confirm the assigned clients and all five role owners are visible where required, and verify that all cited as-of dates match the analysis.",
       "After upload, open the Canvas submission receipt and confirm that every required filename appears. A local file or public-repository link is not a submission."
     ],
     "assignments": [
       {
         "phaseId": "phase-1",
-        "canvasTitle": "BUS331 Investment Committee · Phase 1 Gate · Frame the Mandate",
-        "decision": "Approve or revise the common market view and all three client mandates before portfolio construction begins.",
-        "submissionProcess": "Part 1 produces the macro workbook. Part 2 produces the client IPS documents, mandate memo, and decision record. After the Gate 1 vote, submit the four required files as one Phase 1 package. One designated team member submits for the group; all five members verify the Canvas receipt.",
+        "id": "phase-1-macro",
+        "partId": "macro-analysis",
+        "canvasTitle": "BUS331 Investment Committee · Phase 1 Part 1 · Macro Forecast",
+        "outputFile": "phase-1-macro-assignment.html",
+        "decision": "Submit the common 12-month macro forecast before applying it to assigned clients. Gate 1 approval follows the separate client-analysis assignment.",
+        "submissionProcess": "Complete and submit the macro starter workbook as the Part 1 group assignment. One designated team member submits for the group; every team member verifies the Canvas receipt. Carry the submitted forecast into Part 2 and document any later revision in the decision record.",
         "includePrivateEvidenceBoundary": false,
         "requiredFiles": [
-          {"name": "BUS331_Team##_Phase1_MandateMemo.pdf", "description": "One-page committee mandate memo covering the common market view and three client mandates."},
-          {"name": "BUS331_Team##_Phase1_Macro.xlsx", "description": "Completed macro starter workbook with human-first read, consensus comparison, and bull/base/bear scenarios."},
-          {"name": "BUS331_Team##_Phase1_ClientIPS.pdf", "description": "One combined PDF containing the three completed client IPS documents in assigned-client order."},
-          {"name": "BUS331_Team##_Phase1_DecisionRecord.xlsx", "description": "Current Analyst Decision Log and signed Phase 1 vote with five-role-by-three-client coverage."}
+          {"name": "BUS331_[TeamName]_Phase1_Macro.xlsx", "description": "Completed macro starter workbook with historical evidence, human-first read, source-dated consensus comparison, inflation forecast, and probability-weighted bull/base/bear scenarios."}
+        ],
+        "allowedExtensions": ["xlsx"],
+        "preflight": [
+          "All five macro responsibilities have named owners; a four-person team may assign two responsibilities to one person.",
+          "Historical claims use the labeled series, frequency, units, and source dates; current observations are distinguished from 12-month forecasts.",
+          "GDP growth, CPI inflation, fed funds, and sentiment forecasts include a comparable external reference, source, date, horizon, and rationale when available; an unavailable comparison is explained.",
+          "Bull, base, and bear probabilities total 100%, and the weighted forecast calculates from the three scenarios."
+        ]
+      },
+      {
+        "id": "phase-1-client",
+        "partId": "client-submissions",
+        "phaseId": "phase-1",
+        "canvasTitle": "BUS331 Investment Committee · Phase 1 Part 2 · Client Analysis and Gate 1",
+        "outputFile": "phase-1-client-assignment.html",
+        "decision": "Approve or revise the three client mandates using the submitted macro forecast before portfolio construction begins.",
+        "submissionProcess": "Use the macro forecast already submitted in Part 1; do not upload it again. After the Gate 1 vote, submit the three client-analysis files as the Part 2 group assignment. One designated team member submits for the group; every team member verifies the Canvas receipt.",
+        "includePrivateEvidenceBoundary": false,
+        "requiredFiles": [
+          {"name": "BUS331_[TeamName]_Phase1_MandateMemo.pdf", "description": "One-page committee mandate memo covering the submitted market view and three client mandates."},
+          {"name": "BUS331_[TeamName]_Phase1_ClientIPS.pdf", "description": "One combined PDF containing the three completed client IPS documents in assigned-client order."},
+          {"name": "BUS331_[TeamName]_Phase1_DecisionRecord.xlsx", "description": "Current Analyst Decision Log with five-role-by-three-client coverage and one Gate 1 vote per team member."}
         ],
         "allowedExtensions": ["pdf", "xlsx"],
         "preflight": [
-          "Scenario probabilities total 100% and every macro claim has a source and as-of date.",
+          "The mandate memo identifies the submitted macro forecast and explains any revision since Part 1.",
           "Each client has an objective, RRTTLLU constraints, return target, volatility limit, drawdown tripwire, and unresolved information gaps.",
           "The Decision Record shows initial judgment, committee challenge, human verification, final reasoning, downstream guardrail, owner, and peer reviewer.",
-          "All five members recorded the Phase 1 vote and any revision action."
+          "Every team member recorded one Phase 1 vote and any revision action; all five role responsibilities are covered."
         ]
       },
       {
         "phaseId": "phase-2",
         "canvasTitle": "BUS331 Investment Committee · Phase 2 Gate · Build and Challenge",
         "decision": "Approve, revise, or reject each client portfolio after the locked baseline, instructor-issued Scenario Reveal, full IPS review, corrective trade, and re-test.",
-        "submissionProcess": "Phase 2 has two checkpoints. At the instructor-designated baseline checkpoint, submit the Baseline Snapshot before the Scenario Reveal. After the reveal, complete the corrective trade and re-test, then submit the complete Gate 2 package. One designated team member submits for the group; all five members verify the Canvas receipt.",
+        "submissionProcess": "Phase 2 has two checkpoints. At the instructor-designated baseline checkpoint, submit the Baseline Snapshot before the Scenario Reveal. After the reveal, complete the corrective trade and re-test, then submit the complete Gate 2 package. One designated team member submits for the group; every team member verifies the Canvas receipt.",
         "includePrivateEvidenceBoundary": true,
         "requiredFiles": [
-          {"name": "BUS331_Team##_Phase2_CME.xlsx", "description": "Completed capital-market-expectations and optimization workbook."},
-          {"name": "BUS331_Team##_Phase2_SecuritySelection.xlsx", "description": "Completed final-holding scorecards, selective decision notes, Holding & Exposure Reality Checks, conditional direct-security evidence, and FactSet Evidence Log."},
-          {"name": "BUS331_Team##_Phase2_BaselineSnapshot.pdf", "description": "Submitted baseline allocation, IPS scorecard, and initial stress result retained before the Scenario Reveal."},
-          {"name": "BUS331_Team##_Phase2_StressTest.xlsx", "description": "Scenario Release Log, integrated allocation, full IPS scorecard, revealed-scenario results, corrective trades, and re-test."},
-          {"name": "BUS331_Team##_Phase2_DecisionRecord.xlsx", "description": "Current committee record with client-by-client votes, dissent, actions, owners, and deadlines."},
-          {"name": "BUS331_Team##_Phase2_LicensedEvidence.zip", "description": "Private course-use evidence files referenced by the FactSet Evidence Log; no credentials or unrelated exports."}
+          {"name": "BUS331_[TeamName]_Phase2_CME.xlsx", "description": "Completed capital-market-expectations and optimization workbook."},
+          {"name": "BUS331_[TeamName]_Phase2_SecuritySelection.xlsx", "description": "Completed final-holding scorecards, selective decision notes, Holding & Exposure Reality Checks, conditional direct-security evidence, and FactSet Evidence Log."},
+          {"name": "BUS331_[TeamName]_Phase2_BaselineSnapshot.pdf", "description": "Submitted baseline allocation, IPS scorecard, and initial stress result retained before the Scenario Reveal."},
+          {"name": "BUS331_[TeamName]_Phase2_StressTest.xlsx", "description": "Scenario Release Log, integrated allocation, full IPS scorecard, revealed-scenario results, corrective trades, and re-test."},
+          {"name": "BUS331_[TeamName]_Phase2_DecisionRecord.xlsx", "description": "Current committee record with client-by-client votes, dissent, actions, owners, and deadlines."},
+          {"name": "BUS331_[TeamName]_Phase2_LicensedEvidence.zip", "description": "Private course-use evidence files referenced by the FactSet Evidence Log; no credentials or unrelated exports."}
         ],
         "allowedExtensions": ["pdf", "xlsx", "zip"],
         "preflight": [
@@ -898,21 +922,21 @@
           "Every final holding has the concise scorecard, realistic alternatives are rejected briefly, and direct individual securities include rationale, idiosyncratic-risk, and position-size evidence.",
           "The Portfolio Manager recorded overlap, concentration, final-selection, weight, and trade-off decisions; the Risk and Derivatives Analyst recorded residual risk and a supported hedge or no-hedge conclusion.",
           "The baseline snapshot was submitted before the Scenario Reveal; every client allocation totals 100%, all IPS objectives and constraints were re-tested, and every revealed breach has a corrective trade and full re-test.",
-          "All five members recorded the Phase 2 vote and can identify their recommendation, alternative rejected, key trade-off, and evidence reviewed."
+          "Every team member recorded one Phase 2 vote and can identify their recommendation, alternative rejected, key trade-off, and evidence reviewed."
         ]
       },
       {
         "phaseId": "phase-3",
         "canvasTitle": "BUS331 Investment Committee · Phase 3 Gate · Defend the Recommendation",
         "decision": "Issue one integrated recommendation for all three clients, preserve the audit trail, and arrive ready for the scheduled committee defense.",
-        "submissionProcess": "Submit the complete Phase 3 package before the scheduled committee defense. One designated team member submits for the group; all five members verify the Canvas receipt.",
+        "submissionProcess": "Submit the complete Phase 3 package before the scheduled committee defense. One designated team member submits for the group; every team member verifies the Canvas receipt.",
         "includePrivateEvidenceBoundary": true,
         "requiredFiles": [
-          {"name": "BUS331_Team##_Phase3_DecisionMemo.pdf", "description": "Final committee decision memo with recommendation first, client-specific actions, reservations, and monitoring triggers."},
-          {"name": "BUS331_Team##_Phase3_TechnicalDossier.pdf", "description": "Auditable exhibit book linking macro, mandates, allocations, security evidence, stress results, corrections, and sources."},
-          {"name": "BUS331_Team##_Phase3_Presentation.pptx", "description": "Final visual committee presentation with balanced speaking responsibility and a compact role-specific investment-committee defense."},
-          {"name": "BUS331_Team##_Phase3_DecisionRecord.xlsx", "description": "Final vote, dissent or reservations, implementation actions, Analyst Decision Log, and AI audit appendix."},
-          {"name": "BUS331_Team##_Phase3_LicensedEvidence.zip", "description": "Final private evidence bundle containing only licensed supporting files cited in the dossier and Evidence Log."}
+          {"name": "BUS331_[TeamName]_Phase3_DecisionMemo.pdf", "description": "Final committee decision memo with recommendation first, client-specific actions, reservations, and monitoring triggers."},
+          {"name": "BUS331_[TeamName]_Phase3_TechnicalDossier.pdf", "description": "Auditable exhibit book linking macro, mandates, allocations, security evidence, stress results, corrections, and sources."},
+          {"name": "BUS331_[TeamName]_Phase3_Presentation.pptx", "description": "Final visual committee presentation with balanced speaking responsibility and a compact role-specific investment-committee defense."},
+          {"name": "BUS331_[TeamName]_Phase3_DecisionRecord.xlsx", "description": "Final vote, dissent or reservations, implementation actions, Analyst Decision Log, and AI audit appendix."},
+          {"name": "BUS331_[TeamName]_Phase3_LicensedEvidence.zip", "description": "Final private evidence bundle containing only licensed supporting files cited in the dossier and Evidence Log."}
         ],
         "allowedExtensions": ["pdf", "pptx", "xlsx", "zip"],
         "preflight": [
@@ -950,11 +974,19 @@
       "audience": "student"
     },
     {
+      "id": "macro-step-guide",
+      "label": "Macro Forecast step-by-step guide",
+      "type": "HTML",
+      "path": "project/macro-analysis.html",
+      "description": "Workbook-mapped steps for a human-first macro view, AI challenge, independent verification, scenarios, and the Part 1 submission.",
+      "audience": "student"
+    },
+    {
       "id": "macro-starter",
       "label": "Macro starter workbook",
       "type": "XLSX",
       "path": "files/Macro_Starter_Template_Student.xlsx",
-      "description": "Historical data, human-first analysis, consensus comparison, scenarios, and sensitivity modeling.",
+      "description": "Source-dated historical data, human-first analysis, verified external comparisons, inflation expectations, and weighted bull/base/bear forecasts.",
       "audience": "student"
     },
     {

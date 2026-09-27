@@ -10,7 +10,7 @@ Maintain one public project model that generates the student overview, phase wor
 
 The committee establishes one defensible 12-month market view and converts each assigned client profile into an approved investment mandate.
 
-The student Phase 1 page presents this as two ordered parts: **Macroeconomic Analysis** produces the common market view and macro workbook; **Client Submissions** turns that view and the assigned client profiles into IPS documents, a mandate memo, and the decision record. Both parts feed one Gate 1 vote and one four-file Phase 1 Canvas package. `studentRoadmap.phase1Parts` groups the maintained sequence, readiness, evidence, deliverables, and resources without changing the three-phase approval model.
+The student Phase 1 page presents two ordered assignments: **Macroeconomic Analysis / Macro Forecast** submits the workbook first; **Client Submissions / Client Analysis** uses that submitted forecast and submits the IPS documents, mandate memo, and decision record after one Gate 1 vote. The macro workbook is not uploaded twice. `studentRoadmap.phase1Parts` groups the maintained sequence, readiness, evidence, deliverables, and resources without changing the three-phase approval model. Four or five people cover five official roles; a dual-role member casts one vote.
 
 Required evidence:
 
@@ -18,7 +18,7 @@ Required evidence:
 - Instructor-led demonstration and structured human client role-play for each assigned client
 - Continuing project-wide decision and audit trail in the Analyst Decision Log, with student access on the overview and current phase pages
 - Human-first macro read using the historical dataset
-- FactSet/FRED consensus comparison with source dates
+- FRED historical observations plus comparable source-dated external forecasts or consensus where available
 - Bull/base/bear scenarios and probabilities totaling 100%
 - Completed RRTTLLU analysis and explicit drawdown tripwire for each client
 - Conflict register documenting tensions among return, risk, liquidity, tax, legal, and unique constraints
@@ -93,6 +93,7 @@ BUS331-Investment-Project-Specific/
     guide.html                          # generated compatibility entry for older Project Guide links
     roadmap.html                        # generated compatibility entry for older Roadmap links
     canvas-submission-guide.html        # generated student submission contract
+    macro-analysis.html                  # maintained workbook-mapped Part 1 student guide
     client-discovery-ai-protocol.html   # generated Phase 1 Part 2 workflow
     security-analysis-selection.html    # generated Phase 2 security workflow and templates
     portfolio-management-stress-testing.html
@@ -104,7 +105,8 @@ BUS331-Investment-Project-Specific/
     assessment.html                     # generated student-facing assessment guide
     supporting references              # static technical guides aligned to the current phase model
   canvas/
-    phase-1-assignment.html             # generated inline-styled Canvas assignment fragment
+    phase-1-macro-assignment.html       # generated Part 1 Canvas assignment fragment
+    phase-1-client-assignment.html      # generated Part 2 Canvas assignment fragment
     phase-2-assignment.html             # generated inline-styled Canvas assignment fragment
     phase-3-assignment.html             # generated inline-styled Canvas assignment fragment
   files/
@@ -128,16 +130,20 @@ BUS331-Investment-Project-Specific/
 - fictional-client team sets, team-specific structured role-play pages, five-role interview rounds, the Phase 1 decision cycle, and the public student-facing activity instructions
 - Phase 2 8–10 holding boundaries, funds/ETFs-first implementation, limited individual securities, final-holding scorecards, optional consequential decision notes, Holding & Exposure Reality Check, conditional direct-security add-on, FactSet evidence-log, portfolio-integration, IPS-compliance, bear-case, residual-risk, one-hedge/no-hedge, correction, and re-test contracts
 - the Analyst Decision Log contract, including recommendations, alternatives rejected, key trade-offs, PM integration and residual-risk evidence, and complete five-role-by-three-client coverage before the Phase 1 gate
-- the three Canvas assignment contracts, including exact filenames, allowed file types, preflight checks, private licensed-evidence handling, and receipt retention
+- the four Canvas assignment contracts, including separate Phase 1 packages, exact filenames, allowed file types, preflight checks, private licensed-evidence handling, and receipt retention
 - resource labels and relative paths
 - AI rules and verification requirements
 - public assessment language
 
 The workbook layout base is not an alternate content source. `scripts/update-security-selection-workbook.mjs` applies the current `project-model.json` contract and workbook-specific structure to that stable base on every build, so the public workbook can be regenerated without reading its prior generated version.
 
-The overview is the project orientation and phase selector. Each phase page owns its ordered steps, definition of done, evidence, and resource links. The Canvas Submission Workflow lists exact files and filenames; the Canvas assignment controls dates, points, and the actual upload. The Guide and Roadmap URLs remain short compatibility entry pages for existing links. Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
+The overview is the project orientation and phase selector. Each phase page owns its ordered steps, definition of done, evidence, and resource links. `project/macro-analysis.html` is a maintained supporting guide for Phase 1 Part 1, mapped to the current macro workbook tabs; its navigation entry and resource label live in `project-model.json`. The Canvas Submission Workflow lists exact files and filenames; the Canvas assignment controls dates, points, and the actual upload. The Guide and Roadmap URLs remain short compatibility entry pages for existing links. Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
 
-`canvasSubmissions` is the authoritative team-submission contract. The builder turns it into the public student guide and three inline-styled fragments ready to paste into Canvas. Those generated fragments do not change the live Canvas course. An instructor must separately configure each assignment as a group file-upload assignment, choose the correct group set, preserve the course's approved points and dates, and confirm the contract in Student View.
+`canvasSubmissions` is the authoritative team-submission contract. The builder turns it into the public student guide and four inline-styled fragments ready to paste into Canvas. Those generated fragments do not change the live Canvas course. An instructor must separately configure each assignment as a group file-upload assignment, choose the correct group set, set approved points and dates, and confirm the contract in Student View.
+
+The submission contract uses `BUS331_[TeamName]_` for every required filename. `canvasSubmissions.fileNamingRule` explains how students derive the filename from the team name recorded in the macro workbook; the builder displays this rule in the submission guide and every Canvas-ready assignment fragment.
+
+`files/Macro_Starter_Template_Student.xlsx` is the maintained native student workbook for Phase 1 Part 1 in this repository. The copy in Downloads is not a source. Its Historical Data tab contains a dated FRED snapshot with GDP quarterly observations and monthly CPI, yield spread, sentiment, and effective fed funds observations; do not silently extend or interpolate missing observations. The separate private instructor repository does not currently provide a matching macro answer key. The separate `files/BUS331_Investment_Committee_Decision_Record_Student.xlsx` begins with client analysis in Part 2: its Analyst Decision Log records the client-by-client role judgments, its Phase 1 sheet records the Gate 1 vote, and the team continues the same record in later phases. Only the Macro Starter workbook is submitted in Part 1; the Decision Record is submitted with the Part 2 client package.
 
 Phase 1 uses no AI interview service or copied student prompts. The student site explains the instructor-led Sally Hart demonstration and gives each team a separate activity page. The designated client-role student receives a sealed instructor-controlled card; the other committee members ask their own neutral questions, record a concise summary, mark information gaps, and translate the findings into guardrails. The sealed cards, demonstration materials, Scenario Reveal packets, and release log are maintained only in `BUS331-instructor/Investment_Project/instructor-control-center/`.
 

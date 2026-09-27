@@ -1893,6 +1893,176 @@ tr:last-child td {
   margin: 0;
 }
 
+.macro-guide-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.macro-guide-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.38fr);
+  gap: 36px;
+  align-items: start;
+  margin-bottom: 30px;
+}
+
+.macro-guide-intro h2,
+.macro-guide-section h2 {
+  margin: 8px 0 14px;
+  color: var(--navy-900);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+}
+
+.macro-guide .page-shell .section-kicker {
+  color: #865812;
+}
+
+.macro-guide-intro p {
+  max-width: 750px;
+}
+
+.macro-guide-deliverable {
+  display: grid;
+  gap: 7px;
+  padding: 22px;
+  border-top: 4px solid var(--gold-500);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  box-shadow: 0 10px 30px rgba(7, 22, 38, 0.07);
+}
+
+.macro-guide-deliverable code,
+.macro-step code {
+  overflow-wrap: anywhere;
+}
+
+.macro-guide-deliverable span {
+  color: var(--slate);
+  font-size: 0.88rem;
+}
+
+.macro-guide-jump {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 60px;
+}
+
+.macro-guide-jump a {
+  padding: 15px 17px;
+  border: 1px solid #d8e2ea;
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--navy-900);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.macro-guide-jump a:hover,
+.macro-guide-jump a:focus-visible {
+  border-color: var(--gold-500);
+  background: #fff8e9;
+}
+
+.macro-guide-section {
+  scroll-margin-top: 96px;
+  margin-bottom: 68px;
+}
+
+.macro-guide-section > h2 {
+  max-width: 760px;
+  margin-bottom: 28px;
+}
+
+.macro-steps {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.macro-step {
+  padding: 26px 30px;
+  border: 1px solid #d8e2ea;
+  border-radius: var(--radius-md);
+  background: var(--white);
+}
+
+.macro-step-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 17px;
+  margin-bottom: 15px;
+}
+
+.macro-step-number {
+  flex: 0 0 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--navy-900);
+  color: var(--gold-300);
+  font-weight: 800;
+}
+
+.macro-step h3 {
+  margin: 0 0 3px;
+  color: var(--navy-900);
+  font-size: 1.22rem;
+}
+
+.macro-step-tab {
+  margin: 0;
+  color: var(--slate);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.macro-step > p {
+  margin: 0 0 13px 59px;
+}
+
+.macro-step > p:last-child {
+  margin-bottom: 0;
+}
+
+.macro-step-output {
+  padding-top: 12px;
+  border-top: 1px solid var(--mist);
+  color: var(--navy-800);
+}
+
+.macro-guide-example,
+.macro-guide-prompt {
+  margin: 16px 0 20px 59px;
+  padding: 17px 20px;
+  border-left: 4px solid var(--teal-500);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: #eef8f7;
+}
+
+.macro-guide-prompt {
+  border-left-color: var(--gold-500);
+  background: #fff8e9;
+}
+
+.macro-guide-example p,
+.macro-guide-prompt blockquote {
+  margin: 6px 0 0;
+}
+
+.macro-guide-prompt blockquote {
+  overflow-wrap: anywhere;
+}
+
+.macro-guide-next {
+  margin-bottom: 0;
+}
+
 .instrument-grid,
 .role-integration-grid,
 .question-bank {
@@ -2254,6 +2424,21 @@ tr:last-child td {
 }
 
 @media (max-width: 760px) {
+  .macro-guide-intro,
+  .macro-guide-jump {
+    grid-template-columns: 1fr;
+  }
+
+  .macro-step {
+    padding: 20px;
+  }
+
+  .macro-step > p,
+  .macro-guide-example,
+  .macro-guide-prompt {
+    margin-left: 0;
+  }
+
   .interview-simulator {
     scroll-margin-top: 86px;
   }

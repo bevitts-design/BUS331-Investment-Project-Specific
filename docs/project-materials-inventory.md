@@ -6,7 +6,7 @@ Working status at inventory: clean `main`; no changes committed or published
 
 ## Navigation update · 2026-09-27
 
-The current student path uses `index.html` as the project overview and phase selector. Phase 1 has two ordered parts—Macroeconomic Analysis and Client Submissions—that feed one Gate 1 Canvas package. The three phase pages hold the working sequences, definitions of done, evidence, and resource links. `project/guide.html`, `project/roadmap.html`, and `BUS331_InvProject_Requirements_AllPhases.html` are short generated entry pages retained for existing links. The current printable reference is `files/BUS331_Investment_Committee_Phase_Checklists.pdf`; the older Project Guide PDF path is a current-content alias. The legacy `project/macro-analysis.html` page now links to the Phase 1 checklist instead of a missing PDF. The July inventory and disposition notes below document the earlier redesign state.
+The current student path uses `index.html` as the project overview and phase selector. Phase 1 has two ordered assignments: Macro Forecast submits the workbook first; Client Analysis submits the IPS, mandate memo, and decision record after one Gate 1 vote. Four or five students cover five roles, and each student votes once. The three phase pages hold the working sequences, definitions of done, evidence, and resource links. `project/guide.html`, `project/roadmap.html`, and `BUS331_InvProject_Requirements_AllPhases.html` are short generated entry pages retained for existing links. The current printable reference is `files/BUS331_Investment_Committee_Phase_Checklists.pdf`; the older Project Guide PDF path is a current-content alias. The maintained `project/macro-analysis.html` page is the step-by-step Part 1 guide, mapped to the macro workbook and linked from the Phase 1 resources. The July inventory and disposition notes below document the earlier redesign state.
 
 ## Executive findings
 
@@ -37,7 +37,7 @@ One critical public/private boundary issue was identified during inventory:
 | `project/security-analysis-selection.html` | Student/public | 8–10 holding boundary, final-holding scorecards, concise alternatives, fixed-income/equity ownership, and Holding & Exposure Reality Check | Generated Phase 2 workflow; use with the supporting security-selection technical reference; project-wide Decision Log access belongs on the Roadmap and Project Guide |
 | `project/BUS331_InvProject_StressTest_Guide.html` | Student/public | Base/bear metrics, tripwire logic, reallocation decision, AI audit | Preserve as Phase 2 Workstream C |
 | `project/BUS331_InvProject_FinalPitch_Guide.html` | Student/public | Final presentation structure, compact investment-committee defense, role-specific questions, and Q&A preparation | Preserve as the Phase 3 committee decision and defense guide |
-| `files/Macro_Starter_Template_Student.xlsx` | Student/public | Historical data, human-first analysis, consensus comparison, scenarios, sensitivity matrix | Preserve; align visible role and phase language with Phase 1 |
+| `files/Macro_Starter_Template_Student.xlsx` | Student/public | Maintained native workbook; FRED snapshot retrieved 2026-09-27, five role responsibilities for four or five members, human-first evidence fields, inflation expectations, and weighted bull/base/bear cases | Use the repository copy as source; refresh source-dated observations deliberately |
 | `files/Client_Scenarios_Profiles.pptx` | Student/public | Five team sets with three clients each | Preserve; align term and committee framing |
 | `files/Client_Scenarios_Data_File.xlsx` | Student/public | Fifteen client records and formula-based risk classifications | Preserve as the client-data source; no hidden sheets or external links found |
 | `files/Investment_Policy_Statement_Template_Client_Analysis_Framework.docx` | Student/public | Detailed IPS framework, constraints, allocation, monitoring, acknowledgment | Preserve; distinguish its internal implementation timeline from project phases |
@@ -47,7 +47,7 @@ One critical public/private boundary issue was identified during inventory:
 | `files/BUS331_InvProject_StressTest_Template.xlsx` | Student/public | Three client stress tests, summary, tripwire status, corrective-action logic | Maintain as Phase 2 Workstream C |
 | `project/portfolio-management-stress-testing.html` | Student/public | Integrated allocation, full IPS scorecard, bear-case test, breach correction, re-test, role handoffs | Generated Phase 2 workflow; use with the supporting stress-test technical reference |
 | `project/canvas-submission-guide.html` | Student/public | One team submission per phase, exact filenames, private licensed-evidence rules, preflight checks, and receipt retention | Generate from `project-model.json`; treat its contract as authoritative |
-| `canvas/phase-1-assignment.html`, `phase-2-assignment.html`, `phase-3-assignment.html` | Canvas-ready/public | Accessible inline-styled assignment instructions with exact upload packages | Generate from `project-model.json`; paste into Canvas only after instructor review |
+| `canvas/phase-1-macro-assignment.html`, `phase-1-client-assignment.html`, `phase-2-assignment.html`, `phase-3-assignment.html` | Canvas-ready/public | Four inline-styled assignment instructions with exact upload packages | Generate from `project-model.json`; install in Canvas as separate group file-upload assignments |
 | `files/final-rubric.pdf` | Student/public | Written/oral criteria, Q&A expectations, cohesion, visual standards | Generate from `project-model.json` with `scripts/build-final-rubric-pdf.py` |
 | `files/MACROE~2.PDF` | Instructor only | Instructor scorecards, grading diagnostics, model anchors, worked submission | Resolved: moved to `BUS331-instructor/Investment_Project/source/Macroeconomic_Forecast_Instructor_Master_Guide.pdf` after explicit approval |
 
@@ -77,7 +77,7 @@ One critical public/private boundary issue was identified during inventory:
 4. **Portfolio Manager** - owns final selection and weights, resolves overlap and concentration, and records explicit integration trade-offs.
 5. **Risk and Derivatives Analyst** - owns portfolio-level stress tests, residual-risk evidence, and one targeted hedge or a fully supported no-hedge conclusion.
 
-All five members vote in every phase, sign the decision record, and must be able to defend any section. A recommendation is not approved until the committee records the motion, evidence reviewed, vote, dissent or reservation, and action items.
+All four or five members vote once in every phase, sign the decision record, and must be able to defend any section. A recommendation is not approved until the committee records the motion, evidence reviewed, vote, dissent or reservation, and action items.
 
 ## Release readiness
 

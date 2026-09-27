@@ -345,7 +345,7 @@ function landingPage() {
         <div class="section-header">
           <p class="section-kicker">Your working pages</p>
           <h2 id="phases-title">Open the phase you're working on</h2>
-          <p>Each phase page has the ordered steps, definition of done, required evidence, and resources for that approval gate. All five members review and vote before the committee moves forward.</p>
+          <p>Each phase page has the ordered steps, definition of done, required evidence, and resources for that approval gate. Every member reviews and votes once before the committee moves forward; four-person teams cover all five roles by assigning two roles to one member.</p>
         </div>
         <div class="phase-entry-grid">
           ${model.phases.map((phase) => `<article class="phase-entry-card"><p class="phase-number">Phase ${phase.number}</p><h3>${escapeHtml(phase.title)}</h3><p>${escapeHtml(phase.tagline)}</p><a class="button button-primary" href="${escapeHtml(phasePath(phase))}">Open Phase ${phase.number} checklist <span aria-hidden="true">→</span></a></article>`).join("\n")}
@@ -443,23 +443,25 @@ function phaseOnePage(phase) {
   const parts = model.studentRoadmap.phase1Parts;
   const steps = model.studentRoadmap.phaseSequences[phase.id];
   const done = model.studentRoadmap.definitionOfDone[phase.id];
-  const assignment = model.canvasSubmissions.assignments.find((item) => item.phaseId === phase.id);
+  const assignments = new Map(model.canvasSubmissions.assignments.filter((item) => item.phaseId === phase.id).map((item) => [item.partId, item]));
   const partMarkup = parts.map((part, index) => {
     const partSteps = steps.slice(...part.stepRange);
     const partDone = done.slice(...part.doneRange);
     const partEvidence = phase.evidence.slice(...part.evidenceRange);
     const partDeliverables = phase.deliverables.slice(...part.deliverableRange);
+    const assignment = assignments.get(part.id);
+    if (!assignment) throw new Error(`Missing Phase 1 assignment for ${part.id}`);
     return `<section class="phase-one-part" id="${escapeHtml(part.id)}" aria-labelledby="${escapeHtml(part.id)}-title">
       <div class="phase-one-part-head"><p class="section-kicker">Part ${index + 1} of ${parts.length}</p><h2 id="${escapeHtml(part.id)}-title">${escapeHtml(part.title)}</h2><p>${escapeHtml(part.purpose)}</p></div>
       <h3>Do this in order</h3>
       <ol class="workflow-steps">${partSteps.map((step, stepIndex) => `<li class="workflow-step"><span aria-hidden="true">${stepIndex + 1}</span><div><p>${escapeHtml(step)}</p></div></li>`).join("\n")}</ol>
       ${part.id === "client-submissions" ? `<div class="callout"><h3>Client discovery comes first</h3><p>Use the <a href="${escapeHtml(prefixPath(prefix, clientDiscoveryPath))}">Client Discovery and Decision Protocol</a> to test needs and information gaps before finalizing each IPS.</p></div>` : ""}
       <div class="phase-one-check-grid"><div><h3>Ready when</h3><ul class="check-list">${partDone.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></div><div><h3>Evidence to keep</h3><ul class="check-list">${partEvidence.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></div></div>
-      <h3>${index === 0 ? "Output to carry forward" : "Client and committee deliverables"}</h3>
+      <h3>${index === 0 ? "Macro forecast deliverable" : "Client and committee deliverables"}</h3>
       <ul class="clean-list">${partDeliverables.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
       <h3>Resources for this part</h3>
       <div class="resource-list phase-one-resources">${resourceLinks(part.resources, prefix, { includeDescription: true })}</div>
-      ${part.id === "client-submissions" ? `<div class="phase-one-submission"><h3>Submit one Phase 1 package after Gate 1</h3><p>${escapeHtml(assignment.submissionProcess)}</p><ul class="phase-file-list">${assignment.requiredFiles.map((file) => `<li><code>${escapeHtml(file.name)}</code><span>${escapeHtml(file.description)}</span></li>`).join("\n")}</ul><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, canvasSubmissionPath))}">Check the Canvas submission workflow</a></div>` : ""}
+      <div class="phase-one-submission"><h3>${index === 0 ? "Assignment 1: submit the macro forecast" : "Assignment 2: submit client analysis after Gate 1"}</h3><p>${escapeHtml(assignment.submissionProcess)}</p><ul class="phase-file-list">${assignment.requiredFiles.map((file) => `<li><code>${escapeHtml(file.name)}</code><span>${escapeHtml(file.description)}</span></li>`).join("\n")}</ul><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, canvasSubmissionPath))}#${escapeHtml(assignment.id)}-canvas">Check this Canvas submission</a></div>
     </section>`;
   }).join("\n");
   const body = `
@@ -467,7 +469,7 @@ function phaseOnePage(phase) {
     ${pageHero("Phase 1 · Two-part working checklist", phase.title, phase.tagline)}
     <div class="page-shell"><div class="content-flow phase-one-flow">
       <nav class="phase-one-nav" aria-label="Phase 1 parts">${parts.map((part, index) => `<a href="#${escapeHtml(part.id)}"><span>Part ${index + 1}</span><strong>${escapeHtml(part.title)}</strong><small>${escapeHtml(part.purpose)}</small></a>`).join("\n")}</nav>
-      <section class="phase-one-intro"><p class="section-kicker">Decision question</p><h2>${escapeHtml(phase.keyQuestion)}</h2><p>${escapeHtml(phase.objective)}</p><p>Complete both parts before the committee votes. The macro workbook from Part 1 joins the client and committee files from Part 2 in one Phase 1 Canvas submission.</p></section>
+      <section class="phase-one-intro"><p class="section-kicker">Decision question</p><h2>${escapeHtml(phase.keyQuestion)}</h2><p>${escapeHtml(phase.objective)}</p><p>Submit the macro forecast as Assignment 1. Use that forecast in Assignment 2 for the client analysis and Gate 1 vote. Each assignment has its own Canvas receipt.</p></section>
       ${partMarkup}
       <section><h2>Committee responsibilities across both parts</h2>${rolePhaseMatrix(phase)}</section>
       <section><h2>Gate 1 approval standard</h2><div class="callout"><h3>Committee motion</h3><p>${escapeHtml(phase.meetingMotion)}</p><p>${escapeHtml(phase.gate)}</p></div><p>The decision record must state the motion, evidence reviewed, each member's vote, any dissent or reservation, and the owner and due date for every required revision.</p></section>
@@ -840,7 +842,7 @@ function portfolioStressPage() {
         <p class="section-kicker">Portfolio approval gate</p><h2>Approve only a traceable, tested recommendation</h2>
         <ul class="check-list">${experience.portfolioQualityGate.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
         <div class="callout"><h3>AI boundary</h3><p>AI may challenge assumptions, suggest a counter-scenario, or help debug a formula. The team must verify every factual or numerical claim, run its own calculations, and own the final allocation, correction, and vote.</p></div>
-        <div class="milestone-banner"><div><h3>Complete the decision package</h3><p>Attach the final IPS scorecard, bear-case result, residual-risk and hedge/no-hedge conclusion, correction and re-test if needed, all five votes, dissent or reservations, and monitoring triggers.</p></div><div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, cmeWorkbook.path))}">Open CME workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, stressWorkbook.path))}">Open stress workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open Decision Log <span>XLSX</span></a><a class="button" href="assessment.html">Prepare for defense</a></div></div>
+        <div class="milestone-banner"><div><h3>Complete the decision package</h3><p>Attach the final IPS scorecard, bear-case result, residual-risk and hedge/no-hedge conclusion, correction and re-test if needed, one vote per member, dissent or reservations, and monitoring triggers.</p></div><div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, cmeWorkbook.path))}">Open CME workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, stressWorkbook.path))}">Open stress workbook <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open Decision Log <span>XLSX</span></a><a class="button" href="assessment.html">Prepare for defense</a></div></div>
       </section>
     </div></div>
   </main>`
@@ -869,15 +871,16 @@ function canvasSubmissionPage() {
         <section><div class="callout"><h2>Canvas is the private submission record</h2><p>${escapeHtml(workflow.authority)}</p></div></section>
         <section>
           <p class="section-kicker">Rules that apply at every gate</p>
-          <h2>Submit once, verify twice</h2>
-          <ul class="check-list">${workflow.sharedRules.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+          <h2>Submit each assignment and verify its receipt</h2>
+          <ul class="check-list"><li>${escapeHtml(workflow.fileNamingRule)}</li>${workflow.sharedRules.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
         </section>
         ${workflow.assignments.map((assignment) => {
           const phase = model.phases.find((item) => item.id === assignment.phaseId);
-          return `<section id="${escapeHtml(assignment.phaseId)}-canvas">
-            <p class="section-kicker">Phase ${phase.number} Canvas gate</p>
+          return `<section id="${escapeHtml(assignment.id || assignment.phaseId)}-canvas">
+            <p class="section-kicker">${assignment.partId ? `Phase ${phase.number} · ${escapeHtml(assignment.partId === "macro-analysis" ? "Part 1" : "Part 2")}` : `Phase ${phase.number} Canvas gate`}</p>
             <h2>${escapeHtml(assignment.canvasTitle)}</h2>
-            <div class="callout"><h3>Decision recorded</h3><p>${escapeHtml(assignment.decision)}</p></div>
+            <div class="callout"><h3>${assignment.partId === "macro-analysis" ? "Purpose and sequence" : "Decision recorded"}</h3><p>${escapeHtml(assignment.decision)}</p></div>
+            <p>${escapeHtml(assignment.submissionProcess)}</p>
             <h3>Upload these exact files</h3>
             ${submissionFileList(assignment)}
             <h3>Pre-submission check</h3>
@@ -888,7 +891,7 @@ function canvasSubmissionPage() {
         <section>
           <p class="section-kicker">Submission receipt</p>
           <h2>The gate is not complete until the team confirms Canvas</h2>
-          <p>After the designated submitter uploads the package, each member opens the Canvas receipt, confirms the required filenames, and records the receipt check in the committee Decision Record. If a file is missing or cannot be opened, use the attempt and revision policy shown in Canvas.</p>
+          <p>After the designated submitter uploads each package, every member opens its Canvas receipt and confirms the required filenames. Record the Gate 1 client-analysis receipt in the committee Decision Record. If a file is missing or cannot be opened, use the attempt and revision policy shown in Canvas.</p>
         </section>
       </div>
     </div>
@@ -904,13 +907,14 @@ function canvasAssignmentFragment(assignment) {
   const evidenceBoundary = assignment.includePrivateEvidenceBoundary ? `<div style="${card}border-left:6px solid ${palette.gold};"><h2 style="margin:0 0 8px;color:${palette.navy};font-size:22px;">Submit through Canvas</h2><p style="margin:0;">Submit all required work and licensed-source evidence through this Canvas assignment. Do not include credentials, raw data, or unrelated downloads.</p></div>` : "";
   return `<div style="max-width:980px;margin:0 auto;color:${palette.ink};font-family:Arial,Helvetica,sans-serif;line-height:1.55;">
   <div style="background:${palette.navy};color:#ffffff;border-top:8px solid ${palette.gold};padding:24px;border-radius:14px 14px 6px 6px;">
-    <p style="margin:0 0 6px;font-size:14px;font-weight:bold;letter-spacing:.06em;text-transform:uppercase;color:#F1D48E;">BUS331 &middot; Phase ${phase.number} approval gate</p>
+    <p style="margin:0 0 6px;font-size:14px;font-weight:bold;letter-spacing:.06em;text-transform:uppercase;color:#F1D48E;">${assignment.partId ? `BUS331 &middot; Phase ${phase.number} &middot; ${assignment.partId === "macro-analysis" ? "Part 1 assignment" : "Part 2 Gate 1 assignment"}` : `BUS331 &middot; Phase ${phase.number} approval gate`}</p>
     <h1 style="margin:0;font-size:30px;line-height:1.2;color:#ffffff;">${canvasText(assignment.canvasTitle)}</h1>
     <p style="margin:12px 0 0;color:#ffffff;">${escapeHtml(assignment.decision)}</p>
   </div>
   <div style="background:${palette.paper};padding:20px;border:1px solid ${palette.line};border-top:0;border-radius:0 0 14px 14px;">
     <div style="${card}border-left:6px solid ${palette.teal};"><h2 style="margin:0 0 8px;color:${palette.navy};font-size:22px;">Submission process</h2><p style="margin:0;">${escapeHtml(assignment.submissionProcess)}</p><p style="margin:10px 0 0;">Canvas controls the due date, points, availability window, and attempt policy.</p></div>
     <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Required files</h2>
+    <p style="margin:0 0 12px;">${escapeHtml(model.canvasSubmissions.fileNamingRule)}</p>
     ${assignment.requiredFiles.map((file) => `<div style="${card}"><p style="margin:0 0 4px;font-weight:bold;color:${palette.navy};overflow-wrap:anywhere;">${escapeHtml(file.name)}</p><p style="margin:0;">${escapeHtml(file.description)}</p></div>`).join("\n")}
     <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Pre-submission check</h2>
     <ul style="margin:0;padding-left:24px;">${assignment.preflight.map((item) => `<li style="margin:8px 0;">${escapeHtml(item)}</li>`).join("")}</ul>
@@ -987,9 +991,10 @@ for (const phase of model.phases) {
   await fs.writeFile(path.join(rootDir, phasePath(phase)), phasePage(phase));
 }
 await fs.writeFile(path.join(rootDir, "project", "assessment.html"), assessmentPage());
+await fs.rm(path.join(rootDir, "canvas", "phase-1-assignment.html"), { force: true });
 for (const assignment of model.canvasSubmissions.assignments) {
   const phase = model.phases.find((item) => item.id === assignment.phaseId);
-  await fs.writeFile(path.join(rootDir, "canvas", `phase-${phase.number}-assignment.html`), canvasAssignmentFragment(assignment));
+  await fs.writeFile(path.join(rootDir, "canvas", assignment.outputFile || `phase-${phase.number}-assignment.html`), canvasAssignmentFragment(assignment));
 }
 
 console.log(`Built ${model.phases.length + 14} project pages and ${model.canvasSubmissions.assignments.length} Canvas fragments from project-model.json.`);

@@ -49,8 +49,8 @@ def main():
     ],background=ICE)]
     for phase in model["phases"]:
         if phase["id"] == "phase-1":
-            assignment=next(a for a in model["canvasSubmissions"]["assignments"] if a["phaseId"]==phase["id"])
             for number,part in enumerate(road["phase1Parts"],1):
+                assignment=next(a for a in model["canvasSubmissions"]["assignments"] if a.get("partId")==part["id"])
                 story += [PageBreak(),p(f"Phase 1 - Part {number}: {part['title']}",s["H"]),p(part["purpose"],s["Bodyx"]),p("Do this in order",s["H3x"])]
                 start,end=part["stepRange"]
                 story += [p(f"{i}. {step}",s["Bodyx"]) for i,step in enumerate(road["phaseSequences"][phase["id"]][start:end],1)]
@@ -68,10 +68,10 @@ def main():
                         p("Client-discovery activity",s["H3x"]),
                         p("First observe the instructor-led practice interview. Then open only your team's role-play page. For each assigned client, one designated member receives a sealed client card while the other members ask their own neutral questions. Rotate the client role across the three cases.",s["Bodyx"]),
                         p("The client reveals only what the sealed card establishes. If a fact is not established, record an information gap. After each interview, write a concise summary, the provisional guardrails, and the downstream decision each guardrail could affect in the Analyst Decision Log. No AI prompt or student AI account is required for this activity.",s["Bodyx"]),
-                        p("Canvas submission check",s["H3x"]),
-                        p("Submit the macro workbook from Part 1 together with the client IPS documents, mandate memo, and decision record as one Phase 1 package after Gate 1.",s["Smallx"])
+                        p("Submit the client-analysis package after Gate 1. Reference the already submitted macro forecast; do not upload it again.",s["Smallx"])
                     ]
-                    story += [p(f"[ ] {item}",s["Smallx"]) for item in assignment["preflight"]]
+                story += [p(f"Canvas assignment {number}: {assignment['canvasTitle']}",s["H3x"]),p(assignment["submissionProcess"],s["Smallx"])]
+                story += [p(f"[ ] {item}",s["Smallx"]) for item in assignment["preflight"]]
             continue
         story += [PageBreak(),p(f"Phase {phase['number']} - {phase['title']}",s["H"]),p(phase["objective"],s["Bodyx"]),p("Do this in order",s["H3x"])]
         story += [p(f"{i}. {x}",s["Bodyx"]) for i,x in enumerate(road["phaseSequences"][phase["id"]],1)]
@@ -92,7 +92,7 @@ def main():
             ]
         assignment=next(a for a in model["canvasSubmissions"]["assignments"] if a["phaseId"]==phase["id"])
         story += [p("Canvas submission check",s["H3x"])] + [p(f"[ ] {x}",s["Smallx"]) for x in assignment["preflight"]]
-    story += [PageBreak(),p("Committee roles and operating protocol",s["H"]),p(f"Roles identify distinct decision rights. All {model['project']['committeeSize']} members review the full evidence package, vote at every gate, and prepare to defend the complete recommendation.",s["Bodyx"])]
+    story += [PageBreak(),p("Committee roles and operating protocol",s["H"]),p("Five committee roles must be covered by four or five members. On a four-person team, one member owns two roles but casts one vote. Every member reviews the full evidence package and prepares to defend the complete recommendation.",s["Bodyx"])]
     for role in model["roles"]: story += [p(role["title"],s["H3x"]),p(role["mandate"],s["Bodyx"])]
     story += [p("AI rules of engagement",s["H"])]
     for rule in model["aiRules"]: story += [p(f"{rule['status']}: {rule['title']} - {rule['description']}",s["Bodyx"])]

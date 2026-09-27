@@ -9,7 +9,7 @@ if (!targetRoot) throw new Error("Usage: node build-decision-record.mjs <target-
 const model = JSON.parse(await fs.readFile(path.join(targetRoot, "project-model.json"), "utf8"));
 const outputPath = path.join(targetRoot, "files", "BUS331_Investment_Committee_Decision_Record_Student.xlsx");
 const previewDir = path.join(path.dirname(new URL(import.meta.url).pathname), "previews");
-const minimumDecisionLogEntries = model.project.clientCount * model.project.committeeSize;
+const minimumDecisionLogEntries = model.project.clientCount * model.project.roleCount;
 
 const COLORS = {
   navy: "#0B1F35",
@@ -150,7 +150,7 @@ function addDecisionLogFormatting(range) {
 }
 
 function configureDecisionSheet(sheet, { phaseNumber, phaseTitle, scopeLabel, gateLabel }) {
-  titleBand(sheet, `BUS331 Investment Committee — Phase ${phaseNumber} Decision Record`, `${phaseTitle} | All five committee members review, vote, and sign this record.`);
+  titleBand(sheet, `BUS331 Investment Committee — Phase ${phaseNumber} Decision Record`, `${phaseTitle} | All four or five members review and cast one vote each.`);
   setColumnWidths(sheet, { A: 20, B: 22, C: 16, D: 24, E: 20, F: 18, G: 18, H: 4 });
 
   sheet.getRange("A4:A6").values = [["Team / Committee Name"], [scopeLabel], ["Meeting Date"]];
@@ -193,18 +193,19 @@ function configureDecisionSheet(sheet, { phaseNumber, phaseTitle, scopeLabel, ga
   sheet.getRange("A21:G21").format.rowHeight = 42;
 
   sectionBand(sheet, 23, "COMMITTEE VOTE");
-  sheet.getRange("A24:G24").values = [["Committee seat", "Member name", "Vote", "Reservation / condition", "Evidence cited", "Initials", "Follow-up owner"]];
+  sheet.getRange("A24:G24").values = [["Member slot", "Member name", "Vote", "Reservation / condition", "Evidence cited", "Initials", "Follow-up owner"]];
   styleHeaders(sheet.getRange("A24:G24"));
-  const seats = model.roles.map((role) => role.shortTitle);
-  sheet.getRange("A25:G29").values = seats.map((seat) => [seat, "", "", "", "", "", ""]);
+  sheet.getRange("A25:G29").values = Array.from({ length: 5 }, (_, index) => [`Member ${index + 1}`, "", "", "", "", "", ""]);
   sheet.getRange("A25:A29").format = { fill: "#F5F8FA", font: { bold: true, color: COLORS.navy }, wrapText: true };
   styleInputs(sheet.getRange("B25:G29"));
+  for (let row = 25; row <= 29; row++) sheet.getRange(`B${row}`).formulas = [[`=IF('COMMITTEE ROSTER'!B${row - 7}="","",'COMMITTEE ROSTER'!B${row - 7})`]];
+  sheet.getRange("B25:B29").format = { fill: COLORS.mist, font: { color: COLORS.ink } };
   sheet.getRange("C25:C29").dataValidation = { rule: { type: "list", values: ["Approve", "Revise", "Reject"] } };
 
   sheet.getRange("A30").values = [["Decision status"]];
   sheet.getRange("A30").format.font = { bold: true, color: COLORS.ink };
   sheet.getRange("B30:C30").merge();
-  sheet.getRange("B30").formulas = [["=IF(COUNTIF(C25:C29,\"Revise\")+COUNTIF(C25:C29,\"Reject\")>0,\"REVISION REQUIRED\",IF(COUNTIF(C25:C29,\"Approve\")=5,\"APPROVED\",\"INCOMPLETE\"))"]];
+  sheet.getRange("B30").formulas = [["=IF('COMMITTEE ROSTER'!B23<>\"READY\",\"INCOMPLETE\",IF(COUNTIF(C25:C29,\"Revise\")+COUNTIF(C25:C29,\"Reject\")>0,\"REVISION REQUIRED\",IF(COUNTIF(C25:C29,\"Approve\")='COMMITTEE ROSTER'!E19,\"APPROVED\",\"INCOMPLETE\")))"]];
   sheet.getRange("B30:C30").format = { font: { size: 12, bold: true, color: COLORS.ink }, fill: COLORS.yellow, borders: { preset: "outside", style: "medium", color: COLORS.navy } };
   addStatusFormatting(sheet.getRange("B30:C30"));
 
@@ -222,7 +223,7 @@ function configureDecisionSheet(sheet, { phaseNumber, phaseTitle, scopeLabel, ga
   sheet.getRange("E38:E42").dataValidation = { rule: { type: "list", values: ["Open", "Complete"] } };
 
   sheet.getRange("A44:G44").merge();
-  sheet.getRange("A44").values = [["Approval requires five Approve votes. Any Revise or Reject vote produces REVISION REQUIRED; document the change and reconvene before the next gate."]];
+  sheet.getRange("A44").values = [["Approval requires one Approve vote from each of the four or five distinct members listed on the roster. A dual-role member votes once. Any Revise or Reject vote requires revision and a new meeting."]];
   sheet.getRange("A44:G44").format = { fill: COLORS.goldLight, font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 32 };
   sheet.freezePanes.freezeRows(8);
 }
@@ -276,7 +277,7 @@ start.getRange("A25").values = [[model.project.scopeNote]];
 start.getRange("A25:G25").format = { fill: "#F5F8FA", font: { italic: true, color: COLORS.slate }, wrapText: true, rowHeight: 28 };
 start.freezePanes.freezeRows(6);
 
-titleBand(roster, "Committee Roster & Role Charter", "Assign one student to each of five committee seats. Roles define distinct decision rights; all members share the final decision.");
+titleBand(roster, "Committee Roster & Role Charter", "Assign all five roles to four or five members. A dual-role member casts one vote.");
 setColumnWidths(roster, { A: 25, B: 26, C: 34, D: 34, E: 34, F: 34, G: 4, H: 4 });
 roster.getRange("A4:F4").values = [["Committee seat", "Member name", "Standing mandate", "Phase 1 responsibility", "Phase 2 responsibility", "Phase 3 responsibility"]];
 styleHeaders(roster.getRange("A4:F4"));
@@ -304,6 +305,22 @@ roster.getRange("A11:F15").values = [
 roster.getRange("A11:A15").format = { fill: COLORS.goldLight, font: { bold: true, color: COLORS.navy }, wrapText: true };
 roster.getRange("B11:F15").merge(true);
 roster.getRange("B11:F15").format = { font: { color: COLORS.slate }, wrapText: true };
+sectionBand(roster, 17, "VOTING MEMBERS — ENTER EACH PERSON ONCE", "F");
+roster.getRange("A18:A22").values = [["Member 1"], ["Member 2"], ["Member 3"], ["Member 4"], ["Member 5 (optional)"]];
+styleInputs(roster.getRange("B18:B22"));
+roster.getRange("D18").values = [["Team size (4 or 5)"]];
+styleInputs(roster.getRange("E18"));
+roster.getRange("E18").dataValidation = { rule: { type: "list", values: ["4", "5"] } };
+roster.getRange("D19").values = [["Confirmed size"]];
+roster.getRange("E19").formulas = [["=IF(E18=\"\",\"\",VALUE(E18))"]];
+roster.getRange("D20:F22").merge();
+roster.getRange("D20").values = [["Enter each person once at left. Assign the same person to two roles above when the team has four members. Vote names on gate sheets link to this list."]];
+roster.getRange("D20:F22").format = { fill: COLORS.goldLight, font: { color: COLORS.ink }, wrapText: true };
+roster.getRange("A23").values = [["Roster status"]];
+roster.getRange("B23").formulas = [["=IF(OR(E19=\"\",AND(E19<>4,E19<>5),COUNTA(B18:B22)<>E19,COUNTA(B5:B9)<>5),\"INCOMPLETE\",IF(OR(AND(B18<>\"\",B18=B19),AND(B18<>\"\",B18=B20),AND(B18<>\"\",B18=B21),AND(B18<>\"\",B18=B22),AND(B19<>\"\",B19=B20),AND(B19<>\"\",B19=B21),AND(B19<>\"\",B19=B22),AND(B20<>\"\",B20=B21),AND(B20<>\"\",B20=B22),AND(B21<>\"\",B21=B22)),\"DUPLICATE MEMBER\",IF(B24=\"COVERED\",\"READY\",\"ROLE OWNER MISMATCH\")))"]];
+addDecisionLogFormatting(roster.getRange("B23"));
+roster.getRange("A24").values = [["Role coverage"]];
+roster.getRange("B24").formulas = [["=IF(OR(E19=\"\",COUNTA(B5:B9)<>5),\"INCOMPLETE\",IF(AND(COUNTIF(B18:B22,B5)>0,COUNTIF(B18:B22,B6)>0,COUNTIF(B18:B22,B7)>0,COUNTIF(B18:B22,B8)>0,COUNTIF(B18:B22,B9)>0,COUNTIF(B5:B9,B18)>0,COUNTIF(B5:B9,B19)>0,COUNTIF(B5:B9,B20)>0,COUNTIF(B5:B9,B21)>0,IF(E19=5,COUNTIF(B5:B9,B22)>0,TRUE)),\"COVERED\",\"ROLE OWNER MISMATCH\"))"]];
 roster.freezePanes.freezeRows(4);
 
 titleBand(analystLog, "Analyst Decision Log", "Recommendation → alternative rejected → key trade-off → verification → final reasoning → downstream guardrail", "T");
