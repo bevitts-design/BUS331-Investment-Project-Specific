@@ -147,12 +147,22 @@ const experience = model.phase1Experience;
 if (!experience) {
   fail("Missing phase1Experience in the public model.");
 } else {
-  if (experience.clientSets?.length !== 5) fail("Phase 1 must present five fictional-client team sets.");
+  if (experience.clientSets?.length !== 6) fail("Phase 1 must present six fictional-client team sets.");
   if (experience.clientSets?.some((set) => set.clients?.length !== 3)) fail("Every fictional-client team set must contain three clients.");
   if (!experience.scenarioAnalysisRules?.factRule || !experience.scenarioAnalysisRules?.assumptionRule || !experience.scenarioAnalysisRules?.gapRule) {
     fail("Phase 1 must distinguish scenario facts, labeled assumptions, and unsupported gaps.");
   }
-  if (experience.clientProfiles?.length !== 15) fail("Phase 1 must define one public scenario profile for each fictional client.");
+  if (experience.clientProfiles?.length !== 18) fail("Phase 1 must define one public scenario profile for each fictional client.");
+  for (const set of experience.clientSets || []) {
+    const assigned = experience.clientProfiles.filter(profile => profile.team === set.team);
+    if (assigned.length !== 3 || set.clients.some(name => !assigned.some(profile => profile.name === name))) fail(`${set.team} must have three matching assigned profiles.`);
+  }
+  const sixthTeam = experience.clientProfiles.filter(profile => profile.team === "Team Six");
+  for (const profile of sixthTeam) {
+    const expected = profile.riskAversion > 4.5 ? "Risk Averse" : profile.riskAversion <= 2.5 ? "Risk Seeking" : "Risk Neutral";
+    if (profile.riskClassification !== expected || !(profile.targetReturn > 0) || !(profile.stdDev > 0)) fail(`${profile.name} must use the supplied risk framework and positive return/volatility inputs.`);
+  }
+  if (new Set(sixthTeam.map(profile => profile.riskClassification)).size !== 3) fail("Team Six requires one client in each risk category.");
   if (experience.scenarioSequence?.length !== 5) fail("Phase 1 must define the scenario-analysis sequence.");
   if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Prepare|Separate facts and assumptions|Compare your three clients|Challenge and verify|Set the mandate") {
     fail("Phase 1 decision cycle must preserve fact and assumption labeling, challenge, verification, and mandate steps.");
@@ -229,7 +239,7 @@ const generatedFiles = [
   "project/guide.html",
   "project/client-discovery-ai-protocol.html",
   "project/client-role-play/instructor-demo.html",
-  ...["one", "two", "three", "four", "five"].map((team) => `project/client-role-play/team-${team}.html`),
+  ...["one", "two", "three", "four", "five", "six"].map((team) => `project/client-role-play/team-${team}.html`),
   "project/security-analysis-selection.html",
   "project/portfolio-management-stress-testing.html",
   "project/canvas-submission-guide.html",
@@ -494,7 +504,7 @@ if (/Committee Chair|Markets &amp; Economic Strategist|Portfolio Construction Le
 for (const requiredText of ["For client-analysis steps", "Open your team scenario files", "Reasoned assumptions", "Use the provided case materials", "Committee challenge round"]) {
   if (!scenarioHtml.includes(requiredText)) fail(`Client scenario protocol is missing required content: ${requiredText}.`);
 }
-for (const relative of ["project/client-discovery-ai-protocol.html", "project/client-analysis.html", "project/phase-1-frame-the-mandate.html", ...["one", "two", "three", "four", "five"].map((team) => `project/client-role-play/team-${team}.html`), "project/client-role-play/instructor-demo.html", "canvas/phase-1-client-step-by-step-page.html", "canvas/phase-1-client-assignment.html"]) {
+for (const relative of ["project/client-discovery-ai-protocol.html", "project/client-analysis.html", "project/phase-1-frame-the-mandate.html", ...["one", "two", "three", "four", "five", "six"].map((team) => `project/client-role-play/team-${team}.html`), "project/client-role-play/instructor-demo.html", "canvas/phase-1-client-step-by-step-page.html", "canvas/phase-1-client-assignment.html"]) {
   const html = await fs.readFile(path.join(rootDir, relative), "utf8");
   const visibleText = html.replace(/<[^>]*>/g, " ");
   const positiveInstructionText = visibleText.replace(/\bno (?:fictional )?client interviews?\b/gi, "");

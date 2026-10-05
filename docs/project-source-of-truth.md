@@ -215,3 +215,13 @@ The validator should fail when it detects:
 - Create student-safe replacements or aliases before retiring public links.
 - Instructor PDF boundary resolved on 2026-07-29 after explicit approval: the file now resides at `BUS331-instructor/Investment_Project/source/Macroeconomic_Forecast_Instructor_Master_Guide.pdf` and is absent from the public staging repository.
 - Do not commit, push, publish, or alter Canvas as part of staging work.
+
+## Client scenario materials: six teams
+
+`project-model.json` owns all team assignments and Team Six client facts, narratives, target returns, standard deviations, risk-aversion scores, and risk classifications. `scripts/build-client-scenario-materials.mjs` generates the 18-client data workbook, combined profile deck, and Team Six deck from those facts and these student-safe native layout bases:
+
+- `source-templates/Client_Scenarios_Data_Base.xlsx`: original 15-client data and shared column layout.
+- `source-templates/Client_Scenarios_Profiles_Base.pptx`: original cover and five team slides.
+- `source-templates/Client_Scenarios_Team_Layout_Base.pptx`: existing three-client slide layout.
+
+The existing Teams One through Five decks remain maintained native documents; the builder adjusts only their total-team marker. The new builder uses the bundled `@oai/artifact-tool` and `jszip` packages. Run it from the repository root with that runtime, then run the portal builder and validator. Native XLSX package repair preserves original styles, existing client rows, and AutoFilter while inserting authored rows 17–19 and extending the filter through row 19. The original Downloads workbook is a reference, not an output destination. Private instructor packets remain outside this build.

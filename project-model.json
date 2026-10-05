@@ -222,6 +222,15 @@
         "team": "Team Five",
         "clients": ["Arthur Sterling", "The Petersons", "Tyler Reed"],
         "inquiry": "Investigate how philanthropy, debt, uneven cash flow, starting capital, and multigenerational goals change portfolio priorities."
+      },
+      {
+        "team": "Team Six",
+        "clients": [
+          "Nora Ellis",
+          "Priya & Owen Brooks",
+          "Adrian Cole"
+        ],
+        "inquiry": "Investigate how family-care spending, a planned career break, and a long growth horizon require different liquidity and risk guardrails."
       }
     ],
     "scenarioAnalysisRules": {
@@ -251,7 +260,10 @@
       {"id":"elena-rossi","slug":"elena-rossi","team":"Team Four","name":"Elena Rossi","initials":"ER","caseLabel":"Case #14 · Team Four","identity":"Age 52 · corporate vice president","statedDirection":"Tax-efficient, sophisticated growth matters."},
       {"id":"arthur-sterling","slug":"arthur-sterling","team":"Team Five","name":"Arthur Sterling","initials":"AS","caseLabel":"Case #09 · Team Five","identity":"Age 80 · retired executive","statedDirection":"Philanthropy and multigenerational wealth matter."},
       {"id":"the-petersons","slug":"the-petersons","team":"Team Five","name":"The Petersons","initials":"TP","caseLabel":"Case #13 · Team Five","identity":"Ages 31 and 30 · teacher and nurse","statedDirection":"Debt reduction and child education matter."},
-      {"id":"tyler-reed","slug":"tyler-reed","team":"Team Five","name":"Tyler Reed","initials":"TR","caseLabel":"Case #15 · Team Five","identity":"Age 27 · gig-economy worker","statedDirection":"Capital accumulation matters despite minimal starting capital."}
+      {"id":"tyler-reed","slug":"tyler-reed","team":"Team Five","name":"Tyler Reed","initials":"TR","caseLabel":"Case #15 · Team Five","identity":"Age 27 · gig-economy worker","statedDirection":"Capital accumulation matters despite minimal starting capital."},
+      {"id":"nora-ellis","name":"Nora Ellis","initials":"NE","case":16,"age":61,"occupation":"Occupational Therapist","income":95000,"netWorth":900000,"goal":"Family Care / Capital Preservation","constraints":"$90k access work in 2 yrs; care reserve","targetReturn":0.045,"stdDev":0.07,"riskAversion":8,"riskClassification":"Risk Averse","identity":"Age 61 · Occupational therapist","statedDirection":"Preserve capital while funding accessibility improvements and family care.","caseBackground":"Nora supports an adult sibling with a mobility disability. She expects $90,000 of home accessibility improvements in two years and needs a separate reserve for ongoing family care. Her investment priority is dependable access to capital, with limited willingness to accept losses. The amount and timing of future care costs are not provided.","slug":"nora-ellis","team":"Team Six","caseLabel":"Case #16 · Team Six"},
+      {"id":"priya-owen-brooks","name":"Priya & Owen Brooks","initials":"PB","case":17,"age":"40/42","occupation":"Engineer / School Administrator","income":205000,"netWorth":780000,"goal":"Career Break / Retirement","constraints":"$100k career break in 4 yrs; 20-yr retirement","targetReturn":0.07,"stdDev":0.13,"riskAversion":4,"riskClassification":"Risk Neutral","identity":"Ages 40 and 42 · Engineer and school administrator","statedDirection":"Balance a planned career break with continued retirement growth.","caseBackground":"Priya and Owen plan a one-year career break beginning in four years, with a $100,000 spending budget. They also want to keep building retirement wealth over a 20-year horizon. They accept moderate investment fluctuations, but the career-break money must be available when needed. Replacement income during the break and account tax treatment are not provided.","slug":"priya-owen-brooks","team":"Team Six","caseLabel":"Case #17 · Team Six"},
+      {"id":"adrian-cole","name":"Adrian Cole","initials":"AC","case":18,"age":35,"occupation":"Airline Pilot","income":180000,"netWorth":650000,"goal":"Long-term Financial Independence","constraints":"25-yr horizon; cash reserve outside portfolio","targetReturn":0.095,"stdDev":0.2,"riskAversion":2,"riskClassification":"Risk Seeking","identity":"Age 35 · Airline pilot","statedDirection":"Pursue long-term growth toward financial independence.","caseBackground":"Adrian earns a stable salary and invests toward financial independence over 25 years. He maintains an emergency cash reserve outside the investment portfolio and expects no planned withdrawals from the portfolio during the next ten years. He is willing to accept substantial fluctuations for growth. The reserve amount, future contribution rate, and maximum acceptable drawdown are not provided.","slug":"adrian-cole","team":"Team Six","caseLabel":"Case #18 · Team Six"}
     ],
     "decisionCycle": [
       {
@@ -1026,6 +1038,14 @@
       "type": "PPTX",
       "path": "files/Client_Scenarios_Team_Five.pptx",
       "description": "Baseline case file for Team Five's three assigned clients.",
+      "audience": "student"
+    },
+    {
+      "id": "team-six-client-profiles",
+      "label": "Team Six client profiles",
+      "type": "PPTX",
+      "path": "files/Client_Scenarios_Team_Six.pptx",
+      "description": "Baseline case file for Team Six's three assigned clients.",
       "audience": "student"
     },
     {

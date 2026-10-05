@@ -31,7 +31,7 @@ One critical public/private boundary issue was identified during inventory:
 | `BUS331_InvProject_Requirements_AllPhases.html` | Student/public | Scenario, client mandate, five roles, technical expectations, checklists | Replace with a generated three-phase project guide; retain the path only as a compatibility entry point |
 | `project/macro-analysis.html` | Student/public | Macro objective, indicator list, starter-workbook link | Fold into Phase 1; replace broken PDF dependency with public-safe instructions |
 | `project/ips-client-profiles.html` | Student/public | RRTTLLU framing and links to client resources | Fold into Phase 1 as the client-mandate workstream |
-| `project/client-discovery-ai-protocol.html` | Student/public | Scenario-analysis workflow and five team-specific case-file links at a retained URL | Generate from `project-model.json`; do not expose instructor-only role cards or Scenario Reveal packets |
+| `project/client-discovery-ai-protocol.html` | Student/public | Scenario-analysis workflow and six team-specific case-file links at a retained URL | Generate from `project-model.json`; do not expose instructor-only role cards or Scenario Reveal packets |
 | `project/client-analysis.html` | Student/public | Decision Record setup, human-first client judgments, labeled case-based assumptions, source challenge, three IPS mandates, memo, Gate 1, and three-file submission | Maintain directly; its label and Phase 1 resource link come from `project-model.json` |
 | `project/BUS331_InvProject_Bridge_CME_Guide.html` | Student/public | CME logic, scenario translation, Solver workflow | Preserve as Phase 2 Workstream A |
 | `project/BUS331_InvProject_SecuritySelection_Guide.html` | Student/public | Focused candidate workflow, funds/ETFs-first selection, final-holding scorecard, concise alternatives, and optional hedge/no-hedge boundary | Preserve as the clean Phase 2 Workstream B technical reference; do not add completed examples |
@@ -93,7 +93,7 @@ All four or five members vote once in every phase, sign the decision record, and
 - `project-model.json` now defines the three phases, five committee seats, approval gates, deliverables, resource manifest, AI rules, and public assessment language.
 - `project-model.json` now also defines the Phase 2 8–10 holding contract, funds/ETFs-first implementation, limited individual securities, final-holding scorecards, concise alternatives, optional one-hedge/no-hedge decision, integrated allocation, IPS compliance, bear-case, breach-correction, and re-test requirements.
 - FactSet is required through a tool-neutral retrieval-and-interpretation record that connects issuer, credit, fund/ETF, corporate-financial, and portfolio-risk research without embedding proprietary captures or exports.
-- The Phase 1 public model defines five fictional-client team sets, human-first scenario analysis, five analyst lenses, labeled assumptions, committee challenge questions, approved-source rules, and CFA Level I foundation links. Older interview cards remain private and outside the current student assignment; Scenario Reveal packets and release controls remain only in `BUS331-instructor/Investment_Project/instructor-control-center/`.
+- The Phase 1 public model defines six fictional-client team sets, human-first scenario analysis, five analyst lenses, labeled assumptions, committee challenge questions, approved-source rules, and CFA Level I foundation links. Older interview cards remain private and outside the current student assignment; Scenario Reveal packets and release controls remain only in `BUS331-instructor/Investment_Project/instructor-control-center/`.
 - The shared builder now generates the portal, comprehensive guide, three phase guides, compatibility guide, assessment page, Canvas submission guide, and three Canvas-ready assignment fragments.
 - The shared builder generates the student-facing Client Scenario Analysis and Decision Protocol and integrates it into the portal, project guide, and Phase 1 guide.
 - The generated pages no longer link to either missing retired resource.
@@ -105,3 +105,9 @@ All four or five members vote once in every phase, sign the decision record, and
 - The paused Eleanor voice pilot is outside the dependency path for the current prompt-free workflow.
 
 Nothing was deleted, committed, pushed, or published during this inventory. The instructor-only PDF was moved only after explicit approval in the follow-up task.
+
+## October 5, 2026: sixth team
+
+Team Six adds Nora Ellis (Risk Averse), Priya & Owen Brooks (Risk Neutral), and Adrian Cole (Risk Seeking). The current public model, scenario protocol, six team pages, combined profile deck, and scenario-data workbook cover 18 clients. Team Six has the same one-slide profile format as the existing teams. Target return, standard deviation, and risk-aversion scores are fictional case inputs. The workbook retains its original classification thresholds and formula logic. The earlier July inventory findings above describe the original 15-client review. No private instructor materials were added.
+
+Regenerate the new client materials with `scripts/build-client-scenario-materials.mjs` using the bundled Artifact Tool runtime. It reads Team Six facts from `project-model.json` and stable student-safe native layout bases in `source-templates/`.
