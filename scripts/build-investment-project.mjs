@@ -158,11 +158,12 @@ function teamScenarioPage(set) {
   const prefix = "../../";
   const profiles = model.phase1Experience.clientProfiles.filter((profile) => profile.team === set.team);
   const teamProfiles = resourceById.get(`${teamSlug(set.team)}-client-profiles`);
+  const ipsTemplate = resourceById.get("ips-framework");
   const decisionRecord = resourceById.get("decision-record");
   const body = `<main id="main-content">
     ${pageHero(`Phase 1 · ${set.team}`, "Analyze your three assigned clients", "Use the provided scenario facts and clearly labeled assumptions to build each IPS mandate.")}
     <div class="page-shell"><div class="content-flow">
-      <section><div class="callout"><h2>Use the slides and data together</h2><p><strong>Start with your team's client slides.</strong> They state the case background, goal, and main constraint. Match each client to the row in the scenario-data workbook for the provided target return, standard deviation, and risk classification. Treat these as case inputs to evaluate, not automatic promises or approved limits.</p><p>When an IPS field is missing, use a reasonable assumption supported by a scenario clue and label it <strong>Assumption</strong>. If no defensible basis exists for a specific value, write <strong>Not provided; confirm before implementation</strong>. Do not turn an inference into a supplied client fact.</p><div class="hero-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, teamProfiles.path))}">Open ${escapeHtml(set.team)} client profiles <span>PPTX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, "files/Client_Scenarios_Data_File.xlsx"))}">Open client data <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open the Analyst Decision Log <span>XLSX</span></a></div></div></section>
+      <section><div class="callout"><h2>Use the slides and data together</h2><p><strong>Start with your team's client slides.</strong> They state the case background, goal, and main constraint. Match each client to the row in the scenario-data workbook for the provided target return, standard deviation, and risk classification. Treat these as case inputs to evaluate, not automatic promises or approved limits.</p><p>Missing client facts may remain <strong>Not provided</strong>. Label and justify only essential modeling assumptions. Return and risk policies, allocation weights, and review rules are committee proposals, not supplied client facts.</p><div class="hero-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, teamProfiles.path))}">Open ${escapeHtml(set.team)} client profiles <span>PPTX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, ipsTemplate.path))}">Open IPS template <span>DOCX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, "files/Client_Scenarios_Data_File.xlsx"))}">Open client data <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open the Analyst Decision Log <span>XLSX</span></a></div></div></section>
       <section><p class="section-kicker">Your three clients</p><h2>Compare the assigned scenarios</h2><div class="client-set-board">${profiles.map((profile) => `<article class="client-set"><p class="role-tag">Assigned client</p><h3>${escapeHtml(profile.name)}</h3><p>${escapeHtml(profile.identity)}</p><p>${escapeHtml(profile.statedDirection)}</p>${profile.caseBackground ? `<p>${escapeHtml(profile.caseBackground)}</p><p><strong>${escapeHtml(profile.riskClassification)}</strong> · Target E(R): ${(100 * profile.targetReturn).toFixed(2)}% · Std dev (σ): ${(100 * profile.stdDev).toFixed(2)}% · Risk aversion (A): ${profile.riskAversion}</p>` : ""}</article>`).join("\n")}</div></section>
       <section><p class="section-kicker">Activity sequence</p><h2>Work from the case evidence</h2>${scenarioSequenceMarkup()}</section>
       <section><p class="section-kicker">Before writing the IPS</p><h2>Document, challenge, and hand off</h2><ul class="check-list"><li>Mark every material statement as a supplied fact, a reasoned assumption, or an information gap.</li><li>Explain the scenario clue behind each assumption and what later confirmation could change.</li><li>Set a provisional client guardrail that later security selection or allocation must honor.</li><li>Record the reasoning and an independent peer review in the Analyst Decision Log.</li></ul></section>
@@ -529,7 +530,7 @@ function clientDiscoveryPage() {
           <p>${escapeHtml(experience.purpose)}</p>
           <div class="content-grid compact-grid">
             <article class="callout"><h3>1 · Supplied facts</h3><p>Read your team's three profile slides and the matching client-data rows. Record where each material fact came from.</p></article>
-            <article class="callout"><h3>2 · Reasoned assumptions</h3><p>For an unanswered IPS field, add a plausible answer based on the scenario and label it as an assumption with its rationale. Mark unsupported exact values as not provided.</p></article>
+            <article class="callout"><h3>2 · Reasoned assumptions</h3><p>Missing facts may remain not provided. Label and justify essential modeling assumptions; distinguish proposed committee policies from supplied client facts.</p></article>
           </div>
         </section>
 
@@ -544,7 +545,7 @@ function clientDiscoveryPage() {
           <h2>Find your committee's three clients</h2>
           <p>Open your assigned team page for the baseline slides and scenario-analysis sequence. The inquiry line identifies tensions to investigate, not a conclusion to copy.</p>
           ${clientSetBoard()}
-          <div class="resource-list resource-list-inline">${resourceLinks(["client-data"], prefix, { includeDescription: true })}</div>
+          <div class="resource-list resource-list-inline">${resourceLinks(["ips-framework", "client-data", ...model.phase1Experience.clientSets.map((set) => `${teamSlug(set.team)}-client-profiles`)], prefix, { includeDescription: true })}</div>
         </section>
 
         <section>

@@ -57,7 +57,7 @@
         "doneRange": [1, 4],
         "evidenceRange": [3, 8],
         "deliverableRange": [1, 5],
-        "resources": ["client-step-guide", "client-discovery-protocol", "client-data", "ips-framework", "decision-record", "canvas-submission-guide"]
+        "resources": ["client-step-guide", "client-discovery-protocol", "client-data", "team-one-client-profiles", "team-two-client-profiles", "team-three-client-profiles", "team-four-client-profiles", "team-five-client-profiles", "team-six-client-profiles", "ips-framework", "decision-record", "canvas-submission-guide"]
       }
     ],
     "phaseSequences": {
@@ -235,13 +235,13 @@
     ],
     "scenarioAnalysisRules": {
       "factRule": "Use the assigned team client slides and client-data workbook as the source for stated facts. Record the file and location for material claims.",
-      "assumptionRule": "For an IPS field the scenario does not answer, enter a plausible scenario-based assumption when useful, label it as an assumption, explain the clue and reasoning, and state what later confirmation could change.",
+      "assumptionRule": "Use the IPS template. Missing client facts may remain Not provided; do not invent personal or account details. Label and justify only essential modeling assumptions and interpretations, and distinguish committee-proposed policies from supplied client facts.",
       "gapRule": "If the scenario gives no defensible basis for a specific value, write 'Not provided; confirm before implementation' rather than presenting an invented number as a fact."
     },
     "scenarioSequence": [
       {"stage":"Read the assigned files","action":"Use only your team's three client profiles and the matching client-data rows. Record stated goals, numerical case inputs, constraints, and source locations."},
       {"stage":"Draft a human-first view","action":"Each of the five roles records a provisional judgment for each client before AI use, naming the supplied fact or clearly labeled assumption behind it."},
-      {"stage":"Resolve missing fields","action":"For each IPS field not specified, make a plausible case-based assumption with a reason or mark the information as not provided. Never present an assumption as a client statement."},
+      {"stage":"Resolve missing fields","action":"Mark missing client facts as Not provided. Explain a material gap and its effect on the mandate; label and justify only an essential modeling assumption. Never present a policy recommendation as a client statement."},
       {"stage":"Challenge and verify","action":"Test the first interpretation as a committee, verify material claims against the case files or approved sources, and record alternatives and trade-offs."},
       {"stage":"Finish the mandate","action":"Use the submitted macro outlook, three scenario analyses, and documented assumptions to complete the IPS mandates and prepare for Gate 1."}
     ],
@@ -273,7 +273,7 @@
       },
       {
         "stage": "Separate facts and assumptions",
-        "action": "For IPS fields the scenario does not specify, write a plausible, labeled assumption with its case-based rationale, or mark the information as not provided when no defensible inference is possible.",
+        "action": "Use Not provided for missing client facts without guessing. Record only material gaps, label any essential modeling assumption with its rationale, and identify proposed committee policies separately.",
         "logEvidence": "The case location for supplied facts; the reasoning and confirmation condition for each material assumption"
       },
       {
@@ -405,7 +405,7 @@
       "Each role records at least one human-first judgment for each assigned client before AI use.",
       "Every material scenario-based assumption is labeled, tied to a case clue, and kept distinct from a supplied fact or client statement.",
       "Every factual claim or number used in the final reasoning has an approved source and as-of date.",
-      "A missing IPS field receives a reasoned, labeled assumption when the scenario supports one; otherwise it is marked not provided with a confirmation condition.",
+      "Missing client facts are marked Not provided; only material gaps need a confirmation condition. Essential modeling assumptions are labeled and justified; proposed policies are identified as committee recommendations.",
       "The final reasoning states what changed the judgment and why.",
       "Each final judgment creates a testable guardrail for later fixed-income, equity, allocation, stress-test, or hedge/no-hedge decisions.",
       "A second team member reviews the evidence trail before the Phase 1 gate."
@@ -734,6 +734,12 @@
         "client-step-guide",
         "client-discovery-protocol",
         "client-data",
+        "team-one-client-profiles",
+        "team-two-client-profiles",
+        "team-three-client-profiles",
+        "team-four-client-profiles",
+        "team-five-client-profiles",
+        "team-six-client-profiles",
         "ips-framework",
         "decision-record",
         "canvas-submission-guide"
@@ -888,7 +894,7 @@
         "canvasTitle": "BUS331 Investment Committee · Phase 1 Part 2 · Client Analysis and Gate 1",
         "outputFile": "phase-1-client-assignment.html",
         "decision": "Approve or revise the three client mandates using the submitted macro forecast before portfolio construction begins.",
-        "submissionProcess": "Complete each IPS from the assigned fictional scenario, using labeled and justified assumptions for missing details; no client interviews are required. Use the macro forecast already submitted in Part 1; do not upload it again. After the Gate 1 vote, submit the three client-analysis files as the Part 2 group assignment. One designated team member submits for the group; every team member verifies the Canvas receipt.",
+        "submissionProcess": "Complete the IPS template from the assigned fictional scenario. Missing facts may remain Not provided; label essential modeling assumptions and justify committee policy choices. No client interviews are required. Use the macro forecast already submitted in Part 1; do not upload it again. After the Gate 1 vote, submit the three client-analysis files as the Part 2 group assignment. One designated team member submits for the group; every team member verifies the Canvas receipt.",
         "includePrivateEvidenceBoundary": false,
         "requiredFiles": [
           {"name": "BUS331_[TeamName]_Phase1_MandateMemo.pdf", "description": "One-page committee mandate memo covering the submitted market view and three client mandates."},
@@ -1058,10 +1064,10 @@
     },
     {
       "id": "ips-framework",
-      "label": "IPS client-analysis framework",
+      "label": "IPS template",
       "type": "DOCX",
-      "path": "files/Investment_Policy_Statement_Template_Client_Analysis_Framework.docx",
-      "description": "Blank framework for objectives, RRTTLLU constraints, allocation, monitoring, and acknowledgment.",
+      "path": "files/BUS331_Abbreviated_IPS_Template.docx",
+      "description": "Two-page blank mandate template using supplied scenario facts, material constraints, return and risk policies, broad allocation, and committee review; missing client facts may remain Not provided.",
       "audience": "student"
     },
     {
