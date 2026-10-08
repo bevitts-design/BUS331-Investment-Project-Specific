@@ -13,7 +13,10 @@
     "premise": "Your four- or five-person investment committee advises three client mandates and manages $500,000 in hypothetical assets. Cover all five committee roles; on a four-person team, one member owns two roles but casts one vote. The committee must establish a market view, build and challenge each portfolio, and defend one evidence-linked recommendation.",
     "clientCount": 3,
     "roleCount": 5,
-    "teamSizeOptions": [4, 5],
+    "teamSizeOptions": [
+      4,
+      5
+    ],
     "hypotheticalAum": "$500,000",
     "scopeNote": "Use the current phase page for work steps and approval readiness. Use the Canvas Submission Workflow for exact files and filenames; Canvas controls due dates, points, and the actual upload."
   },
@@ -43,21 +46,61 @@
         "id": "macro-analysis",
         "title": "Macroeconomic Analysis",
         "purpose": "Build and submit one documented 12-month macro forecast with three probability-weighted scenarios before applying it to the clients.",
-        "stepRange": [0, 3],
-        "doneRange": [0, 1],
-        "evidenceRange": [0, 3],
-        "deliverableRange": [0, 1],
-        "resources": ["macro-step-guide", "macro-starter"]
+        "stepRange": [
+          0,
+          3
+        ],
+        "doneRange": [
+          0,
+          1
+        ],
+        "evidenceRange": [
+          0,
+          3
+        ],
+        "deliverableRange": [
+          0,
+          1
+        ],
+        "resources": [
+          "macro-step-guide",
+          "macro-starter"
+        ]
       },
       {
         "id": "client-submissions",
         "title": "Client Submissions",
-        "purpose": "Use the submitted macro forecast and each assigned client profile to produce IPS documents, a committee mandate, and a recorded Gate 1 decision in a separate client-analysis submission.",
-        "stepRange": [3, 6],
-        "doneRange": [1, 4],
-        "evidenceRange": [3, 8],
-        "deliverableRange": [1, 5],
-        "resources": ["client-step-guide", "client-discovery-protocol", "client-data", "team-one-client-profiles", "team-two-client-profiles", "team-three-client-profiles", "team-four-client-profiles", "team-five-client-profiles", "team-six-client-profiles", "ips-framework", "decision-record", "canvas-submission-guide"]
+        "purpose": "Review each client’s criteria, consider risk, return, utility, and risk aversion, and explain the asset allocation in one abbreviated IPS per client. Complete the committee review and required submission.",
+        "stepRange": [
+          3,
+          6
+        ],
+        "doneRange": [
+          1,
+          4
+        ],
+        "evidenceRange": [
+          3,
+          8
+        ],
+        "deliverableRange": [
+          1,
+          5
+        ],
+        "resources": [
+          "client-step-guide",
+          "client-discovery-protocol",
+          "client-data",
+          "team-one-client-profiles",
+          "team-two-client-profiles",
+          "team-three-client-profiles",
+          "team-four-client-profiles",
+          "team-five-client-profiles",
+          "team-six-client-profiles",
+          "ips-framework",
+          "decision-record",
+          "canvas-submission-guide"
+        ]
       }
     ],
     "phaseSequences": {
@@ -65,8 +108,8 @@
         "Open the Macro Starter workbook, assign all five roles, and save a team-named Part 1 copy.",
         "Complete the detailed macro analysis in the provided workbook: review historical evidence, form a human-first interpretation, and document sources.",
         "Compare the committee view with FRED historical observations and a source-dated FactSet or other external forecast or consensus where a comparable measure exists; then create bull, base, and bear scenarios with probabilities totaling 100%.",
-        "Open the separate Decision Record, identify assigned clients, and analyze their scenario profiles and data. Separate supplied facts, reasoned assumptions, and information gaps.",
-        "Translate the macro outlook into a client-specific IPS mandate, including return target, risk limit, drawdown tripwire, and provisional strategic allocation.",
+        "Review your three assigned client profiles and data. Consider goals, constraints, risk capacity, risk willingness, target return, utility, and risk aversion. Open the separate Decision Record for the committee record.",
+        "Complete one abbreviated IPS per client. Explain how the client criteria and risk–return trade-off influence broad allocation weights totaling 100%, using the submitted macro outlook as context.",
         "Hold Gate 1: challenge the evidence, vote, and record required revisions before any portfolio construction begins."
       ],
       "phase-2": [
@@ -200,27 +243,47 @@
     "clientSets": [
       {
         "team": "Team One",
-        "clients": ["Eleanor Vance", "Marcus Chen", "David and Sarah Miller"],
+        "clients": [
+          "Eleanor Vance",
+          "Marcus Chen",
+          "David and Sarah Miller"
+        ],
         "inquiry": "Investigate how near-term spending, concentrated wealth, and overlapping goals change the meaning of risk."
       },
       {
         "team": "Team Two",
-        "clients": ["Javier Rodriguez", "Linda Sterling", "Robert Halloway"],
+        "clients": [
+          "Javier Rodriguez",
+          "Linda Sterling",
+          "Robert Halloway"
+        ],
         "inquiry": "Investigate how illiquidity, taxes, a known cash need, and retirement urgency constrain an otherwise attractive return target."
       },
       {
         "team": "Team Three",
-        "clients": ["Chloe Dubois", "Dr. Amara Okafor", "Zoe Jenkins"],
+        "clients": [
+          "Chloe Dubois",
+          "Dr. Amara Okafor",
+          "Zoe Jenkins"
+        ],
         "inquiry": "Investigate how experience, values, variable income, and emergency reserves affect capacity, willingness, and product fit."
       },
       {
         "team": "Team Four",
-        "clients": ["Thomas Murphy", "Yuki Tanaka", "Elena Rossi"],
+        "clients": [
+          "Thomas Murphy",
+          "Yuki Tanaka",
+          "Elena Rossi"
+        ],
         "inquiry": "Investigate how loss aversion, currency exposure, relocation, taxes, and restricted holdings affect implementable choices."
       },
       {
         "team": "Team Five",
-        "clients": ["Arthur Sterling", "The Petersons", "Tyler Reed"],
+        "clients": [
+          "Arthur Sterling",
+          "The Petersons",
+          "Tyler Reed"
+        ],
         "inquiry": "Investigate how philanthropy, debt, uneven cash flow, starting capital, and multigenerational goals change portfolio priorities."
       },
       {
@@ -239,31 +302,244 @@
       "gapRule": "If the scenario gives no defensible basis for a specific value, write 'Not provided; confirm before implementation' rather than presenting an invented number as a fact."
     },
     "scenarioSequence": [
-      {"stage":"Read the assigned files","action":"Use only your team's three client profiles and the matching client-data rows. Record stated goals, numerical case inputs, constraints, and source locations."},
-      {"stage":"Draft a human-first view","action":"Each of the five roles records a provisional judgment for each client before AI use, naming the supplied fact or clearly labeled assumption behind it."},
-      {"stage":"Resolve missing fields","action":"Mark missing client facts as Not provided. Explain a material gap and its effect on the mandate; label and justify only an essential modeling assumption. Never present a policy recommendation as a client statement."},
-      {"stage":"Challenge and verify","action":"Test the first interpretation as a committee, verify material claims against the case files or approved sources, and record alternatives and trade-offs."},
-      {"stage":"Finish the mandate","action":"Use the submitted macro outlook, three scenario analyses, and documented assumptions to complete the IPS mandates and prepare for Gate 1."}
+      {
+        "stage": "Read the assigned files",
+        "action": "Use only your team's three client profiles and the matching client-data rows. Record stated goals, numerical case inputs, constraints, and source locations."
+      },
+      {
+        "stage": "Draft a human-first view",
+        "action": "Each of the five roles records a provisional judgment for each client before AI use, naming the supplied fact or clearly labeled assumption behind it."
+      },
+      {
+        "stage": "Resolve missing fields",
+        "action": "Mark missing client facts as Not provided. Explain a material gap and its effect on the mandate; label and justify only an essential modeling assumption. Never present a policy recommendation as a client statement."
+      },
+      {
+        "stage": "Challenge and verify",
+        "action": "Test the first interpretation as a committee, verify material claims against the case files or approved sources, and record alternatives and trade-offs."
+      },
+      {
+        "stage": "Finish the mandate",
+        "action": "Use the submitted macro outlook, three scenario analyses, and documented assumptions to complete the IPS mandates and prepare for Gate 1."
+      }
     ],
     "clientProfiles": [
-      {"id":"eleanor-vance","slug":"eleanor-vance","team":"Team One","name":"Eleanor Vance","initials":"EV","caseLabel":"Case #01 · Team One","identity":"Age 72 · Retired librarian","statedDirection":"Capital preservation and income matter."},
-      {"id":"marcus-chen","slug":"marcus-chen","team":"Team One","name":"Marcus Chen","initials":"MC","caseLabel":"Case #02 · Team One","identity":"Age 29 · Software engineer","statedDirection":"Aggressive growth and early retirement matter."},
-      {"id":"david-sarah-miller","slug":"david-sarah-miller","team":"Team One","name":"David and Sarah Miller","initials":"DM","caseLabel":"Case #03 · Team One","identity":"Ages 48 and 46 · middle management","statedDirection":"College funding and retirement must work together."},
-      {"id":"javier-rodriguez","slug":"javier-rodriguez","team":"Team Two","name":"Javier Rodriguez","initials":"JR","caseLabel":"Case #05 · Team Two","identity":"Age 55 · business owner","statedDirection":"Diversification and a future business exit matter."},
-      {"id":"linda-sterling","slug":"linda-sterling","team":"Team Two","name":"Linda Sterling","initials":"LS","caseLabel":"Case #07 · Team Two","identity":"Age 51 · marketing director","statedDirection":"Stability matters while planning for a home purchase."},
-      {"id":"robert-halloway","slug":"robert-halloway","team":"Team Two","name":"Robert Halloway","initials":"RH","caseLabel":"Case #08 · Team Two","identity":"Age 58 · retail manager","statedDirection":"Catch-up retirement growth matters."},
-      {"id":"chloe-dubois","slug":"chloe-dubois","team":"Team Three","name":"Chloe Dubois","initials":"CD","caseLabel":"Case #04 · Team Three","identity":"Age 24 · graduate student","statedDirection":"Long-term wealth building matters."},
-      {"id":"amara-okafor","slug":"amara-okafor","team":"Team Three","name":"Dr. Amara Okafor","initials":"AO","caseLabel":"Case #06 · Team Three","identity":"Age 42 · pediatrician","statedDirection":"Ethical growth matters."},
-      {"id":"zoe-jenkins","slug":"zoe-jenkins","team":"Team Three","name":"Zoe Jenkins","initials":"ZJ","caseLabel":"Case #10 · Team Three","identity":"Age 32 · graphic designer","statedDirection":"Emergency reserves and growth matter."},
-      {"id":"thomas-murphy","slug":"thomas-murphy","team":"Team Four","name":"Thomas Murphy","initials":"TM","caseLabel":"Case #11 · Team Four","identity":"Age 45 · police officer","statedDirection":"Supplemental retirement matters, but losses feel difficult."},
-      {"id":"yuki-tanaka","slug":"yuki-tanaka","team":"Team Four","name":"Yuki Tanaka","initials":"YT","caseLabel":"Case #12 · Team Four","identity":"Age 38 · technology consultant","statedDirection":"Growth and global diversification matter before an international move."},
-      {"id":"elena-rossi","slug":"elena-rossi","team":"Team Four","name":"Elena Rossi","initials":"ER","caseLabel":"Case #14 · Team Four","identity":"Age 52 · corporate vice president","statedDirection":"Tax-efficient, sophisticated growth matters."},
-      {"id":"arthur-sterling","slug":"arthur-sterling","team":"Team Five","name":"Arthur Sterling","initials":"AS","caseLabel":"Case #09 · Team Five","identity":"Age 80 · retired executive","statedDirection":"Philanthropy and multigenerational wealth matter."},
-      {"id":"the-petersons","slug":"the-petersons","team":"Team Five","name":"The Petersons","initials":"TP","caseLabel":"Case #13 · Team Five","identity":"Ages 31 and 30 · teacher and nurse","statedDirection":"Debt reduction and child education matter."},
-      {"id":"tyler-reed","slug":"tyler-reed","team":"Team Five","name":"Tyler Reed","initials":"TR","caseLabel":"Case #15 · Team Five","identity":"Age 27 · gig-economy worker","statedDirection":"Capital accumulation matters despite minimal starting capital."},
-      {"id":"nora-ellis","name":"Nora Ellis","initials":"NE","case":16,"age":61,"occupation":"Occupational Therapist","income":95000,"netWorth":900000,"goal":"Family Care / Capital Preservation","constraints":"$90k access work in 2 yrs; care reserve","targetReturn":0.045,"stdDev":0.07,"riskAversion":8,"riskClassification":"Risk Averse","identity":"Age 61 · Occupational therapist","statedDirection":"Preserve capital while funding accessibility improvements and family care.","caseBackground":"Nora supports an adult sibling with a mobility disability. She expects $90,000 of home accessibility improvements in two years and needs a separate reserve for ongoing family care. Her investment priority is dependable access to capital, with limited willingness to accept losses. The amount and timing of future care costs are not provided.","slug":"nora-ellis","team":"Team Six","caseLabel":"Case #16 · Team Six"},
-      {"id":"priya-owen-brooks","name":"Priya & Owen Brooks","initials":"PB","case":17,"age":"40/42","occupation":"Engineer / School Administrator","income":205000,"netWorth":780000,"goal":"Career Break / Retirement","constraints":"$100k career break in 4 yrs; 20-yr retirement","targetReturn":0.07,"stdDev":0.13,"riskAversion":4,"riskClassification":"Risk Neutral","identity":"Ages 40 and 42 · Engineer and school administrator","statedDirection":"Balance a planned career break with continued retirement growth.","caseBackground":"Priya and Owen plan a one-year career break beginning in four years, with a $100,000 spending budget. They also want to keep building retirement wealth over a 20-year horizon. They accept moderate investment fluctuations, but the career-break money must be available when needed. Replacement income during the break and account tax treatment are not provided.","slug":"priya-owen-brooks","team":"Team Six","caseLabel":"Case #17 · Team Six"},
-      {"id":"adrian-cole","name":"Adrian Cole","initials":"AC","case":18,"age":35,"occupation":"Airline Pilot","income":180000,"netWorth":650000,"goal":"Long-term Financial Independence","constraints":"25-yr horizon; cash reserve outside portfolio","targetReturn":0.095,"stdDev":0.2,"riskAversion":2,"riskClassification":"Risk Seeking","identity":"Age 35 · Airline pilot","statedDirection":"Pursue long-term growth toward financial independence.","caseBackground":"Adrian earns a stable salary and invests toward financial independence over 25 years. He maintains an emergency cash reserve outside the investment portfolio and expects no planned withdrawals from the portfolio during the next ten years. He is willing to accept substantial fluctuations for growth. The reserve amount, future contribution rate, and maximum acceptable drawdown are not provided.","slug":"adrian-cole","team":"Team Six","caseLabel":"Case #18 · Team Six"}
+      {
+        "id": "eleanor-vance",
+        "slug": "eleanor-vance",
+        "team": "Team One",
+        "name": "Eleanor Vance",
+        "initials": "EV",
+        "caseLabel": "Case #01 · Team One",
+        "identity": "Age 72 · Retired librarian",
+        "statedDirection": "Capital preservation and income matter."
+      },
+      {
+        "id": "marcus-chen",
+        "slug": "marcus-chen",
+        "team": "Team One",
+        "name": "Marcus Chen",
+        "initials": "MC",
+        "caseLabel": "Case #02 · Team One",
+        "identity": "Age 29 · Software engineer",
+        "statedDirection": "Aggressive growth and early retirement matter."
+      },
+      {
+        "id": "david-sarah-miller",
+        "slug": "david-sarah-miller",
+        "team": "Team One",
+        "name": "David and Sarah Miller",
+        "initials": "DM",
+        "caseLabel": "Case #03 · Team One",
+        "identity": "Ages 48 and 46 · middle management",
+        "statedDirection": "College funding and retirement must work together."
+      },
+      {
+        "id": "javier-rodriguez",
+        "slug": "javier-rodriguez",
+        "team": "Team Two",
+        "name": "Javier Rodriguez",
+        "initials": "JR",
+        "caseLabel": "Case #05 · Team Two",
+        "identity": "Age 55 · business owner",
+        "statedDirection": "Diversification and a future business exit matter."
+      },
+      {
+        "id": "linda-sterling",
+        "slug": "linda-sterling",
+        "team": "Team Two",
+        "name": "Linda Sterling",
+        "initials": "LS",
+        "caseLabel": "Case #07 · Team Two",
+        "identity": "Age 51 · marketing director",
+        "statedDirection": "Stability matters while planning for a home purchase."
+      },
+      {
+        "id": "robert-halloway",
+        "slug": "robert-halloway",
+        "team": "Team Two",
+        "name": "Robert Halloway",
+        "initials": "RH",
+        "caseLabel": "Case #08 · Team Two",
+        "identity": "Age 58 · retail manager",
+        "statedDirection": "Catch-up retirement growth matters."
+      },
+      {
+        "id": "chloe-dubois",
+        "slug": "chloe-dubois",
+        "team": "Team Three",
+        "name": "Chloe Dubois",
+        "initials": "CD",
+        "caseLabel": "Case #04 · Team Three",
+        "identity": "Age 24 · graduate student",
+        "statedDirection": "Long-term wealth building matters."
+      },
+      {
+        "id": "amara-okafor",
+        "slug": "amara-okafor",
+        "team": "Team Three",
+        "name": "Dr. Amara Okafor",
+        "initials": "AO",
+        "caseLabel": "Case #06 · Team Three",
+        "identity": "Age 42 · pediatrician",
+        "statedDirection": "Ethical growth matters."
+      },
+      {
+        "id": "zoe-jenkins",
+        "slug": "zoe-jenkins",
+        "team": "Team Three",
+        "name": "Zoe Jenkins",
+        "initials": "ZJ",
+        "caseLabel": "Case #10 · Team Three",
+        "identity": "Age 32 · graphic designer",
+        "statedDirection": "Emergency reserves and growth matter."
+      },
+      {
+        "id": "thomas-murphy",
+        "slug": "thomas-murphy",
+        "team": "Team Four",
+        "name": "Thomas Murphy",
+        "initials": "TM",
+        "caseLabel": "Case #11 · Team Four",
+        "identity": "Age 45 · police officer",
+        "statedDirection": "Supplemental retirement matters, but losses feel difficult."
+      },
+      {
+        "id": "yuki-tanaka",
+        "slug": "yuki-tanaka",
+        "team": "Team Four",
+        "name": "Yuki Tanaka",
+        "initials": "YT",
+        "caseLabel": "Case #12 · Team Four",
+        "identity": "Age 38 · technology consultant",
+        "statedDirection": "Growth and global diversification matter before an international move."
+      },
+      {
+        "id": "elena-rossi",
+        "slug": "elena-rossi",
+        "team": "Team Four",
+        "name": "Elena Rossi",
+        "initials": "ER",
+        "caseLabel": "Case #14 · Team Four",
+        "identity": "Age 52 · corporate vice president",
+        "statedDirection": "Tax-efficient, sophisticated growth matters."
+      },
+      {
+        "id": "arthur-sterling",
+        "slug": "arthur-sterling",
+        "team": "Team Five",
+        "name": "Arthur Sterling",
+        "initials": "AS",
+        "caseLabel": "Case #09 · Team Five",
+        "identity": "Age 80 · retired executive",
+        "statedDirection": "Philanthropy and multigenerational wealth matter."
+      },
+      {
+        "id": "the-petersons",
+        "slug": "the-petersons",
+        "team": "Team Five",
+        "name": "The Petersons",
+        "initials": "TP",
+        "caseLabel": "Case #13 · Team Five",
+        "identity": "Ages 31 and 30 · teacher and nurse",
+        "statedDirection": "Debt reduction and child education matter."
+      },
+      {
+        "id": "tyler-reed",
+        "slug": "tyler-reed",
+        "team": "Team Five",
+        "name": "Tyler Reed",
+        "initials": "TR",
+        "caseLabel": "Case #15 · Team Five",
+        "identity": "Age 27 · gig-economy worker",
+        "statedDirection": "Capital accumulation matters despite minimal starting capital."
+      },
+      {
+        "id": "nora-ellis",
+        "name": "Nora Ellis",
+        "initials": "NE",
+        "case": 16,
+        "age": 61,
+        "occupation": "Occupational Therapist",
+        "income": 95000,
+        "netWorth": 900000,
+        "goal": "Family Care / Capital Preservation",
+        "constraints": "$90k access work in 2 yrs; care reserve",
+        "targetReturn": 0.045,
+        "stdDev": 0.07,
+        "riskAversion": 8,
+        "riskClassification": "Risk Averse",
+        "identity": "Age 61 · Occupational therapist",
+        "statedDirection": "Preserve capital while funding accessibility improvements and family care.",
+        "caseBackground": "Nora supports an adult sibling with a mobility disability. She expects $90,000 of home accessibility improvements in two years and needs a separate reserve for ongoing family care. Her investment priority is dependable access to capital, with limited willingness to accept losses. The amount and timing of future care costs are not provided.",
+        "slug": "nora-ellis",
+        "team": "Team Six",
+        "caseLabel": "Case #16 · Team Six"
+      },
+      {
+        "id": "priya-owen-brooks",
+        "name": "Priya & Owen Brooks",
+        "initials": "PB",
+        "case": 17,
+        "age": "40/42",
+        "occupation": "Engineer / School Administrator",
+        "income": 205000,
+        "netWorth": 780000,
+        "goal": "Career Break / Retirement",
+        "constraints": "$100k career break in 4 yrs; 20-yr retirement",
+        "targetReturn": 0.07,
+        "stdDev": 0.13,
+        "riskAversion": 4,
+        "riskClassification": "Risk Neutral",
+        "identity": "Ages 40 and 42 · Engineer and school administrator",
+        "statedDirection": "Balance a planned career break with continued retirement growth.",
+        "caseBackground": "Priya and Owen plan a one-year career break beginning in four years, with a $100,000 spending budget. They also want to keep building retirement wealth over a 20-year horizon. They accept moderate investment fluctuations, but the career-break money must be available when needed. Replacement income during the break and account tax treatment are not provided.",
+        "slug": "priya-owen-brooks",
+        "team": "Team Six",
+        "caseLabel": "Case #17 · Team Six"
+      },
+      {
+        "id": "adrian-cole",
+        "name": "Adrian Cole",
+        "initials": "AC",
+        "case": 18,
+        "age": 35,
+        "occupation": "Airline Pilot",
+        "income": 180000,
+        "netWorth": 650000,
+        "goal": "Long-term Financial Independence",
+        "constraints": "25-yr horizon; cash reserve outside portfolio",
+        "targetReturn": 0.095,
+        "stdDev": 0.2,
+        "riskAversion": 2,
+        "riskClassification": "Risk Seeking",
+        "identity": "Age 35 · Airline pilot",
+        "statedDirection": "Pursue long-term growth toward financial independence.",
+        "caseBackground": "Adrian earns a stable salary and invests toward financial independence over 25 years. He maintains an emergency cash reserve outside the investment portfolio and expects no planned withdrawals from the portfolio during the next ten years. He is willing to accept substantial fluctuations for growth. The reserve amount, future contribution rate, and maximum acceptable drawdown are not provided.",
+        "slug": "adrian-cole",
+        "team": "Team Six",
+        "caseLabel": "Case #18 · Team Six"
+      }
     ],
     "decisionCycle": [
       {
@@ -296,31 +572,61 @@
       {
         "roleId": "client-macro",
         "focus": "Goals and context",
-        "evidenceToConsider": ["Primary and secondary goals", "Time horizons and decision dates", "Income, spending, and liquidity events", "Tax, legal, values, and other unique constraints", "Macro conditions that could change the plan"],
+        "evidenceToConsider": [
+          "Primary and secondary goals",
+          "Time horizons and decision dates",
+          "Income, spending, and liquidity events",
+          "Tax, legal, values, and other unique constraints",
+          "Macro conditions that could change the plan"
+        ],
         "handoff": "Draft the client objective, the RRTTLLU facts, and a list of facts still missing."
       },
       {
         "roleId": "fixed-income",
         "focus": "Income and capital protection",
-        "evidenceToConsider": ["Required cash-flow floor", "Known liability dates", "Tolerance for price changes when rates move", "Credit-loss capacity", "Liquidity and tax treatment"],
+        "evidenceToConsider": [
+          "Required cash-flow floor",
+          "Known liability dates",
+          "Tolerance for price changes when rates move",
+          "Credit-loss capacity",
+          "Liquidity and tax treatment"
+        ],
         "handoff": "Draft the provisional maturity, duration, credit-quality, liquidity, and income guardrails."
       },
       {
         "roleId": "equity",
         "focus": "Growth exposure and equity fit",
-        "evidenceToConsider": ["Long-term growth need and equity-loss capacity", "Diversification and concentration limits", "Sector, style, values, and benchmark restrictions", "Fee, tax, trading, and liquidity sensitivity", "Conditions for any limited individual-security exposure"],
+        "evidenceToConsider": [
+          "Long-term growth need and equity-loss capacity",
+          "Diversification and concentration limits",
+          "Sector, style, values, and benchmark restrictions",
+          "Fee, tax, trading, and liquidity sensitivity",
+          "Conditions for any limited individual-security exposure"
+        ],
         "handoff": "Draft the screen for equity funds and ETFs and any limited individual equity; do not name a winning product yet."
       },
       {
         "roleId": "portfolio-manager",
         "focus": "Integration and trade-offs",
-        "evidenceToConsider": ["Required return versus desired return", "Ability and willingness to bear loss", "Concentration and correlation risks", "Priority among competing goals", "Weight, liquidity, and implementation trade-offs"],
+        "evidenceToConsider": [
+          "Required return versus desired return",
+          "Ability and willingness to bear loss",
+          "Concentration and correlation risks",
+          "Priority among competing goals",
+          "Weight, liquidity, and implementation trade-offs"
+        ],
         "handoff": "Reconcile conflicts, identify portfolio-level trade-offs, and specify which selection or weighting decisions require committee approval."
       },
       {
         "roleId": "risk-derivatives",
         "focus": "Downside, residual risk, and hedge conditions",
-        "evidenceToConsider": ["Reaction to a one-year drawdown", "Client goal most exposed in a bear case", "Drawdown tripwire and monitoring trigger", "Residual risks the client can or cannot accept", "Conditions under which a targeted hedge could be justified or removed"],
+        "evidenceToConsider": [
+          "Reaction to a one-year drawdown",
+          "Client goal most exposed in a bear case",
+          "Drawdown tripwire and monitoring trigger",
+          "Residual risks the client can or cannot accept",
+          "Conditions under which a targeted hedge could be justified or removed"
+        ],
         "handoff": "Propose the drawdown tripwire, name the residual risks to stress, and identify which facts must be verified before any hedge or no-hedge conclusion."
       }
     ],
@@ -496,17 +802,44 @@
       "licenseBoundary": "Use your licensed FactSet access to research and download data for your own course work. Submit the final project package and any required licensed-source supporting evidence privately through Canvas. Do not place FactSet captures, exports, credentials, completed proprietary data files, or student work in the public repository.",
       "navigationBoundary": "FactSet layouts, entitlements, and labels can differ. Use course demonstrations and current FactSet support for navigation; this public guide defines the evidence standard, not a click path.",
       "steps": [
-        {"stage": "Frame the research question", "action": "Name the client guardrail, holding or exposure claim, product comparison, direct-security risk, or portfolio-risk input the FactSet research must test."},
-        {"stage": "Retrieve licensed evidence", "action": "Research the relevant security, credit, fund/ETF, benchmark, holdings, exposure, cost, liquidity, or portfolio-risk data available in your licensed workspace; use issuer evidence only for a selected direct security when it is relevant."},
-        {"stage": "Record the retrieval", "action": "Log what was retrieved, retrieval date, relevant metric or research item, entity/security, as-of period, and source or document reference as appropriate."},
-        {"stage": "Interpret", "action": "Explain what the evidence means for exposure, overlap, concentration, costs, liquidity, risk, diversification, or client fit; for a selected direct security, include the material business or issuer-specific risk. Do not substitute copied output for analysis."},
-        {"stage": "Apply and retain", "action": "State how the evidence confirmed, qualified, contradicted, or changed the recommendation, then retain and submit the required licensed-source evidence privately through Canvas under course policy."}
+        {
+          "stage": "Frame the research question",
+          "action": "Name the client guardrail, holding or exposure claim, product comparison, direct-security risk, or portfolio-risk input the FactSet research must test."
+        },
+        {
+          "stage": "Retrieve licensed evidence",
+          "action": "Research the relevant security, credit, fund/ETF, benchmark, holdings, exposure, cost, liquidity, or portfolio-risk data available in your licensed workspace; use issuer evidence only for a selected direct security when it is relevant."
+        },
+        {
+          "stage": "Record the retrieval",
+          "action": "Log what was retrieved, retrieval date, relevant metric or research item, entity/security, as-of period, and source or document reference as appropriate."
+        },
+        {
+          "stage": "Interpret",
+          "action": "Explain what the evidence means for exposure, overlap, concentration, costs, liquidity, risk, diversification, or client fit; for a selected direct security, include the material business or issuer-specific risk. Do not substitute copied output for analysis."
+        },
+        {
+          "stage": "Apply and retain",
+          "action": "State how the evidence confirmed, qualified, contradicted, or changed the recommendation, then retain and submit the required licensed-source evidence privately through Canvas under course policy."
+        }
       ],
       "connections": [
-        {"workstream": "Holding and exposure review", "application": "For every proposed final holding, use current product, holdings, exposure, cost, liquidity, and risk evidence to complete the concise Holding & Exposure Reality Check; add business or issuer-specific evidence only for a selected direct individual security."},
-        {"workstream": "Credit and fixed income", "application": "Use relevant issue and issuer evidence for price/yield context, maturity and structure, duration or rate sensitivity, credit quality, spreads, liquidity, coverage, debt maturities, and downside risk."},
-        {"workstream": "Mutual funds and ETFs", "application": "Use relevant product, holdings, benchmark, style, performance, flow, risk, cost, liquidity, and overlap evidence while verifying official product facts in sponsor or filed documents when appropriate."},
-        {"workstream": "Portfolio risk inputs", "application": "Use appropriately dated risk, return, exposure, correlation, or benchmark inputs and document their definitions, units, limitations, and role in the team calculation."}
+        {
+          "workstream": "Holding and exposure review",
+          "application": "For every proposed final holding, use current product, holdings, exposure, cost, liquidity, and risk evidence to complete the concise Holding & Exposure Reality Check; add business or issuer-specific evidence only for a selected direct individual security."
+        },
+        {
+          "workstream": "Credit and fixed income",
+          "application": "Use relevant issue and issuer evidence for price/yield context, maturity and structure, duration or rate sensitivity, credit quality, spreads, liquidity, coverage, debt maturities, and downside risk."
+        },
+        {
+          "workstream": "Mutual funds and ETFs",
+          "application": "Use relevant product, holdings, benchmark, style, performance, flow, risk, cost, liquidity, and overlap evidence while verifying official product facts in sponsor or filed documents when appropriate."
+        },
+        {
+          "workstream": "Portfolio risk inputs",
+          "application": "Use appropriately dated risk, return, exposure, correlation, or benchmark inputs and document their definitions, units, limitations, and role in the team calculation."
+        }
       ],
       "evidenceLogFields": [
         "Client and workstream",
@@ -877,9 +1210,14 @@
         "submissionProcess": "Complete and submit the macro starter workbook as the Part 1 group assignment. One designated team member submits for the group; every team member verifies the Canvas receipt. Carry the submitted forecast into Part 2 and document any later revision in the decision record.",
         "includePrivateEvidenceBoundary": false,
         "requiredFiles": [
-          {"name": "BUS331_[TeamName]_Phase1_Macro.xlsx", "description": "Completed macro starter workbook with historical evidence, human-first read, source-dated consensus comparison, inflation forecast, and probability-weighted bull/base/bear scenarios."}
+          {
+            "name": "BUS331_[TeamName]_Phase1_Macro.xlsx",
+            "description": "Completed macro starter workbook with historical evidence, human-first read, source-dated consensus comparison, inflation forecast, and probability-weighted bull/base/bear scenarios."
+          }
         ],
-        "allowedExtensions": ["xlsx"],
+        "allowedExtensions": [
+          "xlsx"
+        ],
         "preflight": [
           "All five macro responsibilities have named owners; a four-person team may assign two responsibilities to one person.",
           "Historical claims use the labeled series, frequency, units, and source dates; current observations are distinguished from 12-month forecasts.",
@@ -897,11 +1235,23 @@
         "submissionProcess": "Complete the IPS template from the assigned fictional scenario. Missing facts may remain Not provided; label essential modeling assumptions and justify committee policy choices. No client interviews are required. Use the macro forecast already submitted in Part 1; do not upload it again. After the Gate 1 vote, submit the three client-analysis files as the Part 2 group assignment. One designated team member submits for the group; every team member verifies the Canvas receipt.",
         "includePrivateEvidenceBoundary": false,
         "requiredFiles": [
-          {"name": "BUS331_[TeamName]_Phase1_MandateMemo.pdf", "description": "One-page committee mandate memo covering the submitted market view and three client mandates."},
-          {"name": "BUS331_[TeamName]_Phase1_ClientIPS.pdf", "description": "One combined PDF containing the three completed client IPS documents in assigned-client order."},
-          {"name": "BUS331_[TeamName]_Phase1_DecisionRecord.xlsx", "description": "Current Analyst Decision Log with five-role-by-three-client coverage and one Gate 1 vote per team member."}
+          {
+            "name": "BUS331_[TeamName]_Phase1_MandateMemo.pdf",
+            "description": "One-page committee mandate memo covering the submitted market view and three client mandates."
+          },
+          {
+            "name": "BUS331_[TeamName]_Phase1_ClientIPS.pdf",
+            "description": "One combined PDF containing the three completed client IPS documents in assigned-client order."
+          },
+          {
+            "name": "BUS331_[TeamName]_Phase1_DecisionRecord.xlsx",
+            "description": "Current Analyst Decision Log with five-role-by-three-client coverage and one Gate 1 vote per team member."
+          }
         ],
-        "allowedExtensions": ["pdf", "xlsx"],
+        "allowedExtensions": [
+          "pdf",
+          "xlsx"
+        ],
         "preflight": [
           "The mandate memo identifies the submitted macro forecast and explains any revision since Part 1.",
           "Each client has an objective, RRTTLLU constraints, return target, volatility limit, drawdown tripwire, and unresolved information gaps.",
@@ -918,14 +1268,36 @@
         "submissionProcess": "Phase 2 has two checkpoints. At the instructor-designated baseline checkpoint, submit the Baseline Snapshot before the Scenario Reveal. After the reveal, complete the corrective trade and re-test, then submit the complete Gate 2 package. One designated team member submits for the group; every team member verifies the Canvas receipt.",
         "includePrivateEvidenceBoundary": true,
         "requiredFiles": [
-          {"name": "BUS331_[TeamName]_Phase2_CME.xlsx", "description": "Completed capital-market-expectations and optimization workbook."},
-          {"name": "BUS331_[TeamName]_Phase2_SecuritySelection.xlsx", "description": "Completed final-holding scorecards, selective decision notes, Holding & Exposure Reality Checks, conditional direct-security evidence, and FactSet Evidence Log."},
-          {"name": "BUS331_[TeamName]_Phase2_BaselineSnapshot.pdf", "description": "Submitted baseline allocation, IPS scorecard, and initial stress result retained before the Scenario Reveal."},
-          {"name": "BUS331_[TeamName]_Phase2_StressTest.xlsx", "description": "Scenario Release Log, integrated allocation, full IPS scorecard, revealed-scenario results, corrective trades, and re-test."},
-          {"name": "BUS331_[TeamName]_Phase2_DecisionRecord.xlsx", "description": "Current committee record with client-by-client votes, dissent, actions, owners, and deadlines."},
-          {"name": "BUS331_[TeamName]_Phase2_LicensedEvidence.zip", "description": "Private course-use evidence files referenced by the FactSet Evidence Log; no credentials or unrelated exports."}
+          {
+            "name": "BUS331_[TeamName]_Phase2_CME.xlsx",
+            "description": "Completed capital-market-expectations and optimization workbook."
+          },
+          {
+            "name": "BUS331_[TeamName]_Phase2_SecuritySelection.xlsx",
+            "description": "Completed final-holding scorecards, selective decision notes, Holding & Exposure Reality Checks, conditional direct-security evidence, and FactSet Evidence Log."
+          },
+          {
+            "name": "BUS331_[TeamName]_Phase2_BaselineSnapshot.pdf",
+            "description": "Submitted baseline allocation, IPS scorecard, and initial stress result retained before the Scenario Reveal."
+          },
+          {
+            "name": "BUS331_[TeamName]_Phase2_StressTest.xlsx",
+            "description": "Scenario Release Log, integrated allocation, full IPS scorecard, revealed-scenario results, corrective trades, and re-test."
+          },
+          {
+            "name": "BUS331_[TeamName]_Phase2_DecisionRecord.xlsx",
+            "description": "Current committee record with client-by-client votes, dissent, actions, owners, and deadlines."
+          },
+          {
+            "name": "BUS331_[TeamName]_Phase2_LicensedEvidence.zip",
+            "description": "Private course-use evidence files referenced by the FactSet Evidence Log; no credentials or unrelated exports."
+          }
         ],
-        "allowedExtensions": ["pdf", "xlsx", "zip"],
+        "allowedExtensions": [
+          "pdf",
+          "xlsx",
+          "zip"
+        ],
         "preflight": [
           "Each client portfolio contains 8–10 holdings and never more than 10; funds and ETFs are primary, individual securities total no more than two or three, and no slot is filled without a purpose.",
           "Every final holding has the concise scorecard, realistic alternatives are rejected briefly, and direct individual securities include rationale, idiosyncratic-risk, and position-size evidence.",
@@ -941,13 +1313,33 @@
         "submissionProcess": "Submit the complete Phase 3 package before the scheduled committee defense. One designated team member submits for the group; every team member verifies the Canvas receipt.",
         "includePrivateEvidenceBoundary": true,
         "requiredFiles": [
-          {"name": "BUS331_[TeamName]_Phase3_DecisionMemo.pdf", "description": "Final committee decision memo with recommendation first, client-specific actions, reservations, and monitoring triggers."},
-          {"name": "BUS331_[TeamName]_Phase3_TechnicalDossier.pdf", "description": "Auditable exhibit book linking macro, mandates, allocations, security evidence, stress results, corrections, and sources."},
-          {"name": "BUS331_[TeamName]_Phase3_Presentation.pptx", "description": "Final visual committee presentation with balanced speaking responsibility and a compact role-specific investment-committee defense."},
-          {"name": "BUS331_[TeamName]_Phase3_DecisionRecord.xlsx", "description": "Final vote, dissent or reservations, implementation actions, Analyst Decision Log, and AI audit appendix."},
-          {"name": "BUS331_[TeamName]_Phase3_LicensedEvidence.zip", "description": "Final private evidence bundle containing only licensed supporting files cited in the dossier and Evidence Log."}
+          {
+            "name": "BUS331_[TeamName]_Phase3_DecisionMemo.pdf",
+            "description": "Final committee decision memo with recommendation first, client-specific actions, reservations, and monitoring triggers."
+          },
+          {
+            "name": "BUS331_[TeamName]_Phase3_TechnicalDossier.pdf",
+            "description": "Auditable exhibit book linking macro, mandates, allocations, security evidence, stress results, corrections, and sources."
+          },
+          {
+            "name": "BUS331_[TeamName]_Phase3_Presentation.pptx",
+            "description": "Final visual committee presentation with balanced speaking responsibility and a compact role-specific investment-committee defense."
+          },
+          {
+            "name": "BUS331_[TeamName]_Phase3_DecisionRecord.xlsx",
+            "description": "Final vote, dissent or reservations, implementation actions, Analyst Decision Log, and AI audit appendix."
+          },
+          {
+            "name": "BUS331_[TeamName]_Phase3_LicensedEvidence.zip",
+            "description": "Final private evidence bundle containing only licensed supporting files cited in the dossier and Evidence Log."
+          }
         ],
-        "allowedExtensions": ["pdf", "pptx", "xlsx", "zip"],
+        "allowedExtensions": [
+          "pdf",
+          "pptx",
+          "xlsx",
+          "zip"
+        ],
         "preflight": [
           "The memo, dossier, presentation, and decision record state the same allocations, securities, and monitoring actions.",
           "Every recommendation traces backward to a Phase 1 client guardrail and forward to a monitoring trigger.",
@@ -987,7 +1379,7 @@
       "label": "Client Analysis step-by-step guide",
       "type": "HTML",
       "path": "project/client-analysis.html",
-      "description": "Decision Record, scenario analysis, three IPS documents, mandate memo, Gate 1 vote, and Part 2 submission in working order.",
+      "description": "Four steps: review client criteria, consider risk, return, utility and risk aversion, explain asset allocation, and complete three abbreviated IPS statements; then review and submit.",
       "audience": "student"
     },
     {

@@ -145,9 +145,9 @@ def main():
         .encode("ascii", "xmlcharrefreplace")
         .decode("ascii")
     )
-    if html.count("Step 1:") != 1 or html.count("Step 10:") != 1:
+    if html.count("Step 1:") != 1 or html.count("Step 4:") != 1:
         raise ValueError("Canvas guide is missing a step")
-    if "Two workbooks, two jobs" in html or "Step 11:" in html:
+    if "Two workbooks, two jobs" in html or "Step 5:" in html:
         raise ValueError("Canvas guide contains unexpected content")
     if re.search(r'href="(?!https?://)', html):
         raise ValueError("Canvas guide contains a relative link")
