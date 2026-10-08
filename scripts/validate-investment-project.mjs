@@ -66,7 +66,7 @@ if (!roadmap) {
   for (const required of ["historical", "human-first", "FactSet", "FRED", "bull", "base", "bear", "100%", "macro", "mandate"]) {
     if (!new RegExp(required, "i").test(phaseOneText)) fail(`Phase 1 roadmap sequence is missing its detailed macro-analysis requirement: ${required}.`);
   }
-  if (!/Part 1 macro reasoning stays in the Macro Starter workbook/.test(roadmap.decisionLogGuidance?.usage || "") || !/In Part 2, open the separate committee Decision Record/.test(roadmap.decisionLogGuidance?.usage || "")) fail("Project-wide Decision Log guidance must distinguish the Part 1 macro workbook from the Part 2 Decision Record.");
+  if (!/Part 1 macro reasoning stays in the Macro Starter workbook/.test(roadmap.decisionLogGuidance?.usage || "") || !/In Phase 2, open the separate committee Decision Record/.test(roadmap.decisionLogGuidance?.usage || "")) fail("Project-wide Decision Log guidance must distinguish the Part 1 macro workbook from the Phase 2 Decision Record.");
   const phaseOne = model.phases.find((phase) => phase.id === "phase-1");
   const parts = roadmap.phase1Parts || [];
   if (parts.map((part) => part.id).join("|") !== "macro-analysis|client-submissions") fail("Phase 1 must have macroeconomic analysis followed by client submissions.");
@@ -163,9 +163,9 @@ if (!experience) {
     if (profile.riskClassification !== expected || !(profile.targetReturn > 0) || !(profile.stdDev > 0)) fail(`${profile.name} must use the supplied risk framework and positive return/volatility inputs.`);
   }
   if (new Set(sixthTeam.map(profile => profile.riskClassification)).size !== 3) fail("Team Six requires one client in each risk category.");
-  if (experience.scenarioSequence?.length !== 5) fail("Phase 1 must define the scenario-analysis sequence.");
-  if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Prepare|Separate facts and assumptions|Compare your three clients|Challenge and verify|Set the mandate") {
-    fail("Phase 1 decision cycle must preserve fact and assumption labeling, challenge, verification, and mandate steps.");
+  if (experience.scenarioSequence?.length !== 4) fail("Phase 1 must define the scenario-analysis sequence.");
+  if (experience.decisionCycle?.map((item) => item.stage).join("|") !== "Review client criteria|Consider risk and return preferences|Explain asset allocation|Complete the abbreviated IPS") {
+    fail("Phase 1 must use the four-step client criteria and abbreviated IPS workflow.");
   }
   if (experience.analystLenses?.length !== 5) fail("Phase 1 must define one scenario-analysis lens for each of the five roles.");
   const roundRoleIds = new Set(experience.analystLenses?.map((lens) => lens.roleId));
@@ -174,8 +174,8 @@ if (!experience) {
   }
   if (!/label/i.test(experience.scenarioAnalysisRules.assumptionRule) || !/not provided/i.test(experience.scenarioAnalysisRules.gapRule)) fail("Scenario analysis must allow reasoned, labeled assumptions and identify unsupported values.");
   if (!experience.approvedSources?.length) fail("Phase 1 must define approved verification sources.");
-  if (!experience.qualityGate?.some((item) => /human-first/i.test(item))) fail("Phase 1 quality gate must require a human-first judgment.");
-  if (!experience.qualityGate?.some((item) => /guardrail/i.test(item))) fail("Phase 1 quality gate must connect final reasoning to later investment guardrails.");
+  if (!experience.qualityGate?.some((item) => /risk aversion/i.test(item))) fail("Phase 1 readiness must include risk-aversion reasoning.");
+  if (!experience.qualityGate?.some((item) => /100%/i.test(item))) fail("Phase 1 readiness must require allocation weights totaling 100%.");
 }
 
 const phaseIds = new Set(model.phases.map((phase) => phase.id));
@@ -461,10 +461,10 @@ for (const requiredText of ["Open the phase you're working on", "Use one page fo
 const roadmapHtml = await fs.readFile(path.join(rootDir, roadmapPath), "utf8");
 const phaseOneHtml = await fs.readFile(path.join(rootDir, phasePath(model.phases[0])), "utf8");
 if (await exists(path.join(rootDir, "canvas", "phase-1-assignment.html"))) fail("Retired combined Phase 1 Canvas fragment remains in the build output.");
-for (const required of ["Macroeconomic Analysis", "Client Submissions", 'id="macro-analysis"', 'id="client-submissions"', "Assignment 1: submit the macro forecast", "Assignment 2: submit client analysis after Gate 1", "Work from the assigned scenarios"]) {
+for (const required of ["Macroeconomic Analysis", "Client Submissions", 'id="macro-analysis"', 'id="client-submissions"', "Assignment 1: submit the macro forecast", "Assignment 2: submit the three client IPS statements", "Work from the assigned scenarios"]) {
   if (!phaseOneHtml.includes(required)) fail(`Phase 1 page is missing its two-part working path: ${required}.`);
 }
-for (const required of ["Open the Macro Starter workbook", "Open the separate Decision Record"]) {
+for (const required of ["Open the Macro Starter workbook", "Review your three assigned client profiles"]) {
   if (!phaseOneHtml.includes(required)) fail(`Phase 1 page is missing its workbook handoff: ${required}.`);
 }
 if (!phaseOneHtml.includes('href="../project/macro-analysis.html"')) fail("Phase 1 Part 1 must link to the macro step-by-step guide.");
@@ -492,17 +492,17 @@ for (const role of model.roles) {
 }
 
 const scenarioHtml = await fs.readFile(path.join(rootDir, "project", "client-discovery-ai-protocol.html"), "utf8");
-for (const requiredText of ["Prepare", "Separate facts and assumptions", "Compare your three clients", "Challenge and verify", "Set the mandate", "Analyst Decision Log"]) {
-  if (!scenarioHtml.includes(requiredText)) fail(`Client scenario protocol is missing required stage or artifact: ${requiredText}.`);
+for (const requiredText of ["Review client criteria", "Consider risk and return preferences", "Explain asset allocation", "Complete the abbreviated IPS", "utility", "risk aversion"]) {
+  if (!scenarioHtml.includes(requiredText)) fail(`Client IPS reference is missing ${requiredText}.`);
 }
-for (const roleTitle of requiredRoleTitles) {
-  if (!scenarioHtml.includes(roleTitle)) fail(`Client scenario protocol is missing role: ${roleTitle}.`);
-}
-if (/Committee Chair|Markets &amp; Economic Strategist|Portfolio Construction Lead|Risk, Controls/i.test(scenarioHtml)) {
-  fail("Client scenario protocol contains a retired committee-role title.");
-}
-for (const requiredText of ["For client-analysis steps", "Open your team scenario files", "Reasoned assumptions", "Use the provided case materials", "Committee challenge round"]) {
-  if (!scenarioHtml.includes(requiredText)) fail(`Client scenario protocol is missing required content: ${requiredText}.`);
+const clientAssignment = model.canvasSubmissions.assignments.find(item => item.id === "phase-1-client");
+if (clientAssignment.requiredFiles.length !== 1 || clientAssignment.requiredFiles[0].name !== "BUS331_[TeamName]_Phase1_ClientIPS.pdf" || clientAssignment.allowedExtensions.join("|") !== "pdf") fail("Part 2 must require only the combined three-client IPS PDF.");
+for (const relative of ["project/client-analysis.html", "canvas/phase-1-client-step-by-step-page.html", "canvas/phase-1-client-assignment.html"]) {
+  const html = await fs.readFile(path.join(rootDir, relative), "utf8");
+  for (const term of ["utility", "risk aversion", "100%", "BUS331_Abbreviated_IPS_Template.docx"]) {
+    if (!html.includes(term)) fail(`${relative} is missing client IPS requirement ${term}.`);
+  }
+  if (/Phase1_MandateMemo|Phase1_DecisionRecord/.test(html)) fail(`${relative} still requires retired Part 2 submissions.`);
 }
 for (const relative of ["project/client-discovery-ai-protocol.html", "project/client-analysis.html", "project/phase-1-frame-the-mandate.html", ...["one", "two", "three", "four", "five", "six"].map((team) => `project/client-role-play/team-${team}.html`), "project/client-role-play/instructor-demo.html", "canvas/phase-1-client-step-by-step-page.html", "canvas/phase-1-client-assignment.html"]) {
   const html = await fs.readFile(path.join(rootDir, relative), "utf8");
@@ -626,7 +626,7 @@ for (const [relative, html] of [["project/roadmap.html", roadmapHtml], ["project
   }
   if (/<ol class="workflow-steps">|<div class="role-board">/.test(html)) fail(`${relative} still duplicates the current overview or phase checklists.`);
 }
-for (const required of ["Use one project-wide Analyst Decision Log", "Part 1 macro reasoning stays in the Macro Starter workbook", "In Part 2, open the separate committee Decision Record", "consequential recommendations", "rejected alternatives", "trade-offs, and verification", "all three phases", "separate gate sheets", "each client&#039;s Phase 2 approval", "Open the project-wide Analyst Decision Log", "BUS331_Investment_Committee_Decision_Record_Student.xlsx"]) {
+for (const required of ["Use one project-wide Analyst Decision Log", "Part 1 macro reasoning stays in the Macro Starter workbook", "In Phase 2, open the separate committee Decision Record", "consequential recommendations", "rejected alternatives", "trade-offs, and verification", "throughout the project", "separate gate sheets", "each client&#039;s Phase 2 approval", "Open the project-wide Analyst Decision Log", "BUS331_Investment_Committee_Decision_Record_Student.xlsx"]) {
   if (!indexHtml.includes(required)) fail(`index.html is missing project-wide Decision Log guidance or access: ${required}.`);
 }
 for (const required of ["Save as you go", "Save your working project files regularly", "consequential Decision Log entries", "approval-gate work"]) {

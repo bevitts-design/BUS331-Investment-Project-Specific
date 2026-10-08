@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
   <title id="title">Investment Committee Simulation roadmap</title>
-  <desc id="desc">Three phases: Phase 1 has separate macro forecast and client analysis assignments followed by one Gate 1 vote; Phase 2 builds and stress tests portfolios; Phase 3 defends the recommendation. Four or five members cover five committee roles.</desc>
+  <desc id="desc">Three phases: Phase 1 has separate macro forecast and client analysis assignments with three abbreviated IPS statements; Phase 2 builds and stress tests portfolios; Phase 3 defends the recommendation. Four or five members cover five committee roles.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4fbfd"/><stop offset="1" stop-color="#fff8ee"/></linearGradient>
     <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#071626" flood-opacity=".12"/></filter>
@@ -24,12 +24,12 @@
     <text x="1105" y="202" font-size="24" font-weight="700" fill="#ffffff">PHASE 3 · DEFEND</text>
 
     <g fill="#0b1f35" font-size="22" font-weight="700">
-      <text x="100" y="270">Part 1 · Macroeconomic analysis</text><text x="100" y="350">Assignment 1: macro workbook</text><text x="100" y="430">Part 2 · Client submissions</text><text x="100" y="510">Assignment 2: client files + Gate 1</text>
+      <text x="100" y="270">Part 1 · Macroeconomic analysis</text><text x="100" y="350">Assignment 1: macro workbook</text><text x="100" y="430">Part 2 · Client submissions</text><text x="100" y="510">Assignment 2: three client IPS</text>
       <text x="605" y="270">1 · Translate mandate to candidates</text><text x="605" y="350">2 · Select 8–10 holdings</text><text x="605" y="430">3 · Integrate weights and trade-offs</text><text x="605" y="510">4 · Stress, correct, and re-test</text><text x="605" y="590">5 · Conclude hedge or no hedge</text>
       <text x="1110" y="270">1 · Issue the recommendation</text><text x="1110" y="350">2 · Build the evidence package</text><text x="1110" y="430">3 · Deliver the presentation</text><text x="1110" y="510">4 · Run the compact defense</text>
     </g>
     <g fill="#4b6073" font-size="18">
-      <text x="100" y="298">Historical data, sources, scenarios</text><text x="100" y="378">One committee market view</text><text x="100" y="458">Client scenarios, IPS, mandate memo</text><text x="100" y="538">One vote per member; five roles covered</text>
+      <text x="100" y="298">Historical data, sources, scenarios</text><text x="100" y="378">One committee market view</text><text x="100" y="458">Client criteria, risk, return, utility</text><text x="100" y="538">Allocation rationale in each IPS</text>
       <text x="605" y="298">Funds and ETFs are the primary vehicles</text><text x="605" y="378">Never more than 10; do not fill every slot</text><text x="605" y="458">Resolve overlap, concentration, and fit</text><text x="605" y="538">Test the IPS and client consequence</text><text x="605" y="618">At most one targeted derivative hedge</text>
       <text x="1110" y="298">One evidence-linked client decision</text><text x="1110" y="378">Trace mandate, holdings, weights, and risk</text><text x="1110" y="458">Balanced role ownership and clear exhibits</text><text x="1110" y="538">Targeted questions for all five roles</text>
     </g>

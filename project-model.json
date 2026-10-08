@@ -9,7 +9,7 @@
   },
   "project": {
     "title": "Investment Committee Simulation",
-    "subtitle": "Three approval gates. Four or five members. Five roles. One integrated recommendation.",
+    "subtitle": "Three phases. Four or five members. Five roles. One integrated recommendation.",
     "premise": "Your four- or five-person investment committee advises three client mandates and manages $500,000 in hypothetical assets. Cover all five committee roles; on a four-person team, one member owns two roles but casts one vote. The committee must establish a market view, build and challenge each portfolio, and defend one evidence-linked recommendation.",
     "clientCount": 3,
     "roleCount": 5,
@@ -26,7 +26,7 @@
     "visual": {
       "path": "assets/roadmap/investment-committee-roadmap-5-role.svg",
       "version": "20260927-client-scenarios",
-      "alt": "Investment Committee Simulation roadmap showing separate Phase 1 Part 1 macro forecast and Part 2 client analysis submissions before one Gate 1 vote, Phase 2 focused 8–10 holding selection and stress testing, Phase 3 presentation and defense, and five roles covered by four or five members."
+      "alt": "Investment Committee Simulation roadmap showing Phase 1 macro forecast and three client IPS statements, Phase 2 focused holding selection and stress testing, Phase 3 presentation and defense, and five roles covered by four or five members."
     },
     "boundary": "BUS331 provides structured Excel workbooks and client data. Your committee completes the analysis, reaches its own conclusions, and creates its own final PowerPoint presentation.",
     "beforeYouBegin": [
@@ -37,8 +37,8 @@
     ],
     "decisionLogGuidance": {
       "title": "Use one project-wide Analyst Decision Log",
-      "usage": "Part 1 macro reasoning stays in the Macro Starter workbook. In Part 2, open the separate committee Decision Record and begin the Analyst Decision Log with each role's human-first judgments for every assigned client. Continue recording consequential recommendations, rejected alternatives, trade-offs, and verification through all three phases.",
-      "gates": "Use the separate gate sheets for formal Phase 1 approval, each client's Phase 2 approval, and Phase 3 approval.",
+      "usage": "Part 1 macro reasoning stays in the Macro Starter workbook. Part 2 reasoning belongs in the three abbreviated IPS statements. In Phase 2, open the separate committee Decision Record to record consequential recommendations, rejected alternatives, trade-offs, and verification. Retain the Phase 1 IPS statements as the client mandate throughout the project.",
+      "gates": "Use the separate gate sheets for each client's Phase 2 approval and Phase 3 approval. Phase 1 Part 2 requires the three abbreviated IPS statements; no formal vote or Decision Record submission is required.",
       "saveReminder": "Save your working project files regularly as the team proceeds, especially after consequential Decision Log entries and approval-gate work."
     },
     "phase1Parts": [
@@ -70,7 +70,7 @@
       {
         "id": "client-submissions",
         "title": "Client Submissions",
-        "purpose": "Review each client’s criteria, consider risk, return, utility, and risk aversion, and explain the asset allocation in one abbreviated IPS per client. Complete the committee review and required submission.",
+        "purpose": "Review each client’s criteria, consider risk, return, utility, and risk aversion, and explain asset allocation in one abbreviated IPS per client. Submit the three IPS statements together.",
         "stepRange": [
           3,
           6
@@ -81,15 +81,14 @@
         ],
         "evidenceRange": [
           3,
-          8
+          6
         ],
         "deliverableRange": [
           1,
-          5
+          2
         ],
         "resources": [
           "client-step-guide",
-          "client-discovery-protocol",
           "client-data",
           "team-one-client-profiles",
           "team-two-client-profiles",
@@ -98,7 +97,6 @@
           "team-five-client-profiles",
           "team-six-client-profiles",
           "ips-framework",
-          "decision-record",
           "canvas-submission-guide"
         ]
       }
@@ -108,9 +106,9 @@
         "Open the Macro Starter workbook, assign all five roles, and save a team-named Part 1 copy.",
         "Complete the detailed macro analysis in the provided workbook: review historical evidence, form a human-first interpretation, and document sources.",
         "Compare the committee view with FRED historical observations and a source-dated FactSet or other external forecast or consensus where a comparable measure exists; then create bull, base, and bear scenarios with probabilities totaling 100%.",
-        "Review your three assigned client profiles and data. Consider goals, constraints, risk capacity, risk willingness, target return, utility, and risk aversion. Open the separate Decision Record for the committee record.",
-        "Complete one abbreviated IPS per client. Explain how the client criteria and risk–return trade-off influence broad allocation weights totaling 100%, using the submitted macro outlook as context.",
-        "Hold Gate 1: challenge the evidence, vote, and record required revisions before any portfolio construction begins."
+        "Review your three assigned client profiles and data. Consider goals, constraints, risk capacity, risk willingness, target return, utility, and risk aversion.",
+        "Complete one abbreviated IPS mandate per client. Explain how the client criteria and risk–return trade-off influence broad allocation weights totaling 100%, using the submitted macro outlook as context.",
+        "Review the three abbreviated IPS statements together, check each allocation totals 100%, and submit one combined client IPS PDF."
       ],
       "phase-2": [
         "Reopen the approved client mandate before researching investments.",
@@ -132,9 +130,9 @@
     "definitionOfDone": {
       "phase-1": [
         "The macro workbook documents historical analysis, source-dated external comparisons, inflation expectations, and weighted bull, base, and bear scenarios.",
-        "Each client has objectives, RRTTLLU constraints, a return target, risk limit, drawdown tripwire, provisional strategic allocation, and identified information gaps.",
-        "The committee can explain how its macro outlook changes each client mandate.",
-        "Each team member has recorded one Gate 1 vote and any revision actions; all five role responsibilities are covered."
+        "Each client has a completed abbreviated IPS with goals, relevant constraints, return and risk policies, and a provisional allocation totaling 100%.",
+        "Each IPS explains how risk, return, utility, and risk aversion influence the allocation, using the submitted macro outlook as context.",
+        "The team has checked all three IPS statements and combined them into one PDF in assigned-client order."
       ],
       "phase-2": [
         "Each client portfolio traces back to an approved mandate and has a stated purpose for every holding.",
@@ -196,7 +194,7 @@
       "color": "terra",
       "mandate": "Own portfolio integration: resolve overlap and concentration, set final selection and weights, record explicit trade-offs, maintain decision-log quality, and move the integrated recommendation to a vote.",
       "phaseResponsibilities": {
-        "phase-1": "Reconcile risk capacity and willingness, set provisional portfolio guardrails, coordinate the committee challenge, and audit the Analyst Decision Log.",
+        "phase-1": "Reconcile risk capacity and willingness, coordinate the team’s allocation discussion, and check the three abbreviated IPS statements.",
         "phase-2": "Integrate analyst recommendations, resolve duplication and concentration, choose the final 8–10 holdings and weights, and record the trade-offs behind every integration decision.",
         "phase-3": "State and defend the integrated recommendation, portfolio construction decisions, final weights, rejected integrations, and implementation priorities."
       }
@@ -237,9 +235,9 @@
     }
   ],
   "phase1Experience": {
-    "title": "Client Scenario Analysis and Decision Protocol",
-    "subtitle": "Read the scenario. Make a reasoned judgment. Label assumptions. Set the guardrails.",
-    "purpose": "Use the assigned fictional client profile and data to create documented investment criteria before the team screens a bond, mutual fund, ETF, or portfolio allocation. No client interviews are part of this assignment.",
+    "title": "Client Criteria and Abbreviated IPS",
+    "subtitle": "Review the clients. Explain the allocation. Complete three IPS statements.",
+    "purpose": "Use your assigned client slides and data to discuss risk, return, utility, and risk aversion, then complete one abbreviated IPS per client. Part 2 requires only the three IPS statements combined into one PDF.",
     "clientSets": [
       {
         "team": "Team One",
@@ -303,24 +301,20 @@
     },
     "scenarioSequence": [
       {
-        "stage": "Read the assigned files",
-        "action": "Use only your team's three client profiles and the matching client-data rows. Record stated goals, numerical case inputs, constraints, and source locations."
+        "stage": "Review client criteria",
+        "action": "Read the assigned goals, constraints, target return, standard deviation, and risk aversion."
       },
       {
-        "stage": "Draft a human-first view",
-        "action": "Each of the five roles records a provisional judgment for each client before AI use, naming the supplied fact or clearly labeled assumption behind it."
+        "stage": "Consider risk and return preferences",
+        "action": "Discuss risk capacity and willingness. Utility reflects the client’s return–risk trade-off; greater risk aversion gives risk a larger penalty."
       },
       {
-        "stage": "Resolve missing fields",
-        "action": "Mark missing client facts as Not provided. Explain a material gap and its effect on the mandate; label and justify only an essential modeling assumption. Never present a policy recommendation as a client statement."
+        "stage": "Explain asset allocation",
+        "action": "Propose broad equity, fixed-income, and cash weights totaling 100%, supported by the client criteria and submitted macro outlook."
       },
       {
-        "stage": "Challenge and verify",
-        "action": "Test the first interpretation as a committee, verify material claims against the case files or approved sources, and record alternatives and trade-offs."
-      },
-      {
-        "stage": "Finish the mandate",
-        "action": "Use the submitted macro outlook, three scenario analyses, and documented assumptions to complete the IPS mandates and prepare for Gate 1."
+        "stage": "Complete the abbreviated IPS",
+        "action": "Complete one concise IPS per client, review the three statements together, and submit one combined PDF."
       }
     ],
     "clientProfiles": [
@@ -543,29 +537,20 @@
     ],
     "decisionCycle": [
       {
-        "stage": "Prepare",
-        "action": "Read the assigned client profile and record one tentative, evidence-based interpretation: what the client needs, which constraints matter, and what remains unknown.",
-        "logEvidence": "The interpretation; supporting case evidence and assumptions; unanswered questions; and the portfolio or security decision it could affect"
+        "stage": "Review client criteria",
+        "action": "Read the assigned goals, constraints, target return, standard deviation, and risk aversion."
       },
       {
-        "stage": "Separate facts and assumptions",
-        "action": "Use Not provided for missing client facts without guessing. Record only material gaps, label any essential modeling assumption with its rationale, and identify proposed committee policies separately.",
-        "logEvidence": "The case location for supplied facts; the reasoning and confirmation condition for each material assumption"
+        "stage": "Consider risk and return preferences",
+        "action": "Discuss risk capacity and willingness. Utility reflects the client’s return–risk trade-off; greater risk aversion gives risk a larger penalty."
       },
       {
-        "stage": "Compare your three clients",
-        "action": "Use your team's profile slides and matching data rows to identify how goals, capacity for loss, time horizon, and constraints differ across the three mandates.",
-        "logEvidence": "Client-by-client facts, assumption labels, conflicts, and a provisional guardrail for each case"
+        "stage": "Explain asset allocation",
+        "action": "Propose broad equity, fixed-income, and cash weights totaling 100%, supported by the client criteria and submitted macro outlook."
       },
       {
-        "stage": "Challenge and verify",
-        "action": "As a committee, test the first interpretation, separate facts from assumptions, and verify material claims in the assigned files, team workbook, or approved source.",
-        "logEvidence": "Material challenge; source or file location; source date; and Confirmed / Qualified / Contradicted / Not verifiable"
-      },
-      {
-        "stage": "Set the mandate",
-        "action": "State what changed, what remains uncertain, the final judgment, and the guardrail that later security selection or portfolio construction must honor.",
-        "logEvidence": "Final decision, concise rationale, downstream guardrail, and peer review"
+        "stage": "Complete the abbreviated IPS",
+        "action": "Complete one concise IPS per client, review the three statements together, and submit one combined PDF."
       }
     ],
     "analystLenses": [
@@ -708,13 +693,10 @@
       "Peer reviewer and status"
     ],
     "qualityGate": [
-      "Each role records at least one human-first judgment for each assigned client before AI use.",
-      "Every material scenario-based assumption is labeled, tied to a case clue, and kept distinct from a supplied fact or client statement.",
-      "Every factual claim or number used in the final reasoning has an approved source and as-of date.",
-      "Missing client facts are marked Not provided; only material gaps need a confirmation condition. Essential modeling assumptions are labeled and justified; proposed policies are identified as committee recommendations.",
-      "The final reasoning states what changed the judgment and why.",
-      "Each final judgment creates a testable guardrail for later fixed-income, equity, allocation, stress-test, or hedge/no-hedge decisions.",
-      "A second team member reviews the evidence trail before the Phase 1 gate."
+      "Each client has a complete abbreviated IPS.",
+      "Each allocation totals 100% and fits the supplied goals and constraints.",
+      "Risk, return, utility, and risk aversion support the allocation rationale.",
+      "Missing facts and essential assumptions are identified."
     ]
   },
   "phase2Experience": {
@@ -1028,8 +1010,8 @@
       "tagline": "Two parts: macroeconomic analysis, then client submissions.",
       "keyQuestion": "What must be true about markets and each client before we are willing to invest?",
       "objective": "Establish one defensible 12-month market view and convert each assigned client profile into an approved investment mandate.",
-      "gate": "Approve or revise the common market view and all three client mandates. Portfolio construction cannot begin until the vote and action items are recorded.",
-      "meetingMotion": "Motion to approve the committee's market view and the investment mandate for each assigned client.",
+      "gate": "Check that the three abbreviated IPS statements reflect the clients’ criteria and provide usable return, risk, and allocation policies for Phase 2. No formal Phase 1 vote is required.",
+      "meetingMotion": "Review the three client IPS statements for completeness and consistency.",
       "workstreams": [
         {
           "title": "Market view",
@@ -1037,35 +1019,29 @@
         },
         {
           "title": "Client scenario analysis",
-          "description": "Make a human-first judgment from assigned scenario facts, label reasoned assumptions, and translate objectives and constraints into RRTTLLU guardrails."
+          "description": "Review client goals and constraints, risk and return, utility and risk aversion, then explain the implications for asset allocation."
         },
         {
-          "title": "Decision log and guardrails",
-          "description": "Use a committee challenge to test the initial view, verify material claims, record final reasoning, and set criteria for later bonds, mutual funds/ETFs, allocation, and risk."
+          "title": "Complete the IPS statements",
+          "description": "Record the team’s client reasoning and broad allocation choices in one abbreviated IPS per client."
         }
       ],
       "evidence": [
         "Human-first five-year macro read with source dates",
         "Source-dated external forecast comparison, FRED historical evidence, and team growth, inflation, rate, and sentiment forecasts",
         "Bull/base/bear scenarios with probabilities totaling 100%",
-        "RRTTLLU analysis for all three assigned clients",
-        "Return target, maximum volatility, and drawdown tripwire for each client",
-        "Provisional strategic allocation totaling 100% and a policy-level implementation plan for each client",
-        "Analyst Decision Log showing initial judgment, committee challenge, verification, final reasoning, and downstream guardrail",
-        "Phase 1 decision record showing every team member's vote, with all five roles covered"
+        "Client goals and relevant constraints recorded in all three abbreviated IPS statements",
+        "Risk, return, utility, and risk-aversion reasoning supporting each client’s allocation",
+        "Provisional broad allocation totaling 100% and concise return and risk policies for each client"
       ],
       "deliverables": [
         "Completed macro starter workbook",
-        "Completed Analyst Decision Log for all three assigned clients",
-        "Three completed client IPS documents",
-        "One-page committee mandate memo",
-        "Phase 1 decision record"
+        "Three completed abbreviated client IPS statements combined into one PDF"
       ],
       "resources": [
         "macro-step-guide",
         "macro-starter",
         "client-step-guide",
-        "client-discovery-protocol",
         "client-data",
         "team-one-client-profiles",
         "team-two-client-profiles",
@@ -1074,7 +1050,6 @@
         "team-five-client-profiles",
         "team-six-client-profiles",
         "ips-framework",
-        "decision-record",
         "canvas-submission-guide"
       ]
     },
@@ -1189,7 +1164,7 @@
   ],
   "canvasSubmissions": {
     "title": "Canvas Submission Workflow",
-    "purpose": "Submit the macro forecast first, then the client analysis at Gate 1. Later gates retain their own team submissions so the decision trail and evidence remain private and reviewable.",
+    "purpose": "Submit the macro forecast first, then the three abbreviated client IPS statements. Later gates retain their own team submissions so the decision trail and evidence remain private and reviewable.",
     "authority": "The Canvas assignment controls the due date, points, availability window, and attempt policy. This guide controls the required package, filenames, and public/private boundary.",
     "fileNamingRule": "Use the team name entered on Team Information in every filename. Replace [TeamName] with that name, omitting spaces and punctuation (for example, Harbor Analysts becomes HarborAnalysts); use the same spelling in every submission. Do not add individual student names to filenames.",
     "sharedRules": [
@@ -1206,7 +1181,7 @@
         "partId": "macro-analysis",
         "canvasTitle": "BUS331 Investment Committee · Phase 1 Part 1 · Macro Forecast",
         "outputFile": "phase-1-macro-assignment.html",
-        "decision": "Submit the common 12-month macro forecast before applying it to assigned clients. Gate 1 approval follows the separate client-analysis assignment.",
+        "decision": "Submit the common 12-month macro forecast before applying it to assigned clients. The separate Part 2 assignment completes the three client IPS statements.",
         "submissionProcess": "Complete and submit the macro starter workbook as the Part 1 group assignment. One designated team member submits for the group; every team member verifies the Canvas receipt. Carry the submitted forecast into Part 2 and document any later revision in the decision record.",
         "includePrivateEvidenceBoundary": false,
         "requiredFiles": [
@@ -1229,36 +1204,26 @@
         "id": "phase-1-client",
         "partId": "client-submissions",
         "phaseId": "phase-1",
-        "canvasTitle": "BUS331 Investment Committee · Phase 1 Part 2 · Client Analysis and Gate 1",
+        "canvasTitle": "BUS331 Investment Committee · Phase 1 Part 2 · Client IPS Statements",
         "outputFile": "phase-1-client-assignment.html",
-        "decision": "Approve or revise the three client mandates using the submitted macro forecast before portfolio construction begins.",
-        "submissionProcess": "Complete the IPS template from the assigned fictional scenario. Missing facts may remain Not provided; label essential modeling assumptions and justify committee policy choices. No client interviews are required. Use the macro forecast already submitted in Part 1; do not upload it again. After the Gate 1 vote, submit the three client-analysis files as the Part 2 group assignment. One designated team member submits for the group; every team member verifies the Canvas receipt.",
+        "decision": "Explain how each client’s criteria, risk, return, utility, and risk aversion shape a provisional asset allocation.",
+        "submissionProcess": "Review the supplied client profiles and data, discuss risk, return, utility, and risk aversion, and complete one abbreviated IPS per client. Combine all three IPS statements into one PDF in assigned-client order. Submit only this PDF for Part 2; no separate mandate memo, Decision Log, or Gate 1 vote is required. Use the macro forecast already submitted in Part 1 as context. No client interviews are required. One designated team member submits for the group; every member verifies the Canvas receipt.",
         "includePrivateEvidenceBoundary": false,
         "requiredFiles": [
           {
-            "name": "BUS331_[TeamName]_Phase1_MandateMemo.pdf",
-            "description": "One-page committee mandate memo covering the submitted market view and three client mandates."
-          },
-          {
             "name": "BUS331_[TeamName]_Phase1_ClientIPS.pdf",
             "description": "One combined PDF containing the three completed client IPS documents in assigned-client order."
-          },
-          {
-            "name": "BUS331_[TeamName]_Phase1_DecisionRecord.xlsx",
-            "description": "Current Analyst Decision Log with five-role-by-three-client coverage and one Gate 1 vote per team member."
           }
         ],
         "allowedExtensions": [
-          "pdf",
-          "xlsx"
+          "pdf"
         ],
         "preflight": [
-          "The mandate memo identifies the submitted macro forecast and explains any revision since Part 1.",
-          "Each client has an objective, RRTTLLU constraints, return target, volatility limit, drawdown tripwire, and unresolved information gaps.",
-          "Each IPS distinguishes supplied scenario facts from labeled, reasoned assumptions; unsupported exact values are marked for confirmation.",
-          "Each IPS includes a provisional strategic allocation totaling 100% and policy-level implementation; specific securities, trades, and final optimized weights belong to Phase 2.",
-          "The Decision Record shows initial judgment, committee challenge, human verification, final reasoning, downstream guardrail, owner, and peer reviewer.",
-          "Every team member recorded one Phase 1 vote and any revision action; all five role responsibilities are covered."
+          "The PDF contains one completed abbreviated IPS for each assigned client, in assigned-client order.",
+          "Each IPS uses the supplied criteria and explains how risk, return, utility, and risk aversion influence asset allocation.",
+          "Each broad allocation totals 100% and respects the client’s goals, time horizon, liquidity needs, and restrictions.",
+          "Missing facts remain Not provided; proposed policies and any essential assumptions are clearly identified.",
+          "The three statements are legible, consistent with the submitted macro outlook, and ready to guide Phase 2."
         ]
       },
       {
@@ -1368,10 +1333,10 @@
     },
     {
       "id": "client-discovery-protocol",
-      "label": "Client Scenario Analysis and Decision Protocol",
+      "label": "Client Criteria and Abbreviated IPS",
       "type": "HTML",
       "path": "project/client-discovery-ai-protocol.html",
-      "description": "Team-specific scenario files, five analyst lenses, fact-versus-assumption rules, evidence checks, and the human-first decision cycle.",
+      "description": "A concise reference for reviewing client preferences and completing the three IPS statements.",
       "audience": "student"
     },
     {
@@ -1379,7 +1344,7 @@
       "label": "Client Analysis step-by-step guide",
       "type": "HTML",
       "path": "project/client-analysis.html",
-      "description": "Four steps: review client criteria, consider risk, return, utility and risk aversion, explain asset allocation, and complete three abbreviated IPS statements; then review and submit.",
+      "description": "Review client criteria, consider risk, return, utility and risk aversion, explain asset allocation, and complete three abbreviated IPS statements.",
       "audience": "student"
     },
     {

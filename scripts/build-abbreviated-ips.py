@@ -62,7 +62,7 @@ def main():
         ('Standard deviation σ: _____%','Annual portfolio volatility limit: _____%\n[Explain whether you retain or revise the case input]'),
         ('Risk classification: __________\nRisk aversion A: _____','Drawdown review tripwire: _____% from peak\n[Justify from the case; this is a review trigger, not a loss guarantee]')])
     field('Risk capacity versus willingness: one sentence on each, and the main conflict or trade-off')
-    p('Copy the approved objective, volatility limit, and drawdown tripwire into the Decision Record. Volatility and drawdown measure different risks; do not treat σ as a maximum loss.')
+    p('Utility: explain how the client weighs expected return against risk, and how the supplied risk-aversion value influences the preferred allocation. Volatility is not a maximum loss.')
     d.add_page_break()
     h('3 Constraints that affect the portfolio')
     p('Together with Section 2, this covers RRTTLLU: Risk, Return, Time horizon, Tax, Liquidity, Legal, and Unique circumstances. “Not provided” is a valid response for missing facts; it does not mean no constraint exists.')
@@ -80,9 +80,9 @@ def main():
     p('Use funds and ETFs as the primary vehicles. Phase 2 selects 8–10 holdings, never more than 10, with no more than two or three individual securities. Apply every stated client restriction.')
     field('Committee review and rebalancing rule: when to check weights, return, volatility, liquidity and restrictions; what triggers action')
     p('If the drawdown tripwire or another mandate constraint is breached, document the cause, proposed correction and full re-test before approval. Evaluate any hedge or no-hedge decision in Phase 2.')
-    h('6 Open issues and committee approval')
+    h('6 Open issues and team review')
     field('Material unresolved fact or essential modeling assumption, its basis and what decision could change; write None if none')
-    p('Gate 1 status: ☐ Approve  ☐ Revise  ☐ Reject\nDecision Record vote reference and required action: __________________________')
+    p('Team review: goals and constraints checked ☐  Allocation totals 100% ☐\nReviewed by: __________________________  Date: ____________________')
     p('No client interview or signature is required. Combine the three completed IPS documents in assigned-client order as BUS331_[TeamName]_Phase1_ClientIPS.pdf.')
     footer=s.footer.paragraphs[0]
     footer.text='BUS331 | IPS | '

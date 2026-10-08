@@ -10,20 +10,20 @@ Maintain one public project model that generates the student overview, phase wor
 
 The committee establishes one defensible 12-month market view and converts each assigned client profile into an approved investment mandate.
 
-The student Phase 1 page presents two ordered assignments: **Macroeconomic Analysis / Macro Forecast** submits the workbook first; **Client Submissions / Client Analysis** uses that submitted forecast and submits the IPS documents, mandate memo, and decision record after one Gate 1 vote. The macro workbook is not uploaded twice. `studentRoadmap.phase1Parts` groups the maintained sequence, readiness, evidence, deliverables, and resources without changing the three-phase approval model. Four or five people cover five official roles; a dual-role member casts one vote.
+The student Phase 1 page presents two ordered assignments: **Macroeconomic Analysis / Macro Forecast** submits the workbook first; **Client Submissions / Client Analysis** uses that submitted forecast and submits only one combined PDF containing three abbreviated IPS statements. The macro workbook is not uploaded twice. `studentRoadmap.phase1Parts` groups the maintained sequence, readiness, evidence, deliverables, and resources without changing the three-phase approval model. Four or five people cover five official roles; a dual-role member casts one vote.
 
 Required evidence:
 
-- Human-first client judgment recorded before AI use
+- Client reasoning recorded in each abbreviated IPS
 - Assigned team profile slides and client-data rows for each of three fictional clients, with supplied facts separated from reasoned, labeled assumptions
 - Continuing project-wide decision and audit trail in the Analyst Decision Log, with student access on the overview and current phase pages
 - Human-first macro read using the historical dataset
 - FRED historical observations plus comparable source-dated external forecasts or consensus where available
 - Bull/base/bear scenarios and probabilities totaling 100%
 - Completed RRTTLLU analysis and explicit drawdown tripwire for each client
-- Conflict register documenting tensions among return, risk, liquidity, tax, legal, and unique constraints
+- Brief explanation of how risk, return, utility, and risk aversion influence asset allocation
 
-Committee gate: approve or revise the macro view and all client mandates. No portfolio construction begins until the vote and action items are recorded.
+Phase 1 handoff: complete and review the three client IPS statements before portfolio construction. Part 2 requires no separate mandate memo, detailed Decision Log, or Gate 1 vote.
 
 ### Phase 2 - Build and Challenge
 
@@ -96,7 +96,7 @@ BUS331-Investment-Project-Specific/
     roadmap.html                        # generated compatibility entry for older Roadmap links
     canvas-submission-guide.html        # generated student submission contract
     macro-analysis.html                  # maintained workbook-mapped Part 1 student guide
-    client-analysis.html                 # maintained Decision Record and IPS-mapped Part 2 student guide
+    client-analysis.html                 # maintained client criteria and abbreviated IPS student guide
     client-discovery-ai-protocol.html   # generated scenario-analysis workflow at a retained URL
     security-analysis-selection.html    # generated Phase 2 security workflow and templates
     portfolio-management-stress-testing.html
@@ -134,7 +134,7 @@ BUS331-Investment-Project-Specific/
 - phase objectives, evidence, committee gates, and deliverables
 - fictional-client team sets, team-specific scenario pages, five analyst lenses, the Phase 1 decision cycle, and fact-versus-assumption rules
 - Phase 2 8–10 holding boundaries, funds/ETFs-first implementation, limited individual securities, final-holding scorecards, optional consequential decision notes, Holding & Exposure Reality Check, conditional direct-security add-on, FactSet evidence-log, portfolio-integration, IPS-compliance, bear-case, residual-risk, one-hedge/no-hedge, correction, and re-test contracts
-- the Analyst Decision Log contract, including recommendations, alternatives rejected, key trade-offs, PM integration and residual-risk evidence, and complete five-role-by-three-client coverage before the Phase 1 gate
+- the Analyst Decision Log contract, including recommendations, alternatives rejected, key trade-offs, PM integration and residual-risk evidence, and consequential decisions beginning in Phase 2
 - the four Canvas assignment contracts, including separate Phase 1 packages, exact filenames, allowed file types, preflight checks, private licensed-evidence handling, and receipt retention
 - resource labels and relative paths
 - AI rules and verification requirements
@@ -142,19 +142,19 @@ BUS331-Investment-Project-Specific/
 
 The workbook layout base is not an alternate content source. `scripts/update-security-selection-workbook.mjs` applies the current `project-model.json` contract and workbook-specific structure to that stable base on every build, so the public workbook can be regenerated without reading its prior generated version.
 
-The overview is the project orientation and phase selector. Each phase page owns its ordered steps, definition of done, evidence, and resource links. `project/macro-analysis.html` is the maintained supporting guide for Phase 1 Part 1, mapped to the current macro workbook tabs. `project/client-analysis.html` is the maintained Part 2 guide, mapped to the Decision Record and IPS framework. Their navigation entries and resource labels live in `project-model.json`. The Canvas Submission Workflow lists exact files and filenames; the Canvas assignment controls dates, points, and the actual upload. The Guide and Roadmap URLs remain short compatibility entry pages for existing links. Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
+The overview is the project orientation and phase selector. Each phase page owns its ordered steps, definition of done, evidence, and resource links. `project/macro-analysis.html` is the maintained supporting guide for Phase 1 Part 1, mapped to the current macro workbook tabs. `project/client-analysis.html` is the maintained Part 2 guide, mapped to client criteria and the abbreviated IPS. Their navigation entries and resource labels live in `project-model.json`. The Canvas Submission Workflow lists exact files and filenames; the Canvas assignment controls dates, points, and the actual upload. The Guide and Roadmap URLs remain short compatibility entry pages for existing links. Generated HTML must not be edited by hand as the final source. Existing binary templates remain maintained in their native formats; the manifest records their public name, audience, phase/workstream, and status.
 
 `canvas/phase-1-macro-step-by-step-page.html` is a body-only, inline-styled Canvas page fragment derived from `project/macro-analysis.html` by `python3 scripts/build-macro-guide-canvas.py`. It uses absolute public resource links and omits the later client-analysis and Decision Record handoffs so the Canvas page covers only the Macro Starter assignment. Update the maintained guide first, then rebuild this fragment; the assignment fragment remains a separate file. Generating the fragment does not install or publish a Canvas page.
 
-`canvas/phase-1-client-step-by-step-page.html` is the corresponding body-only, inline-styled Part 2 Canvas page fragment, derived from `project/client-analysis.html` by `python3 scripts/build-client-guide-canvas.py`. It covers the Decision Record, scenario-based IPS assumptions, three IPS mandates, memo, Gate 1, and the three-file Part 2 submission. It uses absolute public resource links and does not reassign the Part 1 macro workbook for upload. Update the maintained guide before rebuilding this fragment; installation in Canvas is separate.
+`canvas/phase-1-client-step-by-step-page.html` is the corresponding body-only, inline-styled Part 2 Canvas page fragment, derived from `project/client-analysis.html` by `python3 scripts/build-client-guide-canvas.py`. It covers client criteria, risk, return, utility and risk aversion, broad allocation, three abbreviated IPS statements, and the single-PDF Part 2 submission. It uses absolute public resource links and does not reassign the Part 1 macro workbook for upload. Update the maintained guide before rebuilding this fragment; installation in Canvas is separate.
 
 `canvasSubmissions` is the authoritative team-submission contract. The builder turns it into the public student guide and four inline-styled fragments ready to paste into Canvas. Those generated fragments do not change the live Canvas course. An instructor must separately configure each assignment as a group file-upload assignment, choose the correct group set, set approved points and dates, and confirm the contract in Student View.
 
 The submission contract uses `BUS331_[TeamName]_` for every required filename. `canvasSubmissions.fileNamingRule` explains how students derive the filename from the team name recorded in the macro workbook; the builder displays this rule in the submission guide and every Canvas-ready assignment fragment.
 
-`files/Macro_Starter_Template_Student.xlsx` is the maintained native student workbook for Phase 1 Part 1 in this repository. The copy in Downloads is not a source. Its Historical Data tab contains a dated FRED snapshot with GDP quarterly observations and monthly CPI, yield spread, sentiment, and effective fed funds observations; do not silently extend or interpolate missing observations. The separate private instructor repository does not currently provide a matching macro answer key. The separate `files/BUS331_Investment_Committee_Decision_Record_Student.xlsx` begins with client analysis in Part 2: its Analyst Decision Log records the client-by-client role judgments, its Phase 1 sheet records the Gate 1 vote, and the team continues the same record in later phases. Only the Macro Starter workbook is submitted in Part 1; the Decision Record is submitted with the Part 2 client package.
+`files/Macro_Starter_Template_Student.xlsx` is the maintained native student workbook for Phase 1 Part 1 in this repository. The copy in Downloads is not a source. Its Historical Data tab contains a dated FRED snapshot with GDP quarterly observations and monthly CPI, yield spread, sentiment, and effective fed funds observations; do not silently extend or interpolate missing observations. The separate private instructor repository does not currently provide a matching macro answer key. The separate `files/BUS331_Investment_Committee_Decision_Record_Student.xlsx` is used for consequential decisions and formal approvals beginning in Phase 2. Its legacy Phase 1 sheet and role-by-client readiness checks are not Part 2 requirements. Only the Macro Starter workbook is submitted in Part 1; only the three abbreviated IPS statements, combined into one PDF, are submitted in Part 2.
 
-Phase 1 Part 2 uses the supplied fictional client profiles and client-data workbook. The student resource is `files/BUS331_Abbreviated_IPS_Template.docx`, generated by `scripts/build-abbreviated-ips.py`. Its six sections retain the client mandate, RRTTLLU, numeric return and risk policies, broad allocation totaling 100%, and committee review. Missing client facts may remain Not provided; students justify proposed policies and label only essential modeling assumptions. The original `files/Investment_Policy_Statement_Template_Client_Analysis_Framework.docx` is preserved as a longer reference and is no longer the linked assignment template. The generated team pages retain their existing URLs and point to assigned scenario files. Scenario Reveal packets remain in the private instructor repository.
+Phase 1 Part 2 uses the supplied fictional client profiles and client-data workbook. The student resource is `files/BUS331_Abbreviated_IPS_Template.docx`, generated by `scripts/build-abbreviated-ips.py`. Its six sections retain the client mandate, RRTTLLU, numeric return and risk policies, broad allocation totaling 100%, and team review. Missing client facts may remain Not provided; students justify proposed policies and label only essential modeling assumptions. The original `files/Investment_Policy_Statement_Template_Client_Analysis_Framework.docx` is preserved as a longer reference and is no longer the linked assignment template. The generated team pages retain their existing URLs and point to assigned scenario files. Scenario Reveal packets remain in the private instructor repository.
 
 ## Instructor-only structure
 
@@ -202,7 +202,7 @@ The validator should fail when it detects:
 - a phase count other than three in generated pages;
 - a role count other than five in the committee roster;
 - committee roles that do not match the Client/Macro, Fixed-Income, Equity, Portfolio Manager, and Risk/Derivatives contract;
-- a Phase 1 protocol that skips the recommendation, alternative/trade-off, verification, or final-reasoning stage;
+- a Part 2 workflow missing client criteria, risk and return preferences, utility and risk aversion, allocation rationale, or the three abbreviated IPS statements;
 - phase numbering outside the current three-phase model in generated student pages;
 - missing local resources;
 - filenames or visible text marked `INSTRUCTOR`, `Solution`, `Answer Key`, or similar in the public manifest;

@@ -163,7 +163,7 @@ function teamScenarioPage(set) {
   const body = `<main id="main-content">
     ${pageHero(`Phase 1 · ${set.team}`, "Analyze your three assigned clients", "Use the provided scenario facts and clearly labeled assumptions to build each IPS mandate.")}
     <div class="page-shell"><div class="content-flow">
-      <section><div class="callout"><h2>Use the slides and data together</h2><p><strong>Start with your team's client slides.</strong> They state the case background, goal, and main constraint. Match each client to the row in the scenario-data workbook for the provided target return, standard deviation, and risk classification. Treat these as case inputs to evaluate, not automatic promises or approved limits.</p><p>Missing client facts may remain <strong>Not provided</strong>. Label and justify only essential modeling assumptions. Return and risk policies, allocation weights, and review rules are committee proposals, not supplied client facts.</p><div class="hero-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, teamProfiles.path))}">Open ${escapeHtml(set.team)} client profiles <span>PPTX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, ipsTemplate.path))}">Open IPS template <span>DOCX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, "files/Client_Scenarios_Data_File.xlsx"))}">Open client data <span>XLSX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, decisionRecord.path))}">Open the Analyst Decision Log <span>XLSX</span></a></div></div></section>
+      <section><div class="callout"><h2>Use the slides and data together</h2><p><strong>Start with your team's client slides.</strong> They state the case background, goal, and main constraint. Match each client to the row in the scenario-data workbook for the provided target return, standard deviation, and risk classification. Treat these as case inputs to evaluate, not automatic promises or approved limits.</p><p>Missing client facts may remain <strong>Not provided</strong>. Label and justify only essential modeling assumptions. Return and risk policies, allocation weights, and review rules are committee proposals, not supplied client facts.</p><div class="hero-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, teamProfiles.path))}">Open ${escapeHtml(set.team)} client profiles <span>PPTX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, ipsTemplate.path))}">Open IPS template <span>DOCX</span></a><a class="button" href="${escapeHtml(prefixPath(prefix, "files/Client_Scenarios_Data_File.xlsx"))}">Open client data <span>XLSX</span></a></div></div></section>
       <section><p class="section-kicker">Your three clients</p><h2>Compare the assigned scenarios</h2><div class="client-set-board">${profiles.map((profile) => `<article class="client-set"><p class="role-tag">Assigned client</p><h3>${escapeHtml(profile.name)}</h3><p>${escapeHtml(profile.identity)}</p><p>${escapeHtml(profile.statedDirection)}</p>${profile.caseBackground ? `<p>${escapeHtml(profile.caseBackground)}</p><p><strong>${escapeHtml(profile.riskClassification)}</strong> · Target E(R): ${(100 * profile.targetReturn).toFixed(2)}% · Std dev (σ): ${(100 * profile.stdDev).toFixed(2)}% · Risk aversion (A): ${profile.riskAversion}</p>` : ""}</article>`).join("\n")}</div></section>
       <section><p class="section-kicker">Activity sequence</p><h2>Work from the case evidence</h2>${scenarioSequenceMarkup()}</section>
       <section><p class="section-kicker">Before writing the IPS</p><h2>Document, challenge, and hand off</h2><ul class="check-list"><li>Mark every material statement as a supplied fact, a reasoned assumption, or an information gap.</li><li>Explain the scenario clue behind each assumption and what later confirmation could change.</li><li>Set a provisional client guardrail that later security selection or allocation must honor.</li><li>Record the reasoning and an independent peer review in the Analyst Decision Log.</li></ul></section>
@@ -177,7 +177,7 @@ function formerDemoPage() {
   const body = `<main id="main-content">
     ${pageHero("Phase 1 · Part 2", "Use the assigned client scenarios", "The current assignment uses the provided profile slides and client-data workbook.")}
     <div class="page-shell"><div class="content-flow">
-      <section><div class="callout"><h2>Start with the current analysis protocol</h2><p>Read your assigned team files, separate scenario facts from labeled assumptions, and use the Decision Record to explain how each IPS mandate follows from the evidence.</p><div class="hero-actions"><a class="button button-primary" href="../client-discovery-ai-protocol.html">Open client scenario analysis</a></div></div></section>
+      <section><div class="callout"><h2>Start with the current analysis protocol</h2><p>Read your assigned team files, separate scenario facts from labeled assumptions, and explain your reasoning in each abbreviated IPS.</p><div class="hero-actions"><a class="button button-primary" href="../client-discovery-ai-protocol.html">Open client scenario analysis</a></div></div></section>
     </div></div></main>`;
   return shell({title: "Client scenario analysis", description: "Current Phase 1 Part 2 client scenario instructions.", prefix, body, pageClass: "guide-page discovery-page"});
 }
@@ -378,13 +378,13 @@ function phaseOnePage(phase) {
       <div class="phase-one-part-head"><p class="section-kicker">Part ${index + 1} of ${parts.length}</p><h2 id="${escapeHtml(part.id)}-title">${escapeHtml(part.title)}</h2><p>${escapeHtml(part.purpose)}</p></div>
       <h3>Do this in order</h3>
       <ol class="workflow-steps">${partSteps.map((step, stepIndex) => `<li class="workflow-step"><span aria-hidden="true">${stepIndex + 1}</span><div><p>${escapeHtml(step)}</p></div></li>`).join("\n")}</ol>
-      ${part.id === "client-submissions" ? `<div class="callout"><h3>Work from the assigned scenarios</h3><p>Use the <a href="${escapeHtml(prefixPath(prefix, clientDiscoveryPath))}">Client Scenario Analysis and Decision Protocol</a> to separate stated facts, reasoned assumptions, and information gaps before finalizing each IPS.</p></div>` : ""}
+      ${part.id === "client-submissions" ? `<div class="callout"><h3>Work from the assigned scenarios</h3><p>Use the <a href="${escapeHtml(prefixPath(prefix, "project/client-analysis.html"))}">four-step client guide</a> to review risk, return, utility, and risk aversion, then complete one abbreviated IPS per client. No client interviews are required.</p></div>` : ""}
       <div class="phase-one-check-grid"><div><h3>Ready when</h3><ul class="check-list">${partDone.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></div><div><h3>Evidence to keep</h3><ul class="check-list">${partEvidence.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></div></div>
       <h3>${index === 0 ? "Macro forecast deliverable" : "Client and committee deliverables"}</h3>
       <ul class="clean-list">${partDeliverables.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
       <h3>Resources for this part</h3>
       <div class="resource-list phase-one-resources">${resourceLinks(part.resources, prefix, { includeDescription: true })}</div>
-      <div class="phase-one-submission"><h3>${index === 0 ? "Assignment 1: submit the macro forecast" : "Assignment 2: submit client analysis after Gate 1"}</h3><p>${escapeHtml(assignment.submissionProcess)}</p><ul class="phase-file-list">${assignment.requiredFiles.map((file) => `<li><code>${escapeHtml(file.name)}</code><span>${escapeHtml(file.description)}</span></li>`).join("\n")}</ul><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, canvasSubmissionPath))}#${escapeHtml(assignment.id)}-canvas">Check this Canvas submission</a></div>
+      <div class="phase-one-submission"><h3>${index === 0 ? "Assignment 1: submit the macro forecast" : "Assignment 2: submit the three client IPS statements"}</h3><p>${escapeHtml(assignment.submissionProcess)}</p><ul class="phase-file-list">${assignment.requiredFiles.map((file) => `<li><code>${escapeHtml(file.name)}</code><span>${escapeHtml(file.description)}</span></li>`).join("\n")}</ul><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, canvasSubmissionPath))}#${escapeHtml(assignment.id)}-canvas">Check this Canvas submission</a></div>
     </section>`;
   }).join("\n");
   const body = `
@@ -392,10 +392,10 @@ function phaseOnePage(phase) {
     ${pageHero("Phase 1 · Two-part working checklist", phase.title, phase.tagline)}
     <div class="page-shell"><div class="content-flow phase-one-flow">
       <nav class="phase-one-nav" aria-label="Phase 1 parts">${parts.map((part, index) => `<a href="#${escapeHtml(part.id)}"><span>Part ${index + 1}</span><strong>${escapeHtml(part.title)}</strong><small>${escapeHtml(part.purpose)}</small></a>`).join("\n")}</nav>
-      <section class="phase-one-intro"><p class="section-kicker">Decision question</p><h2>${escapeHtml(phase.keyQuestion)}</h2><p>${escapeHtml(phase.objective)}</p><p>Submit the macro forecast as Assignment 1. Use that forecast in Assignment 2 for the client analysis and Gate 1 vote. Each assignment has its own Canvas receipt.</p></section>
+      <section class="phase-one-intro"><p class="section-kicker">Decision question</p><h2>${escapeHtml(phase.keyQuestion)}</h2><p>${escapeHtml(phase.objective)}</p><p>Submit the macro forecast as Assignment 1. Use that forecast in Assignment 2 to complete the three client IPS statements. Each assignment has its own Canvas receipt.</p></section>
       ${partMarkup}
       <section><h2>Committee responsibilities across both parts</h2>${rolePhaseMatrix(phase)}</section>
-      <section><h2>Gate 1 approval standard</h2><div class="callout"><h3>Committee motion</h3><p>${escapeHtml(phase.meetingMotion)}</p><p>${escapeHtml(phase.gate)}</p></div><p>The decision record must state the motion, evidence reviewed, each member's vote, any dissent or reservation, and the owner and due date for every required revision.</p></section>
+      <section><h2>Ready for Phase 2</h2><p>${escapeHtml(phase.gate)}</p></section>
     </div></div>
   </main>`;
   return shell({ title: `Phase 1 - ${phase.title}`, description: phase.objective, prefix, body, pageClass: "guide-page phase-one-page", navCurrent: phase.id });
@@ -519,102 +519,12 @@ function guidePage(prefix = "../") {
 function clientDiscoveryPage() {
   const prefix = "../";
   const experience = model.phase1Experience;
-  const body = `
-  <main id="main-content">
-    ${pageHero("Phase 1 · Part 2 · Client Submissions", experience.title, experience.subtitle)}
-    <div class="page-shell">
-      <div class="content-flow">
-        <section>
-          <p class="section-kicker">For client-analysis steps</p>
-          <h2>Use the provided case materials</h2>
-          <p>${escapeHtml(experience.purpose)}</p>
-          <div class="content-grid compact-grid">
-            <article class="callout"><h3>1 · Supplied facts</h3><p>Read your team's three profile slides and the matching client-data rows. Record where each material fact came from.</p></article>
-            <article class="callout"><h3>2 · Reasoned assumptions</h3><p>Missing facts may remain not provided. Label and justify essential modeling assumptions; distinguish proposed committee policies from supplied client facts.</p></article>
-          </div>
-        </section>
-
-        <section>
-          <p class="section-kicker">Your decision cycle</p>
-          <h2>Five moves from profile to mandate</h2>
-          ${decisionCycleMarkup()}
-        </section>
-
-        <section>
-          <p class="section-kicker">Fictional client assignments</p>
-          <h2>Find your committee's three clients</h2>
-          <p>Open your assigned team page for the baseline slides and scenario-analysis sequence. The inquiry line identifies tensions to investigate, not a conclusion to copy.</p>
-          ${clientSetBoard()}
-          <div class="resource-list resource-list-inline">${resourceLinks(["ips-framework", "client-data", ...model.phase1Experience.clientSets.map((set) => `${teamSlug(set.team)}-client-profiles`)], prefix, { includeDescription: true })}</div>
-        </section>
-
-        <section>
-          <p class="section-kicker">Five analyst lenses</p>
-          <h2>Read each scenario through every role</h2>
-          <p>Each role examines the same provided case from its area of responsibility and hands a usable constraint, assumption, or information gap to the committee. All five roles enter a human-first judgment for all three clients before AI use.</p>
-          ${analystLensBoard()}
-        </section>
-
-        <section>
-          <p class="section-kicker">Committee challenge round</p>
-          <h2>Challenge the first interpretation</h2>
-          <p>Use these questions as a committee discussion guide. Do not paste them into an AI tool.</p>
-          <div class="challenge-grid">${experience.committeeChallengeQuestions.map((question) => `<article><p>${escapeHtml(question)}</p></article>`).join("\n")}</div>
-        </section>
-
-        <section>
-          <p class="section-kicker">Human verification</p>
-          <h2>Use an approved evidence path</h2>
-          <p>AI output is never a source. Match the claim to the strongest available evidence, record an as-of date, and classify the result as Confirmed, Qualified, Contradicted, or Not verifiable.</p>
-          ${sourceBoard()}
-        </section>
-
-        <section>
-          <p class="section-kicker">Analyst Decision Log</p>
-          <h2>Make the change in judgment visible</h2>
-          <div class="content-grid compact-grid">
-            <div>
-              <ul class="clean-list">${experience.decisionLogFields.map((field) => `<li>${escapeHtml(field)}</li>`).join("\n")}</ul>
-            </div>
-            <aside class="side-rail static-rail">
-              <p class="section-kicker">Student workbook</p>
-              <h2>Log every material decision</h2>
-              <div class="resource-list">${resourceLinks(["decision-record"], prefix, { includeDescription: true })}</div>
-            </aside>
-          </div>
-        </section>
-
-        <section>
-          <p class="section-kicker">Quality gate</p>
-          <h2>Ready for the Phase 1 vote?</h2>
-          <ul class="check-list">${experience.qualityGate.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
-          <div class="callout"><h3>Stop condition</h3><p>If a material claim is contradicted or not verifiable, revise the judgment or mark the mandate incomplete. Do not carry uncertainty forward as a fact.</p></div>
-        </section>
-
-        <section>
-          <p class="section-kicker">CFA Level I foundation</p>
-          <h2>Use foundational concepts to organize the judgment</h2>
-          <div class="foundation-grid">${experience.cfaFoundations.map((item) => `<article><h3><a href="${escapeHtml(item.url)}">${escapeHtml(item.topic)}</a></h3><p>${escapeHtml(item.application)}</p></article>`).join("\n")}</div>
-          <p class="fine-print">Course alignment only. CFA Institute does not sponsor or endorse this project, and the linked pages remain the authority for current CFA Program descriptions.</p>
-        </section>
-
-        <section>
-          <div class="milestone-banner">
-            <div><p class="section-kicker">Next decision</p><h2>Convert scenario analysis into the client mandate</h2><p>Carry each approved guardrail into the IPS, then use it as a pass/fail screen when the team evaluates bonds, mutual funds, ETFs, portfolio weights, and stress results.</p></div>
-            <div class="milestone-actions"><a class="button button-primary" href="${escapeHtml(path.basename(phasePath(model.phases[0])))}">Return to Phase 1</a><a class="button" href="${escapeHtml(prefixPath(prefix, "index.html"))}">Project overview</a></div>
-          </div>
-        </section>
-      </div>
-    </div>
-  </main>`;
-
-  return shell({
-    title: experience.title,
-    description: experience.purpose,
-    prefix,
-    body,
-    pageClass: "guide-page discovery-page"
-  });
+  const body = `<main id="main-content">${pageHero("Phase 1 · Part 2 · Client Submissions", experience.title, experience.subtitle)}
+    <div class="page-shell"><section><h2>Use the provided case materials</h2><p>${escapeHtml(experience.purpose)}</p><p>${escapeHtml(experience.scenarioAnalysisRules.assumptionRule)} No client interviews are required.</p><a class="button button-primary" href="client-analysis.html">Open the four-step client guide</a></section>
+    <section><h2>From client criteria to IPS</h2>${scenarioSequenceMarkup()}</section>
+    <section><h2>Find your three assigned clients</h2>${clientSetBoard()}${resourceLinks(["ips-framework", "client-data"], prefix, { includeDescription: true })}</section>
+    <section><h2>Ready to submit?</h2><ul class="check-list">${experience.qualityGate.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul><p>Combine the three IPS statements into one PDF. No separate memo, Decision Log, or Gate 1 vote is required.</p></section></div></main>`;
+  return shell({ title: experience.title, description: experience.purpose, prefix, body, pageClass: "guide-page", navCurrent: "phase-1" });
 }
 
 function securityAnalysisPage() {
@@ -814,7 +724,7 @@ function canvasSubmissionPage() {
         <section>
           <p class="section-kicker">Submission receipt</p>
           <h2>The gate is not complete until the team confirms Canvas</h2>
-          <p>After the designated submitter uploads each package, every member opens its Canvas receipt and confirms the required filenames. Record the Gate 1 client-analysis receipt in the committee Decision Record. If a file is missing or cannot be opened, use the attempt and revision policy shown in Canvas.</p>
+          <p>After the designated submitter uploads each package, every member opens its Canvas receipt and confirms the required filenames. Keep the Part 2 IPS submission receipt with your team files. If a file is missing or cannot be opened, use the attempt and revision policy shown in Canvas.</p>
         </section>
       </div>
     </div>
@@ -830,13 +740,13 @@ function canvasAssignmentFragment(assignment) {
   const evidenceBoundary = assignment.includePrivateEvidenceBoundary ? `<div style="${card}border-left:6px solid ${palette.gold};"><h2 style="margin:0 0 8px;color:${palette.navy};font-size:22px;">Submit through Canvas</h2><p style="margin:0;">Submit all required work and licensed-source evidence through this Canvas assignment. Do not include credentials, raw data, or unrelated downloads.</p></div>` : "";
   return `<div style="max-width:980px;margin:0 auto;color:${palette.ink};font-family:Arial,Helvetica,sans-serif;line-height:1.55;">
   <div style="background:${palette.navy};color:#ffffff;border-top:8px solid ${palette.gold};padding:24px;border-radius:14px 14px 6px 6px;">
-    <p style="margin:0 0 6px;font-size:14px;font-weight:bold;letter-spacing:.06em;text-transform:uppercase;color:#F1D48E;">${assignment.partId ? `BUS331 &middot; Phase ${phase.number} &middot; ${assignment.partId === "macro-analysis" ? "Part 1 assignment" : "Part 2 Gate 1 assignment"}` : `BUS331 &middot; Phase ${phase.number} approval gate`}</p>
+    <p style="margin:0 0 6px;font-size:14px;font-weight:bold;letter-spacing:.06em;text-transform:uppercase;color:#F1D48E;">${assignment.partId ? `BUS331 &middot; Phase ${phase.number} &middot; ${assignment.partId === "macro-analysis" ? "Part 1 assignment" : "Part 2 IPS assignment"}` : `BUS331 &middot; Phase ${phase.number} approval gate`}</p>
     <h1 style="margin:0;font-size:30px;line-height:1.2;color:#ffffff;">${canvasText(assignment.canvasTitle)}</h1>
     <p style="margin:12px 0 0;color:#ffffff;">${escapeHtml(assignment.decision)}</p>
   </div>
   <div style="background:${palette.paper};padding:20px;border:1px solid ${palette.line};border-top:0;border-radius:0 0 14px 14px;">
     <div style="${card}border-left:6px solid ${palette.teal};"><h2 style="margin:0 0 8px;color:${palette.navy};font-size:22px;">Submission process</h2><p style="margin:0;">${escapeHtml(assignment.submissionProcess)}</p><p style="margin:10px 0 0;">Canvas controls the due date, points, availability window, and attempt policy.</p></div>
-    <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Required files</h2>
+${assignment.id === "phase-1-client" ? `    <p><a href="https://bevitts-design.github.io/BUS331-Investment-Project-Specific/files/BUS331_Abbreviated_IPS_Template.docx">Download the abbreviated IPS template</a> · <a href="https://bevitts-design.github.io/BUS331-Investment-Project-Specific/project/client-analysis.html">Open the four-step guide</a></p>\n` : ""}    <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Required files</h2>
     <p style="margin:0 0 12px;">${escapeHtml(model.canvasSubmissions.fileNamingRule)}</p>
     ${assignment.requiredFiles.map((file) => `<div style="${card}"><p style="margin:0 0 4px;font-weight:bold;color:${palette.navy};overflow-wrap:anywhere;">${escapeHtml(file.name)}</p><p style="margin:0;">${escapeHtml(file.description)}</p></div>`).join("\n")}
     <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Pre-submission check</h2>
