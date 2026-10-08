@@ -378,13 +378,13 @@ function phaseOnePage(phase) {
       <div class="phase-one-part-head"><p class="section-kicker">Part ${index + 1} of ${parts.length}</p><h2 id="${escapeHtml(part.id)}-title">${escapeHtml(part.title)}</h2><p>${escapeHtml(part.purpose)}</p></div>
       <h3>Do this in order</h3>
       <ol class="workflow-steps">${partSteps.map((step, stepIndex) => `<li class="workflow-step"><span aria-hidden="true">${stepIndex + 1}</span><div><p>${escapeHtml(step)}</p></div></li>`).join("\n")}</ol>
-      ${part.id === "client-submissions" ? `<div class="callout"><h3>Work from the assigned scenarios</h3><p>Use the <a href="${escapeHtml(prefixPath(prefix, "project/client-analysis.html"))}">four-step client guide</a> to review risk, return, utility, and risk aversion, then complete one abbreviated IPS per client. No client interviews are required.</p></div>` : ""}
+      ${part.id === "client-submissions" ? `<div class="callout"><h3>Work from the assigned scenarios</h3><p>Use the <a href="${escapeHtml(prefixPath(prefix, "project/client-analysis.html"))}">client guide</a> to consider RRTTLLLU and complete one abbreviated IPS per client. No client interviews are required.</p></div>` : ""}
       <div class="phase-one-check-grid"><div><h3>Ready when</h3><ul class="check-list">${partDone.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></div><div><h3>Evidence to keep</h3><ul class="check-list">${partEvidence.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul></div></div>
-      <h3>${index === 0 ? "Macro forecast deliverable" : "Client and committee deliverables"}</h3>
+      <h3>${index === 0 ? "Macro forecast deliverable" : "Client deliverable"}</h3>
       <ul class="clean-list">${partDeliverables.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
       <h3>Resources for this part</h3>
       <div class="resource-list phase-one-resources">${resourceLinks(part.resources, prefix, { includeDescription: true })}</div>
-      <div class="phase-one-submission"><h3>${index === 0 ? "Assignment 1: submit the macro forecast" : "Assignment 2: submit the three client IPS statements"}</h3><p>${escapeHtml(assignment.submissionProcess)}</p><ul class="phase-file-list">${assignment.requiredFiles.map((file) => `<li><code>${escapeHtml(file.name)}</code><span>${escapeHtml(file.description)}</span></li>`).join("\n")}</ul><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, canvasSubmissionPath))}#${escapeHtml(assignment.id)}-canvas">Check this Canvas submission</a></div>
+      <div class="phase-one-submission"><h3>${index === 0 ? "Assignment 1: submit the macro forecast" : "Assignment 2: submit the three client IPS statements"}</h3><p>${escapeHtml(assignment.submissionProcess)}</p><ul class="phase-file-list">${assignment.requiredFiles.map((file) => `<li><code>${escapeHtml(file.name)}</code><span>${escapeHtml(file.description)}</span></li>`).join("\n")}</ul>${part.id === "client-submissions" ? "" : `<a class="button button-primary" href="${escapeHtml(prefixPath(prefix, canvasSubmissionPath))}#${escapeHtml(assignment.id)}-canvas">Check this Canvas submission</a>`}</div>
     </section>`;
   }).join("\n");
   const body = `
@@ -395,7 +395,7 @@ function phaseOnePage(phase) {
       <section class="phase-one-intro"><p class="section-kicker">Decision question</p><h2>${escapeHtml(phase.keyQuestion)}</h2><p>${escapeHtml(phase.objective)}</p><p>Submit the macro forecast as Assignment 1. Use that forecast in Assignment 2 to complete the three client IPS statements. Each assignment has its own Canvas receipt.</p></section>
       ${partMarkup}
       <section><h2>Committee responsibilities across both parts</h2>${rolePhaseMatrix(phase)}</section>
-      <section><h2>Ready for Phase 2</h2><p>${escapeHtml(phase.gate)}</p></section>
+
     </div></div>
   </main>`;
   return shell({ title: `Phase 1 - ${phase.title}`, description: phase.objective, prefix, body, pageClass: "guide-page phase-one-page", navCurrent: phase.id });
@@ -520,7 +520,7 @@ function clientDiscoveryPage() {
   const prefix = "../";
   const experience = model.phase1Experience;
   const body = `<main id="main-content">${pageHero("Phase 1 · Part 2 · Client Submissions", experience.title, experience.subtitle)}
-    <div class="page-shell"><section><h2>Use the provided case materials</h2><p>${escapeHtml(experience.purpose)}</p><p>${escapeHtml(experience.scenarioAnalysisRules.assumptionRule)} No client interviews are required.</p><a class="button button-primary" href="client-analysis.html">Open the four-step client guide</a></section>
+    <div class="page-shell"><section><h2>Use the provided case materials</h2><p>${escapeHtml(experience.purpose)}</p><p>${escapeHtml(experience.scenarioAnalysisRules.assumptionRule)} No client interviews are required.</p><a class="button button-primary" href="client-analysis.html">Open the client guide</a></section>
     <section><h2>From client criteria to IPS</h2>${scenarioSequenceMarkup()}</section>
     <section><h2>Find your three assigned clients</h2>${clientSetBoard()}${resourceLinks(["ips-framework", "client-data"], prefix, { includeDescription: true })}</section>
     <section><h2>Ready to submit?</h2><ul class="check-list">${experience.qualityGate.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul><p>Combine the three IPS statements into one PDF. No separate memo, Decision Log, or Gate 1 vote is required.</p></section></div></main>`;

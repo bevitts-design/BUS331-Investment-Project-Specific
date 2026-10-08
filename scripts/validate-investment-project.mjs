@@ -63,7 +63,7 @@ if (!roadmap) {
     if (roadmap.definitionOfDone?.[phaseId]?.length < 3) fail(`Student roadmap needs a definition of done for ${phaseId}.`);
   }
   const phaseOneText = JSON.stringify(roadmap.phaseSequences?.["phase-1"] || []);
-  for (const required of ["historical", "human-first", "FactSet", "FRED", "bull", "base", "bear", "100%", "macro", "mandate"]) {
+  for (const required of ["historical", "human-first", "FactSet", "FRED", "bull", "base", "bear", "100%", "macro", "IPS"]) {
     if (!new RegExp(required, "i").test(phaseOneText)) fail(`Phase 1 roadmap sequence is missing its detailed macro-analysis requirement: ${required}.`);
   }
   if (!/Part 1 macro reasoning stays in the Macro Starter workbook/.test(roadmap.decisionLogGuidance?.usage || "") || !/In Phase 2, open the separate committee Decision Record/.test(roadmap.decisionLogGuidance?.usage || "")) fail("Project-wide Decision Log guidance must distinguish the Part 1 macro workbook from the Phase 2 Decision Record.");
@@ -499,7 +499,7 @@ const clientAssignment = model.canvasSubmissions.assignments.find(item => item.i
 if (clientAssignment.requiredFiles.length !== 1 || clientAssignment.requiredFiles[0].name !== "BUS331_[TeamName]_Phase1_ClientIPS.pdf" || clientAssignment.allowedExtensions.join("|") !== "pdf") fail("Part 2 must require only the combined three-client IPS PDF.");
 for (const relative of ["project/client-analysis.html", "canvas/phase-1-client-step-by-step-page.html", "canvas/phase-1-client-assignment.html"]) {
   const html = await fs.readFile(path.join(rootDir, relative), "utf8");
-  for (const term of ["utility", "risk aversion", "100%", "BUS331_Abbreviated_IPS_Template.docx"]) {
+  for (const term of ["RRTTLLLU", "BUS331_Abbreviated_IPS_Template.docx"]) {
     if (!html.includes(term)) fail(`${relative} is missing client IPS requirement ${term}.`);
   }
   if (/Phase1_MandateMemo|Phase1_DecisionRecord/.test(html)) fail(`${relative} still requires retired Part 2 submissions.`);

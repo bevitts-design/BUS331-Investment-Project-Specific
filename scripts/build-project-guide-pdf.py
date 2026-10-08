@@ -66,7 +66,7 @@ def main():
                 if part["id"] == "client-submissions":
                     story += [
                         p("Client scenario analysis",s["H3x"]),
-                        p("Use the abbreviated IPS with the assigned profile slides and data rows. Missing facts may remain Not provided. Label only essential modeling assumptions; justify committee policy choices and cite case evidence. Propose broad weights totaling 100%. No interview is assigned.",s["Smallx"])
+                        p("Consider RRTTLLLU for each assigned client and complete one abbreviated IPS statement per client. Record reasoning in the template. No contract or approval gate is required.",s["Smallx"])
                     ]
                 story += [p(f"Canvas assignment {number}: {assignment['canvasTitle']}",s["H3x"]),p(assignment["submissionProcess"],s["Smallx"])]
                 story += [p(f"[ ] {item}",s["Smallx"]) for item in assignment["preflight"]]

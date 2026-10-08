@@ -23,7 +23,7 @@ Required evidence:
 - Completed RRTTLLU analysis and explicit drawdown tripwire for each client
 - Brief explanation of how risk, return, utility, and risk aversion influence asset allocation
 
-Phase 1 handoff: complete and review the three client IPS statements before portfolio construction. Part 2 requires no separate mandate memo, detailed Decision Log, or Gate 1 vote.
+Phase 1 Part 2 requires only consideration of RRTTLLLU for each assigned client and completion of one abbreviated IPS statement per client. Submit the three completed statements as one PDF. No contract, approval gate, separate mandate memo, or Decision Record is required.
 
 ### Phase 2 - Build and Challenge
 

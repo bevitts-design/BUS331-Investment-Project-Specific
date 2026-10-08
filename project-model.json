@@ -70,7 +70,7 @@
       {
         "id": "client-submissions",
         "title": "Client Submissions",
-        "purpose": "Review each client’s criteria, consider risk, return, utility, and risk aversion, and explain asset allocation in one abbreviated IPS per client. Submit the three IPS statements together.",
+        "purpose": "Consider RRTTLLLU for each assigned client and complete one abbreviated IPS statement for each client.",
         "stepRange": [
           3,
           6
@@ -96,8 +96,7 @@
           "team-four-client-profiles",
           "team-five-client-profiles",
           "team-six-client-profiles",
-          "ips-framework",
-          "canvas-submission-guide"
+          "ips-framework"
         ]
       }
     ],
@@ -106,9 +105,9 @@
         "Open the Macro Starter workbook, assign all five roles, and save a team-named Part 1 copy.",
         "Complete the detailed macro analysis in the provided workbook: review historical evidence, form a human-first interpretation, and document sources.",
         "Compare the committee view with FRED historical observations and a source-dated FactSet or other external forecast or consensus where a comparable measure exists; then create bull, base, and bear scenarios with probabilities totaling 100%.",
-        "Review your three assigned client profiles and data. Consider goals, constraints, risk capacity, risk willingness, target return, utility, and risk aversion.",
-        "Complete one abbreviated IPS mandate per client. Explain how the client criteria and risk–return trade-off influence broad allocation weights totaling 100%, using the submitted macro outlook as context.",
-        "Review the three abbreviated IPS statements together, check each allocation totals 100%, and submit one combined client IPS PDF."
+        "Review your three assigned client profiles and consider RRTTLLLU: risk, return, time horizon, taxes, liquidity, legal constraints, and unique circumstances.",
+        "Complete one abbreviated IPS statement for each client. Record your client reasoning directly in the template.",
+        "Combine the three completed abbreviated IPS statements into one PDF for submission."
       ],
       "phase-2": [
         "Reopen the approved client mandate before researching investments.",
@@ -130,9 +129,9 @@
     "definitionOfDone": {
       "phase-1": [
         "The macro workbook documents historical analysis, source-dated external comparisons, inflation expectations, and weighted bull, base, and bear scenarios.",
-        "Each client has a completed abbreviated IPS with goals, relevant constraints, return and risk policies, and a provisional allocation totaling 100%.",
-        "Each IPS explains how risk, return, utility, and risk aversion influence the allocation, using the submitted macro outlook as context.",
-        "The team has checked all three IPS statements and combined them into one PDF in assigned-client order."
+        "RRTTLLLU has been considered for each assigned client.",
+        "Each client has a completed abbreviated IPS statement.",
+        "The three completed IPS statements are combined into one PDF."
       ],
       "phase-2": [
         "Each client portfolio traces back to an approved mandate and has a stated purpose for every holding.",
@@ -1009,9 +1008,9 @@
       "shortTitle": "Mandate",
       "tagline": "Two parts: macroeconomic analysis, then client submissions.",
       "keyQuestion": "What must be true about markets and each client before we are willing to invest?",
-      "objective": "Establish one defensible 12-month market view and convert each assigned client profile into an approved investment mandate.",
-      "gate": "Check that the three abbreviated IPS statements reflect the clients’ criteria and provide usable return, risk, and allocation policies for Phase 2. No formal Phase 1 vote is required.",
-      "meetingMotion": "Review the three client IPS statements for completeness and consistency.",
+      "objective": "Establish one defensible 12-month market view, consider RRTTLLLU for each client, and complete each client’s abbreviated IPS statement.",
+      "gate": "",
+      "meetingMotion": "",
       "workstreams": [
         {
           "title": "Market view",
@@ -1019,20 +1018,20 @@
         },
         {
           "title": "Client scenario analysis",
-          "description": "Review client goals and constraints, risk and return, utility and risk aversion, then explain the implications for asset allocation."
+          "description": "Consider RRTTLLLU for each assigned client and complete one abbreviated IPS statement for each client."
         },
         {
           "title": "Complete the IPS statements",
-          "description": "Record the team’s client reasoning and broad allocation choices in one abbreviated IPS per client."
+          "description": "Complete the supplied abbreviated IPS template for each assigned client."
         }
       ],
       "evidence": [
         "Human-first five-year macro read with source dates",
         "Source-dated external forecast comparison, FRED historical evidence, and team growth, inflation, rate, and sentiment forecasts",
         "Bull/base/bear scenarios with probabilities totaling 100%",
-        "Client goals and relevant constraints recorded in all three abbreviated IPS statements",
-        "Risk, return, utility, and risk-aversion reasoning supporting each client’s allocation",
-        "Provisional broad allocation totaling 100% and concise return and risk policies for each client"
+        "RRTTLLLU reasoning recorded directly in each client’s abbreviated IPS",
+        "One completed abbreviated IPS statement for each assigned client",
+        "Three completed IPS statements combined into one PDF"
       ],
       "deliverables": [
         "Completed macro starter workbook",
@@ -1049,8 +1048,7 @@
         "team-four-client-profiles",
         "team-five-client-profiles",
         "team-six-client-profiles",
-        "ips-framework",
-        "canvas-submission-guide"
+        "ips-framework"
       ]
     },
     {
@@ -1206,8 +1204,8 @@
         "phaseId": "phase-1",
         "canvasTitle": "BUS331 Investment Committee · Phase 1 Part 2 · Client IPS Statements",
         "outputFile": "phase-1-client-assignment.html",
-        "decision": "Explain how each client’s criteria, risk, return, utility, and risk aversion shape a provisional asset allocation.",
-        "submissionProcess": "Review the supplied client profiles and data, discuss risk, return, utility, and risk aversion, and complete one abbreviated IPS per client. Combine all three IPS statements into one PDF in assigned-client order. Submit only this PDF for Part 2; no separate mandate memo, Decision Log, or Gate 1 vote is required. Use the macro forecast already submitted in Part 1 as context. No client interviews are required. One designated team member submits for the group; every member verifies the Canvas receipt.",
+        "decision": "Consider RRTTLLLU for each assigned client and complete one abbreviated IPS statement for each client.",
+        "submissionProcess": "Consider RRTTLLLU for each assigned client and complete one abbreviated IPS statement for each client. Combine the three completed IPS statements into one PDF in assigned-client order and submit it for the group. No contract or approval gate is required. No client interviews, signatures, separate memo, or Decision Record are required. Confirm the Canvas receipt after upload.",
         "includePrivateEvidenceBoundary": false,
         "requiredFiles": [
           {
@@ -1219,11 +1217,8 @@
           "pdf"
         ],
         "preflight": [
-          "The PDF contains one completed abbreviated IPS for each assigned client, in assigned-client order.",
-          "Each IPS uses the supplied criteria and explains how risk, return, utility, and risk aversion influence asset allocation.",
-          "Each broad allocation totals 100% and respects the client’s goals, time horizon, liquidity needs, and restrictions.",
-          "Missing facts remain Not provided; proposed policies and any essential assumptions are clearly identified.",
-          "The three statements are legible, consistent with the submitted macro outlook, and ready to guide Phase 2."
+          "RRTTLLLU has been considered for each assigned client.",
+          "The PDF contains one completed abbreviated IPS statement for each assigned client."
         ]
       },
       {
