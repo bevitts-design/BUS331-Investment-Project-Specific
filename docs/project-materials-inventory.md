@@ -116,3 +116,5 @@ Regenerate the new client materials with `scripts/build-client-scenario-material
 ## Phase 3 and 4 update - November 9, 2026
 
 The current public model now separates the Phase 3 single Excel submission from the Phase 4 integrated presentation. The revised blank student workbook is `files/BUS331_Phase3_Portfolio_Student_Template.xlsx`. Maintained instructions are `source-templates/phase-3-portfolio-instructions.html`, generated into the Phase 3 working page and Canvas assignment fragment. The former Phase 3 defense URL is retained as a current-instructions compatibility alias. No instructor worked workbook is included. Publication and installation in Canvas are separate actions.
+
+The Phase 3 CME tab now includes the October 30, 2026 public FactSet sector baseline and classroom bond scenarios. Team adjustments and explanations remain student inputs. The source data lives in `phase3Experience.cmeBaseline`; the shared layout is `scripts/phase3-cme-layout.mjs`.

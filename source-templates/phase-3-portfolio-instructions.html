@@ -20,13 +20,32 @@
   <p>The workbook has 12 tabs: <strong>Summary, CME, Client 1&ndash;3, Stress Test, History 1&ndash;3, and Risk 1&ndash;3</strong>. History 1 and Risk 1 support Client 1; the same numbering applies to Clients 2 and 3.</p>
 
   <h2 style="color:#16324F;font-size:22px;margin:28px 0 10px;">Step 1 &mdash; Build the team CME</h2>
-  <p>Use the <strong>CME</strong> tab to translate your economic outlook into expectations for the sectors and categories your portfolios will use.</p>
+  <p>The <strong>CME</strong> tab now provides a starting point. Review it against your economic outlook, keep or adjust it, and explain the team&rsquo;s judgment for every category you use.</p>
+  <ol style="padding-left:24px;">
+    <li style="margin:8px 0;"><strong>Review baseline D9:D27.</strong> Equity sectors use the publicly available <a href="{{CME_REPORT_URL}}" style="color:#12576B;text-decoration:underline;">FactSet Earnings Insight report dated {{CME_REPORT_DATE}}, page {{CME_REPORT_PAGE}}</a>. The figures measure analyst target-price upside versus closing prices, excluding income. They are a dated consensus reference, not a guaranteed or probability-weighted return forecast. Broad equity uses the S&amp;P 500 as a U.S. large-cap proxy; assess whether that proxy fits your actual exposure.</li>
+    <li style="margin:8px 0;"><strong>Enter the team adjustment in E9:E27.</strong> Enter <strong>0%</strong> to keep a baseline or a signed percentage-point adjustment to change it. For example, entering <strong>-2%</strong> reduces the baseline by two percentage points. A blank adjustment is incomplete. Preserve the provided equity figures in D.</li>
+    <li style="margin:8px 0;"><strong>Review calculated team forecasts in F9:F27.</strong> The workbook adds the baseline and adjustment. These are the expected annual <strong>price changes</strong> used on the Client sheets. Keep the provided formulas.</li>
+    <li style="margin:8px 0;"><strong>Explain keeping or changing the baseline in H.</strong> Connect the decision to growth, inflation, interest rates, valuations, earnings or credit conditions. Cite the baseline plus any additional team evidence in I and enter the team outlook&rsquo;s as-of date in J. Resolve the status messages in K. Keeping the baseline still requires an explanation.</li>
+    <li style="margin:8px 0;"><strong>Complete downside price forecasts in G.</strong> Develop your own equity downside estimates. Bond and cash starters link to the classroom scenario table below; retain or revise them with a reason. Do not simply subtract an arbitrary fixed amount from every category.</li>
+    <li style="margin:8px 0;">Use one shared 12-month outlook across the team. Complete the base and adverse-scenario explanations in the response areas. Client differences affect security selection and weights.</li>
+  </ol>
+  <h3 style="color:#16324F;font-size:18px;margin:20px 0 8px;">Use the simple bond scenario table</h3>
+  <p><strong>CME rows 48&ndash;54</strong> provide <strong>illustrative classroom assumptions, not FactSet bond forecasts</strong>. The base case assumes benchmark yields fall 25 basis points with unchanged spreads. The adverse growth scenario assumes benchmark yields fall 50 basis points while credit spreads widen; government bond prices may rise even when credit-sensitive categories lose value.</p>
   <ul style="padding-left:24px;">
-    <li style="margin:8px 0;">For every category you use, complete the macro driver, expected annual <strong>price change</strong>, downside annual <strong>price change</strong>, reasoning, source, and as-of date.</li>
-    <li style="margin:8px 0;">Use one shared 12-month outlook across the team. Client differences affect security selection and weights.</li>
-    <li style="margin:8px 0;">Explain the base outlook and one coherent adverse scenario in the response areas. Connect growth, inflation, and interest rates to your forecasts.</li>
+    <li style="margin:8px 0;">Review modified duration and base/downside yield and spread changes in <strong>C48:G54</strong>. Keep the supplied assumptions or revise them to match your team outlook and researched exposure. Explain revisions in the relevant category&rsquo;s H cell.</li>
+    <li style="margin:8px 0;">The table calculates <strong>price change &asymp; &minus;modified duration &times; (yield change + spread change)</strong>. Enter a 25-basis-point change as <strong>0.25%</strong> or <strong>0.0025</strong>; enter a decline with a minus sign. The base results in H48:H54 feed baseline D21:D27; downside results in I48:I54 feed G21:G27 unless you replace the downside link with a justified team estimate.</li>
+    <li style="margin:8px 0;">Match duration to the exposure you intend to hold. The international-bond starter assumes currency hedging; revise for unhedged exposure. The cash starter assumes a stable price. This simplified price model excludes income, convexity, defaults and currency effects.</li>
   </ul>
   <p><strong>Keep price change and income separate.</strong> CME forecasts are price changes. The client sheets separately ask for each security&rsquo;s expected income yield and downside income yield, then add those estimates to the applicable price forecast for this exercise. Do not include income twice.</p>
+
+  <div style="background-color:#E8EFF3;border-left:5px solid #167D8D;padding:18px;margin:22px 0;">
+    <h3 style="margin:0 0 10px;color:#16324F;font-size:20px;">CME research resources</h3>
+    <ul style="margin:0;padding-left:24px;">
+      <li style="margin:8px 0;"><a href="{{CME_REPORT_URL}}" style="color:#12576B;text-decoration:underline;"><strong>FactSet Earnings Insight &mdash; {{CME_REPORT_DATE}}</strong></a>: Open page {{CME_REPORT_PAGE}} and review the sector target-price comparison used for the workbook baseline. Compare the analyst price expectations with your team&rsquo;s economic outlook, then explain why you retain or adjust them.</li>
+      <li style="margin:8px 0;"><a href="https://www.schwab.com/learn/story/stock-sector-outlook" style="color:#12576B;text-decoration:underline;"><strong>Schwab Monthly Stock Sector Outlook</strong></a>: Use the sector commentary, economic drivers and risks to support your reasoning. Schwab&rsquo;s ratings express expected performance relative to the S&amp;P 500 over six to 12 months; they are not numerical return forecasts. Its trailing-performance figures describe past returns.</li>
+    </ul>
+    <p style="margin:12px 0 0;">Record the report or article date and the evidence you used in the CME source/reference field. These resources inform your judgment; your team must still explain its forecasts and downside assumptions.</p>
+  </div>
 
   <h2 style="color:#16324F;font-size:22px;margin:28px 0 10px;">Step 2 &mdash; Select 10 securities for each client</h2>
   <p>Complete the IPS inputs and selection table on <strong>each Client sheet</strong>.</p>

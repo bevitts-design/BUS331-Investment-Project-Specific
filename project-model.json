@@ -120,7 +120,7 @@
       ],
       "phase-3": [
         "Download the revised student portfolio workbook and transfer each client IPS into its Client sheet.",
-        "Build a shared team CME and select 10 distinct securities per client, with sector/category and client-role rationale.",
+        "Review the dated FactSet sector baseline and classroom bond scenarios; keep or adjust each used category with a macro explanation, then select 10 distinct securities per client.",
         "Use STOCKHISTORY to save 61 aligned monthly closes per security and calculate 60 monthly price returns.",
         "Build each client covariance/correlation matrix, enter initial weights and run constrained minimum-variance Solver.",
         "Choose final weights, complete stress tests, explain trade-offs and submit one Excel workbook in Canvas."
@@ -1570,7 +1570,7 @@
       "label": "Phase 3 Portfolio Student Template",
       "type": "XLSX",
       "path": "files/BUS331_Phase3_Portfolio_Student_Template.xlsx",
-      "description": "Revised 12-tab blank student workbook: 10 securities per client, STOCKHISTORY snapshots, CME, covariance, Solver and downside review.",
+      "description": "Revised 12-tab student workbook with a dated FactSet equity-sector baseline, classroom bond scenarios, team adjustments, 10 securities per client, STOCKHISTORY, covariance and Solver.",
       "audience": "student"
     },
     {
@@ -1721,6 +1721,101 @@
     "securitiesPerClient": 10,
     "monthlyCloses": 61,
     "monthlyReturns": 60,
-    "worksheetCount": 12
+    "worksheetCount": 12,
+    "cmeBaseline": {
+      "version": "2026-10-30-factset-classroom-bonds-v1",
+      "factset": {
+        "reportDate": "2026-10-30",
+        "asOfDate": "2026-10-29",
+        "page": 37,
+        "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_103026.pdf",
+        "metric": "Sector bottom-up target-price upside versus closing price; next 12 months, price change only",
+        "values": {
+          "Communication Services": 0.385,
+          "Consumer Discretionary": 0.229,
+          "Consumer Staples": 0.074,
+          "Energy": 0.06,
+          "Financials": 0.102,
+          "Health Care": 0.053,
+          "Industrials": 0.214,
+          "Information Technology": 0.279,
+          "Materials": 0.151,
+          "Real Estate": 0.145,
+          "Utilities": 0.123,
+          "Broad equity": 0.208
+        }
+      },
+      "bonds": {
+        "label": "Instructor-supplied classroom scenarios; not FactSet forecasts",
+        "baseScenario": "Modest easing: benchmark yields fall 25 basis points; credit spreads unchanged. Cash price is stable.",
+        "downsideScenario": "Growth shock: benchmark yields fall 50 basis points while credit spreads widen. Government bonds can gain; credit-sensitive categories can lose. Cash price is stable.",
+        "formula": "Approximate price change = -modified duration * (benchmark yield change + spread change). All yield changes are percentage-point changes entered as decimals.",
+        "rows": [
+          {
+            "category": "Broad fixed income",
+            "duration": 6,
+            "baseRateChange": -0.0025,
+            "baseSpreadChange": 0,
+            "downsideRateChange": -0.005,
+            "downsideSpreadChange": 0.01,
+            "scope": "Illustrative diversified bond exposure"
+          },
+          {
+            "category": "Government bonds",
+            "duration": 6,
+            "baseRateChange": -0.0025,
+            "baseSpreadChange": 0,
+            "downsideRateChange": -0.005,
+            "downsideSpreadChange": 0,
+            "scope": "Government exposure; no credit-spread shock"
+          },
+          {
+            "category": "Investment-grade corporate bonds",
+            "duration": 7,
+            "baseRateChange": -0.0025,
+            "baseSpreadChange": 0,
+            "downsideRateChange": -0.005,
+            "downsideSpreadChange": 0.02,
+            "scope": "Credit spread widens in growth shock"
+          },
+          {
+            "category": "High-yield bonds",
+            "duration": 3.5,
+            "baseRateChange": -0.0025,
+            "baseSpreadChange": 0,
+            "downsideRateChange": -0.005,
+            "downsideSpreadChange": 0.04,
+            "scope": "Large spread shock; default losses omitted"
+          },
+          {
+            "category": "Municipal bonds",
+            "duration": 5,
+            "baseRateChange": -0.0025,
+            "baseSpreadChange": 0,
+            "downsideRateChange": -0.005,
+            "downsideSpreadChange": 0.01,
+            "scope": "Simplified rate/spread exposure; no tax adjustment"
+          },
+          {
+            "category": "International bonds",
+            "duration": 6,
+            "baseRateChange": -0.0025,
+            "baseSpreadChange": 0,
+            "downsideRateChange": -0.005,
+            "downsideSpreadChange": 0.005,
+            "scope": "Currency-hedged proxy; revise for unhedged holdings"
+          },
+          {
+            "category": "Cash equivalent",
+            "duration": 0,
+            "baseRateChange": 0,
+            "baseSpreadChange": 0,
+            "downsideRateChange": 0,
+            "downsideSpreadChange": 0,
+            "scope": "Stable-price proxy; income entered on Client sheet"
+          }
+        ]
+      }
+    }
   }
 }
