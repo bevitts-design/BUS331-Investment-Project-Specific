@@ -10,6 +10,19 @@
     <p style="margin:0;"><strong>Submit one team Excel workbook.</strong> The final oral presentation bringing all project phases together is <strong>Phase 4</strong>.</p>
   </div>
 
+  <div style="border:1px solid #D5DFE5;border-left:5px solid #B88A2B;padding:18px;margin:22px 0;background-color:#FAF7EF;">
+    <h2 style="margin:0 0 10px;color:#16324F;font-size:22px;">Your work sequence &mdash; when to run Solver</h2>
+    <ol style="margin:0;padding-left:24px;">
+      <li style="margin:8px 0;"><strong>Build the team CME</strong> with one change for Equity, Bond and Cash (Step 1).</li>
+      <li style="margin:8px 0;"><strong>Select 10 securities per client</strong>, classify them, and enter the client&rsquo;s IPS inputs (Step 2).</li>
+      <li style="margin:8px 0;"><strong>Build the historical risk analysis:</strong> collect 61 closes, calculate 60 returns, and complete the covariance matrix, correlation and statistics (Steps 3&ndash;4).</li>
+      <li style="margin:8px 0;"><strong>Propose initial weights and set limits</strong>, then copy the initial weights into the Solver column (Step 5).</li>
+      <li style="margin:8px 0;"><strong>Run Solver separately for each client</strong> to find a lower-variance allocation under the client&rsquo;s return goal and constraints (Step 6).</li>
+      <li style="margin:8px 0;"><strong>Evaluate Solver, recommend final weights, and stress test</strong> before submitting the workbook (Steps 7&ndash;8).</li>
+    </ol>
+    <p style="margin:12px 0 0;"><strong>Run Solver at Step 6, after Steps 1&ndash;5 are complete for that client.</strong> Your own initial allocation comes first; Solver provides a comparison before your final recommendation.</p>
+  </div>
+
   <h2 style="color:#16324F;font-size:22px;margin:26px 0 10px;">Before you begin</h2>
   <ul style="padding-left:24px;">
     <li style="margin:8px 0;">Download the <a href="https://bevitts-design.github.io/BUS331-Investment-Project-Specific/files/BUS331_Phase3_Portfolio_Student_Template.xlsx" style="color:#12576B;text-decoration:underline;"><strong>revised Phase 3 Portfolio Student Template (.xlsx)</strong></a>. Use <strong>desktop Excel</strong> with STOCKHISTORY access and the Solver add-in.</li>
@@ -82,7 +95,7 @@
   <p><strong>Interpret the basis correctly:</strong> These historical calculations measure price-return risk, without reconstructing distributions or reinvestment. CME total returns already include income, while the security covariance estimate does not reconstruct distributions. Discuss this limitation for income-oriented holdings. Annualization assumes sufficiently stable monthly returns without material serial correlation.</p>
 
   <h2 style="color:#16324F;font-size:22px;margin:28px 0 10px;">Step 5 &mdash; Set initial weights and limits</h2>
-  <p>On each Client sheet:</p>
+  <p>Complete this step after the client&rsquo;s historical risk analysis is ready. On each Client sheet:</p>
   <ol style="padding-left:24px;">
     <li style="margin:8px 0;">Enter your judgment-based initial weights in <strong>C32:C41</strong>. All 10 positions must receive positive weights, totaling 100%. Explain the initial decision in the response below row 95.</li>
     <li style="margin:8px 0;">Enter justified <strong>positive minimum weights in F32:F41</strong> and appropriate maximums in <strong>G32:G41</strong>. There is no preset assignment-wide minimum percentage. The limits must allow a feasible portfolio and meaningful positions.</li>
@@ -92,6 +105,17 @@
 
   <h2 style="color:#16324F;font-size:22px;margin:28px 0 10px;">Step 6 &mdash; Run Solver for each client</h2>
   <p><strong>Purpose:</strong> Find the lowest modeled portfolio variance while meeting the return goal, security weight limits, and client constraints. A mathematical result still needs your investment judgment.</p>
+  <div style="background-color:#E8EFF3;border-left:5px solid #167D8D;padding:18px;margin:18px 0;">
+    <h3 style="margin:0 0 10px;color:#16324F;font-size:20px;">Before you click Solve</h3>
+    <p>Check these prerequisites for the client you are solving:</p>
+    <ul style="margin:0;padding-left:24px;">
+      <li style="margin:8px 0;">The shared <strong>CME J9:J11</strong> statuses say Complete, and all 10 selections on the Client sheet show Complete in <strong>L17:L26</strong>.</li>
+      <li style="margin:8px 0;">All 10 source histories show <strong>Ready in History C151:L151</strong>. The matching Risk sheet has 60 aligned returns per security and a complete, numeric <strong>10 &times; 10 annual covariance matrix in C76:L85</strong>. Correlation and statistics from Step 4 are also complete.</li>
+      <li style="margin:8px 0;">The client&rsquo;s IPS goals and limits are entered. Initial weights in <strong>C32:C41</strong> are positive and total 100%; minimum and maximum weights in <strong>F32:G41</strong> are entered and justified.</li>
+      <li style="margin:8px 0;">Initial weights have been copied as <strong>values into D32:D41</strong>. The linked expected-return and variance calculations are numeric, and missing-data or formula errors are resolved.</li>
+    </ul>
+    <p style="margin:12px 0 0;">The initial allocation may fall short of the return goal or breach an allocation limit; Solver will attempt to resolve those constraints. Keep the CME and historical data fixed during the run. Solver changes the weights in column D.</p>
+  </div>
   <h3 style="color:#16324F;font-size:18px;margin:20px 0 8px;">A. Enable Solver</h3>
   <ul style="padding-left:24px;">
     <li style="margin:8px 0;"><strong>Windows:</strong> File &gt; Options &gt; Add-ins. At Manage, select Excel Add-ins, choose Go, check Solver Add-in, and select OK.</li>
@@ -133,6 +157,7 @@
   <p><a href="https://support.microsoft.com/en-us/excel/define-and-solve-a-problem-by-using-solver" style="color:#12576B;text-decoration:underline;">Microsoft&rsquo;s Solver reference</a></p>
 
   <h2 style="color:#16324F;font-size:22px;margin:28px 0 10px;">Step 7 &mdash; Recommend final weights and stress test</h2>
+  <p>Begin this step after reviewing and recording the client&rsquo;s Solver result. Compare all three allocations: <strong>C = your initial proposal, D = Solver result, E = final recommendation</strong>.</p>
   <ol style="padding-left:24px;">
     <li style="margin:8px 0;">Enter your final recommendation in <strong>E32:E41</strong>. If you accept Solver, copy D32:D41 and paste values into E32:E41. If you adjust it, explain why. Preserve both the initial and Solver allocations.</li>
     <li style="margin:8px 0;">Keep all 10 holdings at positive weights, totaling 100%, and review final dollar allocations. Check final-column IPS results, concentration, sector overlap, costs, liquidity, and suitability.</li>
@@ -140,6 +165,7 @@
     <li style="margin:8px 0;">On <strong>Stress Test</strong>, review each client&rsquo;s downside total return, dollar loss, and loss-tripwire comparison. Explain the client-goal consequence, monitoring trigger, and correction or reservation. Revise final weights if needed and re-test.</li>
   </ol>
   <p>A one-period downside estimate is different from historical maximum drawdown and does not guarantee a maximum future loss. A second downside optimization is not required.</p>
+  <p><strong>When to rerun Solver:</strong> If you change the CME, selected securities, historical inputs, or IPS/weight constraints after the run, update the affected calculations and run Solver again before finalizing the comparison. A security or history change requires rebuilding the affected returns and covariance matrix first. If you only adjust final weights in column E, recheck the IPS and downside results and explain your judgment.</p>
 
   <div style="border:1px solid #D5DFE5;border-left:5px solid #B88A2B;padding:18px;margin:26px 0;background-color:#FAF7EF;">
     <h2 style="margin:0 0 10px;color:#16324F;font-size:22px;">Step 8 &mdash; Submit through Canvas</h2>
