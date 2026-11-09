@@ -1,53 +1,67 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-  <title id="title">Investment Committee Simulation roadmap</title>
-  <desc id="desc">Three phases: Phase 1 has separate macro forecast and client analysis assignments with three abbreviated IPS statements; Phase 2 builds and stress tests portfolios; Phase 3 defends the recommendation. Four or five members cover five committee roles.</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4fbfd"/><stop offset="1" stop-color="#fff8ee"/></linearGradient>
-    <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#071626" flood-opacity=".12"/></filter>
-  </defs>
-  <rect width="1600" height="900" fill="url(#bg)"/>
-  <text x="70" y="78" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="700" fill="#0b1f35">Investment Committee Simulation</text>
-  <text x="70" y="116" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#4b6073">A three-gate roadmap from client mandate to focused portfolio to committee defense</text>
-
-  <g filter="url(#shadow)">
-    <rect x="65" y="155" width="460" height="500" rx="24" fill="#ffffff"/>
-    <rect x="65" y="155" width="460" height="72" rx="24" fill="#1f7a78"/>
-    <rect x="570" y="155" width="460" height="500" rx="24" fill="#ffffff"/>
-    <rect x="570" y="155" width="460" height="72" rx="24" fill="#c96f4f"/>
-    <rect x="1075" y="155" width="460" height="500" rx="24" fill="#ffffff"/>
-    <rect x="1075" y="155" width="460" height="72" rx="24" fill="#765b9b"/>
-  </g>
-
-  <g font-family="Arial, Helvetica, sans-serif">
-    <text x="95" y="202" font-size="24" font-weight="700" fill="#ffffff">PHASE 1 · FRAME THE MANDATE</text>
-    <text x="600" y="202" font-size="24" font-weight="700" fill="#ffffff">PHASE 2 · BUILD &amp; CHALLENGE</text>
-    <text x="1105" y="202" font-size="24" font-weight="700" fill="#ffffff">PHASE 3 · DEFEND</text>
-
-    <g fill="#0b1f35" font-size="22" font-weight="700">
-      <text x="100" y="270">Part 1 · Macroeconomic analysis</text><text x="100" y="350">Assignment 1: macro workbook</text><text x="100" y="430">Part 2 · Client submissions</text><text x="100" y="510">Assignment 2: three client IPS</text>
-      <text x="605" y="270">1 · Translate mandate to candidates</text><text x="605" y="350">2 · Select 8–10 holdings</text><text x="605" y="430">3 · Integrate weights and trade-offs</text><text x="605" y="510">4 · Stress, correct, and re-test</text><text x="605" y="590">5 · Conclude hedge or no hedge</text>
-      <text x="1110" y="270">1 · Issue the recommendation</text><text x="1110" y="350">2 · Build the evidence package</text><text x="1110" y="430">3 · Deliver the presentation</text><text x="1110" y="510">4 · Run the compact defense</text>
-    </g>
-    <g fill="#4b6073" font-size="18">
-      <text x="100" y="298">Historical data, sources, scenarios</text><text x="100" y="378">One committee market view</text><text x="100" y="458">Client criteria, risk, return, utility</text><text x="100" y="538">Allocation rationale in each IPS</text>
-      <text x="605" y="298">Funds and ETFs are the primary vehicles</text><text x="605" y="378">Never more than 10; do not fill every slot</text><text x="605" y="458">Resolve overlap, concentration, and fit</text><text x="605" y="538">Test the IPS and client consequence</text><text x="605" y="618">At most one targeted derivative hedge</text>
-      <text x="1110" y="298">One evidence-linked client decision</text><text x="1110" y="378">Trace mandate, holdings, weights, and risk</text><text x="1110" y="458">Balanced role ownership and clear exhibits</text><text x="1110" y="538">Targeted questions for all five roles</text>
-    </g>
-
-    <g font-size="17" font-weight="700">
-      <rect x="95" y="578" width="390" height="48" rx="24" fill="#e2f3ef"/><text x="132" y="609" fill="#17623e">GATE 1 · APPROVE THE MANDATE</text>
-      <rect x="600" y="578" width="400" height="48" rx="24" fill="#fff0e8" opacity="0"/>
-      <rect x="1105" y="578" width="400" height="48" rx="24" fill="#f0e9f8"/><text x="1155" y="609" fill="#5a3d7d">GATE 3 · DEFEND THE DECISION</text>
-    </g>
-  </g>
-
-  <rect x="65" y="700" width="1470" height="130" rx="24" fill="#0b1f35"/>
-  <text x="95" y="742" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#edca8a">FIVE DISTINCT DECISION RIGHTS · ONE COLLECTIVE VOTE</text>
-  <g font-family="Arial, Helvetica, sans-serif" fill="#ffffff">
-    <text x="95" y="779" font-size="17" font-weight="700">Client &amp; Macro</text><text x="95" y="807" font-size="15">Market view, mandate</text>
-    <text x="375" y="779" font-size="17" font-weight="700">Fixed Income</text><text x="375" y="807" font-size="15">Rates, credit, income</text>
-    <text x="655" y="779" font-size="17" font-weight="700">Equity</text><text x="655" y="807" font-size="15">Funds, ETFs, stocks</text>
-    <text x="935" y="779" font-size="17" font-weight="700">Portfolio Manager</text><text x="935" y="807" font-size="15">Weights, trade-offs</text>
-    <text x="1215" y="779" font-size="17" font-weight="700">Risk &amp; Derivatives</text><text x="1215" y="807" font-size="15">Stress, hedge decision</text>
-  </g>
-</svg>
+<title id="title">Investment Committee Simulation roadmap</title><desc id="desc">Four phases: macro and client mandates, security research, Phase 3 Excel portfolios, and Phase 4 integrated oral presentation. Four or five members cover five roles.</desc>
+<rect width="1600" height="900" fill="#f3f7fa"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="60" y="78" font-size="46" font-weight="700" fill="#0b1f35">Investment Committee Simulation</text>
+<text x="60" y="120" font-size="24" fill="#4b6073">Four phases from the market outlook to the client recommendation</text>
+<rect x="60" y="165" width="355" height="495" rx="18" fill="white" stroke="#d9e1e8"/>
+<rect x="60" y="165" width="355" height="100" rx="18" fill="#1f7a78"/>
+<text x="80" y="203" font-size="19" font-weight="700" fill="white">PHASE 1</text>
+<text x="80" y="242" font-size="25" font-weight="700" fill="white">Frame the Mandate</text>
+<text x="80" y="310" font-size="20" font-weight="700" fill="#0b1f35">Part 1 · Macroeconomic analysis</text>
+<text x="80" y="342" font-size="16" fill="#4b6073">Historical data, sources and scenarios</text>
+<text x="80" y="408" font-size="20" font-weight="700" fill="#0b1f35">Part 2 · Client submissions</text>
+<text x="80" y="440" font-size="16" fill="#4b6073">Three abbreviated IPS statements</text>
+<text x="80" y="506" font-size="20" font-weight="700" fill="#0b1f35">One market view</text>
+<text x="80" y="538" font-size="16" fill="#4b6073">Apply it to each client mandate</text>
+<rect x="75" y="590" width="325" height="46" rx="12" fill="#e8eff3"/>
+<text x="90" y="619" font-size="18" font-weight="700" fill="#0b1f35">Macro workbook + IPS PDF</text>
+<rect x="435" y="165" width="355" height="495" rx="18" fill="white" stroke="#d9e1e8"/>
+<rect x="435" y="165" width="355" height="100" rx="18" fill="#b35d40"/>
+<text x="455" y="203" font-size="19" font-weight="700" fill="white">PHASE 2</text>
+<text x="455" y="242" font-size="25" font-weight="700" fill="white">Build and Challenge</text>
+<text x="455" y="310" font-size="20" font-weight="700" fill="#0b1f35">Research securities</text>
+<text x="455" y="342" font-size="16" fill="#4b6073">Funds, ETFs and limited direct holdings</text>
+<text x="455" y="408" font-size="20" font-weight="700" fill="#0b1f35">Compare exposures</text>
+<text x="455" y="440" font-size="16" fill="#4b6073">Costs, liquidity, overlap and client fit</text>
+<text x="455" y="506" font-size="20" font-weight="700" fill="#0b1f35">Challenge the choices</text>
+<text x="455" y="538" font-size="16" fill="#4b6073">Use the current Phase 2 checklist</text>
+<rect x="450" y="590" width="325" height="46" rx="12" fill="#e8eff3"/>
+<text x="465" y="619" font-size="18" font-weight="700" fill="#0b1f35">Carry forward your research</text>
+<rect x="810" y="165" width="355" height="495" rx="18" fill="white" stroke="#d9e1e8"/>
+<rect x="810" y="165" width="355" height="100" rx="18" fill="#765b9b"/>
+<text x="830" y="203" font-size="19" font-weight="700" fill="white">PHASE 3</text>
+<text x="830" y="242" font-size="25" font-weight="700" fill="white">Build Client Portfolios</text>
+<text x="830" y="310" font-size="20" font-weight="700" fill="#0b1f35">Select 10 securities per client</text>
+<text x="830" y="342" font-size="16" fill="#4b6073">Sector/category + client role + CME</text>
+<text x="830" y="408" font-size="20" font-weight="700" fill="#0b1f35">Build histories and risk</text>
+<text x="830" y="440" font-size="16" fill="#4b6073">STOCKHISTORY: 61 closes, 60 returns</text>
+<text x="830" y="506" font-size="20" font-weight="700" fill="#0b1f35">Compare portfolio weights</text>
+<text x="830" y="538" font-size="16" fill="#4b6073">Initial → Solver → final; stress test</text>
+<rect x="825" y="590" width="325" height="46" rx="12" fill="#e8eff3"/>
+<text x="840" y="619" font-size="18" font-weight="700" fill="#0b1f35">Submit one Excel workbook</text>
+<rect x="1185" y="165" width="355" height="495" rx="18" fill="white" stroke="#d9e1e8"/>
+<rect x="1185" y="165" width="355" height="100" rx="18" fill="#235b8c"/>
+<text x="1205" y="203" font-size="19" font-weight="700" fill="white">PHASE 4</text>
+<text x="1205" y="242" font-size="25" font-weight="700" fill="white">Present and Defend</text>
+<text x="1205" y="310" font-size="20" font-weight="700" fill="#0b1f35">Connect the whole semester</text>
+<text x="1205" y="342" font-size="16" fill="#4b6073">Economic review → IPS → research</text>
+<text x="1205" y="408" font-size="20" font-weight="700" fill="#0b1f35">Explain portfolio decisions</text>
+<text x="1205" y="440" font-size="16" fill="#4b6073">Weights, risk, trade-offs and triggers</text>
+<text x="1205" y="506" font-size="20" font-weight="700" fill="#0b1f35">Deliver the oral presentation</text>
+<text x="1205" y="538" font-size="16" fill="#4b6073">Shared speaking and committee Q&amp;A</text>
+<rect x="1200" y="590" width="325" height="46" rx="12" fill="#e8eff3"/>
+<text x="1215" y="619" font-size="18" font-weight="700" fill="#0b1f35">Submit PowerPoint + present</text>
+<rect x="60" y="710" width="1480" height="130" rx="18" fill="#0b1f35"/>
+<text x="85" y="749" font-size="22" font-weight="700" fill="#edca8a">FIVE ROLES · FOUR OR FIVE MEMBERS · ONE INTEGRATED RECOMMENDATION</text>
+<text x="85" y="788" font-size="19" font-weight="700" fill="white">Client &amp; Macro</text>
+<text x="85" y="817" font-size="17" fill="white">Outlook and suitability</text>
+<text x="375" y="788" font-size="19" font-weight="700" fill="white">Fixed Income</text>
+<text x="375" y="817" font-size="17" fill="white">Rates, credit and income</text>
+<text x="665" y="788" font-size="19" font-weight="700" fill="white">Equity</text>
+<text x="665" y="817" font-size="17" fill="white">Sectors, funds and stocks</text>
+<text x="955" y="788" font-size="19" font-weight="700" fill="white">Portfolio Manager</text>
+<text x="955" y="817" font-size="17" fill="white">Weights and trade-offs</text>
+<text x="1245" y="788" font-size="19" font-weight="700" fill="white">Risk &amp; Derivatives</text>
+<text x="1245" y="817" font-size="17" fill="white">Risk and monitoring</text>
+</g></svg>

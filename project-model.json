@@ -9,7 +9,7 @@
   },
   "project": {
     "title": "Investment Committee Simulation",
-    "subtitle": "Three phases. Four or five members. Five roles. One integrated recommendation.",
+    "subtitle": "Four phases. Four or five members. Five roles. One integrated recommendation.",
     "premise": "Your four- or five-person investment committee advises three client mandates and manages $500,000 in hypothetical assets. Cover all five committee roles; on a four-person team, one member owns two roles but casts one vote. The committee must establish a market view, build and challenge each portfolio, and defend one evidence-linked recommendation.",
     "clientCount": 3,
     "roleCount": 5,
@@ -25,8 +25,8 @@
     "subtitle": "Follow the decision path. Build the analysis. Defend your recommendation.",
     "visual": {
       "path": "assets/roadmap/investment-committee-roadmap-5-role.svg",
-      "version": "20260927-client-scenarios",
-      "alt": "Investment Committee Simulation roadmap showing Phase 1 macro forecast and three client IPS statements, Phase 2 focused holding selection and stress testing, Phase 3 presentation and defense, and five roles covered by four or five members."
+      "version": "20261109-four-phases",
+      "alt": "Four-phase investment project: macro forecast and three client IPS statements; security research; Phase 3 Excel portfolios with STOCKHISTORY, CME, covariance and Solver; Phase 4 integrated presentation. Four or five members cover five roles."
     },
     "boundary": "BUS331 provides structured Excel workbooks and client data. Your committee completes the analysis, reaches its own conclusions, and creates its own final PowerPoint presentation.",
     "beforeYouBegin": [
@@ -38,7 +38,7 @@
     "decisionLogGuidance": {
       "title": "Use one project-wide Analyst Decision Log",
       "usage": "Part 1 macro reasoning stays in the Macro Starter workbook. Part 2 reasoning belongs in the three abbreviated IPS statements. In Phase 2, open the separate committee Decision Record to record consequential recommendations, rejected alternatives, trade-offs, and verification. Retain the Phase 1 IPS statements as the client mandate throughout the project.",
-      "gates": "Use the separate gate sheets for each client's Phase 2 approval and Phase 3 approval. Phase 1 Part 2 requires the three abbreviated IPS statements; no formal vote or Decision Record submission is required.",
+      "gates": "Use the separate gate sheets for each client's Phase 2 approval. Phase 1 Part 2 requires the three abbreviated IPS statements; no formal vote or Decision Record submission is required. In Phase 3, record decisions, reservations and contributions inside the portfolio workbook; submit no separate Decision Record. Phase 4 presents the integrated recommendation.",
       "saveReminder": "Save your working project files regularly as the team proceeds, especially after consequential Decision Log entries and approval-gate work."
     },
     "phase1Parts": [
@@ -119,11 +119,18 @@
         "Hold Gate 2: approve, revise, or reject each client portfolio and record the decision."
       ],
       "phase-3": [
-        "Convert approved analysis into a clear committee recommendation for each client.",
-        "Create the decision memo and technical evidence package.",
-        "Design and build the committee's own visual PowerPoint presentation.",
-        "Rehearse cross-functional questions and the strongest trade-offs.",
-        "Hold Gate 3, submit the required package in Canvas, and defend the recommendation."
+        "Download the revised student portfolio workbook and transfer each client IPS into its Client sheet.",
+        "Build a shared team CME and select 10 distinct securities per client, with sector/category and client-role rationale.",
+        "Use STOCKHISTORY to save 61 aligned monthly closes per security and calculate 60 monthly price returns.",
+        "Build each client covariance/correlation matrix, enter initial weights and run constrained minimum-variance Solver.",
+        "Choose final weights, complete stress tests, explain trade-offs and submit one Excel workbook in Canvas."
+      ],
+      "phase-4": [
+        "Use the completed economic review, IPS statements, security research and Phase 3 workbook as your evidence.",
+        "Build a visual PowerPoint presentation connecting the market outlook to each client recommendation.",
+        "Show key portfolio comparisons, stress results, trade-offs and monitoring triggers.",
+        "Rehearse balanced speaking responsibilities and questions across all five roles.",
+        "Submit the presentation in Canvas and deliver the integrated oral presentation and Q&A."
       ]
     },
     "definitionOfDone": {
@@ -142,10 +149,16 @@
         "Each team member has recorded one Gate 2 vote and any revision actions; all five role responsibilities are covered."
       ],
       "phase-3": [
-        "The memo, evidence package, and presentation tell one consistent recommendation story.",
-        "A reviewer can trace each major claim to evidence.",
-        "Every member has rehearsed and can defend both owned work and the integrated decision.",
-        "The team has checked Canvas for the correct required files and deadline."
+        "Each client has 10 distinct positive-weight holdings linked to the IPS and team CME.",
+        "Histories, sources, covariance/correlation matrices and statistics are complete with formulas preserved.",
+        "Initial, Solver and final allocations are retained; constraints, Solver messages, risk and trade-offs are explained.",
+        "Summary includes client decisions and team contributions; the single XLSX upload is checked in Canvas."
+      ],
+      "phase-4": [
+        "Slides match the final Phase 3 workbook and identify sources and assumptions.",
+        "Each of the three client recommendations follows from the economic outlook, IPS, research and risk analysis.",
+        "Every member can explain their contribution and defend the integrated recommendation.",
+        "The team has checked the Canvas upload and is ready for the oral presentation."
       ]
     }
   },
@@ -159,7 +172,8 @@
       "phaseResponsibilities": {
         "phase-1": "Lead analysis of the assigned client scenarios, document goals and RRTTLLU constraints, establish the macro context, and label reasoned assumptions and information gaps.",
         "phase-2": "Test whether proposed allocations and securities fit the approved client mandate and the committee's market view.",
-        "phase-3": "Defend client suitability, the macro assumptions, and the line from scenario-based need to recommendation."
+        "phase-3": "Connect the economic review, category CME and each client IPS; explain suitability.",
+        "phase-4": "Defend client suitability, the macro assumptions, and the line from scenario-based need to recommendation."
       }
     },
     {
@@ -171,7 +185,8 @@
       "phaseResponsibilities": {
         "phase-1": "Translate cash-flow needs, time horizon, liquidity, taxes, and loss capacity into fixed-income questions and provisional guardrails.",
         "phase-2": "Analyze yields, duration, credit, liquidity, and structure; recommend fixed-income exposures that meet the approved guardrails.",
-        "phase-3": "Defend the portfolio's income, capital-preservation, interest-rate, and credit-risk trade-offs."
+        "phase-3": "Select and classify fixed-income exposures; document income assumptions, research and client roles.",
+        "phase-4": "Defend the portfolio's income, capital-preservation, interest-rate, and credit-risk trade-offs."
       }
     },
     {
@@ -183,7 +198,8 @@
       "phaseResponsibilities": {
         "phase-1": "Translate the client's growth needs, time horizon, values, tax position, liquidity, and concentration limits into equity-selection guardrails.",
         "phase-2": "Recommend equity funds and ETFs as the primary equity vehicles and analyze any limited individual equities, including rationale, idiosyncratic risk, and position size.",
-        "phase-3": "Defend equity exposures, vehicle choices, limited individual-security decisions, rejected alternatives, and their client fit."
+        "phase-3": "Select and classify equity exposures; document sector choices, research and client roles.",
+        "phase-4": "Defend equity exposures, vehicle choices, limited individual-security decisions, rejected alternatives, and their client fit."
       }
     },
     {
@@ -195,7 +211,8 @@
       "phaseResponsibilities": {
         "phase-1": "Reconcile risk capacity and willingness, coordinate the team’s allocation discussion, and check the three abbreviated IPS statements.",
         "phase-2": "Integrate analyst recommendations, resolve duplication and concentration, choose the final 8–10 holdings and weights, and record the trade-offs behind every integration decision.",
-        "phase-3": "State and defend the integrated recommendation, portfolio construction decisions, final weights, rejected integrations, and implementation priorities."
+        "phase-3": "Integrate 10 holdings per client; compare initial, Solver and final allocations and record portfolio decisions.",
+        "phase-4": "State and defend the integrated recommendation, portfolio construction decisions, final weights, rejected integrations, and implementation priorities."
       }
     },
     {
@@ -207,7 +224,8 @@
       "phaseResponsibilities": {
         "phase-1": "Define the downside questions, drawdown tripwire, stress priorities, and residual-risk evidence the final portfolio must address.",
         "phase-2": "Run portfolio-level stress tests, identify residual risk, and document either one targeted hedge or a fully supported no-hedge conclusion, including cost, liquidity, trade-offs, residual risk, and adjustment or removal conditions.",
-        "phase-3": "Defend the stress evidence, residual risk, hedge or no-hedge decision, limits of the analysis, and conditions that would change the risk response."
+        "phase-3": "Verify histories and covariance calculations, review Solver constraints, and interpret downside risks and monitoring triggers.",
+        "phase-4": "Defend the stress evidence, residual risk, hedge or no-hedge decision, limits of the analysis, and conditions that would change the risk response."
       }
     }
   ],
@@ -1116,45 +1134,79 @@
     {
       "id": "phase-3",
       "number": 3,
-      "title": "Defend the Recommendation",
-      "shortTitle": "Decision",
-      "tagline": "Make the recommendation visible, auditable, and defensible under pressure.",
-      "keyQuestion": "Can every committee member defend the same evidence-linked recommendation to the panel?",
-      "objective": "Integrate the committee's work into a concise decision package and defend the client recommendations before an investment-committee panel.",
-      "gate": "Issue the final recommendation, record dissent or reservations, and defend the evidence. Every member must answer questions outside the workstream they led.",
-      "meetingMotion": "Motion to issue the committee's final recommendation and implementation plan for all assigned clients.",
+      "title": "Build Your Client Portfolios",
+      "shortTitle": "Portfolios",
+      "tagline": "Bring your research together in one Excel workbook.",
+      "keyQuestion": "Which 10 securities and weights fit each client and the team market outlook?",
+      "objective": "Use the completed economic review, client IPS statements and security research to build, optimize and evaluate three client portfolios in Excel.",
+      "gate": "Recommend final weights after reviewing the IPS, Solver comparison and downside test; explain unresolved reservations in the workbook.",
+      "meetingMotion": "Agree on the final portfolio recommendation and document the reasoning in the workbook.",
       "workstreams": [
         {
-          "title": "Decision memo",
-          "description": "State the recommendation first, then connect the market view, client mandate, portfolio, and risk decision."
+          "title": "CME and security selection",
+          "description": "Link 10 distinct securities per client to a sector/category, client role and team CME."
         },
         {
-          "title": "Technical exhibit book",
-          "description": "Present the auditable evidence: scenarios, IPS constraints, allocations, securities, stress results, and sources."
+          "title": "History and portfolio risk",
+          "description": "Use STOCKHISTORY for 61 monthly closes, calculate 60 returns and build client-specific covariance/correlation matrices."
         },
         {
-          "title": "Committee defense",
-          "description": "Deliver the visual pitch and a compact investment-committee defense within it, with each member answering targeted questions from their role evidence and the integrated decision."
+          "title": "Optimization and judgment",
+          "description": "Compare initial, Solver and final weights; explain constraints, downside results and monitoring triggers."
         }
       ],
       "evidence": [
-        "Executive recommendation and decision memo",
-        "Technical exhibit book linking macro, mandate, allocation, securities, and risk",
-        "Client-specific recommendation for all three assigned clients",
-        "Final decision record with vote, reservations, and implementation actions",
-        "Visual oral presentation with balanced speaking time and a compact investment-committee defense",
-        "Role-specific evidence and targeted-question preparation for all five seats",
-        "Cross-functional Q&A preparation"
+        "Each client has 10 distinct positive-weight holdings linked to the IPS and team CME.",
+        "Histories, sources, covariance/correlation matrices and statistics are complete with formulas preserved.",
+        "Initial, Solver and final allocations are retained; constraints, Solver messages, risk and trade-offs are explained.",
+        "Summary includes client decisions and team contributions; the single XLSX upload is checked in Canvas."
       ],
       "deliverables": [
-        "Final committee decision memo",
-        "Technical exhibit book or dossier",
-        "Oral presentation",
-        "Final decision record and AI audit appendix"
+        "One completed team Excel workbook: BUS331_[TeamName]_Phase3_Portfolio.xlsx"
       ],
       "resources": [
+        "phase-3-portfolio-workbook",
         "canvas-submission-guide",
-        "decision-record",
+        "phase-3-assessment",
+        "phase-3-rubric-pdf"
+      ]
+    },
+    {
+      "id": "phase-4",
+      "number": 4,
+      "title": "Present and Defend the Recommendation",
+      "shortTitle": "Presentation",
+      "tagline": "Connect the whole semester in one integrated oral presentation.",
+      "keyQuestion": "Can every member explain how the evidence leads to the client recommendations?",
+      "objective": "Present the economic review, client mandates, security research and portfolio analysis as one evidence-linked recommendation for all three clients.",
+      "gate": "Deliver the integrated presentation and answer questions about client suitability, portfolio trade-offs and risk.",
+      "meetingMotion": "Confirm that the final presentation matches the portfolio workbook and that every member is ready to explain the evidence.",
+      "workstreams": [
+        {
+          "title": "Integrated story",
+          "description": "Connect the economic review and IPS statements to research, portfolio weights and risk decisions."
+        },
+        {
+          "title": "Visual evidence",
+          "description": "Use clear exhibits from the completed Phase 3 workbook and cite the supporting research."
+        },
+        {
+          "title": "Oral presentation and Q&A",
+          "description": "Share speaking responsibilities and prepare every member to explain the integrated recommendation."
+        }
+      ],
+      "evidence": [
+        "Slides match the final Phase 3 workbook and identify sources and assumptions.",
+        "Each of the three client recommendations follows from the economic outlook, IPS, research and risk analysis.",
+        "Every member can explain their contribution and defend the integrated recommendation.",
+        "The team has checked the Canvas upload and is ready for the oral presentation."
+      ],
+      "deliverables": [
+        "One team PowerPoint presentation and an integrated oral presentation with Q&A."
+      ],
+      "resources": [
+        "phase-3-portfolio-instructions",
+        "canvas-submission-guide",
         "phase-3-assessment",
         "phase-3-rubric-pdf"
       ]
@@ -1162,13 +1214,13 @@
   ],
   "canvasSubmissions": {
     "title": "Canvas Submission Workflow",
-    "purpose": "Submit the macro forecast first, then the three abbreviated client IPS statements. Later gates retain their own team submissions so the decision trail and evidence remain private and reviewable.",
+    "purpose": "Submit the macro forecast and client IPS statements, complete the research phase, then integrate the work in the Phase 3 Excel workbook and Phase 4 oral presentation.",
     "authority": "The Canvas assignment controls the due date, points, availability window, and attempt policy. This guide controls the required package, filenames, and public/private boundary.",
-    "fileNamingRule": "Use the team name entered on Team Information in every filename. Replace [TeamName] with that name, omitting spaces and punctuation (for example, Harbor Analysts becomes HarborAnalysts); use the same spelling in every submission. Do not add individual student names to filenames.",
+    "fileNamingRule": "Use the team name entered on Team Information (or Summary in the Phase 3 workbook) in every filename. Replace [TeamName] with that name, omitting spaces and punctuation (for example, Harbor Analysts becomes HarborAnalysts); use the same spelling in every submission. Do not add individual student names to filenames.",
     "sharedRules": [
       "One designated submitter uploads each required package for the Canvas group; every team member confirms the receipt before the deadline.",
       "Keep formulas live in required XLSX files. Export narrative and exhibit deliverables to PDF unless PPTX or XLSX is explicitly required.",
-      "Put only licensed FactSet evidence in the private evidence ZIP. Do not place credentials, raw student data, or unrelated downloads in the bundle.",
+      "For the Phase 2 evidence requirement, put only licensed FactSet evidence in the private evidence ZIP. Do not place credentials, raw student data, or unrelated downloads in the bundle. Phase 3 requires only its completed Excel workbook; Phase 4 requires only its PowerPoint file.",
       "Before submitting, open every file, confirm the assigned clients and all five role owners are visible where required, and verify that all cited as-of dates match the analysis.",
       "After upload, open the Canvas submission receipt and confirm that every required filename appears. A local file or public-repository link is not a submission."
     ],
@@ -1268,43 +1320,46 @@
       },
       {
         "phaseId": "phase-3",
-        "canvasTitle": "BUS331 Investment Committee · Phase 3 Gate · Defend the Recommendation",
-        "decision": "Issue one integrated recommendation for all three clients, preserve the audit trail, and arrive ready for the scheduled committee defense.",
-        "submissionProcess": "Submit the complete Phase 3 package before the scheduled committee defense. One designated team member submits for the group; every team member verifies the Canvas receipt.",
+        "canvasTitle": "BUS331 Investment Committee · Phase 3 · Build Your Client Portfolios",
+        "decision": "Use the completed economic review, client IPS statements and security research to build, optimize and evaluate three client portfolios in Excel.",
+        "submissionProcess": "Complete all 12 tabs for the selected securities and categories; submit one team Excel workbook. Record decisions, reservations and contributions inside the workbook. One designated member submits; all members confirm the Canvas receipt. No separate memo, dossier, presentation, Decision Record or evidence ZIP is required for Phase 3.",
         "includePrivateEvidenceBoundary": true,
         "requiredFiles": [
           {
-            "name": "BUS331_[TeamName]_Phase3_DecisionMemo.pdf",
-            "description": "Final committee decision memo with recommendation first, client-specific actions, reservations, and monitoring triggers."
-          },
-          {
-            "name": "BUS331_[TeamName]_Phase3_TechnicalDossier.pdf",
-            "description": "Auditable exhibit book linking macro, mandates, allocations, security evidence, stress results, corrections, and sources."
-          },
-          {
-            "name": "BUS331_[TeamName]_Phase3_Presentation.pptx",
-            "description": "Final visual committee presentation with balanced speaking responsibility and a compact role-specific investment-committee defense."
-          },
-          {
-            "name": "BUS331_[TeamName]_Phase3_DecisionRecord.xlsx",
-            "description": "Final vote, dissent or reservations, implementation actions, Analyst Decision Log, and AI audit appendix."
-          },
-          {
-            "name": "BUS331_[TeamName]_Phase3_LicensedEvidence.zip",
-            "description": "Final private evidence bundle containing only licensed supporting files cited in the dossier and Evidence Log."
+            "name": "BUS331_[TeamName]_Phase3_Portfolio.xlsx",
+            "description": "Completed revised student workbook with team CME, 10 securities per client, STOCKHISTORY snapshots, covariance/correlation, initial/Solver/final weights, IPS checks, downside tests and contributions."
           }
         ],
         "allowedExtensions": [
-          "pdf",
-          "pptx",
-          "xlsx",
-          "zip"
+          "xlsx"
         ],
         "preflight": [
-          "The memo, dossier, presentation, and decision record state the same allocations, securities, and monitoring actions.",
-          "Every recommendation traces backward to a Phase 1 client guardrail and forward to a monitoring trigger.",
-          "Every material number has a source, definition, unit, as-of date, interpretation, and limitation.",
-          "Each member can defend role-specific evidence, the Decision Log contribution, one rejected alternative and key trade-off, and answer targeted questions within the compact committee defense."
+          "Each client has 10 distinct positive-weight holdings linked to the IPS and team CME.",
+          "Histories, sources, covariance/correlation matrices and statistics are complete with formulas preserved.",
+          "Initial, Solver and final allocations are retained; constraints, Solver messages, risk and trade-offs are explained.",
+          "Summary includes client decisions and team contributions; the single XLSX upload is checked in Canvas."
+        ]
+      },
+      {
+        "phaseId": "phase-4",
+        "canvasTitle": "BUS331 Investment Committee · Phase 4 · Integrated Presentation",
+        "decision": "Present the economic review, client mandates, security research and portfolio analysis as one evidence-linked recommendation for all three clients.",
+        "submissionProcess": "Submit one team PowerPoint file through Canvas before the scheduled oral presentation. Deliver the presentation and Q&A with shared speaking responsibilities; every team member confirms the Canvas receipt. Use the completed Phase 3 workbook and prior research as evidence.",
+        "includePrivateEvidenceBoundary": false,
+        "requiredFiles": [
+          {
+            "name": "BUS331_[TeamName]_Phase4_Presentation.pptx",
+            "description": "Integrated visual presentation connecting the economic review, three IPS statements, security research, portfolio construction and risk decisions."
+          }
+        ],
+        "allowedExtensions": [
+          "pptx"
+        ],
+        "preflight": [
+          "Slides match the final Phase 3 workbook and identify sources and assumptions.",
+          "Each of the three client recommendations follows from the economic outlook, IPS, research and risk analysis.",
+          "Every member can explain their contribution and defend the integrated recommendation.",
+          "The team has checked the Canvas upload and is ready for the oral presentation."
         ]
       }
     ]
@@ -1504,10 +1559,26 @@
     },
     {
       "id": "phase-3-rubric-pdf",
-      "label": "Phase 3 assessment reference",
+      "label": "Phase 3 and 4 assessment reference",
       "type": "PDF",
       "path": "files/final-rubric.pdf",
       "description": "Combined printable reference for the Investment Project Submission and Investment Project Presentation rubrics, committee question bank, and submission-readiness checklist.",
+      "audience": "student"
+    },
+    {
+      "id": "phase-3-portfolio-workbook",
+      "label": "Phase 3 Portfolio Student Template",
+      "type": "XLSX",
+      "path": "files/BUS331_Phase3_Portfolio_Student_Template.xlsx",
+      "description": "Revised 12-tab blank student workbook: 10 securities per client, STOCKHISTORY snapshots, CME, covariance, Solver and downside review.",
+      "audience": "student"
+    },
+    {
+      "id": "phase-3-portfolio-instructions",
+      "label": "Phase 3 Excel and Solver instructions",
+      "type": "HTML",
+      "path": "project/phase-3-build-your-client-portfolios.html",
+      "description": "Workbook-mapped steps for STOCKHISTORY, covariance and Solver; one XLSX submission.",
       "audience": "student"
     }
   ],
@@ -1532,7 +1603,7 @@
     }
   ],
   "assessment": {
-    "note": "Canvas remains the authority for due dates, submission mechanics, and course-grade weights. Use the Investment Project Submission rubric for the written decision package and the Investment Project Presentation rubric for the live committee presentation and defense.",
+    "note": "Canvas remains the authority for due dates, submission mechanics, and course-grade weights. Use the Investment Project Submission rubric for the Phase 3 Excel workbook and the Investment Project Presentation rubric for the Phase 4 integrated oral presentation and defense.",
     "submissionRubricName": "BUS331 Investment Project Submission",
     "presentationRubricName": "BUS331 Investment Project Presentation and Defense",
     "submissionPoints": 100,
@@ -1541,27 +1612,27 @@
       {
         "criterion": "Evidence quality & technical accuracy",
         "weight": 20,
-        "standard": "Claims, calculations, formulas, sources, FactSet retrieval records, as-of dates, and portfolio metrics are correct, comparable, traceable, and interpreted; required licensed evidence is submitted privately through Canvas and AI output is never treated as evidence."
+        "standard": "Historical closes, formulas, covariance/correlation, annualization, income estimates, sources and dates are accurate, traceable and interpreted. STOCKHISTORY uses 61 aligned closes for 60 monthly price returns. Income is not counted twice; price-risk limitations are explained."
       },
       {
         "criterion": "Focused security selection",
         "weight": 20,
-        "standard": "Each client portfolio contains 8–10 holdings and never more than 10; funds and ETFs are primary, individual securities total no more than two or three, final holdings have concise scorecards, and realistic alternatives are rejected briefly without duplicate exposure or unnecessary concentration."
+        "standard": "Each client has 10 distinct securities with positive final weights, appropriate sector/category classifications and explicit client-role and team CME rationale. Research supports fit, costs, liquidity, overlap and concentration decisions."
       },
       {
         "criterion": "Client suitability & IPS compliance",
         "weight": 15,
-        "standard": "Each recommendation traces to Phase 1 client needs and guardrails, and the IPS scorecard tests all relevant objectives and RRTTLLU constraints."
+        "standard": "Each recommendation traces to the client IPS and relevant RRTTLLLU objectives and constraints. Return goals, allocation limits, liquidity, suitability and downside tripwires are checked and explained."
       },
       {
         "criterion": "Shared portfolio quality & risk response",
         "weight": 25,
-        "standard": "Final selection and weights, diversification, overlap, concentration, portfolio trade-offs, stress results, breaches, corrective trades, re-tests, and the supported hedge or no-hedge conclusion form one internally consistent portfolio decision."
+        "standard": "Initial, Solver and final weights are retained and total 100%. Client-specific covariance matrices, Solver constraints and outcomes, final judgment, stress results, corrections and monitoring triggers form one internally consistent portfolio decision."
       },
       {
         "criterion": "Individual role evidence & decision trail",
         "weight": 20,
-        "standard": "For each student, role-specific evidence is identifiable and peer-reviewed, and the Analyst Decision Log records recommendation(s), alternative(s) rejected, a key trade-off, contribution to integration or residual-risk decisions, and the link to the committee vote."
+        "standard": "Summary identifies each member contribution. Workbook explanations document the initial judgment, Solver result, final recommendation, rejected alternative, key trade-off, verification and unresolved reservations. No separate Phase 3 Decision Record is required."
       }
     ],
     "oralCriteria": [
@@ -1571,19 +1642,19 @@
         "standard": "Within the presentation's compact investment-committee defense, each member answers targeted questions for their role, uses relevant evidence and calculations, acknowledges uncertainty, and defends or revises the judgment under challenge."
       },
       {
-        "criterion": "Individual evidence & Decision Log contribution",
+        "criterion": "Individual evidence & workbook contribution",
         "weight": 20,
-        "standard": "Each member demonstrates command of owned evidence and can explain their recommendation, alternative rejected, key trade-off, Decision Log contribution, verification, and limitations."
+        "standard": "Each member demonstrates command of owned evidence and can explain their recommendation, alternative rejected, key trade-off, workbook contribution, verification, and limitations."
       },
       {
         "criterion": "Shared portfolio quality & integration",
         "weight": 25,
-        "standard": "The committee presents one coherent chain from client scenario analysis through the focused 8–10 holding selection, final weights, overlap/concentration decisions, stress results, hedge or no-hedge conclusion, correction, and final recommendation."
+        "standard": "The committee presents one coherent chain from client scenario analysis through the 10-security-per-client selection, final weights, overlap/concentration decisions, stress results, residual-risk conclusion, correction, and final recommendation."
       },
       {
         "criterion": "Client suitability & risk compliance",
         "weight": 20,
-        "standard": "Members can show where client needs changed the portfolio, explain the strongest bear case and residual risk, and defend compliance, corrective action, and the hedge or no-hedge conclusion."
+        "standard": "Members can show where client needs changed the portfolio, explain the strongest bear case and residual risk, and defend compliance, corrective action, and the residual-risk conclusion."
       },
       {
         "criterion": "Clarity, professionalism & visual evidence",
@@ -1620,7 +1691,7 @@
         "audience": "Portfolio Manager",
         "questions": [
           "Which analyst recommendations did you integrate, resize, or reject, and what explicit portfolio trade-off drove each decision?",
-          "Where did you resolve overlap or concentration, and why are the final 8–10 holdings and weights better than the strongest alternative mix?",
+          "Where did you resolve overlap or concentration, and why are the final 10 holdings and weights better than the strongest alternative mix?",
           "If the committee rejects one proposed adjustment, what alternative preserves the client goal and what new trade-off does it create?"
         ]
       },
@@ -1643,5 +1714,13 @@
         ]
       }
     ]
+  },
+  "phase3Experience": {
+    "instructionSource": "source-templates/phase-3-portfolio-instructions.html",
+    "workbookResourceId": "phase-3-portfolio-workbook",
+    "securitiesPerClient": 10,
+    "monthlyCloses": 61,
+    "monthlyReturns": 60,
+    "worksheetCount": 12
   }
 }

@@ -112,3 +112,7 @@ Nothing was deleted, committed, pushed, or published during this inventory. The 
 Team Six adds Nora Ellis (Risk Averse), Priya & Owen Brooks (Risk Neutral), and Adrian Cole (Risk Seeking). The current public model, scenario protocol, six team pages, combined profile deck, and scenario-data workbook cover 18 clients. Team Six has the same one-slide profile format as the existing teams. Target return, standard deviation, and risk-aversion scores are fictional case inputs. The workbook retains its original classification thresholds and formula logic. The earlier July inventory findings above describe the original 15-client review. No private instructor materials were added.
 
 Regenerate the new client materials with `scripts/build-client-scenario-materials.mjs` using the bundled Artifact Tool runtime. It reads Team Six facts from `project-model.json` and stable student-safe native layout bases in `source-templates/`.
+
+## Phase 3 and 4 update - November 9, 2026
+
+The current public model now separates the Phase 3 single Excel submission from the Phase 4 integrated presentation. The revised blank student workbook is `files/BUS331_Phase3_Portfolio_Student_Template.xlsx`. Maintained instructions are `source-templates/phase-3-portfolio-instructions.html`, generated into the Phase 3 working page and Canvas assignment fragment. The former Phase 3 defense URL is retained as a current-instructions compatibility alias. No instructor worked workbook is included. Publication and installation in Canvas are separate actions.

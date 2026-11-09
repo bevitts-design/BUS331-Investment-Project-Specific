@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the public BUS331 Phase 3 rubric from project-model.json."""
+"""Build the public BUS331 Phase 3 workbook and Phase 4 presentation rubric from project-model.json."""
 
 from __future__ import annotations
 
@@ -296,7 +296,7 @@ def main() -> None:
             Spacer(1, 14),
             Paragraph("Evidence chain the committee must defend", styles["Section"]),
             paragraph(
-                "Phase 1 client scenario analysis and macro evidence must visibly control Phase 2 security selection, allocation, IPS compliance, stress results, corrections, and the Phase 3 recommendation. Role ownership is individual; the final decision is collective.",
+                "Phase 1 client and macro evidence and Phase 2 security research inform the Phase 3 Excel portfolios. Phase 4 connects the economic review, IPS statements, research, weights and risk decisions in one oral presentation. Role ownership is individual; the final decision is collective.",
                 styles["BodyCompact"],
             ),
             paragraph(
@@ -304,7 +304,7 @@ def main() -> None:
                 styles["BodyCompact"],
             ),
             Spacer(1, 8),
-            Paragraph("Written decision package", styles["Section"]),
+            Paragraph("Phase 3 Excel workbook", styles["Section"]),
             rubric_table(assessment["writtenCriteria"], styles),
             PageBreak(),
             banner(
@@ -317,7 +317,7 @@ def main() -> None:
             Spacer(1, 14),
             Paragraph("Defense standard", styles["Section"]),
             paragraph(
-                "The compact investment-committee defense is part of the final presentation. Each member answers targeted role questions, uses the relevant evidence or calculation, explains their Decision Log contribution, alternative rejected, and key trade-off, acknowledges uncertainty, and states whether the challenge changes the decision.",
+                "The compact investment-committee defense is part of the final presentation. Each member answers targeted role questions, uses the relevant evidence or calculation, explains their workbook contribution, alternative rejected, and key trade-off, acknowledges uncertainty, and states whether the challenge changes the decision.",
                 styles["BodyCompact"],
             ),
             PageBreak(),
@@ -342,26 +342,28 @@ def main() -> None:
             PageBreak(),
             banner(
                 "Submission Readiness",
-                "Use this checklist before the Phase 3 committee decision and Canvas submission",
+                "Use this checklist for the Phase 3 workbook and Phase 4 presentation",
                 styles,
             ),
             Spacer(1, 12),
-            Paragraph("Written package", styles["Section"]),
+            Paragraph("Phase 3 workbook", styles["Section"]),
         ]
     )
     written_checks = [
+        "Each client has 10 distinct positive-weight securities; 61 aligned STOCKHISTORY closes support 60 returns.",
+        "Covariance/correlation matrices, Solver comparisons, constraints and messages are complete.",
         "The recommendation is stated clearly for all assigned clients.",
         "Every material claim, input, calculation, and as-of date is traceable.",
         "Bond, mutual-fund, and ETF decisions show real comparison and instrument-specific evidence.",
         "Holding & Exposure Reality Checks, any conditional direct-security add-ons, and FactSet retrieval records are complete.",
         "Each holding traces to a Phase 1 client guardrail and has a portfolio job and monitoring trigger.",
         "The full IPS scorecard and bear-case test are complete; every breach is corrected and re-tested.",
-        "The Analyst Decision Log records initial judgment, AI challenge, verification, and final reasoning.",
-        "Required licensed-source evidence and final student work are prepared for private Canvas submission.",
+        "The Phase 3 workbook records initial judgment, Solver results, verification, final reasoning and individual contributions.",
+        "Submit only the completed XLSX in Phase 3 and the PowerPoint file in Phase 4; retain licensed research privately under course policy.",
     ]
     story.append(checklist_table(written_checks, styles))
 
-    story.append(Paragraph("Oral defense", styles["Section"]))
+    story.append(Paragraph("Phase 4 oral defense", styles["Section"]))
     oral_checks = [
         "Each member can defend owned work and explain the complete decision chain.",
         "The committee can show where a client need or constraint changed the final portfolio.",

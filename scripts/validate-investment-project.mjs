@@ -58,7 +58,7 @@ if (!roadmap) {
     const visual = await fs.readFile(path.join(rootDir, roadmap.visual.path), "utf8");
     if (!visual.includes("Part 1 · Macroeconomic analysis") || !visual.includes("Part 2 · Client submissions")) fail("Roadmap visual must show both Phase 1 parts.");
   }
-  for (const phaseId of ["phase-1", "phase-2", "phase-3"]) {
+  for (const phaseId of ["phase-1", "phase-2", "phase-3", "phase-4"]) {
     if (roadmap.phaseSequences?.[phaseId]?.length < 4) fail(`Student roadmap needs a complete sequence for ${phaseId}.`);
     if (roadmap.definitionOfDone?.[phaseId]?.length < 3) fail(`Student roadmap needs a definition of done for ${phaseId}.`);
   }
@@ -83,7 +83,7 @@ if (!roadmap) {
   if (parts.flatMap((part) => part.resources || []).join("|") !== (phaseOne?.resources || []).join("|")) fail("Phase 1 part resources must cover the Phase 1 resources in working order.");
 }
 
-if (model.phases.length !== 3) fail(`Expected exactly 3 phases; found ${model.phases.length}.`);
+if (model.phases.length !== 4) fail(`Expected exactly 4 phases; found ${model.phases.length}.`);
 if (model.roles.length !== 5) fail(`Expected exactly 5 committee roles; found ${model.roles.length}.`);
 if (model.project?.teamSizeOptions?.join(",") !== "4,5" || model.project.roleCount !== 5) fail("Four or five students must cover the five official committee roles.");
 
@@ -178,14 +178,20 @@ if (!experience) {
   if (!experience.qualityGate?.some((item) => /100%/i.test(item))) fail("Phase 1 readiness must require allocation weights totaling 100%.");
 }
 
+const phaseThreeSubmission = model.canvasSubmissions.assignments.find((item) => item.phaseId === "phase-3");
+if (phaseThreeSubmission?.requiredFiles?.length !== 1 || phaseThreeSubmission.requiredFiles[0].name !== "BUS331_[TeamName]_Phase3_Portfolio.xlsx" || phaseThreeSubmission.allowedExtensions.join(",") !== "xlsx") fail("Phase 3 must require exactly one portfolio XLSX submission.");
+if (model.phase3Experience?.securitiesPerClient !== 10 || model.phase3Experience.monthlyCloses !== 61 || model.phase3Experience.monthlyReturns !== 60 || model.phase3Experience.worksheetCount !== 12) fail("Phase 3 workbook contract must specify 10 securities per client, 61 closes, 60 returns and 12 worksheets.");
+const portfolioGuide = await fs.readFile(path.join(rootDir, model.phase3Experience.instructionSource), "utf8");
+for (const required of ["STOCKHISTORY", "D46", "D32:D41", "GRG Nonlinear", "C83:L143", "Phase 4"]) if (!portfolioGuide.includes(required)) fail(`Phase 3 instructions are missing ${required}.`);
+
 const phaseIds = new Set(model.phases.map((phase) => phase.id));
 const roleIds = new Set(model.roles.map((role) => role.id));
 if (phaseIds.size !== model.phases.length) fail("Phase IDs must be unique.");
 if (roleIds.size !== model.roles.length) fail("Role IDs must be unique.");
-if (model.phases.map((phase) => phase.number).join(",") !== "1,2,3") fail("Phase numbers must be 1, 2, and 3 in order.");
+if (model.phases.map((phase) => phase.number).join(",") !== "1,2,3,4") fail("Phase numbers must be 1, 2, 3, and 4 in order.");
 
-if (model.canvasSubmissions?.assignments?.map((item) => item.id || item.phaseId).join(",") !== "phase-1-macro,phase-1-client,phase-2,phase-3") {
-  fail("Canvas submission workflow must define separate Phase 1 macro and client assignments, then Phase 2 and 3.");
+if (model.canvasSubmissions?.assignments?.map((item) => item.id || item.phaseId).join(",") !== "phase-1-macro,phase-1-client,phase-2,phase-3,phase-4") {
+  fail("Canvas submission workflow must define separate Phase 1 macro and client assignments, then Phases 2, 3 and 4.");
 } else {
   const [macro, client] = model.canvasSubmissions.assignments;
   if (macro.partId !== "macro-analysis" || client.partId !== "client-submissions" || macro.phaseId !== "phase-1" || client.phaseId !== "phase-1") fail("Phase 1 assignment parts are misaligned with the roadmap.");
@@ -244,6 +250,7 @@ const generatedFiles = [
   "project/portfolio-management-stress-testing.html",
   "project/canvas-submission-guide.html",
   ...model.phases.map(phasePath),
+  "project/phase-3-defend-the-recommendation.html",
   "project/assessment.html"
 ];
 
@@ -262,7 +269,7 @@ const supportingHtmlFiles = [
 ];
 
 const hrefPattern = /href="([^"]+)"/g;
-const oldPhasePattern = /\bPhase\s+(?:0?[4-6])\b/i;
+const oldPhasePattern = /\bPhase\s+(?:0?[5-6])\b/i;
 const forbiddenPublicPattern = /Fund and ETF Analyst|Portfolio Manager and Risk Analyst|all four (?:committee )?roles|at least 10 securities|every client needs at least one derivative|mandatory.{0,30}hedge|required.{0,20}compare to at least 1 alternative|complete one thesis block per security|completed exemplar|worked example|Priya Mehta/i;
 
 for (const relative of generatedFiles) {
@@ -278,10 +285,10 @@ for (const relative of generatedFiles) {
   if (!html.includes('id="main-content"')) fail(`${relative} is missing the main-content target.`);
   if (!/<title>[^<]+<\/title>/i.test(html)) fail(`${relative} is missing a non-empty title.`);
   const mainNav = html.match(/<nav class="site-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
-  if ((mainNav.match(/<a\b/g) || []).length !== 6 || /(?:^|\/)(?:guide|roadmap)\.html/.test(mainNav)) {
-    fail(`${relative} must use the six-link overview, phase, submission, and assessment navigation.`);
+  if ((mainNav.match(/<a\b/g) || []).length !== 7 || /(?:^|\/)(?:guide|roadmap)\.html/.test(mainNav)) {
+    fail(`${relative} must use the seven-link overview, phase, submission, and assessment navigation.`);
   }
-  if (oldPhasePattern.test(html)) fail(`${relative} contains retired Phase 4-6 language.`);
+  if (oldPhasePattern.test(html)) fail(`${relative} contains retired Phase 5-6 language.`);
   if (/Spring 2026/i.test(html)) fail(`${relative} contains the retired Spring 2026 term.`);
   if (forbiddenPublicPattern.test(html)) fail(`${relative} contains a retired role, obsolete portfolio rule, or completed-example marker.`);
 
@@ -427,7 +434,7 @@ for (const relative of officeArtifacts) {
 }
 
 const publicPdfArtifacts = [
-  { relative: "files/final-rubric.pdf", required: ["Investment Project Rubrics", "Role-specific committee", "Decision Log"] },
+  { relative: "files/final-rubric.pdf", required: ["Investment Project Rubrics", "Role-specific committee", "Phase 3 Excel workbook", "Solver"] },
   { relative: "files/BUS331_Investment_Committee_Phase_Checklists.pdf", required: ["Investment Committee Phase Checklists", "Part 1: Macroeconomic Analysis", "Part 2: Client Submissions", "five committee roles", "8-10 final holdings", "no-hedge", "project-wide Analyst Decision Log", "Save as you go"] },
   { relative: "files/BUS331_Investment_Committee_Simulation_Project_Guide.pdf", required: ["Investment Committee Phase Checklists", "Part 1: Macroeconomic Analysis", "Part 2: Client Submissions", "project-wide Analyst Decision Log"] }
 ];
@@ -482,6 +489,8 @@ for (const phase of model.phases) {
   const html = await fs.readFile(path.join(rootDir, phasePath(phase)), "utf8");
   if (phase.id === "phase-1") {
     if ((html.match(/<h3>Do this in order<\/h3>/g) || []).length !== 2 || (html.match(/<h3>Ready when<\/h3>/g) || []).length !== 2) fail("Phase 1 page needs a separate ordered checklist and readiness test for each part.");
+  } else if (phase.id === "phase-3") {
+    for (const text of ["Step 1", "Step 8", "Final checklist", "STOCKHISTORY", "GRG Nonlinear", "Download Phase 3 student workbook"]) if (!html.includes(text)) fail(`Phase 3 workbook page is missing ${text}.`);
   } else if (!html.includes(`Your Phase ${phase.number} sequence`) || !html.includes("Definition of done")) {
     fail(`Phase ${phase.number} page is missing its ordered sequence or definition of done.`);
   }
@@ -602,7 +611,7 @@ for (const rubric of canvasRubricImports) {
   }
   if (!csv.includes(rubric.name) || !csv.includes("Complete") || !csv.includes("Developing") || !csv.includes("Not demonstrated")) fail(`${rubric.file} is missing Canvas rating data.`);
 }
-for (const requiredText of ["Evidence quality", "Focused security selection", "Client suitability", "Shared portfolio quality", "Individual role evidence", "Role-specific committee defense", "Decision Log contribution", "Holding &amp; Exposure Reality Check"]) {
+for (const requiredText of ["Evidence quality", "Focused security selection", "Client suitability", "Shared portfolio quality", "Individual role evidence", "Role-specific committee defense", "workbook contribution", "Holding &amp; Exposure Reality Check"]) {
   if (!assessmentHtml.includes(requiredText)) fail(`Assessment page is missing updated rubric or committee-defense content: ${requiredText}.`);
 }
 if (model.assessment.committeeQuestions?.length < 6) fail("Assessment must define all five role-specific and cross-committee defense questions.");
@@ -621,7 +630,7 @@ if (!decisionRecordResource || !/Analyst Decision Log/i.test(`${decisionRecordRe
 
 const guideHtml = await fs.readFile(path.join(rootDir, "project", "guide.html"), "utf8");
 for (const [relative, html] of [["project/roadmap.html", roadmapHtml], ["project/guide.html", guideHtml]]) {
-  for (const required of ["Open project overview", "Open Phase 1 checklist", "Open Phase 2 checklist", "Open Phase 3 checklist", "Printable phase checklists", "Canvas Submission Workflow"]) {
+  for (const required of ["Open project overview", "Open Phase 1 checklist", "Open Phase 2 checklist", "Open Phase 3 checklist", "Open Phase 4 checklist", "Printable phase checklists", "Canvas Submission Workflow"]) {
     if (!html.includes(required)) fail(`${relative} is missing its compatibility entry point: ${required}.`);
   }
   if (/<ol class="workflow-steps">|<div class="role-board">/.test(html)) fail(`${relative} still duplicates the current overview or phase checklists.`);

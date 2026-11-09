@@ -4,13 +4,13 @@
 
 Maintain one public project model that generates the student overview, phase working pages, submission guidance, and compatibility entry pages, while keeping instructor-only evaluation content in the separate `BUS331-instructor` repository. The public model describes the simulation, roles, phases, deliverables, committee gates, resources, and AI rules. It must not contain answers, completed assigned-client work, grading keys, instructor diagnostics, or proprietary captures.
 
-## Three-phase simulation
+## Four-phase simulation
 
 ### Phase 1 - Frame the Mandate
 
 The committee establishes one defensible 12-month market view and converts each assigned client profile into an approved investment mandate.
 
-The student Phase 1 page presents two ordered assignments: **Macroeconomic Analysis / Macro Forecast** submits the workbook first; **Client Submissions / Client Analysis** uses that submitted forecast and submits only one combined PDF containing three abbreviated IPS statements. The macro workbook is not uploaded twice. `studentRoadmap.phase1Parts` groups the maintained sequence, readiness, evidence, deliverables, and resources without changing the three-phase approval model. Four or five people cover five official roles; a dual-role member casts one vote.
+The student Phase 1 page presents two ordered assignments: **Macroeconomic Analysis / Macro Forecast** submits the workbook first; **Client Submissions / Client Analysis** uses that submitted forecast and submits only one combined PDF containing three abbreviated IPS statements. The macro workbook is not uploaded twice. `studentRoadmap.phase1Parts` groups the maintained sequence, readiness, evidence, deliverables, and resources without changing the four-phase model. Four or five people cover five official roles; a dual-role member casts one vote.
 
 Required evidence:
 
@@ -50,19 +50,19 @@ Required evidence:
 
 Committee gate: approve, revise, or reject each client portfolio. A failed tripwire cannot receive approval without a documented correction.
 
-### Phase 3 - Defend the Recommendation
+### Phase 3 - Build Your Client Portfolios
 
-The committee integrates the work into a concise decision package and defends its recommendations before an investment-committee panel.
+Students integrate the completed economic review, client IPS statements and security research in one Excel workbook. Select 10 distinct securities per client with sector/category and client-role/CME rationale. Use STOCKHISTORY to save 61 aligned monthly closes and calculate 60 monthly price returns. Complete each client's covariance/correlation matrices, annualized statistics, initial weights, constrained minimum-variance Solver comparison, final recommendation and downside review. Separate CME price changes from security income yields.
 
-Required evidence:
+Submit only `BUS331_[TeamName]_Phase3_Portfolio.xlsx`. Record decisions and contributions inside the workbook; no separate memo, dossier, Decision Record, presentation or evidence ZIP is required for Phase 3.
 
-- Executive recommendation and decision memo
-- Technical exhibit book linking macro, mandate, allocation, securities, and risk
-- Client-specific recommendation for all assigned clients
-- Final decision record with vote, reservations, and implementation actions
-- Visual oral presentation and cross-functional Q&A readiness
+`files/BUS331_Phase3_Portfolio_Student_Template.xlsx` is the maintained native blank student workbook (12 tabs). It was copied from the revised, independently checked student artifact; its worked counterpart stays outside this public repository. There is no public regeneration script for this binary. Future structural changes must update and verify the private counterpart as well. `phase3Experience` defines its public contract.
 
-Committee gate: issue the final recommendation and defend the evidence. Every member must answer questions outside the workstream they led.
+`source-templates/phase-3-portfolio-instructions.html` is the maintained inline-styled instruction source. The HTML builder uses it for both the Phase 3 site page and `canvas/phase-3-assignment.html`, replacing the workbook URL token with the appropriate local or absolute public download link. Update this source before rebuilding. The older `project/phase-3-defend-the-recommendation.html` URL serves the current Phase 3 instructions as a compatibility alias.
+
+### Phase 4 - Present and Defend the Recommendation
+
+The final oral presentation connects the economic review, client IPS statements, security research and Phase 3 portfolio analysis. Submit one PowerPoint file and deliver the integrated presentation with shared speaking responsibilities and cross-functional Q&A. The Phase 3 workbook supplies the portfolio evidence; no new memo or dossier is required.
 
 ## Maintained public structure
 
@@ -74,7 +74,7 @@ BUS331-Investment-Project-Specific/
     build-macro-guide-canvas.py          # derives a Canvas page fragment from the maintained macro guide
     build-client-guide-canvas.py         # derives a Canvas page fragment from the maintained client guide
     build-project-guide-pdf.py          # generates printable phase checklists and the legacy PDF alias
-    build-final-rubric-pdf.py           # generates the public Phase 3 rubric from project-model.json
+    build-final-rubric-pdf.py           # generates the public Phase 3 workbook and Phase 4 presentation rubrics from project-model.json
     client-interview-simulator.js       # unlinked prototype; not part of the current student assignment
     build-investment-committee-decision-record.mjs
                                         # generates the student committee record workbook
@@ -103,8 +103,10 @@ BUS331-Investment-Project-Specific/
                                         # generated Phase 2 allocation, IPS, and stress workflow
     phase-1-frame-the-mandate.html      # generated two-part Phase 1 working page
     phase-2-build-and-challenge.html    # generated Phase 2 guide
-    phase-3-defend-the-recommendation.html
-                                        # generated Phase 3 guide
+    phase-3-build-your-client-portfolios.html
+                                        # generated Phase 3 workbook instructions
+    phase-3-defend-the-recommendation.html # compatibility alias
+    phase-4-present-and-defend-the-recommendation.html # generated presentation guide
     assessment.html                     # generated student-facing assessment guide
     supporting references              # static technical guides aligned to the current phase model
   canvas/
@@ -113,7 +115,8 @@ BUS331-Investment-Project-Specific/
     phase-1-client-step-by-step-page.html # generated Canvas page body for the maintained client guide
     phase-1-client-assignment.html      # generated Part 2 Canvas assignment fragment
     phase-2-assignment.html             # generated inline-styled Canvas assignment fragment
-    phase-3-assignment.html             # generated inline-styled Canvas assignment fragment
+    phase-3-assignment.html             # generated full workbook instruction fragment
+    phase-4-assignment.html             # generated presentation assignment fragment
   files/
     BUS331_Investment_Committee_Phase_Checklists.pdf
                                         # generated printable phase checklist reference
@@ -129,13 +132,13 @@ BUS331-Investment-Project-Specific/
 
 - course/project title and term
 - simulation premise and client scope
-- the three stable phase IDs
+- the four stable phase IDs
 - the five stable role IDs
 - phase objectives, evidence, committee gates, and deliverables
 - fictional-client team sets, team-specific scenario pages, five analyst lenses, the Phase 1 decision cycle, and fact-versus-assumption rules
 - Phase 2 8–10 holding boundaries, funds/ETFs-first implementation, limited individual securities, final-holding scorecards, optional consequential decision notes, Holding & Exposure Reality Check, conditional direct-security add-on, FactSet evidence-log, portfolio-integration, IPS-compliance, bear-case, residual-risk, one-hedge/no-hedge, correction, and re-test contracts
 - the Analyst Decision Log contract, including recommendations, alternatives rejected, key trade-offs, PM integration and residual-risk evidence, and consequential decisions beginning in Phase 2
-- the four Canvas assignment contracts, including separate Phase 1 packages, exact filenames, allowed file types, preflight checks, private licensed-evidence handling, and receipt retention
+- the five Canvas assignment contracts, including separate Phase 1 packages, exact filenames, allowed file types, preflight checks, private licensed-evidence handling, and receipt retention
 - resource labels and relative paths
 - AI rules and verification requirements
 - public assessment language
@@ -148,7 +151,7 @@ The overview is the project orientation and phase selector. Each phase page owns
 
 `canvas/phase-1-client-step-by-step-page.html` is the corresponding body-only, inline-styled Part 2 Canvas page fragment, derived from `project/client-analysis.html` by `python3 scripts/build-client-guide-canvas.py`. It covers client criteria, risk, return, utility and risk aversion, broad allocation, three abbreviated IPS statements, and the single-PDF Part 2 submission. It uses absolute public resource links and does not reassign the Part 1 macro workbook for upload. Update the maintained guide before rebuilding this fragment; installation in Canvas is separate.
 
-`canvasSubmissions` is the authoritative team-submission contract. The builder turns it into the public student guide and four inline-styled fragments ready to paste into Canvas. Those generated fragments do not change the live Canvas course. An instructor must separately configure each assignment as a group file-upload assignment, choose the correct group set, set approved points and dates, and confirm the contract in Student View.
+`canvasSubmissions` is the authoritative team-submission contract. The builder turns it into the public student guide and five inline-styled fragments ready to paste into Canvas. Those generated fragments do not change the live Canvas course. An instructor must separately configure each assignment as a group file-upload assignment, choose the correct group set, set approved points and dates, and confirm the contract in Student View.
 
 The submission contract uses `BUS331_[TeamName]_` for every required filename. `canvasSubmissions.fileNamingRule` explains how students derive the filename from the team name recorded in the macro workbook; the builder displays this rule in the submission guide and every Canvas-ready assignment fragment.
 
@@ -225,3 +228,5 @@ The validator should fail when it detects:
 - `source-templates/Client_Scenarios_Team_Layout_Base.pptx`: existing three-client slide layout.
 
 The existing Teams One through Five decks remain maintained native documents; the builder adjusts only their total-team marker. The new builder uses the bundled `@oai/artifact-tool` and `jszip` packages. Run it from the repository root with that runtime, then run the portal builder and validator. Native XLSX package repair preserves original styles, existing client rows, and AutoFilter while inserting authored rows 17–19 and extending the filter through row 19. The original Downloads workbook is a reference, not an output destination. Private instructor packets remain outside this build.
+
+The earlier Phase 2 research/selection and Scenario Reveal materials remain intact. Their 8-10 holding research boundary does not replace the final Phase 3 requirement of exactly 10 distinct positive-weight securities per client. The new workbook uses STOCKHISTORY price returns, not a total-return history; do not describe its covariance estimate as total-return risk. Native STOCKHISTORY was checked in a separate test workbook; native Solver execution remains a manual instructor check, not a claimed automated pass.

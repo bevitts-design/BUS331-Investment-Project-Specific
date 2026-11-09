@@ -7,6 +7,13 @@ const rootDir = path.resolve(scriptDir, "..");
 const model = JSON.parse(await fs.readFile(path.join(rootDir, "project-model.json"), "utf8"));
 const resourceById = new Map(model.resources.map((resource) => [resource.id, resource]));
 const roleById = new Map(model.roles.map((role) => [role.id, role]));
+const portfolioInstructions = await fs.readFile(path.join(rootDir, model.phase3Experience.instructionSource), "utf8");
+const portfolioWorkbook = resourceById.get(model.phase3Experience.workbookResourceId);
+const publicBase = "https://bevitts-design.github.io/BUS331-Investment-Project-Specific/";
+
+function portfolioInstructionMarkup(prefix, canvas = false) {
+  return portfolioInstructions.replaceAll("{{WORKBOOK_URL}}", canvas ? `${publicBase}${portfolioWorkbook.path}` : `${prefix}${portfolioWorkbook.path}`);
+}
 
 const escapeHtml = (value = "") => String(value)
   .replaceAll("&", "&amp;")
@@ -21,7 +28,7 @@ const securityWorkflowPath = "project/security-analysis-selection.html";
 const portfolioStressPath = "project/portfolio-management-stress-testing.html";
 const canvasSubmissionPath = "project/canvas-submission-guide.html";
 const roadmapPath = "project/roadmap.html";
-const assetVersion = "20260927-phase-one-parts-2";
+const assetVersion = "20261109-phase-three-portfolios";
 const prefixPath = (prefix, target) => `${prefix}${target}`;
 
 function siteHeader(prefix, navCurrent = "") {
@@ -268,7 +275,7 @@ function landingPage() {
         <div class="section-header">
           <p class="section-kicker">Your working pages</p>
           <h2 id="phases-title">Open the phase you're working on</h2>
-          <p>Each phase page has the ordered steps, definition of done, required evidence, and resources for that approval gate. Every member reviews and votes once before the committee moves forward; four-person teams cover all five roles by assigning two roles to one member.</p>
+          <p>Each phase page has its steps, definition of done, evidence and resources. Phase 3 brings the completed research into one Excel workbook; Phase 4 presents the integrated recommendation. Four-person teams cover all five roles by assigning two roles to one member.</p>
         </div>
         <div class="phase-entry-grid">
           ${model.phases.map((phase) => `<article class="phase-entry-card"><p class="phase-number">Phase ${phase.number}</p><h3>${escapeHtml(phase.title)}</h3><p>${escapeHtml(phase.tagline)}</p><a class="button button-primary" href="${escapeHtml(phasePath(phase))}">Open Phase ${phase.number} checklist <span aria-hidden="true">→</span></a></article>`).join("\n")}
@@ -281,7 +288,7 @@ function landingPage() {
           <h2 id="map-title">From mandate to defense</h2>
           <p>Use this visual to see how one committee decision sets the conditions for the next. Use your current phase page for the working checklist.</p>
         </div>
-        <figure class="roadmap-visual"><img src="${escapeHtml(`${model.studentRoadmap.visual.path}?v=${model.studentRoadmap.visual.version || assetVersion}`)}" alt="${escapeHtml(model.studentRoadmap.visual.alt)}" width="1600" height="900" loading="lazy" decoding="async"><figcaption>Three phases and three committee gates. <a href="${escapeHtml(`${model.studentRoadmap.visual.path}?v=${model.studentRoadmap.visual.version || assetVersion}`)}" target="_blank" rel="noopener">Open the roadmap graphic full size</a>.</figcaption></figure>
+        <figure class="roadmap-visual"><img src="${escapeHtml(`${model.studentRoadmap.visual.path}?v=${model.studentRoadmap.visual.version || assetVersion}`)}" alt="${escapeHtml(model.studentRoadmap.visual.alt)}" width="1600" height="900" loading="lazy" decoding="async"><figcaption>Four phases: mandate, research, Excel portfolios and presentation. <a href="${escapeHtml(`${model.studentRoadmap.visual.path}?v=${model.studentRoadmap.visual.version || assetVersion}`)}" target="_blank" rel="noopener">Open the roadmap graphic full size</a>.</figcaption></figure>
       </section>
 
       <section class="section" aria-labelledby="site-use-title">
@@ -293,7 +300,7 @@ function landingPage() {
         <div class="site-use-grid">
           <article><h3>Do the work</h3><p>Follow the sequence and approval test on your current phase page. Open its technical workflows and templates only when that step calls for them.</p></article>
           <article><h3>Submit the package</h3><p>The Canvas Submission Workflow lists exact files and filenames. The Canvas assignment shows the due date, points, and upload controls.</p></article>
-          <article><h3>Check the standard</h3><p>Use Assessment for the written and oral rubrics. Keep the same Analyst Decision Log and gate sheets across all three phases.</p></article>
+          <article><h3>Check the standard</h3><p>Use Assessment for the written and oral rubrics. Use the Phase 3 workbook for final portfolio decisions and the Phase 4 presentation to explain the integrated recommendation.</p></article>
         </div>
       </section>
 
@@ -301,7 +308,7 @@ function landingPage() {
         <div class="section-header">
           <p class="section-kicker">Five-person committee</p>
           <h2 id="roles-title">Five roles, one committee decision</h2>
-          <p>Each member leads a workstream, but every member reviews, votes, signs the decision record, and answers questions across the full recommendation.</p>
+          <p>Each member leads a workstream and reviews the integrated recommendation. Record Phase 3 contributions in the portfolio workbook; every member prepares for the Phase 4 presentation and questions.</p>
         </div>
         ${roleBoard()}
       </section>
@@ -403,6 +410,15 @@ function phaseOnePage(phase) {
 
 function phasePage(phase) {
   if (phase.id === "phase-1") return phaseOnePage(phase);
+  if (phase.id === "phase-3") return shell({
+    title: `Phase 3 - ${phase.title}`, description: phase.objective, prefix: "../", navCurrent: phase.id,
+    pageClass: "guide-page portfolio-workbook-page",
+    body: `<main id="main-content"><div class="page-shell"><div class="content-flow">
+      <div class="hero-actions"><a class="button button-primary" href="../${escapeHtml(portfolioWorkbook.path)}" download>Download Phase 3 student workbook <span>XLSX</span></a><a class="button" href="${path.basename(phasePath(model.phases[3]))}">Phase 4 presentation</a></div>
+      <section>${portfolioInstructionMarkup("../")}</section>
+      <section><h2>Committee responsibilities</h2>${rolePhaseMatrix(phase)}</section>
+    </div></div></main>`
+  });
   const prefix = "../";
   const body = `
   <main id="main-content">
@@ -451,7 +467,7 @@ function phasePage(phase) {
           <section>
             <h2>Approval standard</h2>
             <div class="callout"><h3>Gate ${phase.number}</h3><p>${escapeHtml(phase.gate)}</p></div>
-            <p>The decision record must state the motion, evidence reviewed, each member's vote, any dissent or reservation, and the owner and due date for every required revision.</p>
+            <p>${phase.id === "phase-4" ? "Use the completed Phase 3 workbook as the portfolio record. The Phase 4 deliverable is the integrated presentation and Q&A." : "The decision record must state the motion, evidence reviewed, each member's vote, any dissent or reservation, and the owner and due date for every required revision."}</p>
           </section>
         </div>
 
@@ -485,7 +501,7 @@ function legacyEntryPage({ prefix = "../", title, description }) {
       <section>
         <p class="section-kicker">Where to go now</p>
         <h2>Find the page for your work</h2>
-        <p>The project overview explains the committee and shows the full three-phase path. Your current phase page has the ordered steps, definition of done, evidence, and resources.</p>
+        <p>The project overview explains the committee and shows the full four-phase path. Your current phase page has the ordered steps, definition of done, evidence, and resources.</p>
         <div class="hero-actions"><a class="button button-primary" href="${escapeHtml(prefixPath(prefix, "index.html"))}">Open project overview</a></div>
         <div class="phase-entry-grid legacy-phase-grid">
           ${model.phases.map((phase) => `<article class="phase-entry-card"><p class="phase-number">Phase ${phase.number}</p><h3>${escapeHtml(phase.title)}</h3><a class="button" href="${escapeHtml(prefixPath(prefix, phasePath(phase)))}">Open Phase ${phase.number} checklist <span aria-hidden="true">→</span></a></article>`).join("\n")}
@@ -698,7 +714,7 @@ function canvasSubmissionPage() {
   const workflow = model.canvasSubmissions;
   const body = `
   <main id="main-content">
-    ${pageHero("Private team submissions · All three phases", workflow.title, workflow.purpose)}
+    ${pageHero("Private team submissions · All four phases", workflow.title, workflow.purpose)}
     <div class="page-shell">
       <div class="content-flow">
         <section><div class="callout"><h2>Canvas is the private submission record</h2><p>${escapeHtml(workflow.authority)}</p></div></section>
@@ -733,6 +749,7 @@ function canvasSubmissionPage() {
 }
 
 function canvasAssignmentFragment(assignment) {
+  if (assignment.phaseId === "phase-3") return portfolioInstructionMarkup("", true);
   const phase = model.phases.find((item) => item.id === assignment.phaseId);
   const palette = {navy: "#0B1F3A", gold: "#C99A2E", teal: "#187C78", paper: "#F7F4EC", ink: "#172033", line: "#D8D2C4"};
   const card = "border:1px solid #D8D2C4;border-radius:12px;padding:16px;margin:14px 0;background:#ffffff;";
@@ -762,7 +779,7 @@ function assessmentPage() {
   const prefix = "../";
   const body = `
   <main id="main-content">
-    ${pageHero("Phase 3 · Assessment reference", "Assessment & Submission", "The final committee decision is evaluated as both an auditable technical package and a persuasive oral defense.")}
+    ${pageHero("Phases 3 and 4 · Assessment reference", "Assessment & Submission", "Phase 3 submits the Excel portfolio analysis. Phase 4 presents and defends the integrated recommendation.")}
     <div class="page-shell">
       <div class="content-flow">
         <section>
@@ -770,13 +787,13 @@ function assessmentPage() {
         </section>
         <section>
           <p class="section-kicker">Investment Project Submission rubric · ${model.assessment.submissionPoints} points</p>
-          <h2>Written decision package</h2>
+          <h2>Phase 3 Excel workbook</h2>
           ${assessmentTable(model.assessment.writtenCriteria)}
         </section>
         <section>
           <p class="section-kicker">Investment Project Presentation rubric · ${model.assessment.presentationPoints} points</p>
-          <h2>Live committee presentation and defense</h2>
-          <div class="callout"><h3>The defense is part of the presentation</h3><p>Keep the existing final presentation and include a compact investment-committee defense within it. Each student must be ready for targeted questions tied to role-specific evidence, the Analyst Decision Log contribution, an alternative rejected, a key trade-off, and the integrated portfolio decision.</p></div>
+          <h2>Phase 4 live committee presentation and defense</h2>
+          <div class="callout"><h3>Bring the semester together</h3><p>Connect the economic review, client IPS statements, security research and Phase 3 workbook in one oral presentation. Each student must explain their contribution, evidence, an alternative rejected, a key trade-off and the integrated portfolio decision.</p></div>
           ${assessmentTable(model.assessment.oralCriteria)}
         </section>
         <section>
@@ -788,7 +805,7 @@ function assessmentPage() {
         <section>
           <p class="section-kicker">Final readiness check</p>
           <h2>Before the committee meeting</h2>
-          <ul class="check-list">${phase.evidence.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+          <ul class="check-list">${[...phase.evidence, ...model.phases[3].evidence].map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
           <div class="callout"><h3>Q&A standard</h3><p>Every member must be able to defend the market view, mandate, allocation, security choices, stress test, and trade-offs. The panel may direct a question to a member who did not lead that workstream.</p></div>
         </section>
       </div>
@@ -823,6 +840,7 @@ await fs.writeFile(path.join(rootDir, canvasSubmissionPath), canvasSubmissionPag
 for (const phase of model.phases) {
   await fs.writeFile(path.join(rootDir, phasePath(phase)), phasePage(phase));
 }
+await fs.writeFile(path.join(rootDir, "project", "phase-3-defend-the-recommendation.html"), phasePage(model.phases[2]));
 await fs.writeFile(path.join(rootDir, "project", "assessment.html"), assessmentPage());
 await fs.rm(path.join(rootDir, "canvas", "phase-1-assignment.html"), { force: true });
 for (const assignment of model.canvasSubmissions.assignments) {
