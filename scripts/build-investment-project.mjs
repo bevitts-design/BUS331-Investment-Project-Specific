@@ -12,10 +12,12 @@ const portfolioWorkbook = resourceById.get(model.phase3Experience.workbookResour
 const publicBase = "https://bevitts-design.github.io/BUS331-Investment-Project-Specific/";
 
 function portfolioInstructionMarkup(prefix, canvas = false) {
-  const source = model.phase3Experience.cmeBaseline.factset;
+  const baseline = model.phase3Experience.cmeBaseline;
+  const source = baseline.resources.factset;
   const sourceDate = new Date(`${source.reportDate}T00:00:00Z`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
   return portfolioInstructions.replaceAll("{{WORKBOOK_URL}}", canvas ? `${publicBase}${portfolioWorkbook.path}` : `${prefix}${portfolioWorkbook.path}`)
-    .replaceAll("{{CME_REPORT_URL}}", source.url).replaceAll("{{CME_REPORT_DATE}}", sourceDate).replaceAll("{{CME_REPORT_PAGE}}", String(source.page));
+    .replaceAll("{{CME_REPORT_URL}}", source.url).replaceAll("{{CME_REPORT_DATE}}", sourceDate).replaceAll("{{CME_REPORT_PAGE}}", String(source.page))
+    .replaceAll("{{CME_HISTORY_WINDOW}}", `${baseline.referenceYears[0]}–${baseline.referenceYears.at(-1)}`);
 }
 
 const escapeHtml = (value = "") => String(value)

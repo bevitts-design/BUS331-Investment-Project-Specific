@@ -51,8 +51,8 @@
           <h2>Phase 3 Excel workbook</h2>
           <div class="matrix-wrap"><table>
     <thead><tr><th scope="col">Criterion</th><th scope="col">Weight</th><th scope="col">Committee-ready standard</th></tr></thead>
-    <tbody><tr><td><strong>Evidence quality &amp; technical accuracy</strong></td><td class="weight">20%</td><td>Historical closes, formulas, covariance/correlation, annualization, income estimates, sources and dates are accurate, traceable and interpreted. STOCKHISTORY uses 61 aligned closes for 60 monthly price returns. Income is not counted twice; price-risk limitations are explained.</td></tr>
-<tr><td><strong>Focused security selection</strong></td><td class="weight">20%</td><td>Each client has 10 distinct securities with positive final weights, appropriate sector/category classifications and explicit client-role and team CME rationale. Research supports fit, costs, liquidity, overlap and concentration decisions.</td></tr>
+    <tbody><tr><td><strong>Evidence quality &amp; technical accuracy</strong></td><td class="weight">20%</td><td>The provided Reference data, source dates, three class adjustments, category-specific expected and downside returns, covariance/correlation and annualization are used accurately and interpreted. Category total returns include income; security histories estimate price-return risk. A class shift changes the mean while reference SD remains unchanged.</td></tr>
+<tr><td><strong>Focused security selection</strong></td><td class="weight">20%</td><td>Each client has 10 distinct securities with positive final weights, correct class and sector/category classifications, and explicit client-role rationale. The selected category determines its historical baseline; the common Equity, Bond or Cash change supplies the adjustment. Research supports fit, costs, liquidity, overlap and concentration decisions.</td></tr>
 <tr><td><strong>Client suitability &amp; IPS compliance</strong></td><td class="weight">15%</td><td>Each recommendation traces to the client IPS and relevant RRTTLLLU objectives and constraints. Return goals, allocation limits, liquidity, suitability and downside tripwires are checked and explained.</td></tr>
 <tr><td><strong>Shared portfolio quality &amp; risk response</strong></td><td class="weight">25%</td><td>Initial, Solver and final weights are retained and total 100%. Client-specific covariance matrices, Solver constraints and outcomes, final judgment, stress results, corrections and monitoring triggers form one internally consistent portfolio decision.</td></tr>
 <tr><td><strong>Individual role evidence &amp; decision trail</strong></td><td class="weight">20%</td><td>Summary identifies each member contribution. Workbook explanations document the initial judgment, Solver result, final recommendation, rejected alternative, key trade-off, verification and unresolved reservations. No separate Phase 3 Decision Record is required.</td></tr></tbody>
@@ -99,7 +99,7 @@
         <section>
           <p class="section-kicker">Final readiness check</p>
           <h2>Before the committee meeting</h2>
-          <ul class="check-list"><li>Each client has 10 distinct positive-weight holdings linked to the IPS and team CME.</li>
+          <ul class="check-list"><li>Each client has 10 distinct positive-weight holdings linked to the IPS, its sector/category historical baseline and the shared Equity, Bond and Cash adjustments.</li>
 <li>Histories, sources, covariance/correlation matrices and statistics are complete with formulas preserved.</li>
 <li>Initial, Solver and final allocations are retained; constraints, Solver messages, risk and trade-offs are explained.</li>
 <li>Summary includes client decisions and team contributions; the single XLSX upload is checked in Canvas.</li>

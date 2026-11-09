@@ -120,7 +120,7 @@
       ],
       "phase-3": [
         "Download the revised student portfolio workbook and transfer each client IPS into its Client sheet.",
-        "Review the dated FactSet sector baseline and classroom bond scenarios; keep or adjust each used category with a macro explanation, then select 10 distinct securities per client.",
+        "Review the provided sector and bond-category history on Reference. Enter one percentage-point adjustment for Equity, Bond and Cash; apply it to the matching category baselines and calculate downside.",
         "Use STOCKHISTORY to save 61 aligned monthly closes per security and calculate 60 monthly price returns.",
         "Build each client covariance/correlation matrix, enter initial weights and run constrained minimum-variance Solver.",
         "Choose final weights, complete stress tests, explain trade-offs and submit one Excel workbook in Canvas."
@@ -149,7 +149,7 @@
         "Each team member has recorded one Gate 2 vote and any revision actions; all five role responsibilities are covered."
       ],
       "phase-3": [
-        "Each client has 10 distinct positive-weight holdings linked to the IPS and team CME.",
+        "Each client has 10 distinct positive-weight holdings linked to the IPS, its sector/category historical baseline and the shared Equity, Bond and Cash adjustments.",
         "Histories, sources, covariance/correlation matrices and statistics are complete with formulas preserved.",
         "Initial, Solver and final allocations are retained; constraints, Solver messages, risk and trade-offs are explained.",
         "Summary includes client decisions and team contributions; the single XLSX upload is checked in Canvas."
@@ -172,7 +172,7 @@
       "phaseResponsibilities": {
         "phase-1": "Lead analysis of the assigned client scenarios, document goals and RRTTLLU constraints, establish the macro context, and label reasoned assumptions and information gaps.",
         "phase-2": "Test whether proposed allocations and securities fit the approved client mandate and the committee's market view.",
-        "phase-3": "Connect the economic review, category CME and each client IPS; explain suitability.",
+        "phase-3": "Connect the economic review, asset-class CME and each client IPS; explain suitability.",
         "phase-4": "Defend client suitability, the macro assumptions, and the line from scenario-based need to recommendation."
       }
     },
@@ -198,7 +198,7 @@
       "phaseResponsibilities": {
         "phase-1": "Translate the client's growth needs, time horizon, values, tax position, liquidity, and concentration limits into equity-selection guardrails.",
         "phase-2": "Recommend equity funds and ETFs as the primary equity vehicles and analyze any limited individual equities, including rationale, idiosyncratic risk, and position size.",
-        "phase-3": "Select and classify equity exposures; document sector choices, research and client roles.",
+        "phase-3": "Select and classify equity exposures; document sector descriptions, research and client roles.",
         "phase-4": "Defend equity exposures, vehicle choices, limited individual-security decisions, rejected alternatives, and their client fit."
       }
     },
@@ -1137,14 +1137,14 @@
       "title": "Build Your Client Portfolios",
       "shortTitle": "Portfolios",
       "tagline": "Bring your research together in one Excel workbook.",
-      "keyQuestion": "Which 10 securities and weights fit each client and the team market outlook?",
+      "keyQuestion": "Which securities and weights fit each client under the shared Equity, Bond and Cash outlook?",
       "objective": "Use the completed economic review, client IPS statements and security research to build, optimize and evaluate three client portfolios in Excel.",
       "gate": "Recommend final weights after reviewing the IPS, Solver comparison and downside test; explain unresolved reservations in the workbook.",
       "meetingMotion": "Agree on the final portfolio recommendation and document the reasoning in the workbook.",
       "workstreams": [
         {
           "title": "CME and security selection",
-          "description": "Link 10 distinct securities per client to a sector/category, client role and team CME."
+          "description": "Enter three class-level changes. Each selected sector or bond category keeps its own historical return and SD on Reference; its expected return equals that baseline plus the matching class change."
         },
         {
           "title": "History and portfolio risk",
@@ -1156,7 +1156,7 @@
         }
       ],
       "evidence": [
-        "Each client has 10 distinct positive-weight holdings linked to the IPS and team CME.",
+        "Each client has 10 distinct positive-weight holdings linked to the IPS, its sector/category historical baseline and the shared Equity, Bond and Cash adjustments.",
         "Histories, sources, covariance/correlation matrices and statistics are complete with formulas preserved.",
         "Initial, Solver and final allocations are retained; constraints, Solver messages, risk and trade-offs are explained.",
         "Summary includes client decisions and team contributions; the single XLSX upload is checked in Canvas."
@@ -1322,19 +1322,19 @@
         "phaseId": "phase-3",
         "canvasTitle": "BUS331 Investment Committee · Phase 3 · Build Your Client Portfolios",
         "decision": "Use the completed economic review, client IPS statements and security research to build, optimize and evaluate three client portfolios in Excel.",
-        "submissionProcess": "Complete all 12 tabs for the selected securities and categories; submit one team Excel workbook. Record decisions, reservations and contributions inside the workbook. One designated member submits; all members confirm the Canvas receipt. No separate memo, dossier, presentation, Decision Record or evidence ZIP is required for Phase 3.",
+        "submissionProcess": "Complete all 13 tabs for the selected securities and categories; submit one team Excel workbook. Record decisions, reservations and contributions inside the workbook. One designated member submits; all members confirm the Canvas receipt. No separate memo, dossier, presentation, Decision Record or evidence ZIP is required for Phase 3.",
         "includePrivateEvidenceBoundary": true,
         "requiredFiles": [
           {
             "name": "BUS331_[TeamName]_Phase3_Portfolio.xlsx",
-            "description": "Completed revised student workbook with team CME, 10 securities per client, STOCKHISTORY snapshots, covariance/correlation, initial/Solver/final weights, IPS checks, downside tests and contributions."
+            "description": "Completed 13-tab workbook with three class-level return adjustments, a provided sector/bond Reference tab, category-specific expected and downside returns, 10 securities per client, STOCKHISTORY, covariance, Solver comparisons, IPS checks and contributions."
           }
         ],
         "allowedExtensions": [
           "xlsx"
         ],
         "preflight": [
-          "Each client has 10 distinct positive-weight holdings linked to the IPS and team CME.",
+          "Each client has 10 distinct positive-weight holdings linked to the IPS, its sector/category historical baseline and the shared Equity, Bond and Cash adjustments.",
           "Histories, sources, covariance/correlation matrices and statistics are complete with formulas preserved.",
           "Initial, Solver and final allocations are retained; constraints, Solver messages, risk and trade-offs are explained.",
           "Summary includes client decisions and team contributions; the single XLSX upload is checked in Canvas."
@@ -1570,7 +1570,7 @@
       "label": "Phase 3 Portfolio Student Template",
       "type": "XLSX",
       "path": "files/BUS331_Phase3_Portfolio_Student_Template.xlsx",
-      "description": "Revised 12-tab student workbook with a dated FactSet equity-sector baseline, classroom bond scenarios, team adjustments, 10 securities per client, STOCKHISTORY, covariance and Solver.",
+      "description": "13-tab workbook: provided sector/bond history on Reference; three Equity/Bond/Cash changes flow to category-specific forecasts; STOCKHISTORY, covariance and Solver.",
       "audience": "student"
     },
     {
@@ -1612,12 +1612,12 @@
       {
         "criterion": "Evidence quality & technical accuracy",
         "weight": 20,
-        "standard": "Historical closes, formulas, covariance/correlation, annualization, income estimates, sources and dates are accurate, traceable and interpreted. STOCKHISTORY uses 61 aligned closes for 60 monthly price returns. Income is not counted twice; price-risk limitations are explained."
+        "standard": "The provided Reference data, source dates, three class adjustments, category-specific expected and downside returns, covariance/correlation and annualization are used accurately and interpreted. Category total returns include income; security histories estimate price-return risk. A class shift changes the mean while reference SD remains unchanged."
       },
       {
         "criterion": "Focused security selection",
         "weight": 20,
-        "standard": "Each client has 10 distinct securities with positive final weights, appropriate sector/category classifications and explicit client-role and team CME rationale. Research supports fit, costs, liquidity, overlap and concentration decisions."
+        "standard": "Each client has 10 distinct securities with positive final weights, correct class and sector/category classifications, and explicit client-role rationale. The selected category determines its historical baseline; the common Equity, Bond or Cash change supplies the adjustment. Research supports fit, costs, liquidity, overlap and concentration decisions."
       },
       {
         "criterion": "Client suitability & IPS compliance",
@@ -1721,100 +1721,335 @@
     "securitiesPerClient": 10,
     "monthlyCloses": 61,
     "monthlyReturns": 60,
-    "worksheetCount": 12,
+    "worksheetCount": 13,
     "cmeBaseline": {
-      "version": "2026-10-30-factset-classroom-bonds-v1",
-      "factset": {
-        "reportDate": "2026-10-30",
-        "asOfDate": "2026-10-29",
-        "page": 37,
-        "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_103026.pdf",
-        "metric": "Sector bottom-up target-price upside versus closing price; next 12 months, price change only",
-        "values": {
-          "Communication Services": 0.385,
-          "Consumer Discretionary": 0.229,
-          "Consumer Staples": 0.074,
-          "Energy": 0.06,
-          "Financials": 0.102,
-          "Health Care": 0.053,
-          "Industrials": 0.214,
-          "Information Technology": 0.279,
-          "Materials": 0.151,
-          "Real Estate": 0.145,
-          "Utilities": 0.123,
-          "Broad equity": 0.208
+      "version": "2026-11-09-class-shift-sector-reference",
+      "basis": "Historical arithmetic mean and sample SD of annual NAV total returns; income included",
+      "referenceSheet": "Reference",
+      "referenceYears": [
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "referenceSource": "Public iShares/BlackRock fund fact sheets; published calendar-year NAV total returns",
+      "referenceMethod": "Mean and sample SD calculated from the same five complete annual NAV total returns (2021–2025). These are annual observations; no monthly scaling is applied. Five observations are a short classroom reference, not a long-run expected return.",
+      "retrieved": "2026-11-09",
+      "assetClasses": [
+        {
+          "name": "Equity",
+          "referenceCategory": "Broad equity"
+        },
+        {
+          "name": "Bond",
+          "referenceCategory": "Broad fixed income"
+        },
+        {
+          "name": "Cash",
+          "referenceCategory": "Cash equivalent"
         }
-      },
-      "bonds": {
-        "label": "Instructor-supplied classroom scenarios; not FactSet forecasts",
-        "baseScenario": "Modest easing: benchmark yields fall 25 basis points; credit spreads unchanged. Cash price is stable.",
-        "downsideScenario": "Growth shock: benchmark yields fall 50 basis points while credit spreads widen. Government bonds can gain; credit-sensitive categories can lose. Cash price is stable.",
-        "formula": "Approximate price change = -modified duration * (benchmark yield change + spread change). All yield changes are percentage-point changes entered as decimals.",
-        "rows": [
-          {
-            "category": "Broad fixed income",
-            "duration": 6,
-            "baseRateChange": -0.0025,
-            "baseSpreadChange": 0,
-            "downsideRateChange": -0.005,
-            "downsideSpreadChange": 0.01,
-            "scope": "Illustrative diversified bond exposure"
-          },
-          {
-            "category": "Government bonds",
-            "duration": 6,
-            "baseRateChange": -0.0025,
-            "baseSpreadChange": 0,
-            "downsideRateChange": -0.005,
-            "downsideSpreadChange": 0,
-            "scope": "Government exposure; no credit-spread shock"
-          },
-          {
-            "category": "Investment-grade corporate bonds",
-            "duration": 7,
-            "baseRateChange": -0.0025,
-            "baseSpreadChange": 0,
-            "downsideRateChange": -0.005,
-            "downsideSpreadChange": 0.02,
-            "scope": "Credit spread widens in growth shock"
-          },
-          {
-            "category": "High-yield bonds",
-            "duration": 3.5,
-            "baseRateChange": -0.0025,
-            "baseSpreadChange": 0,
-            "downsideRateChange": -0.005,
-            "downsideSpreadChange": 0.04,
-            "scope": "Large spread shock; default losses omitted"
-          },
-          {
-            "category": "Municipal bonds",
-            "duration": 5,
-            "baseRateChange": -0.0025,
-            "baseSpreadChange": 0,
-            "downsideRateChange": -0.005,
-            "downsideSpreadChange": 0.01,
-            "scope": "Simplified rate/spread exposure; no tax adjustment"
-          },
-          {
-            "category": "International bonds",
-            "duration": 6,
-            "baseRateChange": -0.0025,
-            "baseSpreadChange": 0,
-            "downsideRateChange": -0.005,
-            "downsideSpreadChange": 0.005,
-            "scope": "Currency-hedged proxy; revise for unhedged holdings"
-          },
-          {
-            "category": "Cash equivalent",
-            "duration": 0,
-            "baseRateChange": 0,
-            "baseSpreadChange": 0,
-            "downsideRateChange": 0,
-            "downsideSpreadChange": 0,
-            "scope": "Stable-price proxy; income entered on Client sheet"
-          }
-        ]
+      ],
+      "downsideSdMultiplier": 2,
+      "referenceData": [
+        {
+          "category": "Communication Services",
+          "assetClass": "Equity",
+          "ticker": "IXP",
+          "annualReturns": [
+            0.1277,
+            -0.3306,
+            0.3871,
+            0.3131,
+            0.2909
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/ixp-ishares-global-comm-services-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "Global communication-services proxy; includes non-U.S. exposure."
+        },
+        {
+          "category": "Consumer Discretionary",
+          "assetClass": "Equity",
+          "ticker": "IYC",
+          "annualReturns": [
+            0.1962,
+            -0.3178,
+            0.341,
+            0.2759,
+            0.0776
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/iyc-ishares-u-s-consumer-discretionary-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "U.S. sector ETF proxy; fund classifications can differ from other sector indexes."
+        },
+        {
+          "category": "Consumer Staples",
+          "assetClass": "Equity",
+          "ticker": "IYK",
+          "annualReturns": [
+            0.1729,
+            0.0354,
+            -0.0277,
+            0.053,
+            0.047599999999999996
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/iyk-ishares-u-s-consumer-staples-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "U.S. sector ETF proxy; fund classifications can differ from other sector indexes."
+        },
+        {
+          "category": "Energy",
+          "assetClass": "Equity",
+          "ticker": "IYE",
+          "annualReturns": [
+            0.5337,
+            0.6036,
+            -0.0229,
+            0.0604,
+            0.0741
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/iye-ishares-u-s-energy-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "U.S. sector ETF proxy; fund classifications can differ from other sector indexes."
+        },
+        {
+          "category": "Financials",
+          "assetClass": "Equity",
+          "ticker": "IYF",
+          "annualReturns": [
+            0.3146,
+            -0.113,
+            0.1523,
+            0.31379999999999997,
+            0.1822
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/iyf-ishares-u-s-financials-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "U.S. sector ETF proxy; fund classifications can differ from other sector indexes."
+        },
+        {
+          "category": "Health Care",
+          "assetClass": "Equity",
+          "ticker": "IYH",
+          "annualReturns": [
+            0.23399999999999999,
+            -0.0438,
+            0.020499999999999997,
+            0.0308,
+            0.1313
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/iyh-ishares-u-s-healthcare-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "U.S. sector ETF proxy; fund classifications can differ from other sector indexes."
+        },
+        {
+          "category": "Industrials",
+          "assetClass": "Equity",
+          "ticker": "IYJ",
+          "annualReturns": [
+            0.1693,
+            -0.1348,
+            0.19870000000000002,
+            0.17850000000000002,
+            0.11939999999999999
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/iyj-ishares-u-s-industrials-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "U.S. sector ETF proxy; fund classifications can differ from other sector indexes."
+        },
+        {
+          "category": "Information Technology",
+          "assetClass": "Equity",
+          "ticker": "IYW",
+          "annualReturns": [
+            0.3519,
+            -0.348,
+            0.655,
+            0.30210000000000004,
+            0.2544
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/iyw-ishares-u-s-technology-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "U.S. sector ETF proxy; fund classifications can differ from other sector indexes."
+        },
+        {
+          "category": "Materials",
+          "assetClass": "Equity",
+          "ticker": "IYM",
+          "annualReturns": [
+            0.2552,
+            -0.0907,
+            0.1273,
+            -0.0453,
+            0.2041
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/iym-ishares-u-s-basic-materials-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "U.S. sector ETF proxy; fund classifications can differ from other sector indexes."
+        },
+        {
+          "category": "Real Estate",
+          "assetClass": "Equity",
+          "ticker": "IYR",
+          "annualReturns": [
+            0.38689999999999997,
+            -0.2546,
+            0.1186,
+            0.044800000000000006,
+            0.0338
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/iyr-ishares-u-s-real-estate-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "U.S. sector ETF proxy; fund classifications can differ from other sector indexes."
+        },
+        {
+          "category": "Utilities",
+          "assetClass": "Equity",
+          "ticker": "IDU",
+          "annualReturns": [
+            0.16760000000000003,
+            0.0022,
+            -0.050499999999999996,
+            0.2324,
+            0.1527
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/idu-ishares-u-s-utilities-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "U.S. sector ETF proxy; fund classifications can differ from other sector indexes."
+        },
+        {
+          "category": "Broad equity",
+          "assetClass": "Equity",
+          "ticker": "IVV",
+          "annualReturns": [
+            0.2866,
+            -0.1813,
+            0.2627,
+            0.2498,
+            0.17850000000000002
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/ivv-ishares-core-s-p-500-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "June 30, 2026",
+          "scope": "Broad U.S. large-cap equity proxy."
+        },
+        {
+          "category": "Broad fixed income",
+          "assetClass": "Bond",
+          "ticker": "AGG",
+          "annualReturns": [
+            -0.0167,
+            -0.1306,
+            0.0558,
+            0.0137,
+            0.0719
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/agg-ishares-core-u-s-aggregate-bond-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "Broad U.S. investment-grade bond proxy."
+        },
+        {
+          "category": "Government bonds",
+          "assetClass": "Bond",
+          "ticker": "IEF",
+          "annualReturns": [
+            -0.0327,
+            -0.1523,
+            0.0358,
+            -0.0060999999999999995,
+            0.0806
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/ief-ishares-7-10-year-treasury-bond-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "7–10-year U.S. Treasury proxy; duration differs from shorter or longer government holdings."
+        },
+        {
+          "category": "Investment-grade corporate bonds",
+          "assetClass": "Bond",
+          "ticker": "LQD",
+          "annualReturns": [
+            -0.015700000000000002,
+            -0.1801,
+            0.09269999999999999,
+            0.009899999999999999,
+            0.08
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/lqd-ishares-iboxx-investment-grade-corporate-bond-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "June 30, 2026",
+          "scope": "U.S. investment-grade corporate bond proxy."
+        },
+        {
+          "category": "High-yield bonds",
+          "assetClass": "Bond",
+          "ticker": "HYG",
+          "annualReturns": [
+            0.0412,
+            -0.1137,
+            0.1241,
+            0.077,
+            0.08560000000000001
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/hyg-ishares-iboxx-high-yield-corporate-bond-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "U.S. high-yield corporate bond proxy; default and spread risk matter."
+        },
+        {
+          "category": "Municipal bonds",
+          "assetClass": "Bond",
+          "ticker": "MUB",
+          "annualReturns": [
+            0.0124,
+            -0.075,
+            0.058600000000000006,
+            0.0111,
+            0.0369
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/mub-ishares-national-muni-bond-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "National municipal-bond proxy; total return is not tax-equivalent."
+        },
+        {
+          "category": "International bonds",
+          "assetClass": "Bond",
+          "ticker": "IAGG",
+          "annualReturns": [
+            -0.0176,
+            -0.107,
+            0.0837,
+            0.049800000000000004,
+            0.030699999999999998
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/iagg-ishares-core-international-aggregate-bond-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "International aggregate bond proxy, hedged to USD."
+        },
+        {
+          "category": "Cash equivalent",
+          "assetClass": "Cash",
+          "ticker": "SGOV",
+          "annualReturns": [
+            0.0002,
+            0.0158,
+            0.0513,
+            0.0528,
+            0.0424
+          ],
+          "sourceUrl": "https://www.ishares.com/us/literature/fact-sheet/sgov-ishares-0-3-month-treasury-bond-etf-fund-fact-sheet-en-us.pdf",
+          "reportDate": "September 30, 2026",
+          "scope": "Short Treasury-bill ETF cash proxy; annual income varies."
+        }
+      ],
+      "resources": {
+        "factset": {
+          "reportDate": "2026-10-30",
+          "asOfDate": "2026-10-29",
+          "page": 37,
+          "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_103026.pdf",
+          "metric": "Sector bottom-up target-price upside versus closing price; next 12 months, price change only"
+        },
+        "schwab": {
+          "url": "https://www.schwab.com/learn/story/stock-sector-outlook",
+          "label": "Schwab Monthly Stock Sector Outlook"
+        }
       }
     }
   }

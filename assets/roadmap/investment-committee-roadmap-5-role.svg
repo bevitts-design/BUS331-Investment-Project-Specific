@@ -33,7 +33,7 @@
 <text x="830" y="203" font-size="19" font-weight="700" fill="white">PHASE 3</text>
 <text x="830" y="242" font-size="25" font-weight="700" fill="white">Build Client Portfolios</text>
 <text x="830" y="310" font-size="20" font-weight="700" fill="#0b1f35">Select 10 securities per client</text>
-<text x="830" y="342" font-size="16" fill="#4b6073">Sector/category + client role + CME</text>
+<text x="830" y="342" font-size="16" fill="#4b6073">Class change + category history</text>
 <text x="830" y="408" font-size="20" font-weight="700" fill="#0b1f35">Build histories and risk</text>
 <text x="830" y="440" font-size="16" fill="#4b6073">STOCKHISTORY: 61 closes, 60 returns</text>
 <text x="830" y="506" font-size="20" font-weight="700" fill="#0b1f35">Compare portfolio weights</text>

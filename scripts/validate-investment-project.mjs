@@ -180,12 +180,13 @@ if (!experience) {
 
 const phaseThreeSubmission = model.canvasSubmissions.assignments.find((item) => item.phaseId === "phase-3");
 if (phaseThreeSubmission?.requiredFiles?.length !== 1 || phaseThreeSubmission.requiredFiles[0].name !== "BUS331_[TeamName]_Phase3_Portfolio.xlsx" || phaseThreeSubmission.allowedExtensions.join(",") !== "xlsx") fail("Phase 3 must require exactly one portfolio XLSX submission.");
-if (model.phase3Experience?.securitiesPerClient !== 10 || model.phase3Experience.monthlyCloses !== 61 || model.phase3Experience.monthlyReturns !== 60 || model.phase3Experience.worksheetCount !== 12) fail("Phase 3 workbook contract must specify 10 securities per client, 61 closes, 60 returns and 12 worksheets.");
+if (model.phase3Experience?.securitiesPerClient !== 10 || model.phase3Experience.monthlyCloses !== 61 || model.phase3Experience.monthlyReturns !== 60 || model.phase3Experience.worksheetCount !== 13) fail("Phase 3 workbook contract must specify 10 securities per client, 61 closes, 60 returns and 13 worksheets including Reference.");
 const portfolioGuide = await fs.readFile(path.join(rootDir, model.phase3Experience.instructionSource), "utf8");
 for (const required of ["STOCKHISTORY", "D46", "D32:D41", "GRG Nonlinear", "C83:L143", "Phase 4"]) if (!portfolioGuide.includes(required)) fail(`Phase 3 instructions are missing ${required}.`);
 const cmeBaseline = model.phase3Experience.cmeBaseline;
-if (Object.keys(cmeBaseline?.factset?.values || {}).length !== 12 || cmeBaseline?.bonds?.rows?.length !== 7 || !cmeBaseline.factset.url.startsWith("https://advantage.factset.com/")) fail("Phase 3 must provide a sourced 11-sector plus broad-equity baseline and seven classroom bond/cash scenarios.");
-for (const required of ["{{CME_REPORT_URL}}", "{{CME_REPORT_DATE}}", "E9:E27", "0%", "C48:G54", "not FactSet bond forecasts", "Keeping the baseline still requires an explanation"]) if (!portfolioGuide.includes(required)) fail(`Phase 3 baseline instructions are missing ${required}.`);
+if (cmeBaseline?.assetClasses?.map(x=>x.name).join(",") !== "Equity,Bond,Cash" || cmeBaseline?.referenceData?.length !== 19 || cmeBaseline.referenceYears.join(",") !== "2021,2022,2023,2024,2025" || cmeBaseline.referenceSheet !== "Reference" || cmeBaseline.downsideSdMultiplier !== 2) fail("Phase 3 must provide three class changes and a separate 19-category reference using five common annual returns.");
+for (const row of cmeBaseline.referenceData || []) if (row.annualReturns.length !== 5 || !row.annualReturns.every(Number.isFinite) || !row.sourceUrl.startsWith("https://www.ishares.com/")) fail(`Invalid category history or public source: ${row.category}.`);
+for (const required of ["Reference", "F9:F11", "G9:G11", "H9:H11", "total returns", "No separate sector forecasts", "percentage points"]) if (!portfolioGuide.includes(required)) fail(`Phase 3 class-adjustment instructions are missing ${required}.`);
 
 const phaseIds = new Set(model.phases.map((phase) => phase.id));
 const roleIds = new Set(model.roles.map((role) => role.id));
@@ -432,7 +433,7 @@ for (const relative of officeArtifacts) {
       }
     }
     if (relative === "files/BUS331_Phase3_Portfolio_Student_Template.xlsx") {
-      for (const required of ["Provided baseline price change", "Team adjustment (pp)", "Team expected price change", "Classroom bond scenario inputs", cmeBaseline.factset.url, cmeBaseline.factset.reportDate]) {
+      for (const required of ["Asset-class adjustment (pp)", "Category historical return", "Historical annual mean", "Historical annual SD", "Historical sector and bond-category reference", "2021–2025 (5 annual returns)"]) {
         if (!text.includes(required)) fail(`Phase 3 workbook is missing baseline content: ${required}.`);
       }
     }

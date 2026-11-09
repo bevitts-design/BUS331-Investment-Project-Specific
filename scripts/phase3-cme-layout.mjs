@@ -1,106 +1,105 @@
-// Shared student-safe layout. The same function is applied to the private counterpart outside this repository.
+// One student-safe layout shared with the private worked counterpart outside this repository.
 export function applyCmeBaseline(workbook, config) {
-  const sheet = workbook.worksheets.getItem('CME');
-  const alreadyUpdated = sheet.getRange('D8').values[0][0] === 'Provided baseline price change';
-  const old = sheet.getRange('B9:J27').values;
-  const colors = {navy:'#16324F', ink:'#172C3B', yellow:'#FFF2CC', source:'#E8EFF3', green:'#087543'};
-  const percent = '0.0%;(0.0%);0.0%';
-  const value = (a,v) => {sheet.getRange(a).values=[[v]];};
-  const formula = (a,f) => {sheet.getRange(a).formulas=[[f]];};
-  const note = (r,text,height=40) => {
-    const target=`B${r}:K${r}`;
-    if (!alreadyUpdated) sheet.mergeCells(target);
-    value(`B${r}`,text);
-    sheet.getRange(target).format={font:{name:'Arial',size:11,color:colors.ink},wrapText:true,rowHeight:height,verticalAlignment:'center'};
+  const s=workbook.worksheets.getItem('CME');
+  const updated=s.getRange('F8').values[0][0]==='Asset-class adjustment (pp)';
+  const oldValues=s.getRange('D9:I11').values,oldFormulas=s.getRange('G9:H11').formulas;
+  const color={navy:'#16324F',ink:'#172C3B',yellow:'#FFF2CC',purple:'#ECE7F6',source:'#E8EFF3'};
+  const percent='0.00%;(0.00%);0.00%';
+  let ref;
+  try{ref=workbook.worksheets.getItem(config.referenceSheet);}catch{}
+  const newReference=!ref;
+  if(newReference)ref=workbook.worksheets.add(config.referenceSheet);
+  const val=(sheet,a,v)=>{sheet.getRange(a).values=[[v]];};
+  const fx=(sheet,a,f)=>{sheet.getRange(a).formulas=[[f]];};
+  const note=(sheet,r,text,height=42,merge=false)=>{
+    if(merge)sheet.mergeCells(`B${r}:J${r}`);
+    val(sheet,`B${r}`,text);sheet.getRange(`B${r}:J${r}`).format={font:{name:'Arial',size:11,color:color.ink},wrapText:true,rowHeight:height,verticalAlignment:'center'};
   };
-  const header = (r,labels) => {
-    sheet.getRange(`B${r}:K${r}`).values=[labels];
-    sheet.getRange(`B${r}:K${r}`).format={fill:colors.navy,font:{name:'Arial',size:11,color:'#FFFFFF',bold:true},wrapText:true,rowHeight:60,verticalAlignment:'center',horizontalAlignment:'center'};
-  };
-  sheet.getRange('B2:K64').format.font.name='Arial';
-  sheet.getRange('B4').values=[['One shared 12-month outlook. Review baseline D, enter adjustment E (0% to keep), and explain the macro reasoning in H. F calculates the team price forecast; income stays on each Client sheet.']];
-  sheet.getRange('B4:I4').format.rowHeight=48;
-  note(6,'Use percentage points: enter -2% to reduce a baseline by 2 points. Complete each category you use. Equity downside forecasts in G are your own; bond downside starters link to the classroom table below.',44);
-  header(8,['Sector / category','Asset class','Provided baseline price change','Team adjustment (pp)','Team expected price change','Team downside price change','Keep / adjust explanation + macro driver','Team source / reference','Team as-of date','CME status']);
-  for (let j=0;j<19;j++) {
-    const r=9+j, category=old[j][0], bondIndex=config.bonds.rows.findIndex(x=>x.category===category);
-    sheet.getRange(`B${r}:K${r}`).format={font:{name:'Arial',size:11,color:colors.ink},wrapText:true,rowHeight:72,verticalAlignment:'center'};
-    sheet.getRange(`E${r}`).format={fill:colors.yellow,font:{color:'#0000CC'}};
-    sheet.getRange(`F${r}`).format.fill='#FFFFFF';
-    sheet.getRange(`G${r}:J${r}`).format={fill:colors.yellow,font:{color:'#0000CC'}};
-    sheet.getRange(`D${r}`).format.fill=colors.source;
-    if (bondIndex < 0) value(`D${r}`,config.factset.values[category]);
-    else formula(`D${r}`,`=IF(ISNUMBER(H${48+bondIndex}),H${48+bondIndex},"")`);
-    if (!alreadyUpdated) {
-      value(`E${r}`,typeof old[j][3]==='number' ? old[j][3]-(bondIndex<0?config.factset.values[category]:-config.bonds.rows[bondIndex].duration*(config.bonds.rows[bondIndex].baseRateChange+config.bonds.rows[bondIndex].baseSpreadChange)) : null);
-      if (bondIndex>=0) formula(`G${r}`,`=IF(ISNUMBER(I${48+bondIndex}),I${48+bondIndex},"")`);
-      else if (typeof old[j][4]==='number') value(`G${r}`,old[j][4]);
-      else value(`G${r}`,null);
-      value(`H${r}`,old[j][5] ? `${old[j][2] ? old[j][2]+'. ' : ''}${old[j][5]}` : null);
-      value(`I${r}`,old[j][6] || null);
-      value(`J${r}`,old[j][7] || null);
-    }
-    formula(`F${r}`,`=IF(AND(ISNUMBER(D${r}),ISNUMBER(E${r})),D${r}+E${r},"")`);
-    formula(`K${r}`,`=IF(AND(COUNT(D${r}:G${r})=4,H${r}<>"",I${r}<>"",ISNUMBER(J${r}),J${r}>0),"Complete","Missing CME")`);
+  const header=(sheet,r,last,labels)=>{sheet.getRange(`B${r}:${last}${r}`).values=[labels];sheet.getRange(`B${r}:${last}${r}`).format={fill:color.navy,font:{name:'Arial',size:11,color:'#FFFFFF',bold:true},wrapText:true,rowHeight:54,horizontalAlignment:'center',verticalAlignment:'center'};};
+  const stats=config.referenceData.map(a=>{
+    const mean=a.annualReturns.reduce((x,y)=>x+y,0)/a.annualReturns.length;
+    const sd=Math.sqrt(a.annualReturns.reduce((x,y)=>x+(y-mean)**2,0)/(a.annualReturns.length-1));
+    return {...a,mean,sd};
+  });
+  ref.showGridLines=false;ref.tabColor='#B88A2B';
+  ref.getRange('A:A').format.columnWidth=3;
+  ref.getRange('B2:J55').format={font:{name:'Arial',size:11,color:color.ink},verticalAlignment:'center',rowHeight:25};
+  for(const [c,w]of [['B',33],['C',15],['D',13],['E',18],['F',18],['G',20],['H',16],['I',53],['J',48]])ref.getRange(`${c}:${c}`).format.columnWidth=w;
+  val(ref,'B2','Historical sector and bond-category reference');ref.getRange('B2:J2').format={font:{size:16,bold:true,color:color.navy},rowHeight:34};
+  note(ref,4,'Provided data only: no student forecasts or input cells. Historical mean and SD use the same five calendar-year NAV total returns (2021–2025), including reinvested distributions. These are ETF proxies, not exact forecasts for every security.',48,newReference);
+  note(ref,6,'Five annual observations form a short classroom sample. SD is the sample SD of these annual returns, not the issuer’s separate 3-year risk metric. Annual values need no ×12 or SQRT(12) scaling. Factsheet dates can differ; all rows use the same 2021–2025 calendar years.',48,newReference);
+  header(ref,8,'J',['Sector / category','Asset class','Proxy ETF','Historical annual mean','Historical annual SD','History window','Factsheet date','Public source','Proxy scope / limitation']);
+  stats.forEach((a,i)=>{
+    const r=9+i;
+    ref.getRange(`B${r}:J${r}`).values=[[a.category,a.assetClass,a.ticker,a.mean,a.sd,'2021–2025 (5 annual returns)',new Date(a.reportDate+' 00:00:00 UTC'),a.sourceUrl,a.scope]];
+    ref.getRange(`B${r}:J${r}`).format={fill:color.source,wrapText:true,rowHeight:100};
+  });
+  ref.getRange('E9:F27').setNumberFormat(percent);ref.getRange('H9:H27').setNumberFormat('yyyy-mm-dd');
+  ref.getRange('D9:F27').format.horizontalAlignment='center';ref.getRange('H9:H27').format.horizontalAlignment='center';
+  note(ref,29,'Means and sample SDs were calculated from the published calendar-year NAV rows in the linked iShares/BlackRock factsheets, retrieved '+config.retrieved+'. No third-party forecasts or fictional returns are used in this reference.',44,newReference);
+  note(ref,31,'Apply the team’s Equity change to every equity category, Bond change to every bond category, and Cash change to Cash equivalent. Change expected returns only; retain each category’s reference SD. The selected ticker can differ from its proxy, so explain fit and limitations.',44,newReference);
+  note(ref,33,'Underlying published annual total returns (provided for traceability)',28,newReference);ref.getRange('B33:J33').format={fill:color.navy,font:{color:'#FFFFFF',bold:true}};
+  header(ref,36,'H',['Sector / category','Proxy',...config.referenceYears.map(String)]);
+  stats.forEach((a,i)=>{ref.getRange(`B${37+i}:H${37+i}`).values=[[a.category,a.ticker,...a.annualReturns]];});
+  ref.getRange('B37:H55').format={fill:color.source,wrapText:true,rowHeight:30};ref.getRange('D37:H55').setNumberFormat(percent);
+  ref.freezePanes.freezeRows(8);
+  if(!updated){
+    for(const a of ['B4:J4','D6:J6','B13:J13','B15:J15','B17:J17','B19:J19','B21:J21','B23:J23','B24:J24','B25:J25','B27:J27'])s.getRange(a).unmerge();
+    s.getRange('B2:M85').clear({applyTo:'all'});s.getRange('B2:M85').conditionalFormats.deleteAll();
   }
-  sheet.getRange('D9:G27').setNumberFormat(percent);
-  sheet.getRange('J9:J27').setNumberFormat('mm/dd/yyyy');
-  // Old conditional rules belonged to the prior status column, now the date column.
-  sheet.getRange('J9:J27').conditionalFormats.deleteAll();
-  sheet.getRange('K9:K27').conditionalFormats.deleteAll();
-  sheet.getRange('K9:K27').conditionalFormats.add('containsText',{text:'Missing',format:{fill:colors.yellow,font:{color:'#805000'}}});
-  for (const [col,width] of [['B',33],['C',16],['D',17],['E',16],['F',18],['G',18],['H',36],['I',32],['J',16],['K',22]]) sheet.getRange(`${col}:${col}`).format.columnWidth=width;
-  note(39,'Provided baseline sources and scope',28);
-  sheet.getRange('B39:K39').format={fill:colors.navy,font:{color:'#FFFFFF',bold:true}};
-  note(40,`Equity: FactSet Earnings Insight, ${config.factset.reportDate}, p. ${config.factset.page}; closing-price reference ${config.factset.asOfDate}. Analyst target upside is a dated starting point, not a probability-weighted forecast. Broad equity uses the S&P 500 as a U.S. large-cap proxy.`,48);
-  note(41,config.factset.url,34);
-  note(42,'Preserve the provided equity baseline. Enter 0% in E to retain it or a signed percentage-point adjustment to revise it. Explain either decision in H, cite team evidence in I and date the team outlook in J. Reassess proxy fit for non-U.S., small-cap or materially different exposures.',48);
-  note(44,'Classroom bond scenario inputs (illustrative; not FactSet forecasts)',28);
-  sheet.getRange('B44:K44').format={fill:colors.navy,font:{color:'#FFFFFF',bold:true}};
-  note(45,`Provided starting scenarios (before team edits). Base: ${config.bonds.baseScenario} Downside: ${config.bonds.downsideScenario}`,54);
-  header(47,['Category','Modified duration (years)','Base yield change','Base spread change','Downside yield change','Downside spread change','Base price change','Downside price change','Scope / limitation','']);
-  for (let j=0;j<config.bonds.rows.length;j++) {
-    const a=config.bonds.rows[j], r=48+j;
-    sheet.getRange(`B${r}:K${r}`).format={font:{name:'Arial',size:11,color:colors.ink},rowHeight:58,wrapText:true,verticalAlignment:'center'};
-    // On refresh retain the editable classroom assumptions already in the native workbook.
-    value(`B${r}`,a.category);
-    if (!alreadyUpdated) {
-      sheet.getRange(`C${r}:G${r}`).values=[[a.duration,a.baseRateChange,a.baseSpreadChange,a.downsideRateChange,a.downsideSpreadChange]];
-      const prior = old.find(x=>x[0]===a.category);
-      // Preserve a previously completed team downside forecast through the new scenario inputs.
-      if (typeof prior?.[4]==='number' && a.duration>0) {
-        const yieldChange=-prior[4]/a.duration;
-        if (a.category==='Government bonds') value(`F${r}`,yieldChange);
-        else value(`G${r}`,yieldChange-a.downsideRateChange);
-      }
+  s.getRange('B2:J27').format={font:{name:'Arial',size:11,color:color.ink},rowHeight:25,verticalAlignment:'center'};
+  for(const[c,w]of [['B',20],['C',29],['D',18],['E',18],['F',19],['G',19],['H',19],['I',48],['J',23]])s.getRange(`${c}:${c}`).format.columnWidth=w;
+  val(s,'B2','CME — one change per asset class');s.getRange('B2:J2').format={font:{size:16,bold:true,color:color.navy},rowHeight:34};
+  note(s,4,'Enter one percentage-point change for Equity, Bond and Cash. Each selected sector or bond category uses its own historical mean on Reference plus the matching asset-class change. Do not enter a separate outlook for every sector.',48,!updated);
+  val(s,'B6','Downside factor (SDs)');val(s,'C6',config.downsideSdMultiplier);s.getRange('B6:C6').format={fill:color.source,wrapText:true,rowHeight:42};s.getRange('C6').setNumberFormat('0.0');s.getRange('C6').format.horizontalAlignment='center';
+  if(!updated)s.mergeCells('D6:J6');val(s,'D6','Downside = adjusted category return − 2 × that category’s historical SD. A return shift leaves SD unchanged.');s.getRange('D6:J6').format={wrapText:true,rowHeight:42};
+  header(s,8,'J',['Asset class','Broad reference proxy','Historical annual mean','Historical annual SD','Asset-class adjustment (pp)','Adjusted broad reference return','Broad reference downside','Reason for the class change','CME status']);
+  for(let i=0;i<3;i++){
+    const a=config.assetClasses[i],r=9+i,j=stats.findIndex(x=>x.category===a.referenceCategory),sourceRow=9+j;
+    val(s,`B${r}`,a.name);val(s,`C${r}`,`${a.referenceCategory} (${stats[j].ticker})`);
+    for(const [dest,col]of [['D','E'],['E','F']])fx(s,`${dest}${r}`,`=IF(ISNUMBER('Reference'!${col}${sourceRow}),'Reference'!${col}${sourceRow},"")`);
+    if(!updated){
+      val(s,`F${r}`,typeof oldValues[i][2]==='number'&&typeof oldValues[i][0]==='number'?oldValues[i][2]-oldValues[i][0]:null);
+      val(s,`I${r}`,oldValues[i][5]||null);
+      if(oldFormulas[i][0])fx(s,`G${r}`,`=IF(AND(ISNUMBER(D${r}),ISNUMBER(F${r})),D${r}+F${r},"")`);
+      if(oldFormulas[i][1])fx(s,`H${r}`,`=IF(AND(ISNUMBER(G${r}),ISNUMBER(E${r})),G${r}-$C$6*E${r},"")`);
     }
-    sheet.getRange(`C${r}:G${r}`).format={fill:colors.yellow,font:{color:'#0000CC'}};
-    formula(`H${r}`,`=IF(AND(COUNT(C${r}:E${r})=3,C${r}>=0),-C${r}*(D${r}+E${r}),"")`);
-    formula(`I${r}`,`=IF(AND(ISNUMBER(C${r}),COUNT(F${r}:G${r})=2,C${r}>=0),-C${r}*(F${r}+G${r}),"")`);
-    if (!alreadyUpdated) sheet.mergeCells(`J${r}:K${r}`);
-    value(`J${r}`,a.scope);
+    s.getRange(`B${r}:J${r}`).format={rowHeight:105,wrapText:true};s.getRange(`C${r}:E${r}`).format.fill=color.source;
+    s.getRange(`F${r}`).format={fill:color.yellow,font:{color:'#0000CC'}};s.getRange(`G${r}:H${r}`).format={fill:color.purple,font:{color:'#0000CC'}};s.getRange(`I${r}`).format={fill:color.yellow,font:{color:'#0000CC'}};
+    fx(s,`J${r}`,`=IF(AND(COUNT(D${r}:H${r})=5,I${r}<>""),"Complete","Missing CME")`);
   }
-  sheet.getRange('C48:C54').setNumberFormat('0.0');
-  sheet.getRange('D48:I54').setNumberFormat('0.00%;(0.00%);0.00%');
-  sheet.getRange('H48:I54').format.horizontalAlignment='center';
-  note(56,'Price change ≈ -modified duration × (yield change + spread change). Enter 25 basis points as 0.25% (0.0025). Negative changes mean falling yields/spreads. The table excludes income, convexity, defaults and currency effects. Cash uses a stable-price proxy; income can change.',52);
-  note(58,'Use the classroom bond assumptions or revise C:G with an explanation in H9:H27 and supporting evidence. H48:H54 feeds baseline D21:D27. Bond downside starters in G21:G27 link to I48:I54; replace them with a justified team estimate when needed. Keep a consistent adverse scenario.',52);
-  note(60,'Equity baseline data are publicly reported facts transcribed from FactSet, not an instructor forecast. The classroom bond assumptions are illustrative teaching inputs. Neither source supplies your team explanation or final judgment.',44);
-  sheet.freezePanes.freezeRows(8);
-  {
-    for (let i=1;i<=3;i++) {
-      const client=workbook.worksheets.getItem(`Client ${i}`);
-      for (let j=0;j<10;j++) {
-        const a=17+j,r=32+j;
-        let f=client.getRange(`L${a}`).formulas[0][0];
-        client.getRange(`L${a}`).formulas=[[f.replaceAll("'CME'!$J$9:$J$27","'CME'!$K$9:$K$27")]];
-        for (const [dest,source] of [['K','F'],['L','G']]) {
-          const selected=`INDEX('CME'!$${source}$9:$${source}$27,MATCH(E${a},'CME'!$B$9:$B$27,0))`;
-          client.getRange(`${dest}${r}`).formulas=[[`=IF(COUNTIF('CME'!$B$9:$B$27,E${a})<>1,"",IF(ISNUMBER(${selected}),${selected},""))`]];
-        }
+  s.getRange('D9:H11').setNumberFormat(percent);s.getRange('J9:J11').conditionalFormats.deleteAll();s.getRange('J9:J11').conditionalFormats.add('containsText',{text:'Missing',format:{fill:color.yellow,font:{color:'#805000'}}});
+  note(s,13,'Yellow: enter the three class changes in F9:F11 (0% = no change) and explain them in I9:I11. Purple: calculate broad reference expected returns in G9:G11 and downside in H9:H11. Sector and bond-category results flow automatically to the Client sheets.',48,!updated);
+  note(s,15,'Use percentage points: −2% means two points below each matching category’s own average. It does not mean multiplying the historical return by 98%. Sector mean + class change = adjusted expectation; adjusted expectation − 2 × sector SD = downside.',48,!updated);
+  note(s,17,'Reference is the separate, provided data tab. The broad proxy rows above illustrate your class changes; they do not replace the distinct sector/category baselines used for selected securities. Keep all Reference data unchanged.',44,!updated);
+  note(s,19,'All expectations are TOTAL returns including income; do not add another yield. The Reference statistics use 2021–2025 annual observations. The separate security covariance exercises use 60 monthly PRICE returns. Keep these measures distinct.',44,!updated);
+  note(s,21,'The two-SD downside is a simplified stress rule, not a confidence level, maximum drawdown or guaranteed loss bound. Applying it to all categories together does not establish a joint probability. A negative cash result can reflect a limitation of this symmetric rule.',44,!updated);
+  note(s,23,'In each Client sheet, classify the holding by asset class and sector/category. G/H show the selected category’s historical return/SD. The allocation table uses that return plus the matching class change; downside uses that category’s own SD.',44,!updated);
+  note(s,25,'Example only: a category averaging 10% with an Equity change of −2% has an adjusted expectation of 8%. If its historical SD is 15%, its two-SD downside is −22%. These example numbers are illustrative, not additional inputs.',44,!updated);
+  s.freezePanes.freezeRows(8);
+  for(let i=1;i<=3;i++){
+    const c=workbook.worksheets.getItem(`Client ${i}`);
+    val(c,'B4','Select 10 distinct securities. Each category keeps its Reference historical return and SD, and receives the team’s matching Equity, Bond or Cash adjustment. Explain client fit and proxy limitations.');
+    c.getRange('G16:H16').values=[['Category historical return','Category historical SD']];c.getRange('G17:H26').format={fill:color.source,font:{color:color.ink}};
+    c.getRange('D17:D26').dataValidation={rule:{type:'list',values:['Equity','Bond','Cash']}};c.getRange('E17:E26').dataValidation={rule:{type:'list',formula1:`INDIRECT("'Reference'!$B$9:$B$27")`}};
+    c.getRange('K31:L31').values=[['Adjusted category total return','Category downside total return']];
+    for(let j=0;j<10;j++){
+      const a=17+j,r=32+j;
+      for(const [dest,col]of [['G','E'],['H','F']]){
+        const x=`INDEX('Reference'!$${col}$9:$${col}$27,MATCH(E${a},'Reference'!$B$9:$B$27,0))`;
+        fx(c,`${dest}${a}`,`=IF(AND(COUNTIFS('Reference'!$B$9:$B$27,E${a},'Reference'!$C$9:$C$27,D${a})=1,COUNTIFS('Reference'!$B$9:$B$27,E${a},'Reference'!$${col}$9:$${col}$27,"<>")=1),IF(ISNUMBER(${x}),${x},""),"")`);
       }
+      fx(c,`L${a}`,`=IF(COUNTA(B${a}:F${a})<5,"Missing selection",IF(COUNTIF($K$17:$K$26,K${a})<>1,"Duplicate ticker",IF(COUNTIFS('Reference'!$B$9:$B$27,E${a},'Reference'!$C$9:$C$27,D${a})<>1,"Revise category",IF(COUNTIFS('CME'!$B$9:$B$11,D${a},'CME'!$J$9:$J$11,"Complete")<>1,"Missing CME",IF(OR(I${a}="",NOT(ISNUMBER(J${a}))),"Missing evidence","Complete")))))`);
+      const adj=`INDEX('CME'!$F$9:$F$11,MATCH(D${a},'CME'!$B$9:$B$11,0))`;
+      fx(c,`K${r}`,`=IF(AND(ISNUMBER(G${a}),COUNTIFS('CME'!$B$9:$B$11,D${a},'CME'!$F$9:$F$11,"<>")=1),IF(ISNUMBER(${adj}),G${a}+${adj},""),"")`);
+      fx(c,`L${r}`,`=IF(AND(ISNUMBER(K${r}),ISNUMBER(H${a}),ISNUMBER('CME'!$C$6)),K${r}-'CME'!$C$6*H${a},"")`);
+      fx(c,`I${r}`,`=IF(ISNUMBER(K${r}),K${r},"")`);fx(c,`J${r}`,`=IF(ISNUMBER(L${r}),L${r},"")`);
     }
+    val(c,'B28','G/H link to the selected sector or bond category on Reference. Expected return = that category’s historical mean + its asset-class change. Downside subtracts two of that category’s SDs. Income is included; do not add a separate yield.');c.getRange('B28:L28').format.rowHeight=48;
   }
   const summary=workbook.worksheets.getItem('Summary');
-  summary.getRange('B18').values=[['Review the dated FactSet sector baseline and classroom bond scenarios. Enter team adjustments (0% to keep), explain the macro reasoning, and complete team downside price forecasts.']];
+  val(summary,'B18','Review the provided Reference tab. Enter one change for Equity, Bond and Cash; apply it to each category’s own historical return, retaining its own SD. Complete the broad examples and class reasoning.');
+  val(summary,'B21','Choose 10 securities per client. Assign the correct asset class and sector/category so its Reference baseline and the matching team adjustment flow to the portfolio.');
+  val(summary,'B40','61 closes produce 60 monthly PRICE returns for portfolio-risk estimates. CME expectations use category TOTAL-return baselines plus class adjustments; the downside uses category SD. Do not add income twice.');
+  val(workbook.worksheets.getItem('Stress Test'),'B4','Apply each holding’s adjusted category downside TOTAL return to initial and final weights. The common class change shifts the historical category mean; each category retains its own reference SD. Compare client consequences and tripwires.');
 }
