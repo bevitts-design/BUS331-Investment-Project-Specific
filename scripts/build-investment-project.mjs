@@ -747,7 +747,7 @@ function canvasSubmissionPage() {
             <h2>${escapeHtml(assignment.canvasTitle)}</h2>
             <div class="callout"><h3>${assignment.partId === "macro-analysis" ? "Purpose and sequence" : "Decision recorded"}</h3><p>${escapeHtml(assignment.decision)}</p></div>
             <p>${escapeHtml(assignment.submissionProcess)}</p>
-            <h3>Upload these exact files</h3>
+${assignment.presentationRequirements ? `            <div class="callout"><h3>What to submit for Phase 4</h3><p>${escapeHtml(assignment.presentationRequirements.submissionNote)}</p><p><a href="${escapeHtml(path.basename(phasePath(phase)))}">Read the full Phase 4 presentation and defense requirements</a> for required content, speaking responsibilities, visual standards and scheduling guidance.</p></div>\n` : ""}            <h3>Upload these exact files</h3>
             ${submissionFileList(assignment)}
             <h3>Pre-submission check</h3>
             <ul class="check-list">${assignment.preflight.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
@@ -809,7 +809,10 @@ ${evidenceBoundary}
 }
 
 function assessmentPage() {
-  const phase = model.phases[2];
+  const portfolioPhase = model.phases.find((phase) => phase.id === "phase-3");
+  const presentationPhase = model.phases.find((phase) => phase.id === "phase-4");
+  const presentationAssignment = model.canvasSubmissions.assignments.find((assignment) => assignment.phaseId === presentationPhase.id);
+  const presentation = presentationAssignment.presentationRequirements;
   const prefix = "../";
   const body = `
   <main id="main-content">
@@ -829,6 +832,9 @@ function assessmentPage() {
           <h2>Phase 4 live committee presentation and defense</h2>
           <div class="callout"><h3>Bring the semester together</h3><p>Connect the economic review, client IPS statements, security research and Phase 3 workbook in one oral presentation. Each student must explain their contribution, evidence, an alternative rejected, a key trade-off and the integrated portfolio decision.</p></div>
           ${assessmentTable(model.assessment.oralCriteria)}
+          <h3>Individual speaking and defense responsibilities</h3>
+          <p>${escapeHtml(presentation.participation)}</p>
+          <p><a href="${escapeHtml(path.basename(phasePath(presentationPhase)))}">Read the full Phase 4 presentation requirements</a> for the presentation content, visual standards and schedule guidance.</p>
         </section>
         <section>
           <p class="section-kicker">Live defense question bank</p>
@@ -837,10 +843,18 @@ function assessmentPage() {
           <div class="question-bank">${model.assessment.committeeQuestions.map((group) => `<article><h3>${escapeHtml(group.audience)}</h3><ul class="clean-list">${group.questions.map((question) => `<li>${escapeHtml(question)}</li>`).join("\n")}</ul></article>`).join("\n")}</div>
         </section>
         <section>
-          <p class="section-kicker">Final readiness check</p>
-          <h2>Before the committee meeting</h2>
-          <ul class="check-list">${[...phase.evidence, ...model.phases[3].evidence].map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
-          <div class="callout"><h3>Q&A standard</h3><p>Every member must be able to defend the market view, mandate, allocation, security choices, stress test, and trade-offs. The panel may direct a question to a member who did not lead that workstream.</p></div>
+          <p class="section-kicker">Phase 3 readiness check</p>
+          <h2>Before submitting the Phase 3 workbook</h2>
+          <ul class="check-list">${portfolioPhase.evidence.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+          <p><a href="${escapeHtml(path.basename(phasePath(portfolioPhase)))}">Review the Phase 3 workbook instructions</a> and <a href="canvas-submission-guide.html#phase-3-canvas">confirm the single XLSX submission</a>.</p>
+        </section>
+        <section>
+          <p class="section-kicker">Phase 4 readiness check</p>
+          <h2>Before submitting and delivering the Phase 4 presentation</h2>
+          <ul class="check-list">${presentationPhase.evidence.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>
+          <p>${escapeHtml(presentation.submissionNote)}</p>
+          <p><a href="${escapeHtml(path.basename(phasePath(presentationPhase)))}">Review the full Phase 4 presentation requirements</a> and <a href="canvas-submission-guide.html#phase-4-canvas">confirm the single PPTX submission</a>.</p>
+          <div class="callout"><h3>Q&A standard</h3><p>${escapeHtml(presentation.crossFunctional)}</p></div>
         </section>
       </div>
     </div>
