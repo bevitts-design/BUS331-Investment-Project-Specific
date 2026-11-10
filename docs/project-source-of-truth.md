@@ -62,7 +62,7 @@ Submit only `BUS331_[TeamName]_Phase3_Portfolio.xlsx`. Record decisions and cont
 
 ### Phase 4 - Present and Defend the Recommendation
 
-The final oral presentation connects the economic review, client IPS statements, security research and Phase 3 portfolio analysis. Submit one PowerPoint file and deliver the integrated presentation with shared speaking responsibilities and cross-functional Q&A. The Phase 3 workbook supplies the portfolio evidence; no new memo or dossier is required.
+The final oral presentation connects the economic review, client IPS statements, security research and Phase 3 portfolio analysis. Submit one PowerPoint file and deliver the integrated presentation with shared speaking responsibilities and cross-functional Q&A. The Phase 3 workbook supplies the portfolio evidence; no new memo or dossier is required. The Phase 4 website page and `canvas/phase-4-assignment.html` share the same assignment renderer, using `canvasSubmissions.assignments[phaseId=phase-4].presentationRequirements` for the presentation content, participation, visual and scheduling requirements and `assessment.oralCriteria` for grading. Update those maintained model fields and rebuild to keep the website and Canvas fragment aligned.
 
 ## Maintained public structure
 

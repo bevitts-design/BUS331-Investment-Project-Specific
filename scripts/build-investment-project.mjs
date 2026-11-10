@@ -424,6 +424,18 @@ function phasePage(phase) {
       <section><h2>Committee responsibilities</h2>${rolePhaseMatrix(phase)}</section>
     </div></div></main>`
   });
+  if (phase.id === "phase-4") {
+    const assignment = model.canvasSubmissions.assignments.find((item) => item.phaseId === phase.id);
+    return shell({
+      title: `Phase 4 - ${phase.title}`, description: phase.objective, prefix: "../", navCurrent: phase.id,
+      pageClass: "guide-page presentation-page",
+      body: `<main id="main-content"><div class="page-shell"><div class="content-flow">
+        <section aria-label="Phase 4 presentation and submission requirements">${canvasAssignmentFragment(assignment)}</section>
+        <section><h2>Committee responsibilities</h2>${rolePhaseMatrix(phase)}</section>
+        <section><h2>Phase 4 resources</h2><div class="resource-list">${resourceLinks(phase.resources, "../", { includeDescription: true })}</div></section>
+      </div></div></main>`
+    });
+  }
   const prefix = "../";
   const body = `
   <main id="main-content">
@@ -760,6 +772,23 @@ function canvasAssignmentFragment(assignment) {
   const card = "border:1px solid #D8D2C4;border-radius:12px;padding:16px;margin:14px 0;background:#ffffff;";
   const canvasText = (value) => escapeHtml(value).replaceAll("·", "&middot;");
   const evidenceBoundary = assignment.includePrivateEvidenceBoundary ? `<div style="${card}border-left:6px solid ${palette.gold};"><h2 style="margin:0 0 8px;color:${palette.navy};font-size:22px;">Submit through Canvas</h2><p style="margin:0;">Submit all required work and licensed-source evidence through this Canvas assignment. Do not include credentials, raw data, or unrelated downloads.</p></div>` : "";
+  const presentation = assignment.presentationRequirements;
+  const headingStyle = `color:${palette.navy};font-size:22px;margin:24px 0 8px;`;
+  const presentationDetails = presentation ? `
+    <p>${escapeHtml(presentation.submissionNote)}</p>
+    <h2 style="${headingStyle}">What your presentation must cover</h2>
+    <ol style="padding-left:24px;">${presentation.content.map((item) => `<li style="margin:12px 0;"><strong>${escapeHtml(item.title)}:</strong> ${escapeHtml(item.description)}</li>`).join("")}</ol>
+    <h2 style="${headingStyle}">Speaking responsibilities and committee defense</h2>
+    <p>${escapeHtml(presentation.participation)}</p>
+    <p>${escapeHtml(presentation.crossFunctional)}</p>
+    <ul style="padding-left:24px;">${model.assessment.committeeQuestions.filter((group) => group.audience !== "Any committee member").map((group) => `<li style="margin:10px 0;"><strong>${escapeHtml(group.audience)}:</strong> ${escapeHtml(model.roles.find((role) => role.title === group.audience)?.phaseResponsibilities?.["phase-4"] || group.questions[0])}</li>`).join("")}</ul>
+    <h2 style="${headingStyle}">Visual evidence and presentation schedule</h2>
+    <p>${escapeHtml(presentation.visualStandard)}</p>
+    <p>${escapeHtml(presentation.scheduleNote)}</p>
+    <h2 style="${headingStyle}">How the presentation is assessed</h2>
+    <p>${escapeHtml(model.assessment.presentationRubricName)} (${model.assessment.presentationPoints}-point rubric). Canvas controls the assignment points and course-grade weight.</p>
+    <ul style="padding-left:24px;">${model.assessment.oralCriteria.map((item) => `<li style="margin:10px 0;"><strong>${escapeHtml(item.criterion)} — ${item.weight}%:</strong> ${escapeHtml(item.standard)}</li>`).join("")}</ul>
+` : "";
   return `<div style="max-width:980px;margin:0 auto;color:${palette.ink};font-family:Arial,Helvetica,sans-serif;line-height:1.55;">
   <div style="background:${palette.navy};color:#ffffff;border-top:8px solid ${palette.gold};padding:24px;border-radius:14px 14px 6px 6px;">
     <p style="margin:0 0 6px;font-size:14px;font-weight:bold;letter-spacing:.06em;text-transform:uppercase;color:#F1D48E;">${assignment.partId ? `BUS331 &middot; Phase ${phase.number} &middot; ${assignment.partId === "macro-analysis" ? "Part 1 assignment" : "Part 2 IPS assignment"}` : `BUS331 &middot; Phase ${phase.number} approval gate`}</p>
@@ -771,7 +800,7 @@ function canvasAssignmentFragment(assignment) {
 ${assignment.id === "phase-1-client" ? `    <p><a href="https://bevitts-design.github.io/BUS331-Investment-Project-Specific/files/BUS331_Abbreviated_IPS_Template.docx">Download the abbreviated IPS template</a> · <a href="https://bevitts-design.github.io/BUS331-Investment-Project-Specific/project/client-analysis.html">Open the four-step guide</a></p>\n` : ""}    <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Required files</h2>
     <p style="margin:0 0 12px;">${escapeHtml(model.canvasSubmissions.fileNamingRule)}</p>
     ${assignment.requiredFiles.map((file) => `<div style="${card}"><p style="margin:0 0 4px;font-weight:bold;color:${palette.navy};overflow-wrap:anywhere;">${escapeHtml(file.name)}</p><p style="margin:0;">${escapeHtml(file.description)}</p></div>`).join("\n")}
-    <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Pre-submission check</h2>
+${presentationDetails}    <h2 style="color:${palette.navy};font-size:22px;margin:24px 0 8px;">Pre-submission check</h2>
     <ul style="margin:0;padding-left:24px;">${assignment.preflight.map((item) => `<li style="margin:8px 0;">${escapeHtml(item)}</li>`).join("")}</ul>
 ${evidenceBoundary}
     <p style="margin:18px 0 0;font-size:14px;"><strong>Allowed extensions:</strong> ${assignment.allowedExtensions.map((item) => `.${escapeHtml(item)}`).join(", ")}</p>

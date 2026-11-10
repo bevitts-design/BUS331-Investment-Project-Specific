@@ -1360,7 +1360,40 @@
           "Each of the three client recommendations follows from the economic outlook, IPS, research and risk analysis.",
           "Every member can explain their contribution and defend the integrated recommendation.",
           "The team has checked the Canvas upload and is ready for the oral presentation."
-        ]
+        ],
+        "presentationRequirements": {
+          "submissionNote": "Submit one PowerPoint (.pptx) per team. Use the completed Phase 3 workbook as the portfolio evidence; no new memo, dossier, separate evidence ZIP or repeat workbook upload is required for Phase 4. One designated member uploads the file before the scheduled presentation; every member checks the Canvas receipt. Keep licensed research private under course policy.",
+          "content": [
+            {
+              "title": "Lead with the recommendations",
+              "description": "State the final recommendation for each of your three assigned clients and explain why it fits that client."
+            },
+            {
+              "title": "Connect the economic review and client mandates",
+              "description": "Explain the market outlook and key assumptions, then connect each IPS to return objectives, risk tolerance, liquidity, time horizon and other relevant constraints. Identify material information gaps and labeled assumptions."
+            },
+            {
+              "title": "Show the final portfolios and supporting research",
+              "description": "Present the 10 distinct securities per client and final weights totaling 100%. Explain each holding’s role and client fit, why funds and ETFs are the primary vehicles, and why any limited individual security earns its place. Use research to address costs, liquidity, overlap and concentration; cite sources and dates."
+            },
+            {
+              "title": "Explain portfolio construction and judgment",
+              "description": "Use clear exhibits from Phase 3 to compare initial, constrained minimum-variance Solver and final allocations. Explain the expected return and risk evidence, constraints, Solver outcome, alternatives rejected and key trade-offs behind the final weights."
+            },
+            {
+              "title": "Defend the risk response",
+              "description": "Show the downside or bear-case result for each client, the relevant IPS tripwire and client consequence, any corrective action and re-test, remaining risk, and a targeted hedge or supported no-hedge conclusion. Acknowledge the limits of the analysis."
+            },
+            {
+              "title": "Close with implementation and monitoring",
+              "description": "Identify next actions, monitoring triggers, unresolved reservations and the conditions that would cause the team to change the recommendation."
+            }
+          ],
+          "participation": "Share speaking responsibilities. Include a compact defense covering all five committee roles. Each student answers at least one targeted question; on a four-person team, the dual-role member covers both owned roles. Each member must explain their evidence, recommendation, alternative rejected, key trade-off, Phase 3 workbook contribution, verification and limitations, and whether the challenge changes the decision.",
+          "crossFunctional": "Every member must be ready to defend the market view, client suitability, allocation, security choices, stress results and trade-offs. Questions may be directed to a member who did not lead that workstream. Use evidence and calculations, acknowledge uncertainty, and defend or revise your judgment under challenge.",
+          "visualStandard": "Use legible, client-focused charts, tables and other exhibits that make the recommendation and supporting evidence easy to follow. All figures, holdings, weights and risk results must match the final Phase 3 workbook. Identify sources, dates and assumptions.",
+          "scheduleNote": "Follow the presentation schedule and any duration or slide-count directions announced in Canvas or class. The current project materials do not specify a fixed presentation length or required slide count."
+        }
       }
     ]
   },

@@ -500,6 +500,12 @@ for (const phase of model.phases) {
     if ((html.match(/<h3>Do this in order<\/h3>/g) || []).length !== 2 || (html.match(/<h3>Ready when<\/h3>/g) || []).length !== 2) fail("Phase 1 page needs a separate ordered checklist and readiness test for each part.");
   } else if (phase.id === "phase-3") {
     for (const text of ["Step 1", "Step 8", "Final checklist", "STOCKHISTORY", "GRG Nonlinear", "Download Phase 3 student workbook"]) if (!html.includes(text)) fail(`Phase 3 workbook page is missing ${text}.`);
+  } else if (phase.id === "phase-4") {
+    const fragment = await fs.readFile(path.join(rootDir, "canvas/phase-4-assignment.html"), "utf8");
+    if (!html.includes(fragment.trim())) fail("Phase 4 website requirements must match the Canvas assignment fragment.");
+    for (const text of ["What your presentation must cover", "Speaking responsibilities and committee defense", "How the presentation is assessed", "Pre-submission check", "BUS331_[TeamName]_Phase4_Presentation.pptx"]) {
+      if (!html.includes(text)) fail(`Phase 4 presentation page is missing ${text}.`);
+    }
   } else if (!html.includes(`Your Phase ${phase.number} sequence`) || !html.includes("Definition of done")) {
     fail(`Phase ${phase.number} page is missing its ordered sequence or definition of done.`);
   }
